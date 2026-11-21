@@ -1,5 +1,43 @@
+import type {KnownSourceSubtotal} from './nutrient-coverage';
+import type {DietaryReferenceRow} from './dietary-references';
 import { z } from "zod";
 import type { BiologicalRegistry, KnowledgeRelationship } from "./biological-model";
+
+/** Output admission boundary for existing source/Response projections, not a
+ * second inference service. Source arithmetic alone cannot release clinical
+ * interpretation or an unsolicited Today action. */
+export interface ConsumerValueCandidate {
+  candidateId:string;
+  findingType:'source-observed'|'reviewed-interpreted'|'cross-domain-qualified'|'safety-critical';
+  observationRefs:ReadonlyArray<{sourceId:string;revision:string;date?:string}>;
+  relevantUserGoalIds:readonly string[];
+  finding:string;biologicalMeaning:string|null;
+  evidenceRuleIds:readonly string[];
+  applicability:'supported'|'conditional'|'insufficient';
+  practicalNextStepId:string|null;
+  materialUnknowns:readonly string[];prohibitedClaims:readonly string[];
+  priorityReason:string|null;
+  releaseState:'feature-eligible'|'detail-only'|'abstain'|'safety-critical';
+  sourceEpoch:string;
+}
+
+/** Private source projection for existing Food/Response consumers. No field is
+ * an individual optimum, model-calibrated dose or shared scientific asset. */
+export interface NutrientPersonalAssessment {
+ version:'nutrient-personal-assessment-2026-11-18-v1';scope:'account-private';
+ accountScope:string;purpose:'personal-wellness';nutrientId:string;asOf:string;
+ period:{date:string;timeZone:string};sourceEpoch:string;evidenceVersion:string;
+ sourceRevisions:ReadonlyArray<{id:string;revision:string;occurredAt:string;dateBasis:'food-record-time'|'confirmed-taken-time'}>;
+ intake:{groups:ReadonlyArray<KnownSourceSubtotal>;coverage:'partial'|'unknown';recordedFoodEvents:number;confirmedSupplementEvents:number;unavailableEvents:number;excludedRecords:number;usualExposure:{state:'not-established';amount:null;reason:string}};
+ availability:{state:'not-measured';absorbedAmount:null};
+ populationReferences:{status:'matched'|'unmatched'|'unavailable';version:string|null;revision:string|null;rows:ReadonlyArray<{reference:DietaryReferenceRow&{referenceVersion:string};eligible:boolean;reasons:readonly string[]}>};
+ biologicalStatus:{state:'not-assessed';biomarkerRefs:readonly string[]};
+ requirements:{kind:'population-reference-context'|'unknown';individualAmount:null;validationId:null};
+ safety:{state:'potential-reference-overlap'|'not-assessed';toxicity:'not-assessed';doseChangePermitted:false;contraindicationsChecked:readonly string[];importantUnknowns:readonly string[]};
+ outcomes:{goalStatus:'not-provided'|'verified';goalIds:readonly string[];protectedGoalIds:readonly string[];predictedPersonalBenefit:null};
+ decision:{category:'source-details'|'reference-overlap-review'|'food-first-option'|'abstain';approvedActionId:string|null;rationale:string};
+ candidate:ConsumerValueCandidate|null;
+}
 
 /** Shared claim vocabulary. Entered lab values retain reported/unverified provenance;
  * a category never upgrades the quality of an observation or validates a model. */

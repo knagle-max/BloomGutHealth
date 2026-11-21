@@ -1,0 +1,28 @@
+{
+  "task": "V06-M2-GENERAL-LIFE-STAGE-REFERENCE-VIEWS",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "exposure": "LOCAL_PENDING_PUBLISHED_SHA_CI",
+  "baseCommit": "683b8bc67f7777ab9d1a6d6ef04248982fdc45aa",
+  "sources": [
+    "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+    "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html"
+  ],
+  "retrievedOn": "2026-11-18",
+  "scope": [
+    "129published rows/13existing nutrients:59default nonpregnant/nonlactating adult rows retained,35pregnancy/35lactation rows in exact published adult19\u201350categories. Identical source categories coalesced only with equal amounts/units/kind/scope. No adolescent or >50stage extrapolation.",
+    "Public/general stage selector reuses existing reference disclosure. Exploring pregnancy/lactation never saves a personal stage, edits Profile, intake or goals, or sets a treatment dose.",
+    "Optional typed read-only API lifeStage query defaults to original category for old callers. Matching never interprets the combined pregnancy/breastfeeding/planning answer as a specific stage; those rows explicitly abstain. Historical/clinical/source-form safeguards retained.",
+    "Preserve RAE/DFE/folic-acid units and preformed/synthetic/pharmacological limits, no-UL/AI/CDRR distinctions and unknown source form/diet. Cache keys now isolate reference version and explored category. No new store/schema/writer/permission or tracking feature."
+  ],
+  "verification": {
+    "sourceApi": "26/26 source/schema/profile/owned encrypted-context API tests PASS: exact published stage amounts, Mg19\u201330/31\u201350, source-unit/scope parity, no-UL cases, stage bounds, invalid queries, legacy default, source privacy and combined-answer abstention.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile: pregnancy folate600DFE vs UL1000folic-acid, lactation500DFE, distinct Mg categories; no matched specific stage, source values retained through outage/retry, default Mg420 restored without Profile change.32mode/theme/width/zoom matrix exercises pregnancy long units; prior all source/date/owner/keyboard/deep-link and0intakes/meals checks retained.",
+    "typesBuild": "Final TypeScript and production build/original media PASS.",
+    "audits": "8/8 API/capability/Biology audit tests PASS before final documentation refresh."
+  },
+  "publication": "Hold next push while current683b8bc6 CI44341737935 qualifies exact hosted binding; continue local development. Qualified prior906 CI44335001853 SUCCESS871/871/all hosted+isolated Neon.",
+  "limits": [
+    "General adult life-stage reference coverage is implemented; actual specific life-stage matching needs purpose-specific canonical facts, not this display selector.",
+    "No clinical/absorbed/usual intake/adequacy assessment, source-era historical matching or independent final human/device claim. Full M2/C2/Core/RC unfinished."
+  ]
+}

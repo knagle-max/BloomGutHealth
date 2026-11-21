@@ -1,0 +1,12 @@
+/* CHART-A02 marker kit. Import after A01, opt-in scope only. */
+/* All colors inherited from A01; states are redundant with accessible text. */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target { position:absolute; transform:translate(-50%,-50%);width:44px;height:44px;min-width:44px;min-height:44px;display:grid;place-items:center;border:0;padding:0;background:transparent;touch-action:manipulation;cursor:pointer; }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-glyph {display:block;width:24px;height:24px;overflow:visible;color:var(--bvc-series-primary);pointer-events:none;flex:none}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target[data-series="secondary"] .bvc-marker-glyph { color:var(--bvc-series-secondary); }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target[data-series="tertiary"] .bvc-marker-glyph { color:var(--bvc-series-tertiary); }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target[data-series="comparison"] .bvc-marker-glyph { color:var(--bvc-comparison); }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target:focus-visible {outline:3px solid var(--bvc-focus);outline-offset:2px;border-radius:12px;}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target[aria-disabled="true"] {cursor:default;}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target:hover:not([aria-disabled="true"]) .bvc-marker-glyph {filter:drop-shadow(0 1px 2px var(--bvc-selection-halo));}
+@media (forced-colors:active) { .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target .bvc-marker-glyph { color:CanvasText; forced-color-adjust:auto; } .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target:focus-visible {outline-color:Highlight;} }
+@media (prefers-reduced-motion:reduce) { .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-target,.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-marker-glyph {animation:none!important;transition:none!important;} }

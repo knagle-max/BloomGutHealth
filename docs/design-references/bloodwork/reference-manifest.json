@@ -1,0 +1,28 @@
+{
+  "ownerSuppliedAt": "2026-11-17",
+  "sourceAttachment": "1-Pasted-Image-1.jpg",
+  "dimensions": [
+    720,
+    1280
+  ],
+  "sourceJpeg": {
+    "path": "approved-ldl-editorial-reference.jpg",
+    "sha256": "196953f2d2abfb494d70e517ff7c19af211b4fd58e10e2e2097a04c328e76658",
+    "bytesPreserved": true
+  },
+  "comparisonPng": {
+    "path": "approved-ldl-editorial-reference.png",
+    "sha256": "fffd6a3e66a967d19758e72bd6d806b3ad5b14419842f3936551113185377f76",
+    "conversion": "Lossless encoding of the decoded JPEG pixels; no resize, crop or content edit"
+  },
+  "purpose": "Design reference only. Not runtime artwork or a licence to reproduce depicted imagery.",
+  "previousUnverifiedManifest": {
+    "dimensions": [
+      864,
+      1536
+    ],
+    "pngSha256": "98d2bcbda8a8af7c97663943652f83fa4ab76d749c1edb932bd3fa6967b991fb",
+    "sourceJpegSha256": "a832f022dc2153e5756aa1733c12b0ca8155f20e226e1c62c644bed1ac4d51f7",
+    "status": "Prior duplicate not available; latest owner-provided720×1280 bytes imported without upscaling or pretending hashes match."
+  }
+}

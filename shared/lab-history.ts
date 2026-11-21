@@ -1,6 +1,10 @@
+import type {LabSourceReferenceCorrections} from './lab-reference-correction';
+import type {LabReportMetadataView} from './lab-report-metadata';
 import type {Lab,SourceOnlyLab} from './precision-nutrition';
 export type LabHistoryRow=Lab&{id:string};
 export type AnyLabHistoryRow=LabHistoryRow|(SourceOnlyLab&{id:string});
+/** Preserve import identity and split inconsistent report/specimen identifiers. */
+export function labReportGroupKey(source:Lab['sourceReport']){return source?JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]):null;}
 /** A source view over canonical active records, never a new panel or deduplication model. */
 export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[]){
  const groups=new Map<string,{key:string;source:NonNullable<Lab['sourceReport']>;rows:Row[]}>(),unlinked:Row[]=[];
@@ -8,7 +12,7 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
   const source=row.sourceReport;
   if(!source){unlinked.push(row);continue;}
   // Split inconsistent identifiers rather than assigning the first row's context to others.
-  const key=JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]);
+  const key=labReportGroupKey(source)!;
   const group=groups.get(key)||{key,source,rows:[]};group.rows.push(row);groups.set(key,group);
  }
  const imports=Array.from(groups.values()).map(group=>({...group,rows:group.rows.map((row,index)=>({row,index})).sort((a,b)=>(a.row.sourceInput?.rowOrder??Infinity)-(b.row.sourceInput?.rowOrder??Infinity)||a.index-b.index).map(({row})=>row)}));
@@ -17,6 +21,18 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
 
 /** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
 export function labDateText(timestamp:string,source?:Lab['sourceReport'],correction?:Lab['dateCorrection']){return correction?.enteredDate||source?.enteredDate||timestamp.slice(0,10);}
+
+/** Display context only: never resolve tied occurrences by array order or
+ * substitute an earlier observation because its interval looks preferable. */
+export function latestRecordedLabContext<T extends {date:string;sourceReport?:Lab['sourceReport'];dateCorrection?:Lab['dateCorrection']}>(points:readonly T[]){
+ const dated=points.filter(point=>Number.isFinite(Date.parse(point.date)));
+ if(!dated.length)return{point:undefined as T|undefined,ambiguous:false};
+ const latest=Math.max(...dated.map(point=>Date.parse(point.date))),candidates=dated.filter(point=>Date.parse(point.date)===latest);
+ if(candidates.length!==1)return{point:undefined as T|undefined,ambiguous:true};
+ const point=candidates[0],day=labDateText(point.date,point.sourceReport,point.dateCorrection);
+ const unordered=dated.some(other=>other!==point&&labDateText(other.date,other.sourceReport,other.dateCorrection)===day&&[point,other].some(value=>{const source=value.dateCorrection||value.sourceReport;return !!source?.enteredDate&&!source.enteredTime;}));
+ return{point:unordered?undefined:point,ambiguous:unordered};
+}
 
 /** Filter a source view only; a shared calendar date never establishes a panel. */
 export function labHistoryDates(rows: readonly AnyLabHistoryRow[]) {
@@ -67,4 +83,4 @@ export function compareRecordedLabResults<T extends {id:string;date:string;value
 export function formatRecordedLabNumber(value:number){return Number.isFinite(value)?new Intl.NumberFormat(undefined,{maximumSignificantDigits:6}).format(value===0?0:value):'Not available';}
 
 /** Management metadata contains no biomarker values or original report identifiers. */
-export type LabSourceSummary={id:string;revision:string;scope:'report'|'result';results:number|null;records:number;dates:string[];detailRecordId?:string;manageable?:boolean;savedAt?:string|null};
+export type LabSourceSummary={id:string;revision:string;scope:'report'|'result';results:number|null;records:number;dates:string[];detailRecordId?:string;manageable?:boolean;savedAt?:string|null;groupKey?:string|null;originalLaboratories?:string[];reportIdentifiers?:string[];specimenIdentifiers?:string[];dateContexts?:Array<{date:string;precision:'source-date'|'source-time'|'stored-timestamp-only'}>;metadata?:LabReportMetadataView;referenceCorrections?:LabSourceReferenceCorrections};

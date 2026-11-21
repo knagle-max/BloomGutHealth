@@ -1,0 +1,121 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {randomBytes,randomUUID,createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
+import express from 'express';
+import {PGlite} from '@electric-sql/pglite';
+import {drizzle} from 'drizzle-orm/pglite';
+import {PrecisionStorage} from '../server/precision-storage';
+import {ExperienceStorage} from '../server/experience-storage';
+import {LabResponseContextStorage,LabResponseContextError} from '../server/lab-response-context-storage';
+import {registerLabResponseContextRoutes} from '../server/lab-response-context-routes';
+import {labSchema,markerDefinitions} from '../shared/precision-nutrition';
+import {labReviewRevisionText} from '../shared/lab-source-review';
+import {encryptPrecision,decryptPrecision} from '../server/precision-crypto';
+import {recalledLabResponseContextSchema,type LabResponseContextSave} from '../shared/lab-response-context';
+const revision=(payload:unknown)=>createHash('sha256').update(labReviewRevisionText(payload as any)).digest('hex');
+const rejects=(promise:Promise<unknown>,status:number)=>assert.rejects(promise,error=>error instanceof LabResponseContextError&&error.status===status);
+async function fixture(run:(data:any)=>Promise<void>){
+ const previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');const pg=new PGlite();
+ try{
+  await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY,dietary_preferences jsonb);INSERT INTO users(id) VALUES('a'),('b');");for(const migration of ['0002_precision_nutrition.sql','0004_experience.sql'])await pg.exec(readFileSync(new URL('../migrations/'+migration,import.meta.url),'utf8'));
+  const db=drizzle(pg),precision=new PrecisionStorage(db as any),experience=new ExperienceStorage(db as any),now=()=>new Date('2026-11-16T12:00:00Z'),storage=new LabResponseContextStorage(db as any,now);
+  const labs=[];for(const [month,value] of [['09',120],['10',140]] as const){const payload=labSchema.parse({marker:'ldl',value,unit:'mg/dL',measuredAt:`2026-${month}-01T12:00:00Z`,laboratory:'Synthetic context lab',method:'Synthetic LDL assay',fasting:'yes',referenceLow:null,referenceHigh:130,sourceReport:{importId:randomUUID(),enteredDate:`2026-${month}-01`}});labs.push(await precision.insertPrecisionRecord('a','lab',payload));}
+  const sourceReferences=labs.map(row=>({id:row.id,revision:revision(row.payload)})),prepare={family:'lipids' as const,sourceReferences},selection={family:'lipids' as const,sourceIds:sourceReferences.map(source=>source.id)};
+  const command=(view:any,patch:Partial<LabResponseContextSave>={}):LabResponseContextSave=>({...prepare,intentId:randomUUID(),generationId:view.generationId,expectedCurrentId:view.latest?.record.id||null,answer:'yes',eventWindow:{from:'2026-09-15',to:'2026-09-20',precision:'range'},datePrecision:'range',notes:'Synthetic recalled medicine change; no cause claimed.',...patch});
+  await run({pg,db,precision,experience,storage,labs,sourceReferences,prepare,selection,command});
+ }finally{await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
+}
+test('source-current context saves once, keeps event/learned-at separate and replays historical receipts without replacing a later answer',()=>fixture(async({precision,storage,prepare,selection,command}:any)=>{
+ const original=await precision.getPrecisionRecords('a'),empty=await storage.view('a',selection);assert.equal(empty.generationId,null);assert.equal(empty.historyCount,0);
+ const prepared=await storage.prepare('a',prepare);assert.ok(prepared.generationId);assert.equal((await storage.prepare('a',prepare)).generationId,prepared.generationId);
+ const request=command(prepared),saved=await storage.save('a',request),retry=await storage.save('a',request);assert.equal(saved.record.id,retry.record.id);assert.equal(retry.replayed,true);assert.equal(saved.record.payload.recordedAt,'2026-11-16T12:00:00.000Z');assert.equal(saved.record.payload.eventWindow.from,'2026-09-15');assert.deepEqual(saved.record.payload.reviewWindow,{from:'2026-09-01',to:'2026-10-01',basis:'source-date'});
+ await rejects(storage.save('a',{...request,notes:'Changed retry'}),409);await rejects(storage.save('a',{...request,generationId:randomUUID()}),409);
+ const firstView=await storage.view('a',selection);assert.equal(firstView.historyCount,1);assert.equal(firstView.latest.sourceCurrent,true);
+ const next=command(firstView,{answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:''});await storage.save('a',next);const oldReceipt=await storage.save('a',request);assert.equal(oldReceipt.isLatest,false);assert.equal((await storage.view('a',selection)).latest.record.payload.answer,'no');
+ await rejects(storage.save('a',command(firstView)),409);assert.deepEqual(await precision.getPrecisionRecords('a'),original);
+}));
+test('the writer binds question meaning; explicit and legacy-equivalent receipt retries agree, different questions cannot relabel an answer',()=>fixture(async({storage,prepare,selection,command}:any)=>{
+ const prepared=await storage.prepare('a',prepare);assert.equal(prepared.questionId,'medication-change');
+ const request=command(prepared,{expectedQuestion:'medication-change'}),saved=await storage.save('a',request);assert.equal(saved.record.payload.question,'medication-change');
+ const {expectedQuestion,...legacy}=request;assert.equal((await storage.save('a',legacy)).record.id,saved.record.id,'Old requests derive their original legacy question for receipt comparison');
+ await rejects(storage.save('a',{...request,expectedQuestion:'b12-products'}),409);
+ const view=await storage.view('a',selection);await rejects(storage.save('a',command(view,{expectedQuestion:'b12-products'})),409);
+ const unchanged=await storage.view('a',selection);assert.equal(unchanged.historyCount,1);assert.equal(unchanged.latest.record.id,saved.record.id);assert.equal(unchanged.latest.record.payload.question,'medication-change');
+}));
+test('own scope, family, exact source revision, source-date timing and explicit uncertainty are enforced before writes',()=>fixture(async({storage,prepare,selection,command}:any)=>{
+ assert.equal((await storage.view('b',selection)).latest,null);await rejects(storage.prepare('b',prepare),404);
+ await rejects(storage.prepare('a',{...prepare,family:'liver'}),409);await rejects(storage.prepare('a',{...prepare,sourceReferences:prepare.sourceReferences.map((source:any)=>({...source,revision:'f'.repeat(64)}))}),409);
+ await rejects(storage.prepare('a',{...prepare,sourceReferences:[prepare.sourceReferences[0],prepare.sourceReferences[0]]}),400);
+ const prepared=await storage.prepare('a',prepare);
+ await rejects(storage.save('a',command(prepared,{eventWindow:{from:'2026-10-02',to:'2026-10-02',precision:'day'},datePrecision:'day'})),400);
+ for(const answer of ['unknown','not-tracked','prefer-not-answer']){const view=await storage.view('a',selection);const saved=await storage.save('a',command(view,{answer,eventWindow:null,datePrecision:'not-applicable',notes:''}));assert.equal(saved.record.payload.answer,answer);assert.equal(saved.record.payload.eventWindow,null);}
+ await rejects(storage.save('b',command(prepared)),409);
+}));
+test('source corrections and deletion withdraw currentness while context remains removable and original source history stays intact',()=>fixture(async({storage,precision,prepare,selection,command,labs}:any)=>{
+ const prepared=await storage.prepare('a',prepare),request=command(prepared);await storage.save('a',request);
+ const source=labs[1];await precision.reviewLabSource('a',source.id,{expectedRevision:revision(source.payload),marker:'ldl',unit:'mg/dL',referenceLow:null,referenceHigh:125,method:'Synthetic revised LDL assay',reason:'Synthetic original source review',reviewed:true},'context-source-review');
+ assert.equal((await storage.view('a',selection)).latest.sourceCurrent,false);const ownedHistory=await storage.history('a');assert.equal(ownedHistory.length,1);assert.equal(ownedHistory[0].view.latest.sourceCurrent,false);assert.equal(ownedHistory[0].view.latest.record.payload.notes,request.notes);assert.deepEqual(await storage.history('b'),[]);assert.equal((await storage.save('a',request)).sourceCurrent,false);await rejects(storage.prepare('a',prepare),404);
+ const view=await storage.view('a',selection);await storage.deleteHistory('a',{...selection,intentId:randomUUID(),generationId:view.generationId,expectedHistoryRevision:view.historyRevision});assert.equal((await storage.view('a',selection)).historyCount,0);assert.equal((await precision.getPrecisionRecords('a')).length,3);
+}));
+test('context deletion fences queued saves, repeated deletion preserves later arrivals, and ordinary full erasure cannot resurrect old requests',()=>fixture(async({storage,experience,prepare,selection,command}:any)=>{
+ const prepared=await storage.prepare('a',prepare),request=command(prepared);await storage.save('a',request);const view=await storage.view('a',selection),deletion={...selection,intentId:randomUUID(),generationId:view.generationId,expectedHistoryRevision:view.historyRevision};
+ await storage.deleteHistory('a',deletion);await rejects(storage.save('a',request),409);const cleared=await storage.view('a',selection);assert.equal(cleared.latest,null);assert.notEqual(cleared.generationId,prepared.generationId);
+ const later=await storage.save('a',command(cleared));await storage.deleteHistory('a',deletion);assert.equal((await storage.view('a',selection)).latest.record.id,later.record.id);
+ await rejects(storage.deleteHistory('a',{...deletion,intentId:randomUUID()}),409);
+ const old=command(await storage.view('a',selection));await experience.clearExperienceData('a');await rejects(storage.save('a',old),409);const recreated=await storage.prepare('a',prepare);assert.notEqual(recreated.generationId,old.generationId);await rejects(storage.save('a',old),409);assert.equal((await storage.view('a',selection)).historyCount,0);
+}));
+test('real HTTP derives signed account, validates source commands, preserves receipts and requires explicit exact deletion',()=>fixture(async({storage,prepare,selection,command}:any)=>{
+ const app=express();app.use(express.json());let denied=false,calls=0,budgets=0;const actions:any={};for(const name of ['history','view','prepare','save','deleteHistory'])actions[name]=(...args:any[])=>{calls++;return storage[name](...args);};
+ registerLabResponseContextRoutes(app,(req,res,next)=>{const actor=req.get('X-Fixture-Account');if(!actor)return void res.sendStatus(401);req.session={userId:actor} as any;next();},(_req,res,next)=>{budgets++;if(denied)return void res.sendStatus(503);next();},actions);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address() as any).port}/api/experience/lab-response-context`;
+ const send=(path:string,body:any,actor:string|null='a',method='POST',extra:Record<string,string>={})=>fetch(base+path,{method,headers:{'content-type':'application/json',...(actor?{'X-Fixture-Account':actor}:{}),...extra},body:JSON.stringify(body)});
+ try{
+  const anonymous=await send('/prepare',prepare,null);assert.equal(anonymous.status,401);assert.equal(anonymous.headers.get('cache-control'),'no-store');assert.equal(calls,0);assert.equal(budgets,0);
+  assert.equal((await send('/history',{userId:'b'})).status,400);assert.equal((await send('/prepare',{...prepare,userId:'b'})).status,400);assert.equal((await send('/prepare?userId=b',prepare)).status,400);assert.equal(calls,0);
+  denied=true;assert.equal((await send('/prepare',prepare)).status,503);assert.equal(calls,0);denied=false;
+  assert.equal((await send('/prepare',prepare,'b')).status,404);
+  const prepared=await send('/prepare',prepare);assert.equal(prepared.status,200);assert.equal(prepared.headers.get('cache-control'),'no-store');const request=command(await prepared.json());
+  const saved=await send('/save',request);assert.equal(saved.status,201);const result=await saved.json();assert.equal(result.sourceCurrent,true);
+  const replay=await send('/save',request);assert.equal(replay.status,200);assert.equal((await replay.json()).record.id,result.record.id);
+  assert.equal((await send('/save',{...request,notes:'Different retry'})).status,409);
+  assert.equal((await(await send('/history',{})).json()).length,1);assert.deepEqual(await(await send('/history',{},'b')).json(),[]);const other=await(await send('/view',selection,'b')).json();assert.equal(other.latest,null);assert.equal(other.historyCount,0);
+  const view=await(await send('/view',selection)).json(),deletion={...selection,intentId:randomUUID(),generationId:view.generationId,expectedHistoryRevision:view.historyRevision};
+  const beforeDeleteCalls=calls;assert.equal((await send('',deletion,'a','DELETE')).status,400);assert.equal(calls,beforeDeleteCalls);
+  assert.equal((await send('',deletion,'a','DELETE',{'X-Bloom-Confirm':'delete-lab-response-context-history'})).status,204);
+  assert.equal((await send('/save',request)).status,409);assert.equal((await(await send('/view',selection)).json()).latest,null);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
+}));
+
+test('fresh B12/CBC/iron questions derive from exact owned sources while old receipt and immutable meaning survive activation',()=>fixture(async({pg,precision,experience,storage}:any)=>{
+ const rows=new Map<string,any>();for(const marker of ['b12','hemoglobin','ferritin']){const payload=labSchema.parse({marker,value:10,unit:markerDefinitions.find(row=>row.id===marker)!.units[0],measuredAt:'2026-09-01T12:00:00Z',laboratory:'Synthetic owned source',method:'Synthetic assay',fasting:'unknown',referenceLow:null,referenceHigh:null});rows.set(marker,await precision.insertPrecisionRecord('a','lab',payload));}
+ const original=JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows);
+ const commandFor=async(markers:string[])=>{const selected=markers.map(marker=>rows.get(marker)),sourceReferences=selected.map(row=>({id:row.id,revision:revision(row.payload)})),selection={family:'iron-cbc',sourceIds:selected.map(row=>row.id)},prepare={family:'iron-cbc',sourceReferences},view=await storage.prepare('a',prepare);return{selection,prepare,view,request:{...prepare,intentId:randomUUID(),generationId:view.generationId,expectedCurrentId:view.latest?.record.id||null,answer:'unknown',eventWindow:null,datePrecision:'not-applicable',notes:''}};};
+ for(const [markers,target]of [[['b12'],'b12-products'],[['hemoglobin'],'acute-illness'],[['ferritin','b12','hemoglobin'],'iron-products']]as const){const selected=await commandFor([...markers]);assert.equal(selected.view.questionId,target);const aware=await storage.save('a',{...selected.request,expectedQuestion:target});assert.equal(aware.record.payload.question,target);assert.equal((await storage.view('a',selected.selection)).questionId,target);}
+ // An older iron answer on B12 sources is an actual retained historical meaning,
+ // never rewritten into the new question or used as a B12 draft.
+ const selected=await commandFor(['b12','hemoglobin']),legacyIntent=randomUUID(),legacyId=createHash('sha256').update(JSON.stringify(['lab-context-answer-v1','a',legacyIntent])).digest('hex');
+ const oldRequest={...selected.request,intentId:legacyIntent,answer:'no'},legacy=recalledLabResponseContextSchema.parse({version:1,valueKind:'recalled-context',intentId:legacyIntent,family:'iron-cbc',sourceReferences:selected.prepare.sourceReferences,answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:'',question:'iron-products',recordedAt:'2026-11-16T12:00:00.000Z',reviewWindow:{from:null,to:'2026-09-01',basis:'stored-timestamp'},supersedes:null});
+ await pg.query('INSERT INTO experience_records(id,user_id,kind,encrypted_payload) VALUES($1,$2,$3,$4)',[legacyId,'a','lab-response-context',encryptPrecision(legacy,'a')]);
+ const view=await storage.view('a',selected.selection);assert.equal(view.questionId,'b12-products');assert.equal(view.latest.record.payload.question,'iron-products');assert.equal(view.latest.sourceCurrent,true);assert.equal((await storage.save('a',oldRequest)).record.id,legacyId,'Original legacy receipt remains exact and does not change question');
+ const fresh={...selected.request,intentId:randomUUID(),expectedCurrentId:legacyId};await rejects(storage.save('a',fresh),409);await rejects(storage.save('a',{...fresh,expectedQuestion:'iron-products'}),409);assert.equal((await storage.view('a',selected.selection)).historyCount,1);
+ const saved=await storage.save('a',{...fresh,expectedQuestion:'b12-products'});assert.equal(saved.record.payload.question,'b12-products');assert.equal((await storage.save('a',oldRequest)).isLatest,false);assert.deepEqual(decryptPrecision((await pg.query('SELECT encrypted_payload FROM experience_records WHERE id=$1',[legacyId])).rows[0].encrypted_payload,'a'),legacy);
+ const other=await storage.view('b',selected.selection);assert.equal(other.latest,null);assert.deepEqual(await storage.history('b'),[]);assert.equal(JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows),original);
+ await precision.deleteLabEntry('a',rows.get('b12').id);const removed=await storage.view('a',selected.selection);assert.equal(removed.questionId,'b12-products');assert.equal(removed.latest.sourceCurrent,false);assert.equal((await experience.exportExperience('a')).records.filter((row:any)=>row.payload.valueKind==='recalled-context'&&row.payload.sourceReferences.some((ref:any)=>ref.id===rows.get('b12').id)).length,4);
+ await storage.deleteHistory('a',{...selected.selection,generationId:removed.generationId,expectedHistoryRevision:removed.historyRevision,intentId:randomUUID()});assert.equal((await storage.view('a',selected.selection)).historyCount,0);await rejects(storage.save('a',{...fresh,expectedQuestion:'b12-products'}),409);
+}));
+
+test('HbA1c source target changes to medication context while legacy fasting meaning/receipts remain immutable and glucose still selects fasting',()=>fixture(async({pg,storage,precision,command}:any)=>{
+ const rows=[];for(const[date,value]of [['2026-09-01',5.9],['2026-10-01',5.7]]as const){const lab=await precision.insertPrecisionRecord('a','lab',labSchema.parse({marker:'hba1c',value,unit:'%',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic A1c method',fasting:'unknown',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}}));rows.push(lab);}
+ const request={family:'glycemic' as const,sourceReferences:rows.map(row=>({id:row.id,revision:revision(row.payload)}))},selection={family:'glycemic' as const,sourceIds:rows.map(row=>row.id)},prepared=await storage.prepare('a',request);assert.equal(prepared.questionId,'medication-change');
+ const legacyIntent=randomUUID(),legacyId=createHash('sha256').update(JSON.stringify(['lab-context-answer-v1','a',legacyIntent])).digest('hex'),oldRequest=command(prepared,{...request,intentId:legacyIntent,answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:'Synthetic prior fasting answer'});
+ const legacy=recalledLabResponseContextSchema.parse({version:1,valueKind:'recalled-context',intentId:legacyIntent,family:'glycemic',sourceReferences:request.sourceReferences,answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:oldRequest.notes,question:'fasting-context',recordedAt:'2026-11-16T12:00:00.000Z',reviewWindow:{from:'2026-09-01',to:'2026-10-01',basis:'source-date'},supersedes:null});
+ await pg.query('INSERT INTO experience_records(id,user_id,kind,encrypted_payload) VALUES($1,$2,$3,$4)',[legacyId,'a','lab-response-context',encryptPrecision(legacy,'a')]);
+ const original=JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows),view=await storage.view('a',selection);assert.equal(view.questionId,'medication-change');assert.equal(view.latest.record.payload.question,'fasting-context');assert.equal(view.latest.sourceCurrent,true);
+ assert.equal((await storage.save('a',oldRequest)).record.id,legacyId);assert.equal((await storage.save('a',{...oldRequest,expectedQuestion:'fasting-context'})).record.payload.question,'fasting-context');await rejects(storage.save('a',{...oldRequest,expectedQuestion:'medication-change'}),409);
+ const fresh={...oldRequest,intentId:randomUUID(),expectedCurrentId:legacyId};await rejects(storage.save('a',fresh),409);await rejects(storage.save('a',{...fresh,expectedQuestion:'fasting-context'}),409);
+ const saved=await storage.save('a',{...fresh,expectedQuestion:'medication-change'});assert.equal(saved.record.payload.question,'medication-change');assert.equal(saved.record.payload.supersedes,legacyId);assert.equal((await storage.save('a',oldRequest)).isLatest,false);assert.deepEqual(decryptPrecision((await pg.query('SELECT encrypted_payload FROM experience_records WHERE id=$1',[legacyId])).rows[0].encrypted_payload,'a'),legacy);assert.equal(JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows),original);
+ assert.equal((await storage.view('b',selection)).latest,null);assert.deepEqual(await storage.history('b'),[]);
+ const glucose=await precision.insertPrecisionRecord('a','lab',labSchema.parse({marker:'glucose',value:5,unit:'mmol/L',measuredAt:'2026-10-01T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic glucose method',fasting:'yes',referenceLow:null,referenceHigh:null})),glucoseRef={id:glucose.id,revision:revision(glucose.payload)};
+ assert.equal((await storage.prepare('a',{family:'glycemic',sourceReferences:[glucoseRef]})).questionId,'fasting-context');assert.equal((await storage.prepare('a',{family:'glycemic',sourceReferences:[...request.sourceReferences,glucoseRef]})).questionId,'fasting-context');
+}));

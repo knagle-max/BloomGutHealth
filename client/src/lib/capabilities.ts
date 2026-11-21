@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useAuth} from './auth';
 import {apiRequest,queryClient} from './queryClient';
-import {activeDevelopmentPhoto,type CapabilitySnapshot} from '@shared/development-features';
+import {activeDevelopmentPhoto,activeExperimentalEntries,type CapabilitySnapshot} from '@shared/development-features';
 export function useCapabilities(){
  const {user}=useAuth();const key=['/api/capabilities',user?.id];
  // Transient account-scoped visibility suppression after an unconfirmed OFF.
@@ -15,6 +15,6 @@ export function useCapabilities(){
  useEffect(()=>{if(!active){void queryClient.cancelQueries({predicate:q=>q.meta?.restrictedCapability===true});queryClient.removeQueries({predicate:q=>q.meta?.restrictedCapability===true});}},[active]);
  const canReadFeatureAdmin=!query.isError&&query.data?.featureAdministration?.canRead===true;
  useEffect(()=>{if(!canReadFeatureAdmin){void queryClient.cancelQueries({predicate:q=>q.meta?.restrictedAdmin===true});queryClient.removeQueries({predicate:q=>q.meta?.restrictedAdmin===true});}},[canReadFeatureAdmin]);
- const data=query.data&&visibilityHeld?{...query.data,experimentalEnabled:false,developmentFeatures:[]}:query.data;
- return {...query,data,key,holdKey,visibilityHeld,photoPreview:active?activeDevelopmentPhoto(data):null,canReadFeatureAdmin};
+ const data=query.data&&visibilityHeld?{...query.data,experimentalEnabled:false,developmentFeatures:[],experimentalEntries:[]}:query.data;
+ return {...query,data,key,holdKey,visibilityHeld,experimentalEntries:active?activeExperimentalEntries(data):[],photoPreview:active?activeDevelopmentPhoto(data):null,canReadFeatureAdmin};
 }

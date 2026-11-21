@@ -1,0 +1,51 @@
+{
+  "task": "V06-P1-PAIRWISE-LAB-CONNECTIONS",
+  "status": "IMPLEMENTED_UNVERIFIED",
+  "baseCommit": "baa52b9fd3a74eea9e4f33c3bd779b9baa688101",
+  "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md#owner-extension--pairwise-bloodwork-trend-line-display-2026-11-16",
+  "implementation": [
+    "Existing LabTrend SVG retained; global scientific-comparable polyline replaced with independent adjacent lines using pure display-only classification and existing comparator reasons. No scientific comparability or mathematical eligibility changed.",
+    "Strict source numeric/canonical conversion, assay and full timestamp checks; unknown future reasons disconnect. Invalid/inactive/duplicate and unordered-day occurrences are barriers without skipped-point bridges. Working-copy sorting retains original records and selection IDs.",
+    "Solid/dashed/disconnected non-color legend, actual state summary, keyboard/touch source-linked explanations and original point numbering; exact-time spacing and original/corrected/None/provider references remain independent.",
+    "All original media/registry/parent navigation and existing chart engine/tokens/source workflows preserved. No new assets or requested slots needed for this scoped connection defect."
+  ],
+  "validation": [
+    "27 focused classifier/science/provider/source-interval tests PASS; final TypeScript/source audits/production build PASS.",
+    "Actual App mixed six-source sequence S/D/X/X/S; unknown assay remains selectable but not plotted.48 layout states (320/390/768/1440, Everyday/Athlete, light/dark,200%zoom/text); forced colors/reduced motion/keyboard, source detail, source revision/deletion, None and owner withdrawal PASS at final source, including original source-index/accessible-label regression.",
+    "Actual1/2/4/12 irregular dates/140-day gap/zero/outlier/source selection and mobile200% scenario PASS.",
+    "Actual authenticated HTTP/encrypted synthetic SQL range correction journey PASS: exact receipt retry, original source immutability, range removal, concurrent draft, None/reload/mode,48 layouts and owner isolation.",
+    "Actual34-result import/report overlay journey PASS: original/source selection, persisted None without hydration flash, provisional and synthetic verified comparisons, SK/ON abstention, source deletion/account isolation,48 layouts.",
+    "Performance:2000 observations/1999 segments ~67.4ms locally; no mutated source records. No hardware-independent speed guarantee.",
+    "Full maintained92-label x6 source explorer/Timeline/selected comparison regression PASS: original raw0/trace/unknown units, scientific no-difference on unknown method despite dashed display, Back/reload/source revision/deletion/focus, other owner and failed/offline original media."
+  ],
+  "interpretation": "The handoff five-point S/D/X/S illustration cannot coexist with one fatal node and a no-bridge rule: a fatal occurrence disconnects both neighbors. Six-source S/D/X/X/S fixture proves preservation of valid neighbors without inventing an unsafe edge.",
+  "evidence": [
+    "/tmp/bloom-pairwise-final-unit.log",
+    "/tmp/bloom-pairwise-final-types.log",
+    "/tmp/bloom-pairwise-browser-final.log",
+    "/tmp/bloom-pairwise-scenarios.log",
+    "/tmp/bloom-pairwise-ranges.log",
+    "/tmp/bloom-pairwise-correction.log",
+    "/tmp/bloom-pairwise-report-overlay.log",
+    "/tmp/bloom-pairwise-performance.log",
+    "/tmp/bloom-pairwise-browser/",
+    "/tmp/bloom-pairwise-final-mixed.log",
+    "/tmp/bloom-pairwise-explorer-verified.log",
+    "/tmp/bloom-pairwise-final-build.log",
+    "/tmp/bloom-pairwise-browser-final-captures/"
+  ],
+  "exceptions": [
+    "Exact final candidate GitHub CI and Render verification pending publication. Hosted browser remains proxy403; local actual App screenshots are not hosted screenshots.",
+    "Physical VoiceOver/human novice teach-back/independent design or clinical acceptance NOT TESTED; integrated RC remains unfinished.",
+    "Historical lab-source-context journey stops at obsolete Bloodwork over time heading before chart assertions; current full explorer/source lifecycle and correction/report overlay suites are the maintained relevant regressions. No stale test was treated as PASS."
+  ],
+  "privacy": "Synthetic local fixtures only. No real Tester1 health query, production write, main merge or manual deployment.",
+  "publication": {
+    "commit": "1e7254bd998fec7ccdd49037fbe857d8da9ebcf6",
+    "workflow": "43998156113",
+    "ciStatus": "in_progress; no failed steps at latest check",
+    "deploy": "dep-dbtr4367bikc7399jb80",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T01:48:29.925901Z"
+  }
+}

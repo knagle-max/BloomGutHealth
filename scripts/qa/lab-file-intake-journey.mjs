@@ -72,7 +72,7 @@ try {
   await choose('large.csv','x'.repeat(30001),'text/csv');
   await entry.getByRole('alert').filter({hasText:'30,000 bytes'}).waitFor();
   assert.equal((await own()).length,0);
-  const source='Analyte,Value,Unit,Reference interval\r\n[ ORIGINAL SOURCE ]\r\nTest assay,<0.50,source-unit,<2.0\r\nALT,0.00,U/L,\r\nAST,20,U/L,10–30';
+  const source='Analyte,Value,Unit,Reference interval\r\n[ ORIGINAL SOURCE ]\r\nTest assay,<0.50,source-unit,<2.0\r\nALT,0.00,U/L,\r\nUnmapped enzyme assay,20,U/L,10–30';
   await choose('source-report.csv',source,'text/csv');
   await entry.getByRole('status').filter({hasText:'Text loaded from source-report.csv'}).waitFor();
   assert.equal(await entry.getByLabel('Results',{exact:true}).inputValue(),source.replace(/\r\n/g,'\n'));
@@ -82,7 +82,7 @@ try {
   await entry.getByLabel('Test date',{exact:true}).fill('2026-10-20');
   await entry.getByLabel('Laboratory (optional)',{exact:true}).fill('Synthetic file lab');
   await entry.getByRole('button',{name:'Preview results',exact:true}).click();
-  await entry.getByRole('button',{name:'Keep 2 source-only row(s)',exact:true}).click();
+  await entry.getByRole('checkbox',{name:/^Include /}).first().waitFor();assert.equal(await entry.getByRole('checkbox',{name:/^Include /}).count(),2);for(const sourceRow of await entry.getByRole('checkbox',{name:/^Include /}).all())assert.equal(await sourceRow.isChecked(),true,'Source-only rows are included by default');
   assert.equal((await own()).length,0,'Loading and previewing a file never writes a record');
   loseReceipt=true;
   await entry.getByRole('button',{name:'Save 3 result(s) after review',exact:true}).click();
@@ -92,7 +92,7 @@ try {
   await entry.getByText('3 result(s) saved.',{exact:false}).waitFor();
   const saved=await own(),canonical=await report();
   assert.equal(saved.length,3);assert.equal(canonical.labHistory.length,1);assert.equal(canonical.labHistory[0].value,0);assert.equal(canonical.sourceOnlyLabs.length,2);
-  assert.equal(canonical.sourceOnlyLabs.find(row=>row.reportedAnalyte==='AST').reportedReferenceInterval,'10–30');
+  assert.equal(canonical.sourceOnlyLabs.find(row=>row.reportedAnalyte==='Unmapped enzyme assay').reportedReferenceInterval,'10–30');
   assert.equal(canonical.sourceOnlyLabs.find(row=>row.reportedAnalyte==='Test assay').reportedValue,'<0.50');
   assert.deepEqual(saved.map(row=>row.payload.sourceInput.rowOrder).sort(),[2,3,4]);
   assert.equal(new Set(saved.map(row=>row.payload.sourceReport.importId)).size,1);
@@ -106,7 +106,7 @@ try {
   await entry.getByLabel('Test date',{exact:true}).fill('2026-10-20');
   await entry.getByLabel('Laboratory (optional)',{exact:true}).fill('Synthetic file lab');
   await entry.getByRole('button',{name:'Preview results',exact:true}).click();
-  await entry.getByRole('button',{name:'Keep 2 source-only row(s)',exact:true}).click();
+  await entry.getByRole('checkbox',{name:/^Include /}).first().waitFor();assert.equal(await entry.getByRole('checkbox',{name:/^Include /}).count(),2);for(const sourceRow of await entry.getByRole('checkbox',{name:/^Include /}).all())assert.equal(await sourceRow.isChecked(),true,'Source-only rows are included by default');
   await entry.getByRole('heading',{name:'These results may already be recorded',exact:true}).waitFor();
   assert.equal(await entry.getByRole('button',{name:'Save 3 result(s) after review',exact:true}).isDisabled(),true,'The same file is a new import requiring repeat review, not a same-import receipt bypass');
   assert.equal((await own()).length,3);

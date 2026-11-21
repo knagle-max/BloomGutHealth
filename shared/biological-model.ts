@@ -1,3 +1,4 @@
+import originalLabRegistry from './data/biology-content-r4m1-v2.json';
 import { checkedFoodPreferences } from "./weekly-planner";
 import { z } from "zod";
 import { evidenceNetwork } from "./evidence-network";
@@ -294,7 +295,9 @@ export function buildBiologicalRegistry(): BiologicalRegistry {
       "Lower-molecular-weight beta-glucan did not have the same significant LDL effect in this trial; food processing matters.",
     ],
   });
-  for (const marker of markerDefinitions) {
+  // This published mechanistic graph keeps its original versioned marker cohort.
+  // Expanded raw-data support does not publish new biological relationships.
+  for (const marker of markerDefinitions.filter(marker=>originalLabRegistry.labMarkerDefinitions.some(original=>original.id===marker.id))) {
     add(
       "biomarker:" + marker.id,
       marker.name,

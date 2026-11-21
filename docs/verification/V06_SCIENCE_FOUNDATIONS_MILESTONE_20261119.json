@@ -1,0 +1,40 @@
+{
+  "scope": "Science foundations integration milestone and publication identity follow-up",
+  "baseCommit": "299ff30004735d52306182750d9af3ad5cd941f8",
+  "baseFullSuite": {
+    "tests": 959,
+    "pass": 959,
+    "fail": 0,
+    "skip": 0,
+    "durationMs": 529178.198317,
+    "sourceTree": "unchanged during full run"
+  },
+  "followUp": {
+    "publicationIdentity": "reviewed-science-retrieval-v2",
+    "tests": "29 combined retrieval/release/storage/private runner PASS; final9 retrieval PASS after count/label refinement",
+    "typecheck": "PASS",
+    "behavior": [
+      "DOI case variants grouped, outcome cards preserved",
+      "Different publications in same reviewed cohort share one study family",
+      "Unknown/withheld identity remains unknown; no independent-support claim inferred from citation count",
+      "Conflicting DOI/study-family identity abstains",
+      "Retriever version participates in evidence epoch, invalidating old candidates"
+    ]
+  },
+  "realSourceExtraction": {
+    "path": "docs/scientific-seeds/source-candidates/metabo12090846_20261119.json",
+    "doi": "10.3390/metabo12090846",
+    "state": "TECHNICAL_EXTRACTION_PENDING_INDEPENDENT_REVIEW",
+    "rawPublisherBytesArchived": false,
+    "originalDatasetAcquired": false,
+    "runtimeInstalled": false,
+    "providerResponseIndependentlyVerified": false
+  },
+  "qualification": {
+    "exactHeadCI": "PENDING",
+    "exactHeadHostedStatus": "NOT_YET_VERIFIED",
+    "actualModelUsefulness": "NOT_TESTED",
+    "clinicalAcceptance": "NOT_TESTED",
+    "fullV06RC": "NOT_COMPLETE"
+  }
+}

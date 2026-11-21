@@ -1,0 +1,28 @@
+{
+  "ownerSuppliedAt": "2026-11-17",
+  "references": [
+    {
+      "role": "Microbiome overview",
+      "file": "approved-microbiome-overview-reference.jpg",
+      "dimensions": [
+        720,
+        1280
+      ],
+      "sha256": "bc271ee4cd379912aece2058e8d988876897bab8344d4823c8e5eeb974aaa8c3",
+      "originalBytesPreserved": true
+    },
+    {
+      "role": "Individual organism detail",
+      "file": "approved-organism-detail-reference.jpg",
+      "dimensions": [
+        720,
+        1280
+      ],
+      "sha256": "1a8cad79e0390d3396bde91ca465e7e6e0b00883211514be5db5327bcfbc2b12",
+      "originalBytesPreserved": true
+    }
+  ],
+  "ownerHeroInstruction": "New overview hero: reserved placeholder and additive registry entry; do not reuse existing imagery for this hero.",
+  "preserve": "Existing organism image mappings, source records, canonical scientific content and research/source actions; unknown abundance stays unknown.",
+  "usage": "Design references only; do not paste mockups or copy depicted artwork into runtime."
+}

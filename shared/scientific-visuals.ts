@@ -1,3 +1,5 @@
+import morphology from './data/microbe-morphology-crosswalk-v1.json';
+import type {ReportedTaxon} from './reported-taxa';
 import registry from './data/scientific-visual-assets.json';
 
 export const MICROORGANISM_SYMBOL_LABEL='Illustrative microorganism symbol — not species-specific';
@@ -14,11 +16,34 @@ export const REPRESENTATIVE_ILLUSTRATION_LABEL='Representative scientific illust
 export const GENERIC_MORPHOLOGY_LABEL='Generic morphology illustration — not species-specific or your sample';
 /** Public owner-directed imagery. Name matching selects a representative picture,
  * never verifies the report's taxonomy, strain, function or sample identity. */
-export function organismIllustration(sourceName:string|undefined,size:'thumbnail'|'portrait'){
+export function legacyOrganismIllustration(sourceName:string|undefined,size:'thumbnail'|'portrait'){
  const entry=registry.organismIllustrations.find(value=>value.sourceName===sourceName);
  const asset=entry?.[size];
  if(!entry||!asset||!/^\/science\/organisms-v4\/(organisms|thumbnails)\/[a-z-]+\.svg$/.test(asset.src)||!/^[a-f0-9]{64}$/.test(asset.sha256))return null;
  return{src:`${asset.src}?v=${asset.sha256}`,label:entry.genericMorphology?GENERIC_MORPHOLOGY_LABEL:REPRESENTATIVE_ILLUSTRATION_LABEL,depiction:entry.genericMorphology?'generic-morphology':'representative-concept',assetId:entry.slug};
+}
+
+export type OrganismArtworkSource={reportId:string;observationId:string;observations:readonly ReportedTaxon[]};
+/** The existing Viome importer uses plural provider headings; the delivered
+ * crosswalk uses singular group names. Explicit spelling aliases only. */
+const morphologyGroup=(value:string)=>({bacterium:'bacterium',bacteria:'bacterium',virus:'virus',viruses:'virus',eukaryote:'eukaryote',eukaryotes:'eukaryote'} as Record<string,string>)[value.trim().toLowerCase()]||null;
+/** An exact unique name selects reviewed conceptual art within the current
+ * report. Provider ordinals and taxonomic rank do not verify measured shape. */
+export function organismIllustration(sourceName:string|undefined,size:'thumbnail'|'portrait',source?:OrganismArtworkSource){
+ let styleId='U00';
+ if(source?.reportId&&source.observationId&&sourceName){
+  const matches=source.observations.filter(row=>row.id===source.observationId);
+  const row=matches.length===1?matches[0]:undefined;
+  const uniqueName=source.observations.filter(value=>value.bacterialName===sourceName).length===1;
+  const entries=morphology.entries.filter(entry=>entry.reportedName===sourceName);
+  const reportedGroups=[row?.reportedGroup,row?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1]].filter((value):value is string=>!!value).map(morphologyGroup);
+  const currentScope=row?.sampleId===undefined||row.sampleId===source.reportId;
+  if(row?.bacterialName===sourceName&&currentScope&&uniqueName&&entries.length===1&&reportedGroups.every(group=>group!==null&&group===morphologyGroup(entries[0].reportedGroup)))styleId=entries[0].artworkStyleId;
+ }
+ const style=morphology.styles.find(value=>value.id===styleId)||morphology.styles.find(value=>value.id==='U00')!;
+ const asset=style[size];
+ if(!/^\/science\/morphology-v1\/[a-z][0-9]{2}\/[A-Z][0-9]{2}-BVA-[0-9]{4}-(thumbnail|portrait)\.webp$/.test(asset.publicPath)||!/^[a-f0-9]{64}$/.test(asset.sha256))throw Error('Invalid imported morphology asset');
+ return{src:`${asset.publicPath}?v=${asset.sha256}`,label:style.id==='U00'?morphology.disclosure.unknown:morphology.disclosure.group,assetId:style.registryAssetId,styleId:style.id,depiction:'conceptual-morphology' as const};
 }
 
 /** Decoration for an existing navigation category, never a finding or diagnosis. */

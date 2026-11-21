@@ -43,6 +43,13 @@
         "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
         "sourceGitBlob": "fcad619416821c9c7388c13e0edb626dc5635630",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/blautia-wexlerae.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -60,6 +67,13 @@
         "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
         "sourceGitBlob": "765793c7bb8999f5cc8a112bdf648e808de64953",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/escherichia-coli.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -77,6 +91,13 @@
         "sha256": "47bea927f640bff8c2510417a00854a62bdf30ef0bdccb029f4c7127ac831305",
         "sourceGitBlob": "1082ad3dd973e97f6b5c145d767b6a45c1bfa89e",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/prevotella-copri.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -94,6 +115,13 @@
         "sha256": "ab2421a931035b162591f894e6da67fe7cc26bb1a1c42231892d2e2b3da62d6d",
         "sourceGitBlob": "4854e642a54ada50348f35e50eb263e404af95c8",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/anaerostipes-hadrus.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -111,6 +139,13 @@
         "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
         "sourceGitBlob": "35168ebc7d30b63369671f635bae8e5a06538af1",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/desulfovibrio-piger.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -128,6 +163,13 @@
         "sha256": "e9c20b9a3b186e0d5f4bef1770efa4eee7daca858893e471b2b4ea1fd05c660a",
         "sourceGitBlob": "cd4871ca365b595cdcb31562060f365bb1121d55",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/eubacterium-rectale.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -145,6 +187,13 @@
         "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
         "sourceGitBlob": "73b3712356e66f6f06fa0abdb964178c5cae7909",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/ruminococcus-bromii.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -162,6 +211,13 @@
         "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
         "sourceGitBlob": "ad3a23f3205c9a3a101093c18f789d3fb0225b4f",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/alistipes-putredinis.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -179,6 +235,13 @@
         "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
         "sourceGitBlob": "fcad619416821c9c7388c13e0edb626dc5635630",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/bacteroides-vulgatus.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -196,6 +259,13 @@
         "sha256": "e8c60d27918cf002ad7a0418ea64f3b449c862a36535cc35138df9eb2a60b379",
         "sourceGitBlob": "a482f774552b84bc84cddeadb50b3779abe98115",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/bacteroides-uniformis.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -213,6 +283,13 @@
         "sha256": "9b8fb605bd0c5bd3d8c16a9606e4aee1ac2b5f1f0246fcdfd6b7a4245ce4e0df",
         "sourceGitBlob": "482399e76e491a5c69eaa57355af01073d33dfe4",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/bilophila-wadsworthia.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -230,6 +307,13 @@
         "sha256": "01adc0a7d18461f18c4767889aef5aff032dc846903119d20fc788a7ae305d3e",
         "sourceGitBlob": "5265d6d33129d0ccf38d9ce7fe0c3176679e9a6b",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/klebsiella-pneumoniae.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -247,6 +331,13 @@
         "sha256": "76bdd83ec059f4169dea497d4b0caa54fcc7dbedaa7f2816513d49dbc5b79f72",
         "sourceGitBlob": "81e9f0942e3a16f1fba6de0605bbf9bc911cc0f2",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/bifidobacterium-longum.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -264,6 +355,13 @@
         "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
         "sourceGitBlob": "765793c7bb8999f5cc8a112bdf648e808de64953",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/roseburia-intestinalis.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -281,6 +379,13 @@
         "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
         "sourceGitBlob": "73b3712356e66f6f06fa0abdb964178c5cae7909",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/akkermansia-muciniphila.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -298,6 +403,13 @@
         "sha256": "60f47687ddacccf03a758b097c0f5bc4779d569764008d49b85588bcafad0a8d",
         "sourceGitBlob": "f93d424b594f55fdadd576db6ba05d65444af4b2",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/collinsella-aerofaciens.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -315,6 +427,13 @@
         "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
         "sourceGitBlob": "35168ebc7d30b63369671f635bae8e5a06538af1",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/lactobacillus-rhamnosus.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -332,6 +451,13 @@
         "sha256": "6f5f0d6f9554f1d988246b321f30740d93ef8082e411ed0f42ac21d08bb12bf1",
         "sourceGitBlob": "7f425a025f606f5d5ad70c895907f38b7603ec84",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/methanobrevibacter-smithii.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -349,6 +475,13 @@
         "sha256": "a52f149c5e7efbdd211b6c4b9914efa8658f56bafe3ae7611695451393309fcb",
         "sourceGitBlob": "ea27cfbf44ddbaa1aaea818c0d5ae02bf8f5beb3",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/bifidobacterium-adolescentis.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     },
     {
@@ -366,6 +499,13 @@
         "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
         "sourceGitBlob": "ad3a23f3205c9a3a101093c18f789d3fb0225b4f",
         "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/thumbnails/faecalibacterium-prausnitzii.svg"
+      },
+      "presentationLifecycle": "deprecated-pending-replacement",
+      "replacementPolicy": {
+        "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "resolver": "source-scoped observed identity/ordinal (not globally name-only)",
+        "status": "legacy still serving current code, scheduled removal once new visuals accepted",
+        "unknownFallback": "U00"
       }
     }
   ],
@@ -536,7 +676,7 @@
         "originalSha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Acetate; PubChem CID 175; molecular formula C\u2082H\u2083O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Acetate; PubChem CID 175; molecular formula C₂H₃O₂⁻; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "acetic-acid",
@@ -557,7 +697,7 @@
         "originalSha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Acetic acid; PubChem CID 176; molecular formula C\u2082H\u2084O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Acetic acid; PubChem CID 176; molecular formula C₂H₄O₂; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "butyrate",
@@ -578,7 +718,7 @@
         "originalSha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Butyrate; PubChem CID 104775; molecular formula C\u2084H\u2087O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Butyrate; PubChem CID 104775; molecular formula C₄H₇O₂⁻; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "butyric-acid",
@@ -599,7 +739,7 @@
         "originalSha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Butyric acid; PubChem CID 264; molecular formula C\u2084H\u2088O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Butyric acid; PubChem CID 264; molecular formula C₄H₈O₂; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "choline",
@@ -620,7 +760,7 @@
         "originalSha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Choline cation; PubChem CID 305; molecular formula C\u2085H\u2081\u2084NO\u207a; total formal charge 1. Carbon-bound hydrogens implicit where appropriate. Terminal oxygen is a hydroxyl OH."
+      "sourceDescription": "2D atom-and-bond connectivity for Choline cation; PubChem CID 305; molecular formula C₅H₁₄NO⁺; total formal charge 1. Carbon-bound hydrogens implicit where appropriate. Terminal oxygen is a hydroxyl OH."
     },
     {
       "slug": "hydrogen-sulfide",
@@ -641,11 +781,11 @@
         "originalSha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Hydrogen sulfide; PubChem CID 402; molecular formula H\u2082S; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Hydrogen sulfide; PubChem CID 402; molecular formula H₂S; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "lactate",
-      "compoundName": "Lactate \u00b7 unspecified stereo",
+      "compoundName": "Lactate · unspecified stereo",
       "sourcePubChemCid": 91435,
       "sourceFormalCharge": -1,
       "entityId": "molecule:lactate",
@@ -662,11 +802,11 @@
         "originalSha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Lactate \u00b7 unspecified stereo; PubChem CID 91435; molecular formula C\u2083H\u2085O\u2083\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Lactate · unspecified stereo; PubChem CID 91435; molecular formula C₃H₅O₃⁻; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "lactic-acid",
-      "compoundName": "Lactic acid \u00b7 unspecified stereo",
+      "compoundName": "Lactic acid · unspecified stereo",
       "sourcePubChemCid": 612,
       "sourceFormalCharge": 0,
       "entityId": null,
@@ -683,7 +823,7 @@
         "originalSha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Lactic acid \u00b7 unspecified stereo; PubChem CID 612; molecular formula C\u2083H\u2086O\u2083; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Lactic acid · unspecified stereo; PubChem CID 612; molecular formula C₃H₆O₃; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "propionate",
@@ -704,7 +844,7 @@
         "originalSha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Propionate; PubChem CID 104745; molecular formula C\u2083H\u2085O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Propionate; PubChem CID 104745; molecular formula C₃H₅O₂⁻; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "propionic-acid",
@@ -725,7 +865,7 @@
         "originalSha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Propionic acid; PubChem CID 1032; molecular formula C\u2083H\u2086O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Propionic acid; PubChem CID 1032; molecular formula C₃H₆O₂; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "succinate",
@@ -746,7 +886,7 @@
         "originalSha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Succinate; PubChem CID 160419; molecular formula C\u2084H\u2084O\u2084\u00b2\u207b; total formal charge -2. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Succinate; PubChem CID 160419; molecular formula C₄H₄O₄²⁻; total formal charge -2. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "succinic-acid",
@@ -767,7 +907,7 @@
         "originalSha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Succinic acid; PubChem CID 1110; molecular formula C\u2084H\u2086O\u2084; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Succinic acid; PubChem CID 1110; molecular formula C₄H₆O₄; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "tmao",
@@ -788,7 +928,7 @@
         "originalSha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine N-oxide; PubChem CID 1145; molecular formula C\u2083H\u2089NO; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine N-oxide; PubChem CID 1145; molecular formula C₃H₉NO; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     },
     {
       "slug": "trimethylamine",
@@ -809,7 +949,7 @@
         "originalSha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
         "repair": "none"
       },
-      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine; PubChem CID 1146; molecular formula C\u2083H\u2089N; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine; PubChem CID 1146; molecular formula C₃H₉N; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     }
   ],
   "pathwayIllustrations": [
@@ -934,7 +1074,7 @@
     },
     {
       "slug": "methanogenesis",
-      "sourceDescription": "Illustrated conceptual research pathway Hydrogenotrophic methanogenesis. H\u2082 + CO\u2082 through Methanobrevibacter archaeal pathway to Methane. Not measured in your sample.",
+      "sourceDescription": "Illustrated conceptual research pathway Hydrogenotrophic methanogenesis. H₂ + CO₂ through Methanobrevibacter archaeal pathway to Methane. Not measured in your sample.",
       "depiction": "source-pathway-concept",
       "entityId": null,
       "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
@@ -1085,5 +1225,16 @@
         "repair": "none"
       }
     }
-  ]
+  ],
+  "organismPortraitMigration": {
+    "status": "deprecated-for-replacement-NOT_YET_DISCONNECTED",
+    "newRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+    "masterRegistry": "docs/visual-assets/visual-asset-registry.json",
+    "replacementStyleAssetRange": "BVA-0037–BVA-0046",
+    "fallback": "bloom-neutral-microorganism-v1",
+    "oldNamedPortraitCount": 20,
+    "reason": "Legacy SVGs fail approved premium visual direction and often imply taxon-specific portrait fidelity; new morphology-class artwork pending individual user delivery",
+    "activationRule": "Do not switch rendering or remove files until all ten replacement styles are created/reviewed, source resolver implemented and tested, runtime report reconciled, and real mobile/desktop acceptance achieved",
+    "legacyRetention": "Keep bytes and hashes for rollback until migration completed; no default to legacy named art once new mapping active"
+  }
 }

@@ -1,0 +1,47 @@
+{
+  "taskId": "T1b-bloodwork-atlas",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "base": {
+    "sha": "8ffc52ccd7c5816612c9329edc1545eaf3669c55",
+    "run": "43753593433",
+    "job": "132932879985",
+    "conclusion": "SUCCESS",
+    "tests": "733/733",
+    "hosted": "Exact isolated hosted source/preferences/retry/reauthentication/export/erasure/other-owner denial;72 deployed responsive cases,18 media failure/recovery placements, native synthetic PDF privacy and final synthetic cleanup"
+  },
+  "source": "NEXT_ACTIONS.md T1b; app-wide disclosure/preservation and owner immersive Bloodwork benchmark",
+  "implementation": [
+    "New Bloodwork entry hero with real record count and existing Add/Manage/Food routes; actual known systems link to the existing Progress grouped explorer rather than a second science/history engine",
+    "Original report sections, all result names/values/units/dates, review/edit/delete/source history and selected-row callbacks remain available unchanged; overview-to-labs and no-trigger dismissal focus now use visible atlas heading",
+    "Same EditorialMedia lifecycle handles6 registered reserved frames;8 original media bindings and all original SVG/PNG/WebP bytes retained; no substitute anatomy, invented result or image generation",
+    "Master28 stable IDs retained; BVA-0009\u20130014 are reserved local slots only, preserving prior Approved/Generated state and integration.verified=false; available approved source archive bytes have not been independently read/imported here",
+    "Historical owner approval no longer gates development image candidates. Explicit rejected current renditions cannot have public file paths/integration; path uniqueness, retired-ID protection, local-source availability and separate quality/release obligations retained"
+  ],
+  "sourceSha256": {
+    "client/src/components/BloodworkAtlas.tsx": "de8f42a4eaffa4eb0215c43a11c5d80745c6a2f63f676ce600420d7e86ab1410",
+    "client/src/components/EditorialMedia.tsx": "5a0b94898af4930b7e1b7c81e5b2a6ae2c96f46b472e74d55761c0a718f8a7ab",
+    "client/src/content/editorial-media.ts": "fe37e2732614301b9da2a80e71be718b020001a4035a54c29a2df74f79c9b127",
+    "client/src/content/visual-asset-ids.ts": "bdf9f343511833bc81d8edefd78817dd0abeeb66d61e34e0a4185c4320db123b",
+    "client/src/pages/PrecisionNutrition.tsx": "008495e9d7b3055a4f1c9c9718b72b5e5de1419ee15e71de785a2d594d751163",
+    "client/src/styles/bloodwork-atlas.css": "454793e6045d9bf5f32d67e63e1b9530ad62a15aab0dff95aad81a1f9ad0aedd",
+    "shared/visual-asset-registry.ts": "f303f46b4f9f12f066aab98332d242d1e0552012e335bd5f1b733e1f35311880",
+    "scripts/qa/bloodwork-atlas-journey.mjs": "fcc94c6caa871036a826014830331256855078f17b370cbeeece051235d0123f"
+  },
+  "validation": {
+    "types": "PASS",
+    "productionBuild": "PASS; original scientific/R4/M1 source/build media hashes preserved",
+    "focusedUnit": "4/4 registry/route tests including replacement candidates without owner gate and rejected current rendition exclusion",
+    "atlasBrowser": "PASS50 synthetic original rows, literal zero/trace/unknown unit;16 mode/theme/width states at320/390/768/1440 plus200% text, six reserved IDs/decorative accessibility, primary action contrast/keyboard focus, every populated system drill-in, direct original source detail/focus restoration,Add heading focus and second-account withdrawal; zero writes",
+    "historicalSourceParity": "Both modes original source content/order remains byte-identical as displayed text (3272 characters each); controlled pre-atlas source override captured baseline, explicit current/baseline source assertion",
+    "screenshots": "/tmp/bloom-bloodwork-atlas-before and /tmp/bloom-bloodwork-atlas-after; matched320/390 light/dark both modes; representative390light/dark and320Athlete dark visually inspected by implementer, no independent design approval",
+    "savedSourceRegression": "PASS actual App/HTTP/encrypted SQL70 original facts across27/17/26 sources; exact metadata retry, modes/reload/None preferences,96 layouts, primary management\u2194charts, stale-source draft retention and owner withdrawal; no owner private records queried",
+    "mediaAndShell": "PASS72 actual page states/9routes, original8 raster\u2192SVG\u2192terminal geometry/reload recovery across18 placements; keyboard routes/drawer/Escape/close/focus preserved; no writes",
+    "sourceAudits": "Capability52 entries unchanged; refreshed only3 reviewed UI source hashes. Biology adds one intentionally synthetic unresolved source-label fixture:521\u2192522 total,730\u2192732 files;49 supported markers/126 registry taxa/7 pathways and all original identities unchanged. Both audits PASS.",
+    "exactPublicationCI": "PASS: 76672aa98a0967e522e5a50aa6b58cceb1000761, CI43758528809 success; review runtime live same SHA, observed 2026-11-15T20:47:02Z"
+  },
+  "remaining": [
+    "First-party approved BVA archive bytes remain unavailable in this workspace; intentional reserved frames are not delivered-art/visual approval claims. This does not gate layout/Core progress or require image approval",
+    "Full app-wide theme and T2a/T2b/Core functionality remain separately incomplete; this navigation slice is not whole-panel Response intelligence",
+    "Physical VoiceOver and independent final visual/scientific/rights/release acceptance not claimed; main and production data untouched"
+  ]
+}

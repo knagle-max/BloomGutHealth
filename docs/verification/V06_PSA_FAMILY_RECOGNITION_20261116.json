@@ -1,0 +1,31 @@
+{
+  "task": "T1f-PSA-source-family-recognition",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "authority": "docs/architecture/PSA_ANALYTE_FAMILY_RECOGNITION_SOURCE_ONLY_UX_CORRECTION_20261115.md",
+  "implementation": [
+    "Read-only exact PSA analyte-family projection; confirmedMarkerId remains null for source-only observations",
+    "Unspecified/total/free/ratio/conflicting source labels remain separate; no fraction inferred from value/unit/demographics",
+    "Friendly family heading, explicit unconfirmed type, original source label/value/date, optional existing review action; no generic unidentified warning for recognized PSA",
+    "Other taxonomy reused from existing psa_total definition; source records and IDs unchanged",
+    "Explicit free/fPSA/FreePSA/ratio method conflicts cannot enter a total-PSA graph; original total/free exclusion policy strengthened",
+    "Review dialog remains unselected for source-only marker/unit until explicit owner source review"
+  ],
+  "tests": [
+    "16 source identity/catalog/assay/projection/encrypted source review tests PASS",
+    "Actual App0.5ug/L/2026-08-09,original6 source rows,free/ratio no graph,confirmed total2-point graph/legacy URL PASS",
+    "12 Everyday/Athlete light/dark320/390/1440 states+200% text/44px action/keyboard focus PASS",
+    "Original review dialog blank marker+unit/no automatic total selection,no writes,other-owner withdrawal PASS",
+    "TypeScript/production build/original image source+built verifiers PASS"
+  ],
+  "sourceFidelity": {
+    "sourceOnlyValue": "0.5",
+    "sourceOnlyUnit": "ug/L",
+    "collectionDate": "2026-08-09",
+    "canonicalSubtype": "unconfirmed",
+    "numericalConversion": "Only confirmed canonical total PSA uses existingug/L=ng/mL conversion",
+    "recordMutation": false
+  },
+  "screenshots": "/tmp/bloom-psa-family/",
+  "deployment": "Pending exact source publication/CI/preview qualification; prior preview build last observed waiting in GitHub checkout",
+  "independentReview": "No clinical diagnosis, source verification by lab, physical VoiceOver or independent integrated RC approval claimed."
+}

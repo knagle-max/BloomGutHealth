@@ -1,3 +1,4 @@
+import {labSchema} from '../../shared/precision-nutrition.ts';
 import assert from 'node:assert/strict';
 import {randomBytes,randomUUID} from 'node:crypto';
 import {setTimeout as delay} from 'node:timers/promises';
@@ -39,6 +40,12 @@ try {
  await request(first,`/api/user/${first.id}/profile`,'PATCH',{weightKg:150/2.2046226218487757,measurementSource:{version:1,expectedRevision:profile.measurementSource.revision,fields}},200,{'If-Match':`"${profile.profileRevision}"`});
  const savedProfile=await request(first,'/api/profile');assert.deepEqual(savedProfile.measurementSource.fields,fields);
  await request(second,`/api/user/${first.id}/profile`,'PATCH',{weightKg:70},403,{'If-Match':`"${savedProfile.profileRevision}"`});
+ const lab=await request(first,'/api/precision/records','POST',{kind:'lab',payload:labSchema.parse({marker:'alt',value:0,unit:'U/L',measuredAt:'2026-05-09T12:00:00Z',laboratory:'Not supplied',method:'Synthetic hosted source method',fasting:'unknown',referenceLow:null,referenceHigh:40,sourceReport:{importId:randomUUID(),enteredDate:'2026-05-09',reportIdentifier:'Synthetic hosted annotation source'}})},201,{'Idempotency-Key':randomUUID()});
+ const source=(await request(first,'/api/precision/labs/sources')).find(row=>row.detailRecordId===lab.id);assert.ok(source?.metadata?.available,'Annotation table and lifecycle guards must be ready on the exact hosted build');
+ const annotationCommand={sourceRevision:source.revision,metadataRevision:null,identity:{provider:'LifeLabs',otherProvider:'',province:'SK',location:'Synthetic hosted testing location',assertion:'user-confirmed'},identityReviewed:true,overlay:{provider:'none',province:'',otherProvider:''}},annotationKey=randomUUID(),annotationPath=`/api/precision/labs/sources/${source.id}/metadata`;
+ const laboratory=await request(first,annotationPath,'POST',annotationCommand,200,{'Idempotency-Key':annotationKey,'X-Bloom-Labs-Actor':first.id});assert.equal(laboratory.metadata.current.identity.province,'SK');assert.equal(laboratory.metadata.current.overlay.provider,'none');
+ assert.deepEqual(await request(first,annotationPath,'POST',annotationCommand,200,{'Idempotency-Key':annotationKey,'X-Bloom-Labs-Actor':first.id}),laboratory,'Hosted retry appends no extra provider annotation');
+ await request(second,annotationPath,'POST',annotationCommand,404,{'Idempotency-Key':randomUUID(),'X-Bloom-Labs-Actor':second.id});
  const original=await request(first,'/api/experience/records','POST',{kind:'experiment',payload:input},201);
  const corrected={...original.payload,observations:[{...original.payload.observations[0],value:0.00000123,adherence:0}]};
  for(let attempt=0;attempt<2;attempt++)await request(first,`/api/experience/records/${original.id}`,'PUT',{kind:'experiment',payload:corrected});
@@ -46,12 +53,13 @@ try {
  await request(second,`/api/experience/records/${original.id}/history`,'GET',undefined,404);
  const additionalSession={...first,cookie:''};await request(additionalSession,'/api/auth/login','POST',{username:first.username,password:first.password});
  assert.equal((await request(additionalSession,'/api/profile')).measurementSource.fields.weight.value,'150.000');
- const download=await request(first,'/api/account/export');assert.equal(download.format,'bloom-account-records-v2');assert.equal(download.profile.id,first.id);assert.equal(download.profileMeasurementSource.fields.weight.value,'150.000');assert.equal(download.experience.history.versions.length,1);
- const other=await request(second,'/api/account/export');assert.equal(other.experience.records.length,0);assert.deepEqual(other.profileMeasurementSource.fields,{});
+ const reauthenticatedSource=(await request(additionalSession,'/api/precision/labs/sources')).find(row=>row.id===source.id);assert.equal(reauthenticatedSource.metadata.current.identity.provider,'LifeLabs');assert.equal(reauthenticatedSource.metadata.current.identity.province,'SK');assert.equal(reauthenticatedSource.metadata.current.overlay.provider,'none');
+ const download=await request(first,'/api/account/export');assert.equal(download.format,'bloom-account-records-v2');assert.equal(download.profile.id,first.id);assert.equal(download.profileMeasurementSource.fields.weight.value,'150.000');assert.equal(download.experience.history.versions.length,1);assert.deepEqual(download.biology.records.find(row=>row.id===lab.id).payload,lab.payload,'Provider metadata never rewrites the hosted original observation');assert.equal(download.biology.reportMetadata.status,'available');assert.equal(download.biology.reportMetadata.versions.length,1);assert.equal(download.biology.reportMetadata.versions[0].payload.identity.assertion,'user-confirmed');
+ const other=await request(second,'/api/account/export');assert.equal(other.experience.records.length,0);assert.deepEqual(other.profileMeasurementSource.fields,{});assert.deepEqual(other.biology.reportMetadata.versions,[]);
  const erased=await request(first,'/api/account','DELETE',{password:first.password,confirmation:'DELETE ACCOUNT'});assert.equal(erased.scope,'active-application-records');first.deleted=true;
  await request(first,'/api/account/export','GET',undefined,401);await request(additionalSession,'/api/account/export','GET',undefined,401);
  assert.equal((await request(second,'/api/auth/me')).user.id,second.id);
- console.log('PASS: exact hosted isolated binding, secure cookies, Profile original lb source/save/login, immutable routine history/retry, other-account denial, private export, deletion and session revocation');
+ console.log('PASS: exact hosted isolated binding, secure cookies, Profile original lb source/save/login, immutable routine history/retry, report laboratory/province/None preference exact retry and reauthentication, unchanged source observation, other-account denial, owned metadata export, deletion and session revocation');
 } finally {
  for(const account of accounts){if(account.deleted)continue;try{if(!account.id){const logged=await request(account,'/api/auth/login','POST',{username:account.username,password:account.password});account.id=logged.user.id;}await request(account,'/api/account','DELETE',{password:account.password,confirmation:'DELETE ACCOUNT'});account.deleted=true;}catch{cleanupFailed=true;}}
  if(cleanupFailed)throw Error('Synthetic hosted account cleanup could not be confirmed; do not qualify this run');

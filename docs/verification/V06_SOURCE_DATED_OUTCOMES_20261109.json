@@ -1,0 +1,28 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "baseline": "ade6852b84fa2e49bc58df8345666b545f6f6121",
+  "scope": [
+    "source-dated descriptive experiment review",
+    "future entries retained but excluded",
+    "coverage/adherence/context missingness",
+    "weekly-review button reflow"
+  ],
+  "focusedTests": 8,
+  "types": "PASS",
+  "build": "PASS",
+  "actualAppEncryptedHistoryBrowser": "PASS",
+  "responsiveStates": 24,
+  "priorCi": {
+    "run": 42646197306,
+    "result": "failed",
+    "cause": "Save check-in min-content overflow at320px/page zoom200 in Chrome156",
+    "response": "scoped weekly-review buttons wrap, max-width100%, minimum44px"
+  },
+  "limits": [
+    "full Phase3 action-to-outcome reassessment open",
+    "no clinical significance or causal claim",
+    "exact replacement CI pending",
+    "physical VoiceOver not run"
+  ],
+  "actualWellnessSourceJourneyAfterWrapFix": "PASS; populated context48 states, original source24 states, correction/deletion/owner and food/movement bounds retained"
+}

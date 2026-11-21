@@ -1,0 +1,79 @@
+{
+  "task": "V06-M2-B6-PUBLISHED-SOURCE-CONTEXT",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
+  "baseCommit": "f85e36b72eba3573453c05101cd5c27ddf0be86f",
+  "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
+  "scope": "Dated reference/health-product/proposal differences alongside original saved B6 declarations. No inferred daily exposure, chemical-equivalent dose, safety grade or toxicity diagnosis. Full B6 intake/assessment remains unfinished.",
+  "material": {
+    "curatedPayload": "shared/data/vitamin-b6-reference-context.json",
+    "curatedPayloadSha256": "304ffdb642c2060616d2219366bb4fa50e4eee535290ef5e5af1ca4148bc3bbc",
+    "sourceContentInspectedOn": "2026-11-18",
+    "sourceOriginalBytesAcquired": false,
+    "sources": [
+      {
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+        "publishedOn": "2023-06-16",
+        "datePrecision": "day",
+        "kind": "reference_ul",
+        "referenceEdition": "1998"
+      },
+      {
+        "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2023.8006",
+        "publishedOn": "2023-05-17",
+        "datePrecision": "day",
+        "kind": "reference_ul",
+        "referenceEdition": "2023"
+      },
+      {
+        "url": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medeffect-canada/health-product-infowatch/june-2026.html",
+        "publishedOn": "2026-06",
+        "datePrecision": "month",
+        "kind": "health_product_warning",
+        "referenceEdition": "June 2026 safety brief"
+      },
+      {
+        "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/legislation-guidelines/acts-regulations/notices-proposal-notices-modification/list-permitted-supplemental-ingredients-vitamin-b6.html",
+        "publishedOn": "2026-10-22",
+        "datePrecision": "day",
+        "kind": "regulatory_proposal",
+        "referenceEdition": "PASF-2609, October 22, 2026"
+      }
+    ],
+    "sourceBoundaries": [
+      "NIH official fact sheet Table3 and Health Canada October proposal corroborate NASEM1998 adult100mg/day; original NCBI Books chapter returned a browser challenge, not original-byte acquisition. No bypass/re-probe.",
+      "Original EFSA scientific opinion DOI10.2903/j.efsa.2023.8006 section3.7 gives12mg/day, dietary+supplemental/all vitamers; publication2023-05-17. Search-topic12.5mg snippet was not used over original opinion and corroborating NIH source.",
+      "Health Canada June2026 safety brief describes NHP risk/monograph warning from10mg/day. Monthly date precision retained; no invented day.",
+      "October22PASF-2609 is a supplemented-food proposal:10mg/serving maximum, caution above2mg/serving, consultation toJan20,2027. Not enacted universal daily UL; no effective date invented."
+    ]
+  },
+  "implementation": [
+    "New typed discriminated source-context entries exported through existing dietary-reference module. UL, NHP warning and proposal kinds/units/scopes cannot substitute for one another; immutable versioned factual payload, no copied article/PDF corpus.",
+    "Existing saved supplement amount/source disclosure presents context in2deliberate disclosures. Small contextual label cue is visible on B6-declared records. Recognizes explicit B6 declarations/known vitamer names only, not a product-name guess, daily quantity, chemical conversion or regulatory product classification.",
+    "Preserves original native per-label-serving declarations and explicit unknown taken quantity. B6 is not silently added to current21-field totals; no second store, intake engine, provider call, dose target or green safe badge.",
+    "Current source reader/UI data formats unchanged. General references remain independent of personal eligibility. Unknown native declarations now get accurate supported-table missingness copy instead of implying that all composition is absent.",
+    "Fixes f85 CI configuration by using the exact passing baseline browser module/executable for both added browser steps. No test skipped, weakened or deployment manually triggered."
+  ],
+  "verification": {
+    "focused": "19/19 integrated source/reference/reader/audit checks plus final2alias/source-schema tests PASS (overlap); unsafe URL/date precision, kind/unit/scope/proposal-status corruption rejected.",
+    "actualApp": "Actual App\u2192owned HTTP\u2192existing encrypted PostgreSQL persisted explicit-taken fixtures:10/15/50/100mg per label serving and unknown taken quantity; original5events/declarations unchanged, no21-field B6 promotion, no meal duplication; source4scopes visible, keyboard32mode/theme/width/100\u2013200% pagezoom states, reload andA/B PASS. Does not claim all records were authored through the UI in this fixture; canonical write API/UI already qualified in predecessor.",
+    "types": "PASS",
+    "buildAndOriginalMedia": "PASS",
+    "ciBrowserEnvironment": "Both new steps equal the established passing baseline environment; YAML parse/assert PASS. Exact new-source CI/Render qualification next.",
+    "independentClinicalLegalPhysicalVoiceOverAcceptance": "NOT_TESTED_NOT_INFERRED"
+  },
+  "remaining": [
+    "Full B6 canonical identity/known daily source subtotal, compatible source-version readers/producers and form/period-specific assessment remain open. Native per-label-serving values are not complete usual intake.",
+    "Full Canadian DRI population/form coverage and Food12/Response15/RC remain actionable. No full M2/M3 acceptance claim."
+  ],
+  "latestQualification": {
+    "sourceCommit": "266e77f7e8fcb735d9d4033ae732e1cc511fed91",
+    "ciRun": 44316783238,
+    "jobId": 134844887457,
+    "status": "SUCCESS",
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "referenceContextAndB6BrowserSteps": "PASS",
+    "renderDeploy": "dep-dbuqndlg1s2s73d3tnpg",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T13:46:15.998804Z"
+  }
+}

@@ -1,0 +1,128 @@
+import VitaminB6ReferenceContext from './VitaminB6ReferenceContext';
+import {hasVitaminB6Declaration} from '@shared/supplement-reference-context';
+import {accountContextGuard} from '@/lib/request-actor';
+import {useEffect,useRef,useState} from 'react';
+import {useMutation,useQuery,useQueryClient} from '@tanstack/react-query';
+import {z} from 'zod';
+import {useAuth} from '@/lib/auth';
+import {apiRequest,ApiRequestError} from '@/lib/queryClient';
+import {Button} from '@/components/ui/button';
+import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle} from '@/components/ui/dialog';
+import {AlertDialog,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogCancel} from '@/components/ui/alert-dialog';
+import ProductPicker from './ProductPicker';
+import {recordedIntakeSourcePath} from './RecordedIntakeSources';
+import {productResponseSchema,type Product} from '@shared/products';
+import {supplementDraftSchema,type SupplementDraft} from '@shared/supplement-commands';
+import {supplementIntakeRecordSchema,supplementIntakePageSchema,supplementSourceContributions,type SupplementIntakeRecord,type SupplementIntake} from '@shared/supplement-intake';
+import {readLabelNutrientSources} from '@shared/label-nutrient-sources';
+import {formatNutrientAmount} from '@shared/nutrition-display';
+
+const previewSchema=z.object({userId:z.string(),lifecycleId:z.uuid(),reviewRevision:z.string().regex(/^[a-f0-9]{64}$/),draft:supplementDraftSchema,label:productResponseSchema.nullable(),previewOnly:z.literal(true),ingestionRecorded:z.literal(false)}).strict();
+const root='/api/experience/supplement-intakes';
+const unknownBasis=()=>({iron_mg:'unknown',magnesium_mg:'unknown',zinc_mg:'unknown'} as SupplementDraft['mineralBasis']);
+const localInput=(date:Date)=>new Date(+date-date.getTimezoneOffset()*60000).toISOString().slice(0,16);
+const time=(value:string)=>new Date(value).toLocaleString();
+const name=(value:SupplementIntake['current'])=>value.label?.name??value.unlabelled?.name??'Supplement';
+const portion=(value:SupplementIntake['current'])=>value.servings===null?'Amount not recorded':`${value.servings} × ${value.label?.servingDescription||value.unlabelled?.servingDescription||'unit not recorded'}`;
+type Preview=z.infer<typeof previewSchema>&{basis:string;owner:string;target:SupplementIntakeRecord|null};
+
+function SourceHistory({record}:{record:SupplementIntakeRecord}){
+ const[open,setOpen]=useState(false);
+ return <details open={open} onToggle={event=>setOpen(event.currentTarget.open)}><summary className="min-h-11 cursor-pointer">Original entry & corrections ({record.payload.corrections.length})</summary>{open&&<div className="space-y-3"><p className="panel-note">Previous versions explain this entry. They are not extra intakes.</p>{[{value:record.payload.original,label:'Original entry'},...record.payload.corrections.map((change,index)=>({value:change.value,label:`Correction ${index+1} · ${time(change.changedAt)}`}))].map(({value,label},index)=><section key={index} className="space-y-1"><h4>{label}</h4><p>{name(value)} · {portion(value)} · taken {time(value.takenAt)}</p><p className="panel-note">Label version: {value.formulation.labelVersion??'Not supplied'} · batch: {value.formulation.batch??'Not supplied'}</p>{value.label?<ul className="panel-note">{readLabelNutrientSources([{labelSnapshot:value.label}]).sources[0]?.fields.filter(field=>field.amount!==null).map(field=><li key={field.key}>{field.name}: {String(field.amount)} {field.unit} per label serving</li>)}</ul>:<p className="panel-note">Composition not recorded.</p>}</section>)}</div>}</details>;
+}
+function IntakeSource({record,actor}:{record:SupplementIntakeRecord;actor:string}){
+ const[open,setOpen]=useState(false);
+ if(record.userId!==actor)return <p role="status">Source context is unavailable for this account.</p>;
+ const view=open?supplementSourceContributions(record,actor):null,fields=view?.observations.filter(field=>field.nativeAmountPerServing!==null)??[],value=record.payload.current;
+ return <details open={open} onToggle={event=>setOpen(event.currentTarget.open)}><summary className="min-h-11 cursor-pointer">Amounts & source history</summary>{open&&<div className="space-y-3">
+  <p className="panel-note">Saved label amounts use app units. Original printed units and chemical forms may not be captured. These are label-based contributions, not absorbed amounts or a dose/safety assessment.</p>
+  {view?.observations.some(field=>field.state==='conflicting')&&<p role="status" className="panel-note">Some original label declarations conflict. Those amounts remain unavailable.</p>}
+  {fields.length?<div className="overflow-x-auto min-w-0 max-w-full focus-visible:outline focus-visible:outline-2" role="region" aria-label={`Saved label amounts for ${name(value)}`} tabIndex={0}><table className="label-source-table table-fixed w-full text-sm"><thead><tr><th scope="col">Field</th><th scope="col">Per serving</th><th scope="col">This entry</th></tr></thead><tbody>{fields.map(field=><tr key={field.nutrientKey}><td className="p-2">{field.name}</td><td className="p-2">{String(field.nativeAmountPerServing)} {field.unit}{field.sourceReportsZero?' · label reports zero':''}</td><td className="p-2">{field.amount===null?'Unknown':`${formatNutrientAmount(field.amount)} ${field.unit}`}{field.mineralBasis==='compound-weight'?' · compound weight; elemental amount not established':field.mineralBasis==='unknown'?' · elemental basis not confirmed':''}</td></tr>)}</tbody></table></div>:<p className="panel-note">{value.label?.labelDeclarations?.length||value.label?.otherNutrients?.length?'The supported nutrient table has no known amounts for this entry. Original declarations are retained below.':'Composition is unavailable for this entry. Missing values stay unknown.'}</p>}
+  <p className="panel-note">Other missing nutrient fields stay unknown, not zero. Taking an entry does not establish complete daily intake or adequacy.</p>
+  {!!value.label?.labelDeclarations?.length&&<details><summary className="min-h-11 cursor-pointer">Original declared ingredients</summary><p className="panel-note">Saved source values for the label serving, before app-unit conversion; not additional intakes.</p><ul>{value.label.labelDeclarations.map((row,index)=><li key={index}>{row.name}: {row.operator} {row.amount} {row.unit}</li>)}</ul></details>}
+  {!!value.label?.otherNutrients?.length&&<div><h4>Other declarations per label serving</h4><ul>{value.label.otherNutrients.map((field,index)=><li key={index}>{field.name}: {String(field.amount)} {field.unit}</li>)}</ul><p className="panel-note">Separate declarations; no elemental or chemical-equivalent conversion is inferred.</p></div>}
+  {hasVitaminB6Declaration(value.label)&&<VitaminB6ReferenceContext/>}
+  <p className="panel-note">Confirmed: {time(value.confirmedAt)}. Saved: {time(record.createdAt)}. Label retrieved: {value.label?.retrievedAt||'Not supplied'}.</p>
+  {value.label?.url&&<a className="text-link inline-flex min-h-11 items-center" href={value.label.url} target="_blank" rel="noopener noreferrer">Original label source</a>}
+  <SourceHistory record={record}/>
+ </div>}</details>;
+}
+
+export default function SupplementIntakes(){
+ const {user}=useAuth(),client=useQueryClient(),actor=useRef(user?.id),mounted=useRef(true);actor.current=user?.id;
+ const[page,setPage]=useState(0),[open,setOpen]=useState(false),[target,setTarget]=useState<SupplementIntakeRecord|null>(null),[removeTarget,setRemoveTarget]=useState<SupplementIntakeRecord|null>(null);
+ const[formOwner,setFormOwner]=useState<string|null>(null);
+ const[source,setSource]=useState<SupplementDraft['source']>({kind:'unlabelled',description:{name:'',servingDescription:null}}),[label,setLabel]=useState<Product|null>(null);
+ const[takenAt,setTakenAt]=useState(''),[servings,setServings]=useState(''),[basis,setBasis]=useState(unknownBasis),[labelVersion,setLabelVersion]=useState(''),[batch,setBatch]=useState('');
+ const[review,setReview]=useState<Preview|null>(null),[confirmed,setConfirmed]=useState(false),[error,setError]=useState(''),[saved,setSaved]=useState<SupplementIntakeRecord|null>(null);
+ const initialTime=useRef(''),attempt=useRef<{key:string;signature:string}|null>(null),heading=useRef<HTMLHeadingElement>(null);
+ const formBasis=JSON.stringify([user?.id,target?.id,target?.payload.revision,source,takenAt,servings,basis,labelVersion,batch]),basisRef=useRef(formBasis);basisRef.current=formBasis;
+ const list=useQuery({queryKey:[root,user?.id,page],enabled:!!user,queryFn:async({signal})=>{
+  const owner=user!.id,response=await apiRequest('GET',`${root}?offset=${page*25}&limit=25`,undefined,undefined,signal);
+  if(response.headers.get('X-Bloom-Supplement-Reader')!=='supplement-intake-v1')throw Error('Supplement records are unavailable in this app version. Retry after the update.');
+  const result=supplementIntakePageSchema.parse(await response.json());if(result.userId!==owner||result.records.some(row=>row.userId!==owner))throw Error('Supplement records could not be verified for this account.');return result;
+ }});
+ const invalidate=(owner:string)=>{void client.invalidateQueries({queryKey:[root,owner]});void client.invalidateQueries({queryKey:[recordedIntakeSourcePath,owner]});};
+ useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+ useEffect(()=>{setOpen(false);setRemoveTarget(null);setTarget(null);setSaved(null);setReview(null);setPage(0);attempt.current=null;},[user?.id]);
+ useEffect(()=>{setConfirmed(false);},[formBasis]);
+ const preview=useMutation({mutationFn:async(input:{owner:string;basis:string;draft:SupplementDraft;target:SupplementIntakeRecord|null})=>{
+  accountContextGuard(input.owner)();
+  if(!mounted.current||actor.current!==input.owner)throw Error('Review this entry in the current account.');
+  const result=previewSchema.parse(await(await apiRequest('POST',root+'/review',{draft:input.draft,...(input.target?{target:{id:input.target.id,revision:input.target.payload.revision}}:{})})).json());
+  if(result.userId!==input.owner)throw Error('This review is unavailable for the current account.');return{...result,basis:input.basis,owner:input.owner,target:input.target};
+ },onSuccess:result=>{if(!mounted.current||actor.current!==result.owner||basisRef.current!==result.basis)return;setReview(result);setLabel(result.label);setError('');save.reset();}});
+ const save=useMutation({mutationFn:async(input:{owner:string;review:Preview;key:string})=>{
+  accountContextGuard(input.owner)();
+  if(!mounted.current||actor.current!==input.owner)throw Error('Review this entry in the current account.');
+  const r=input.review,body={lifecycleId:r.lifecycleId,reviewRevision:r.reviewRevision,confirmedTaken:true,draft:r.draft,...(r.target?{editId:input.key,expectedRevision:r.target.payload.revision}:{intentId:input.key})};
+  const response=await apiRequest(r.target?'PUT':'POST',r.target?`${root}/${r.target.id}/confirm`:root+'/confirm',body);
+  const record=supplementIntakeRecordSchema.parse(await response.json());if(record.userId!==input.owner)throw Error('The saved entry could not be verified for this account.');return record;
+ },onSuccess:(record,input)=>{if(!mounted.current||actor.current!==input.owner)return;setSaved(record);setOpen(false);setReview(null);attempt.current=null;invalidate(input.owner);requestAnimationFrame(()=>heading.current?.focus());},onSettled:(_data,_error,input)=>{if(actor.current===input.owner)invalidate(input.owner);}});
+ const removal=useMutation({mutationFn:async(input:{owner:string;record:SupplementIntakeRecord})=>{
+  accountContextGuard(input.owner)();
+  if(!mounted.current||actor.current!==input.owner)throw Error('Remove this entry in the current account.');
+  await apiRequest('DELETE',`${root}/${input.record.id}`,{expectedRevision:input.record.payload.revision});
+ },onSuccess:(_data,input)=>{if(actor.current!==input.owner)return;setRemoveTarget(null);if(saved?.id===input.record.id)setSaved(null);invalidate(input.owner);},onSettled:(_data,_error,input)=>{if(actor.current===input.owner)invalidate(input.owner);}});
+ const uncertain=save.isError&&(!(save.error instanceof ApiRequestError)||(save.error.status>=500||save.error.status===408)),frozen=save.isPending||preview.isPending||uncertain;
+ const deleted=save.error instanceof ApiRequestError&&save.error.code==='SUPPLEMENT_INTAKE_DELETED';
+ const current=!!review&&review.owner===user?.id&&review.basis===formBasis&&!save.isError&&!preview.isError;
+ function start(record:SupplementIntakeRecord|null){
+  if(!user||record&&record.userId!==user.id)return;
+  setFormOwner(user.id);
+  const value=record?.payload.current,local=localInput(value?new Date(value.takenAt):new Date());initialTime.current=local;
+  setTarget(record);setSource(value?.label?{kind:'label',product:{source:value.label.source,id:value.label.id}}:{kind:'unlabelled',description:value?.unlabelled??{name:'',servingDescription:null}});setLabel(value?.label??null);
+  setTakenAt(local);setServings(value?.servings==null?'':String(value.servings));setBasis(value?.mineralBasis??unknownBasis());setLabelVersion(value?.formulation.labelVersion??'');setBatch(value?.formulation.batch??'');setReview(null);setConfirmed(false);setError('');attempt.current=null;preview.reset();save.reset();setOpen(true);
+ }
+ function reviewEntry(){
+  if(!user||frozen)return;
+  if(source.kind==='label'&&(!label||label.id!==source.product.id||label.source!==source.product.source)){setError('Choose the exact label, or record the entry with its label unavailable.');return;}
+  try{const draft=supplementDraftSchema.parse({source,takenAt:target&&takenAt===initialTime.current?target.payload.current.takenAt:new Date(takenAt).toISOString(),servings:servings.trim()?Number(servings):null,mineralBasis:basis,formulation:{labelVersion:labelVersion.trim()||null,batch:batch.trim()||null}});setConfirmed(false);setError('');preview.mutate({owner:user.id,basis:formBasis,draft,target});}catch{setError('Enter the supplement name, a valid time and a number greater than0 and at most100 label servings, or leave the amount unknown.');}
+ }
+ function confirmEntry(){
+  if(!user||!review||!current||!confirmed||save.isPending)return;
+  const signature=JSON.stringify([review.reviewRevision,review.target?.id,review.target?.payload.revision,review.draft]);if(attempt.current?.signature!==signature)attempt.current={signature,key:crypto.randomUUID()};save.mutate({owner:user.id,review,key:attempt.current.key});
+ }
+ const rows=list.data?.records.filter(row=>row.userId===user?.id)??[];
+ return <section id="supplement-intakes" className="bloom-panel mb-6 space-y-4 min-w-0 [overflow-wrap:anywhere]" aria-labelledby="supplement-intakes-heading">
+  <div className="flex flex-wrap items-center justify-between gap-3"><h2 id="supplement-intakes-heading" ref={heading} tabIndex={-1}>Supplements taken</h2><Button type="button" className="min-h-11 h-auto whitespace-normal" disabled={!user||!list.data||list.isError} onClick={()=>start(null)}>Record supplement taken</Button></div>
+  <p className="panel-note">Record what you actually took. Product reviews and plans stay separate. Unlogged intake is unknown, not zero.</p>
+  {saved&&saved.userId===user?.id&&<p role="status">Recorded entry saved. {name(saved.payload.current)} · {portion(saved.payload.current)}.</p>}
+  {list.isPending&&<p role="status">Loading recorded supplements…</p>}{list.isError&&<div role="alert"><p>Recorded supplements could not load. They are not treated as an empty history.</p><Button variant="outline" onClick={()=>list.refetch()}>Retry supplement records</Button></div>}
+  {!list.isError&&list.data&&<><p className="panel-note">{list.data.total} recorded {list.data.total===1?'entry':'entries'} · recently updated first</p>{!rows.length&&<p>No intakes recorded on this page.</p>}<div className="grid gap-3 lg:grid-cols-2">{rows.map(record=><article key={record.id} aria-label={`Recorded intake: ${name(record.payload.current)}, ${portion(record.payload.current)}`} className="rounded-xl border p-4 space-y-2 min-w-0"><h3>{name(record.payload.current)}</h3><p>{portion(record.payload.current)} · taken {time(record.payload.current.takenAt)}</p>{hasVitaminB6Declaration(record.payload.current.label)&&<p className="panel-note">B6 is declared on this label; published upper limits and product warnings differ. See amounts & source history.</p>}<div className="flex flex-wrap gap-2"><Button variant="outline" className="min-h-11" aria-label={`Edit ${name(record.payload.current)} taken ${time(record.payload.current.takenAt)}`} onClick={()=>start(record)}>Edit</Button><Button variant="ghost" className="min-h-11" aria-label={`Remove ${name(record.payload.current)} taken ${time(record.payload.current.takenAt)}`} onClick={()=>{removal.reset();setRemoveTarget(record);}}>Remove</Button></div><IntakeSource record={record} actor={user!.id}/></article>)}</div>{(list.data.total>25||page>0)&&<div className="flex flex-wrap gap-3"><Button variant="outline" disabled={page===0} onClick={()=>setPage(value=>value-1)}>Previous intakes</Button><Button variant="outline" disabled={!list.data.hasMore} onClick={()=>setPage(value=>value+1)}>More intakes</Button></div>}</>}
+  <Dialog open={open&&formOwner===user?.id} onOpenChange={next=>{if(!next&&frozen)return;setOpen(next);}}>{formOwner===user?.id&&<DialogContent className="supplement-intake-dialog grid-cols-1 p-3 sm:p-6 max-w-3xl max-h-[90dvh] overflow-y-auto min-w-0 [overflow-wrap:anywhere]" style={{width:"calc(100% - 1.5rem)",maxWidth:"48rem"}} onEscapeKeyDown={event=>{if(frozen)event.preventDefault();}} onPointerDownOutside={event=>{if(frozen)event.preventDefault();}}><DialogHeader className="pr-12"><DialogTitle>{target?'Correct recorded supplement':'Record supplement taken'}</DialogTitle><DialogDescription>Review the source and amount, then explicitly confirm this intake. A review alone does not save it.</DialogDescription></DialogHeader>
+   <fieldset disabled={frozen} className="space-y-4 min-w-0"><legend className="sr-only">Supplement intake details</legend><div className="flex flex-wrap gap-4"><label className="inline-flex min-h-11 items-center gap-2"><input type="radio" name="supplement-source" checked={source.kind==='unlabelled'} onChange={()=>{setSource({kind:'unlabelled',description:{name:label?.name??'',servingDescription:label?.servingDescription||null}});setLabel(null);setBasis(unknownBasis());}}/>Label unavailable</label><label className="inline-flex min-h-11 items-center gap-2"><input type="radio" name="supplement-source" checked={source.kind==='label'} onChange={()=>setSource({kind:'label',product:{source:'manual',id:'not-selected'}})}/>Use a product label</label></div>
+    {source.kind==='unlabelled'?<div className="grid grid-cols-1 gap-3 sm:grid-cols-2"><label>Supplement name<input className="bloom-input w-full" value={source.description.name} maxLength={160} onChange={event=>setSource({kind:'unlabelled',description:{...source.description,name:event.target.value}})}/></label><label>Serving description, if known<input className="bloom-input w-full" placeholder="e.g. 1 capsule" value={source.description.servingDescription??''} maxLength={120} onChange={event=>setSource({kind:'unlabelled',description:{...source.description,servingDescription:event.target.value||null}})}/></label></div>:<div className="space-y-2"><p>{label?`${label.name} · ${label.servingDescription||'Serving not supplied'}`:'Choose the exact product and label serving.'}</p><details><summary className="min-h-11 cursor-pointer">Find or enter a supplement label</summary><ProductPicker initialKind="supplement" servingsLabel="Label servings selected" confirmLabel="Use this label & entered amount" pending={frozen} onPick={(ingredient,snapshot)=>{if(frozen||!ingredient.product)return;setSource({kind:'label',product:{source:ingredient.product.source,id:ingredient.product.id}});setLabel(snapshot??null);setServings(String(ingredient.product.servings));setBasis(unknownBasis());}}/></details></div>}
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2"><label>Date and time taken<input type="datetime-local" className="bloom-input w-full min-w-0" value={takenAt} onChange={event=>setTakenAt(event.target.value)}/></label><label>Number of servings, if known<input className="bloom-input w-full" type="number" min="0.0001" max="100" step="any" value={servings} placeholder="Unknown" onChange={event=>setServings(event.target.value)}/><span className="panel-note">{label?`One label serving: ${label.servingDescription||'not supplied'}`:'Use your reported serving unit. Leave the number blank if unknown.'}</span></label></div>
+    {!!label&&(['iron_mg','magnesium_mg','zinc_mg'] as const).filter(key=>label.perServing[key]!==undefined).map(key=><label className="block" key={key}>{key==='iron_mg'?'Iron':key==='magnesium_mg'?'Magnesium':'Zinc'} amount basis<select className="bloom-input w-full" value={basis[key]} onChange={event=>setBasis({...basis,[key]:event.target.value as SupplementDraft['mineralBasis'][typeof key]})}><option value="unknown">Not confirmed — keep elemental amount unknown</option><option value="elemental-label">Label declares the elemental nutrient amount</option><option value="compound-weight">Compound weight — not an elemental amount</option></select></label>)}
+    <details><summary className="min-h-11 cursor-pointer">Optional formulation details</summary><div className="grid grid-cols-1 gap-3 sm:grid-cols-2"><label>Label version<input className="bloom-input w-full" value={labelVersion} maxLength={160} onChange={event=>setLabelVersion(event.target.value)}/></label><label>Batch<input className="bloom-input w-full" value={batch} maxLength={100} onChange={event=>setBatch(event.target.value)}/></label></div></details>
+    <Button type="button" className="min-h-11 w-full" onClick={reviewEntry}>{preview.isPaused?'Waiting for connection…':preview.isPending?'Reviewing…':review?'Update intake review':'Review intake'}</Button>
+   </fieldset>
+   {(error||preview.error)&&<p role="alert">{error||preview.error?.message}</p>}
+   {review&&<section className="space-y-3 border-t pt-4" aria-label="Intake review"><h3>Review this intake</h3><p>{review.label?.name??(review.draft.source.kind==='unlabelled'?review.draft.source.description.name:'Supplement')} · {review.draft.servings===null?'Amount unknown':`${review.draft.servings} servings`} · {time(review.draft.takenAt)}</p><p className="panel-note">{uncertain?'The save status is unknown. Retry the same confirmed entry.':current?'Not saved. Check the details before confirming.':'Details changed or this review was rejected. Update the review before confirming.'}</p><label className="inline-flex min-h-11 gap-2 items-start"><input type="checkbox" checked={confirmed} disabled={!current||frozen} onChange={event=>setConfirmed(event.target.checked)}/>I took this supplement as recorded above.</label><Button type="button" className="w-full min-h-11 h-auto whitespace-normal" disabled={!current||!confirmed||frozen} onClick={confirmEntry}>Confirm taken</Button></section>}
+   {save.isPaused&&<p role="status">Waiting for a connection. Keep this page open to finish the confirmed save.</p>}
+   {save.isError&&<div role="alert" className="space-y-2"><p>{uncertain?'The save could not be confirmed.':save.error.message}</p>{uncertain&&<><p>Your details are retained. Retry this exact save to recover it without another intake.</p><Button type="button" onClick={()=>{if(save.variables)save.mutate(save.variables);}}>Retry this intake save</Button><a className="text-link block min-h-11" href="/nutrition#supplement-intakes" target="_blank" rel="noopener">Check recorded entries in a new tab</a></>}{deleted&&<Button type="button" onClick={()=>{attempt.current=null;setReview(null);save.reset();}}>Start a new entry from this draft</Button>}{target&&!uncertain&&<Button variant="outline" onClick={async()=>{try{const record=supplementIntakeRecordSchema.parse(await(await apiRequest('GET',`${root}/${target.id}`)).json());if(record.userId===actor.current)start(record);}catch{setError('The current entry could not load. Your draft is retained.');}}}>Reload current entry (replace draft)</Button>}</div>}
+  </DialogContent>}</Dialog>
+  <AlertDialog open={!!removeTarget&&removeTarget.userId===user?.id} onOpenChange={next=>{if(!next&&!removal.isPending)setRemoveTarget(null);}}>{removeTarget?.userId===user?.id&&removeTarget&&<AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Remove recorded intake?</AlertDialogTitle><AlertDialogDescription>{removeTarget?`${name(removeTarget.payload.current)} · ${portion(removeTarget.payload.current)}. `:''}Remove this intake and its retained source/correction history.</AlertDialogDescription></AlertDialogHeader>{removal.error&&<p role="alert">{removal.error.message} Retry removing this same entry, or reload its current details.</p>}<AlertDialogFooter><AlertDialogCancel disabled={removal.isPending}>Keep entry</AlertDialogCancel><Button type="button" variant="destructive" disabled={removal.isPending} onClick={()=>{if(user&&removeTarget)removal.mutate({owner:user.id,record:removeTarget});}}>{removal.isPending?'Removing…':'Remove intake'}</Button></AlertDialogFooter></AlertDialogContent>}</AlertDialog>
+ </section>;
+}

@@ -1,17 +1,19 @@
 import { accountFetch } from "./request-actor";
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
-export class ApiRequestError extends Error {constructor(readonly status:number,message:string){super(message);}}
+export class ApiRequestError extends Error {constructor(readonly status:number,message:string,readonly code?:string){super(message);}}
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
     let message = text;
+    let code:string|undefined;
     try {
       const body = JSON.parse(text);
       message = body.error || body.message || text;
+      if(typeof body.code==='string'&&/^[A-Z][A-Z0-9_]{0,63}$/.test(body.code))code=body.code;
     } catch { /* Non-JSON responses retain their original message. */ }
-    throw new ApiRequestError(res.status,message);
+    throw new ApiRequestError(res.status,message,code);
   }
 }
 

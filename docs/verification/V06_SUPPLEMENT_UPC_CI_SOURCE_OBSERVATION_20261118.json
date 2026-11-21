@@ -1,0 +1,74 @@
+{
+  "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+  "ciRun": 44267810669,
+  "jobId": 134677682928,
+  "ciStatus": "SUCCESS",
+  "kind": "public-source-contract-observation",
+  "checkedAt": "2026-11-18T08:45:40.516Z",
+  "results": [
+    {
+      "originalBarcode": "777672010360",
+      "status": "no-authoritative-match",
+      "products": [],
+      "warnings": []
+    },
+    {
+      "originalBarcode": "023249090021",
+      "status": "no-authoritative-match",
+      "products": [],
+      "warnings": []
+    },
+    {
+      "originalBarcode": "623543753242",
+      "status": "no-authoritative-match",
+      "products": [],
+      "warnings": []
+    },
+    {
+      "originalBarcode": "665553200101",
+      "status": "no-authoritative-match",
+      "products": [],
+      "warnings": []
+    }
+  ],
+  "sourceShapes": [
+    {
+      "endpoint": "quoted-search",
+      "rootKeys": [
+        "hits",
+        "stats"
+      ],
+      "upcSkuType": "undefined",
+      "upcSkuArray": false
+    },
+    {
+      "endpoint": "quoted-search",
+      "rootKeys": [
+        "hits",
+        "stats"
+      ],
+      "upcSkuType": "undefined",
+      "upcSkuArray": false
+    },
+    {
+      "endpoint": "quoted-search",
+      "rootKeys": [
+        "hits",
+        "stats"
+      ],
+      "upcSkuType": "undefined",
+      "upcSkuArray": false
+    },
+    {
+      "endpoint": "quoted-search",
+      "rootKeys": [
+        "hits",
+        "stats"
+      ],
+      "upcSkuType": "undefined",
+      "upcSkuArray": false
+    }
+  ],
+  "failures": [],
+  "limitations": "Actual NIH source outcomes only; unavailable and no-match do not establish absence. No Canadian NPN linkage, independent package certification, clinical validation or account intake is asserted. No private source, USDA key or OFF request is used."
+}

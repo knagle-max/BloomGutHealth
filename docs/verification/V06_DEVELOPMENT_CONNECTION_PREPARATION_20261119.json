@@ -1,0 +1,146 @@
+{
+  "date": "2026-11-19",
+  "status": "DEVELOPMENT_ENGINEERING_TESTED_NETWORK_NOT_ACTIVATED",
+  "baseCommit": "7945ef27ad2828112d4f526b619519a79e3f58d1",
+  "checks": {
+    "pythonScientificAndOperational": 69,
+    "isolatedNodeIncludingRealASGIAndMICOM": 20,
+    "productionBuildDependencyIsolation": 1,
+    "failures": 0,
+    "skips": 0,
+    "lastTargetedTerminationDenialRegression": "PASS",
+    "policyJsonStructure": "PASS_NOT_CONTROL_PLANE_VALIDATION",
+    "lastTargetedLauncherAndResultGuards": "PASS"
+  },
+  "artifacts": [
+    {
+      "path": "docs/scientific-models/DEVELOPMENT_CONNECTION_RUNBOOK.md",
+      "sha256": "feffda259aedac3e30c6ce67e6312eae23848f654398a7704bc7d530c8d18898"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_ACCEPTANCE.md",
+      "sha256": "02b580ac11d7a2fbb210ec9b82a27a351b8085f0c2b49b6bb63a2145a5bb7211"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_SETUP.md",
+      "sha256": "3adbd89deec698eefeef894b59294c24c71d417e2a288bcccca10f5cbed46f9e"
+    },
+    {
+      "path": "docs/scientific-models/MICOM_NUMERICAL_REPRODUCIBILITY_2026-11-19.md",
+      "sha256": "069b1e3f45d63151da89e9967b56c62802d10c3068d07a86f92f8ea2ce58fc33"
+    },
+    {
+      "path": "docs/scientific-models/tailscale-development-policy.proposed.json",
+      "sha256": "6dd823cb8e71570b6894e8acd8c9370d5b0b57645a3591b9a9db097bb8311161"
+    },
+    {
+      "path": "ml_service/development.py",
+      "sha256": "48aca7320381798a8e3b5cb357fc69dbb80a1e9cd68e61e05018ace59893c4dc"
+    },
+    {
+      "path": "ml_service/development_service.py",
+      "sha256": "8d953b37cdf734744ca54502c6350ecddf36ce28f26005632edc3f6dfcb96e85"
+    },
+    {
+      "path": "ml_service/research/development_credentials.py",
+      "sha256": "a8e8c8dadb742d54ddcf9b2a98155678d76d18a278bc1206231d3c3c24806ee5"
+    },
+    {
+      "path": "ml_service/research/development_jobs.py",
+      "sha256": "c0de0062d1a9a27d1856dd9c31042d3afa9b9c36e9a515e52eccfd40c7f6673c"
+    },
+    {
+      "path": "ml_service/research/development_routes.py",
+      "sha256": "f18f6bb2a7e0f421c8a819d6efcd3bb992fcb9a05d837df4b851fcf21754730f"
+    },
+    {
+      "path": "ml_service/research/requirements-development-operations.txt",
+      "sha256": "408b057cb4b67bb599f3cdb6583af5ece05113afad82674a09e54da340773166"
+    },
+    {
+      "path": "scripts/development-science/client.mjs",
+      "sha256": "664cfb582122c726478492ab6471c072907cf5e6a7643920e9f81ac3f8d4a057"
+    },
+    {
+      "path": "scripts/development-science/client.test.mjs",
+      "sha256": "b6ee3968e62ecd4a3e93c0f4fff27c99e9e20800a023a48b5292d1ebd9c66bd8"
+    },
+    {
+      "path": "scripts/development-science/integration.test.mjs",
+      "sha256": "94b7d3b4714641dd327c200500e63ee88c176c34e1447f909759269eb18228c0"
+    },
+    {
+      "path": "scripts/development-science/package.json",
+      "sha256": "16d351d80eaa4baea9d7bf495af383c502ff837fda4f786faaab0753b8aef7b0"
+    },
+    {
+      "path": "scripts/development-science/test-asgi-bridge.py",
+      "sha256": "613b319ced8642ff5d50609b61e0bd8ded67d2db0a37956e385ebdbe788ee545"
+    },
+    {
+      "path": "tests/test_development_operations.py",
+      "sha256": "2b41f1b022717fabd576e2a41d061c30be266e3315753967a13a9006f227514d"
+    },
+    {
+      "path": "tests/test_development_science_jobs.py",
+      "sha256": "f0fddd3d36e72fd9da8e515acffb8b73636bca08c17add71e031146c87ca9a06"
+    },
+    {
+      "path": "scripts/development-science/reference-probe.mjs",
+      "sha256": "3a7a6caa6738489c3a8cd6a8fcf6322c8238f07d2dcda1e1a7613e4fc29b4b84"
+    },
+    {
+      "path": "scripts/development-science/render-caller.mjs",
+      "sha256": "f2c6b36367d5d4f0c70d92154a846c6c354d7f3b45b3f8d7adfd4f77276195e9"
+    },
+    {
+      "path": "scripts/development-science/staging-environment.mjs",
+      "sha256": "0e42ec8fad4079183bac33e13fabf6e843eb765448bfd01feb2eab6d2e6aba4c"
+    },
+    {
+      "path": "scripts/development-science/staging-environment.test.mjs",
+      "sha256": "45de154f29958dd8056c0adcba1a777009e2992a9dfdc6ae7bbf4fd2dda35382"
+    }
+  ],
+  "actualMac": "Owner reports initial pinned scientific validation OK; new operational/RSS/serving additions need Mac confirmation",
+  "renderAudit": {
+    "metadataInspectedPrivately": true,
+    "runtime": "native-node",
+    "startCommand": "npm start",
+    "developmentExecutionTargetConfirmed": true,
+    "actualTailscaleTransportVerified": false,
+    "identifyingMetadataRecorded": false,
+    "confirmation": "Owner: existing service is development/staging only; auxiliary runtime bootstrap remains unqualified"
+  },
+  "tailscalePolicy": {
+    "completeCurrentPolicyReviewedPrivately": true,
+    "genericReplacementPrepared": true,
+    "preservesOwnDeviceSshForUntaggedNodes": true,
+    "removesUnrestrictedNetworkGrant": true,
+    "applied": false,
+    "liveIdentityTestsRun": false
+  },
+  "privacy": {
+    "onlySyntheticOrReferenceControls": true,
+    "actualPolicyExportCommitted": false,
+    "actualWorkspaceOrDeviceIdentifiersCommitted": false,
+    "personalHealthOrIndividualResultsCommitted": false,
+    "liveCredentialsChanged": false
+  },
+  "activation": {
+    "listenersStarted": false,
+    "tailscaleServeEnabled": false,
+    "infrastructureProvisioned": false,
+    "renderSettingsChanged": false,
+    "deployed": false,
+    "requiresExplicitOwnerApproval": true,
+    "certificateIssued": false
+  },
+  "limits": [
+    "Sampled RSS watchdog can overshoot; not kernel isolation",
+    "Actual Mac/VPN/Render outage/recovery/TLS/identity checks not run",
+    "No personal-data authorization or predictive/clinical validation",
+    "Existing production process remains independent of the optional Mac path"
+  ],
+  "publication": "SOURCE_PUBLICATION_APPROVED_BY_OWNER_2026_11_19_NETWORK_ACTIVATION_NOT_AUTHORIZED"
+}

@@ -1,7 +1,47 @@
 import test from 'node:test';import assert from 'node:assert/strict';import express from 'express';import {PGlite} from '@electric-sql/pglite';import {drizzle} from 'drizzle-orm/pglite';import {readFile} from 'node:fs/promises';
 import {internalPreviewGrant,registerCapabilityAccess,CapabilityPreferenceStorage} from '../server/capability-access';
+import {createHash} from 'node:crypto';
 const grant={serviceId:'srv-syntheticreview',userId:'a',grantId:'review-1',expiresAt:'2026-12-01T00:00:00Z',territories:['CA'],reviewReference:'synthetic-review-reference',allowedCapabilities:['bloom.dev.preview']};
 const env={RENDER_SERVICE_ID:'srv-syntheticreview',BLOOM_EXPERIMENTAL_ENVIRONMENT:'isolated-synthetic',BLOOM_PREVIEW_TERRITORY:'CA',BLOOM_INTERNAL_TESTERS:JSON.stringify([grant])};
+test('explicit standing internal access survives dates while temporary fingerprints and expiry remain unchanged',()=>{
+ const {expiresAt,...scope}=grant,standing={...scope,grantType:'standing-internal'};
+ const scoped={...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([standing])};
+ for(const date of ['2026-11-15T00:00:00Z','2026-11-22T15:06:15Z','2035-01-01T00:00:00Z'])assert.ok(internalPreviewGrant('a',scoped,Date.parse(date)));
+ assert.equal(internalPreviewGrant('a',env,Date.parse('2026-11-15T00:00:00Z'))?.fingerprint,createHash('sha256').update(JSON.stringify(grant)).digest('hex'),'Legacy serialized scope remains byte-identical');
+ assert.equal(internalPreviewGrant('a',env,Date.parse(expiresAt)),null);
+ for(const invalid of [scope,{...standing,grantType:'standing'},{...standing,expiresAt:'2035-01-01T00:00:00Z'},{...scope,expiresAt:null},{...standing,userId:undefined},{...standing,allowedCapabilities:[]}])assert.equal(internalPreviewGrant('a',{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([invalid])},Date.parse('2026-11-15T00:00:00Z')),null);
+});
+test('standing eligibility retains scope, duplicates and immediate kill/revocation guards',()=>{
+ const {expiresAt,...scope}=grant,standing={...scope,grantType:'standing-internal',uiPreview:{purpose:'synthetic-ui-review',dataset:'synthetic-only',features:['bloom.food.photo_ai']},allowedCapabilities:['bloom.dev.preview','bloom.food.photo_ai']};
+ const scoped={...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([standing])},now=Date.parse('2035-01-01T00:00:00Z');
+ assert.deepEqual(internalPreviewGrant('a',scoped,now)?.uiFeatures,['bloom.food.photo_ai']);
+ for(const candidate of [{...scoped,RENDER_SERVICE_ID:'srv-other'},{...scoped,BLOOM_PREVIEW_TERRITORY:'US'},{...scoped,BLOOM_EXPERIMENTAL_ENVIRONMENT:'production'},{...scoped,BLOOM_EXPERIMENTAL_KILL_SWITCH:'true'},{...scoped,BLOOM_INTERNAL_TESTERS:'[]'},{...scoped,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:JSON.stringify(standing)}])assert.equal(internalPreviewGrant('a',candidate,now),null);
+ assert.equal(internalPreviewGrant('b',scoped,now),null);
+ assert.notEqual(internalPreviewGrant('a',scoped,now)?.fingerprint,internalPreviewGrant('a',{...scoped,BLOOM_INTERNAL_TESTERS:JSON.stringify([{...standing,allowedCapabilities:['bloom.dev.preview']}])},now)?.fingerprint);
+});
+test('standing preference transition stays scoped and compare-and-set; HTTP checks continue beyond expiry',async()=>{
+ const pg=new PGlite();let revoked=false;
+ const {expiresAt,...scope}=grant,standing={...scope,grantType:'standing-internal'},now=Date.parse('2035-01-01T00:00:00Z');
+ const scoped={...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([standing])};
+ const oldFingerprint=internalPreviewGrant('a',env,Date.parse('2026-11-15T00:00:00Z'))!.fingerprint,newFingerprint=internalPreviewGrant('a',scoped,now)!.fingerprint;
+ await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");
+ await pg.exec(await readFile(new URL('../migrations/0008_capability_preferences.sql',import.meta.url),'utf8'));
+ const store=new CapabilityPreferenceStorage(drizzle(pg) as any);await store.put('a',true,oldFingerprint);await store.put('b',false,'other-account-fingerprint');const otherBefore=await store.get('b');
+ const app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.headers['x-user']} as any;next();});
+ registerCapabilityAccess(app,(req,res,next)=>req.session.userId?next():void res.sendStatus(401),store,id=>revoked?null:internalPreviewGrant(id,scoped,now));
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base='http://127.0.0.1:'+(server.address() as any).port+'/api/capabilities';
+ const get=(id='a')=>fetch(base,{headers:{'x-user':id}}),patch=(enabled:boolean)=>fetch(base+'/experimental',{method:'PATCH',headers:{'x-user':'a','content-type':'application/json'},body:JSON.stringify({enabled})});
+ try{
+  const response=await get();assert.equal(response.headers.get('cache-control'),'no-store');const before=await response.json();assert.equal(before.eligible,true);assert.equal(before.experimentalEnabled,false,'Changing raw grant never automatically re-enables a stale preference');
+  const rebind=()=>pg.query('UPDATE capability_preferences SET grant_fingerprint=$1 WHERE user_id=$2 AND grant_fingerprint=$3 RETURNING enabled',[newFingerprint,'a',oldFingerprint]);
+  assert.equal((await rebind()).rows.length,1);assert.equal((await rebind()).rows.length,0,'Stale transition cannot overwrite a newer preference');
+  assert.equal((await(await get()).json()).experimentalEnabled,true);assert.deepEqual((await(await get()).json()).capabilities,[]);
+  assert.deepEqual(await store.get('b'),otherBefore);assert.equal((await(await get('b')).json()).eligible,false);
+  assert.equal((await patch(false)).status,200);assert.equal((await(await get()).json()).experimentalEnabled,false);
+  assert.equal((await patch(true)).status,200);assert.equal((await(await get()).json()).experimentalEnabled,true);
+  revoked=true;assert.equal((await patch(true)).status,403);assert.equal((await(await get()).json()).eligible,false);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();}
+});
 test('internal preference grants require trusted environment, identity, territory, expiry and non-duplicated provisioning',()=>{
  const now=+new Date('2026-10-24T00:00:00Z');assert.ok(internalPreviewGrant('a',env,now));
  for(const candidate of [{...env,RENDER_SERVICE_ID:undefined},{...env,RENDER_SERVICE_ID:'srv-anotherreview'},{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([{...grant,serviceId:undefined}])},{...env,BLOOM_EXPERIMENTAL_ENVIRONMENT:'production'},{...env,BLOOM_PREVIEW_TERRITORY:'US'},{...env,BLOOM_EXPERIMENTAL_KILL_SWITCH:'true'},{...env,BLOOM_INTERNAL_TESTERS:'invalid'},{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([grant,grant])}])assert.equal(internalPreviewGrant('a',candidate,now),null);

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0",
+  "date": "2026-11-14",
+  "purpose": "Individually owner-approved Bloom art assets for visual registry and developer handoff; not deployed",
+  "publicationGate": "Owner expressly approved these specific two source images only",
+  "assets": [
+    {
+      "id": "BVA-0023",
+      "slug": "athlete-recovery-runner-bench",
+      "route": "/athlete/recovery",
+      "slot": "Athlete recovery hero",
+      "descriptionOfApprovedImage": "An adult woman in blue sportswear resting on a wooden bench overlooking hills, with water bottle, towel and smoothie; editorial illustration, not user activity",
+      "approvalEvidence": "Owner expressly approved runner-on-bench revision; supersedes formerly approved smoothie-only asset",
+      "source": "AI-generated image, visually approved by owner in conversation",
+      "scientificStatus": "Decorative editorial, not source for measurement or medical instruction",
+      "integrationStatus": "NOT integrated; responsive crop and contrast review pending",
+      "deliverables": [
+        {
+          "file": "BVA-0023/originals/BVA-0023-athlete-recovery-runner-bench-source.png",
+          "format": "png",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 1852906,
+          "sha256": "67623300381989ecf0589c5b793a570f7491ceeb901d9956f3fde1fc51378c5b",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-full.webp",
+          "format": "webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 87430,
+          "sha256": "26f4b42a7912892a705e532197ce610586993ea395d8dcaa23417ff8992979b4",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+          "format": "webp",
+          "width": 1536,
+          "height": 864,
+          "bytes": 72014,
+          "sha256": "41d7378308a2aebfe2b4b78e74935999200f232385e79cad74e62e5d481dee48",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1024,
+          "bytes": 52936,
+          "sha256": "09dfbc29088ec61a2bce48fd60515b6a989aaf2618643e29a67116cd794461dd",
+          "alpha": false
+        }
+      ]
+    },
+    {
+      "id": "BVA-0024",
+      "slug": "coach-client-consultation",
+      "route": "/insights",
+      "slot": "Coach header when feature enabled",
+      "descriptionOfApprovedImage": "An adult woman and male coach reviewing a tablet together in a bright gym with mountain views; not a licensed clinician representation",
+      "approvalEvidence": "Owner expressly approved original coach-and-client image, regardless of newer planned brief",
+      "source": "AI-generated image, visually approved by owner in conversation",
+      "scientificStatus": "Decorative editorial, not source for measurement or medical instruction",
+      "integrationStatus": "NOT integrated; responsive crop and contrast review pending",
+      "deliverables": [
+        {
+          "file": "BVA-0024/originals/BVA-0024-coach-client-consultation-source.png",
+          "format": "png",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 2035813,
+          "sha256": "a79ac1740f5809f60025c49c13768ae6b9f7f8bae8a380472feedac98cb74f18",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-full.webp",
+          "format": "webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 109272,
+          "sha256": "06c030cc46b2434969cce4ee9b4955cdb75a723537403603ee99c32e3d7dfc41",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+          "format": "webp",
+          "width": 1536,
+          "height": 864,
+          "bytes": 93826,
+          "sha256": "81332b35f86cc1607db46700dea169850a03bd524d0fbf9ec656040082ec4a28",
+          "alpha": false
+        },
+        {
+          "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-mobile-3x4.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 1024,
+          "bytes": 63982,
+          "sha256": "c6c032eef8526df8947dba0abf2bc3603896197ce111701de06dab2173d21fdd",
+          "alpha": false
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "BVA-0023/originals/BVA-0023-athlete-recovery-runner-bench-source.png",
+      "format": "png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1852906,
+      "sha256": "67623300381989ecf0589c5b793a570f7491ceeb901d9956f3fde1fc51378c5b",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-full.webp",
+      "format": "webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 87430,
+      "sha256": "26f4b42a7912892a705e532197ce610586993ea395d8dcaa23417ff8992979b4",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+      "format": "webp",
+      "width": 1536,
+      "height": 864,
+      "bytes": 72014,
+      "sha256": "41d7378308a2aebfe2b4b78e74935999200f232385e79cad74e62e5d481dee48",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+      "format": "webp",
+      "width": 768,
+      "height": 1024,
+      "bytes": 52936,
+      "sha256": "09dfbc29088ec61a2bce48fd60515b6a989aaf2618643e29a67116cd794461dd",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0024/originals/BVA-0024-coach-client-consultation-source.png",
+      "format": "png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2035813,
+      "sha256": "a79ac1740f5809f60025c49c13768ae6b9f7f8bae8a380472feedac98cb74f18",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-full.webp",
+      "format": "webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 109272,
+      "sha256": "06c030cc46b2434969cce4ee9b4955cdb75a723537403603ee99c32e3d7dfc41",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+      "format": "webp",
+      "width": 1536,
+      "height": 864,
+      "bytes": 93826,
+      "sha256": "81332b35f86cc1607db46700dea169850a03bd524d0fbf9ec656040082ec4a28",
+      "alpha": false
+    },
+    {
+      "file": "BVA-0024/webp/BVA-0024-coach-client-consultation-mobile-3x4.webp",
+      "format": "webp",
+      "width": 768,
+      "height": 1024,
+      "bytes": 63982,
+      "sha256": "c6c032eef8526df8947dba0abf2bc3603896197ce111701de06dab2173d21fdd",
+      "alpha": false
+    }
+  ]
+}

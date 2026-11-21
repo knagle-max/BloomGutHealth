@@ -1,0 +1,33 @@
+{
+  "scope": "P1 bounded private one-pass orchestration, synthetic engine only",
+  "states": {
+    "sourceEvidenceComposition": "IMPLEMENTED_AND_TESTED",
+    "freshnessPermissionsDeadlineAndFallback": "IMPLEMENTED_AND_TESTED",
+    "engineExecution": "MOCK_VERIFIED",
+    "actualPrivateReasoningEngineInstalled": "NOT_TESTED_NOT_INSTALLED",
+    "scientificClaimVerification": "NOT_IMPLEMENTED",
+    "independentHoldoutEvaluation": "NOT_TESTED",
+    "consumerInterpretation": "DISABLED"
+  },
+  "tests": {
+    "runner": "8 PASS",
+    "combinedPrivateSourceHypothesisPublicBoundaryGeminiFixtures": "35 PASS",
+    "typecheck": "PASS"
+  },
+  "proof": [
+    "Canonical private source collector and independently reviewed retrieval fixture are passed to one bounded private-runtime engine callback",
+    "Wrong account, missing approval/configuration, public provider adapter and absent reviewed evidence never invoke the engine",
+    "Correction, consent revocation or evidence withdrawal during reasoning abstains",
+    "Invented references and model-assigned release authority abstain",
+    "End-to-end deadline prevents late source reads from starting reasoning; engine receives abort, late output cannot replace fallback",
+    "Provider/private errors are not included in fallback text",
+    "Only research-only-unverified candidates returned; no personal consumer inference or shared promotion"
+  ],
+  "limits": [
+    "No actual engine, provider call or private production data used",
+    "Private runtime is a trusted server-composition contract, not a security sandbox or proof of engine network isolation",
+    "A live engine requires independent private processing/policy/budget/performance qualification; no public Gemini health transfer authorized",
+    "Scientific prose/numeric derivations/applicability/harm must be independently verified before any user-facing interpretation",
+    "No held-out usefulness or clinical safety claim"
+  ]
+}

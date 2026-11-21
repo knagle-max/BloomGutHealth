@@ -1,0 +1,303 @@
+{
+  "sourceFilesVerified": 43,
+  "optimizedFilesImported": [
+    {
+      "id": "BVA-0009",
+      "publicPath": "/images/editorial/bloodwork/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+      "bytes": 82070,
+      "sha256": "7f6842c4c042a5ba1c506d40f0fc88c9589bebc86f2f7c83b372502fbb5b19ab",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0010",
+      "publicPath": "/images/editorial/bloodwork/BVA-0010-cardiovascular-anatomy.webp",
+      "bytes": 166452,
+      "sha256": "12151b266158753000d0b354722af5376c0c003cce67f238d55cd78813883b66",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0011",
+      "publicPath": "/images/editorial/bloodwork/BVA-0011-glycaemic-concept.webp",
+      "bytes": 156462,
+      "sha256": "ea92b8f72c3bdc43808254b239ed88d33bdc8043d8396c4d4af6808542b98442",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0012",
+      "publicPath": "/images/editorial/bloodwork/BVA-0012-liver-biliary-anatomy.webp",
+      "bytes": 164048,
+      "sha256": "1dfd6929a48b683584dfa278425a8cb69885d3e0091379ad1279b1538228c157",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0013",
+      "publicPath": "/images/editorial/bloodwork/BVA-0013-blood-rbc-morphology.webp",
+      "bytes": 131522,
+      "sha256": "cba3349d741465321cbb11621ea9bfcf86b21fb57fd0a6843f2e47c1666c76d0",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0014",
+      "publicPath": "/images/editorial/bloodwork/BVA-0014-bone-trabecular.webp",
+      "bytes": 158824,
+      "sha256": "8a2f191a3e17c51bc1b32045c928944315baa83eb04b4931a8c4b3d1af7ba122",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0029",
+      "publicPath": "/images/editorial/bloodwork/BVA-0029-hormones-thyroid-anatomy.webp",
+      "bytes": 162914,
+      "sha256": "32e9961c46dc495d860020aab1cfd39262ea304e2d1dbd1458ff6718b91da97c",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a-extension",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0030",
+      "publicPath": "/images/editorial/bloodwork/BVA-0030-inflammation-immunity-response.webp",
+      "bytes": 155072,
+      "sha256": "d53f88a50fd3faf8ce85d10d4645c934672aefb42659db9d41f8b1ac5906989c",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a-extension",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0031",
+      "publicPath": "/images/editorial/bloodwork/BVA-0031-other-identification-network.webp",
+      "bytes": 136556,
+      "sha256": "4b39dae2b334a5455c4b8cad1ad202e294e5d1193bc44a0025a03a692488bf74",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "batch-a-extension",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-molecule.svg",
+      "bytes": 591,
+      "sha256": "1951eeb9f92c743a058f6a6d4d05455d8646d05b4ba6c8e0b07200f4dac7fad3",
+      "dimensions": null,
+      "sourceArchive": "batch-c",
+      "format": "svg"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-plant.svg",
+      "bytes": 438,
+      "sha256": "563e8858537c20372cf8ba5f7fad4e91d33c84353586c4c82d51dd255ed7cc8f",
+      "dimensions": null,
+      "sourceArchive": "batch-c",
+      "format": "svg"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/pathway-kit/pathway-connector.svg",
+      "bytes": 363,
+      "sha256": "7b9d269283138566f95fcbea7ab5cd336cd40fa6cd20978246a4c13010cb62da",
+      "dimensions": null,
+      "sourceArchive": "batch-c",
+      "format": "svg"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/pathway-kit/pathway-overview-decorative.svg",
+      "bytes": 1419,
+      "sha256": "210d1e9309a26a39697227b04facafdae5292c3376f0db0f2efbbec20ce0ea2e",
+      "dimensions": null,
+      "sourceArchive": "batch-c",
+      "format": "svg"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-microbe.svg",
+      "bytes": 471,
+      "sha256": "eace929cd954f72a5107eb60e5d81de97ca382a63cff1894b615f1f605068ebf",
+      "dimensions": null,
+      "sourceArchive": "batch-c",
+      "format": "svg"
+    },
+    {
+      "id": "BVA-0018",
+      "publicPath": "/images/editorial/biology/BVA-0018-genetics-editorial-accent.webp",
+      "bytes": 82980,
+      "sha256": "90e95d1ba65d7919de6e3b805dec8e9f99387f718054c80d15877450713cfeda",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "sourceArchive": "batch-c",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0021",
+      "publicPath": "/images/editorial/progress/BVA-0021-progress-editorial-scene.webp",
+      "bytes": 76552,
+      "sha256": "b7fc320473dd5c6ec45493f076381f3396c6a59405d69014d9521e9cb28a6683",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "sourceArchive": "batch-c",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0020",
+      "publicPath": "/images/editorial/explore/BVA-0020-explore-pathway-reference.webp",
+      "bytes": 111752,
+      "sha256": "458ef94a87b6fe4fb7de67f4c2fd8d4bde6fd5441f3e545300ee116431522416",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "sourceArchive": "batch-c",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0019",
+      "publicPath": "/images/editorial/explore/BVA-0019-explore-living-atlas.webp",
+      "bytes": 113556,
+      "sha256": "0390f1d0266784097068d71dc9dd8f91947d8b19cd8faa53b424d87c2e0f5138",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "sourceArchive": "batch-c",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0017",
+      "publicPath": "/images/editorial/biology/BVA-0017-microbiome-editorial-backdrop.webp",
+      "bytes": 69234,
+      "sha256": "0426d2990d497e509b7d6d92cab9543ced48df6f51999846e1f3be4e4b812af7",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "sourceArchive": "batch-c",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0023",
+      "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+      "bytes": 52936,
+      "sha256": "09dfbc29088ec61a2bce48fd60515b6a989aaf2618643e29a67116cd794461dd",
+      "dimensions": [
+        768,
+        1024
+      ],
+      "sourceArchive": "athlete",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0023",
+      "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+      "bytes": 72014,
+      "sha256": "41d7378308a2aebfe2b4b78e74935999200f232385e79cad74e62e5d481dee48",
+      "dimensions": [
+        1536,
+        864
+      ],
+      "sourceArchive": "athlete",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0023",
+      "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-full.webp",
+      "bytes": 87430,
+      "sha256": "26f4b42a7912892a705e532197ce610586993ea395d8dcaa23417ff8992979b4",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sourceArchive": "athlete",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0024",
+      "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-full.webp",
+      "bytes": 109272,
+      "sha256": "06c030cc46b2434969cce4ee9b4955cdb75a723537403603ee99c32e3d7dfc41",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "sourceArchive": "coach",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0024",
+      "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+      "bytes": 93826,
+      "sha256": "81332b35f86cc1607db46700dea169850a03bd524d0fbf9ec656040082ec4a28",
+      "dimensions": [
+        1536,
+        864
+      ],
+      "sourceArchive": "coach",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0024",
+      "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-mobile-3x4.webp",
+      "bytes": 63982,
+      "sha256": "c6c032eef8526df8947dba0abf2bc3603896197ce111701de06dab2173d21fdd",
+      "dimensions": [
+        768,
+        1024
+      ],
+      "sourceArchive": "coach",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0036",
+      "publicPath": "/images/editorial/bloodwork/BVA-0036-complete-blood-count.webp",
+      "bytes": 112558,
+      "sha256": "e95b820fac2c9edcc7cbdf2c7e3f47f0a5da76b98d797eca8a7a7311f851d1fb",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "cbc",
+      "format": "webp"
+    }
+  ],
+  "originalPngsKeptInSourceLibrary": true
+}

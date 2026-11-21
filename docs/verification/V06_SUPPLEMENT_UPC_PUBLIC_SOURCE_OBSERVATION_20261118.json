@@ -1,0 +1,58 @@
+{
+  "kind": "public-source-contract-observation",
+  "checkedAt": "2026-11-18T06:59:30.531Z",
+  "results": [
+    {
+      "originalBarcode": "777672010360",
+      "status": "provider-unavailable",
+      "products": [],
+      "warnings": [
+        "NIH barcode verification is unavailable or incomplete. This is not proof the product is absent; your private label entry still works."
+      ]
+    },
+    {
+      "originalBarcode": "023249090021",
+      "status": "provider-unavailable",
+      "products": [],
+      "warnings": [
+        "NIH barcode verification is unavailable or incomplete. This is not proof the product is absent; your private label entry still works."
+      ]
+    },
+    {
+      "originalBarcode": "623543753242",
+      "status": "provider-unavailable",
+      "products": [],
+      "warnings": [
+        "NIH barcode verification is unavailable or incomplete. This is not proof the product is absent; your private label entry still works."
+      ]
+    },
+    {
+      "originalBarcode": "665553200101",
+      "status": "provider-unavailable",
+      "products": [],
+      "warnings": [
+        "NIH barcode verification is unavailable or incomplete. This is not proof the product is absent; your private label entry still works."
+      ]
+    }
+  ],
+  "sourceShapes": [],
+  "failures": [
+    {
+      "category": "network",
+      "status": null
+    },
+    {
+      "category": "network",
+      "status": null
+    },
+    {
+      "category": "network",
+      "status": null
+    },
+    {
+      "category": "network",
+      "status": null
+    }
+  ],
+  "limitations": "Actual NIH source outcomes only; unavailable and no-match do not establish absence. No Canadian NPN linkage, independent package certification, clinical validation or account intake is asserted. No private source, USDA key or OFF request is used."
+}

@@ -1,0 +1,26 @@
+{
+  "task": "V06-M2-IRON-MENSTRUAL-SOURCE-BASIS",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "exposure": "LOCAL_COMMIT_PENDING_PUBLICATION_AFTER_CURRENT_CI",
+  "baseCommit": "906416646518377e3d1db6a263308b50a478bfc7",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
+  "retrievedOn": "2026-11-18",
+  "location": "Table2 adult iron rows and footnotes18/g",
+  "change": [
+    "Seven coalesced adult source rows: male EAR6/RDA8; female19\u201350 EAR8.1/RDA18 with source-assumed menstruation; female51+ EAR5/RDA8 with source-assumed post-menopause; shared total-intake UL45mg/day.",
+    "Schema requires the original female source assumption, rejects erased/opposite/borrowed assumptions. No personal menstrual-status field or new questionnaire.",
+    "Current eligibility withholds female EAR/RDA matching because Profile sex/birth year does not establish the source assumption. All general source values and their assumption labels remain visible. Shared UL and applicable ordinary male population context retain existing matching safeguards.",
+    "Source notes retain vegetarian higher-requirement context without personal adjustment, absorption estimates, individual inadequacy probability or treatment dose. Existing source records/producers untouched."
+  ],
+  "verification": {
+    "focused": "18/18 source/schema/profile tests PASS including source assumptions, age36/51/72, unchanged general rows and no personal assessment.",
+    "apiAudits": "9/9 owned encrypted-context API and API/capability/Biology tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile: maleRDA8; female36/72 no matched requirement, public18/8/source-assumption labels and exact unmatched reason remain. Existing all nutrient/date/uncertainty/outage/account/deep-link and32responsive mode/theme/width/zoom states PASS,0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media PASS."
+  },
+  "publicationPlan": "Keep current906Render fixed until CI44335001853 completes its exact hosted gate; continue local engineering. Older064 mismatch failed before account writes; never relax exact-SHA/isolation guards.",
+  "limits": [
+    "No full M2/C2/Core/RC completion claim.",
+    "No inference of personal menstrual losses/status, absorption, deficiency, clinical dose or independent device/human acceptance."
+  ]
+}

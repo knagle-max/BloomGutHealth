@@ -1,0 +1,105 @@
+{
+  "packages": [
+    {
+      "id": "CHART-A01",
+      "archiveSha256": "2fc6350734015617b6232090b9eb30b6b0cb449e0e64a2aaa84813f8b5b4a1af",
+      "claimedNonManifestMembersVerified": 7,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A02",
+      "archiveSha256": "31544120524bb3c4fb870eb066cf11aba46824f48b8a2b6d963a31d88697b5c4",
+      "claimedNonManifestMembersVerified": 34,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "README.md",
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A03",
+      "archiveSha256": "cce1c07abb3065a9e4f60914f07c52a97e29ddeb6a988e8a3bd6dd5c2dbabcde",
+      "claimedNonManifestMembersVerified": 9,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A04",
+      "archiveSha256": "efbe269b23af2a0dc275f85e1339de94a97b1b9432fccfb903f31a050296fd31",
+      "claimedNonManifestMembersVerified": 27,
+      "anomalies": [
+        "manifest self-hash mismatch"
+      ],
+      "outerHashCoveredUnlistedDocuments": []
+    },
+    {
+      "id": "CHART-A05",
+      "archiveSha256": "39314fff295a7ba45dd83698005d7aa641f75ef4ee1b4c7cb9a6dd6e03e2d9c7",
+      "claimedNonManifestMembersVerified": 43,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A06",
+      "archiveSha256": "e1036ce44de467e926b7209dd0ad9c7e64bb3675ee3e430b90ce0f9f4b64d0eb",
+      "claimedNonManifestMembersVerified": 51,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A07",
+      "archiveSha256": "7297b31f3d69420c5e07c6fe77005c04f8906de26f56c7527b0440b76dfbdd33",
+      "claimedNonManifestMembersVerified": 41,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-A08",
+      "archiveSha256": "7ad1fb8f35a223c3a2c8e00b43b733d64de86a199047c10f2a60cd0668fbc67d",
+      "claimedNonManifestMembersVerified": 51,
+      "anomalies": [
+        "manifest self-hash mismatch"
+      ],
+      "outerHashCoveredUnlistedDocuments": []
+    },
+    {
+      "id": "CHART-B01",
+      "archiveSha256": "1397cdac1e4ba68e7231a4825e563954e6db97ae93216409f457f8fa9457907a",
+      "claimedNonManifestMembersVerified": 76,
+      "anomalies": [
+        "manifest self-hash mismatch"
+      ],
+      "outerHashCoveredUnlistedDocuments": []
+    },
+    {
+      "id": "CHART-B02",
+      "archiveSha256": "14782faba857c5fa68d6bcdd62d5105e4bbb52a99dcb6ce5b7d5583ee9c8dfeb",
+      "claimedNonManifestMembersVerified": 108,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    },
+    {
+      "id": "CHART-B03",
+      "archiveSha256": "ee25cfb22f58cf603040daf842251cc697f5ddd6319441273554d75ea758d40f",
+      "claimedNonManifestMembersVerified": 114,
+      "anomalies": [],
+      "outerHashCoveredUnlistedDocuments": [
+        "manifest.json"
+      ]
+    }
+  ],
+  "totalClaimedNonManifestMembers": 561
+}

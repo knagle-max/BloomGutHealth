@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
+  "sourceBaseline": "9d38a212f9d11870c65abbe9bef959bcbb403f68",
+  "appSourceSha256": "5ca3b0ecaeeb7217c912723d1a5459fc72c4b012ae7ded7dd29c1e2f00bf62bb",
+  "coverage": "All23 literal App paths and NotFound inventoried. Nine existing baseline routes rendered; public login/signup now additionally exercised across20 actual-session theme/width states plus200% text. Full-app interaction/new-theme parity remains open.",
+  "baselineReceipt": "/tmp/bloom-ui-media-before/parity.json",
+  "routes": [
+    {
+      "path": "/login",
+      "component": "Login",
+      "accessFrame": "public-auth-route",
+      "source": "client/src/App.tsx",
+      "line": 136,
+      "preserveActions": [
+        "Sign in",
+        "Return to the authorized destination"
+      ],
+      "baselineLayout": "RENDERED_PUBLIC_AUTH_SYNTHETIC_20_STATE_MATRIX",
+      "mutationProof": "Actual auth/session handlers with in-memory synthetic users, canonical cookie acknowledgement, focused failure/pending duplicate guard, logout/account context; docs/verification/V06_AUTH_THEME_20261115.json",
+      "themeStatus": "SCOPED_AUTH_THEME_IMPLEMENTED_AND_ENGINEERING_TESTED; publication/independent visual review pending"
+    },
+    {
+      "path": "/signup",
+      "component": "Signup",
+      "accessFrame": "public-auth-route",
+      "source": "client/src/App.tsx",
+      "line": 137,
+      "preserveActions": [
+        "Create own account",
+        "Open onboarding"
+      ],
+      "baselineLayout": "RENDERED_PUBLIC_AUTH_SYNTHETIC_20_STATE_MATRIX",
+      "mutationProof": "Actual auth/session handlers with in-memory synthetic users, canonical cookie acknowledgement, focused failure/pending duplicate guard, logout/account context; docs/verification/V06_AUTH_THEME_20261115.json",
+      "themeStatus": "SCOPED_AUTH_THEME_IMPLEMENTED_AND_ENGINEERING_TESTED; publication/independent visual review pending"
+    },
+    {
+      "path": "/",
+      "component": "HomeExperience",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 138,
+      "preserveActions": [
+        "Review Today sources",
+        "Log food/activity",
+        "Save or dismiss a wellness choice"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/admin/features",
+      "component": "FeatureManagement",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 141,
+      "preserveActions": [
+        "View only with current administrative capability",
+        "Review feature history and scoped controls"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/biology/reports",
+      "component": "ReportManagement",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 142,
+      "preserveActions": [
+        "Review original source groups",
+        "Scoped delete and source history"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/explore",
+      "component": "Explore",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 143,
+      "preserveActions": [
+        "Search existing evidence/organism graph",
+        "Open source-linked educational details"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/progress",
+      "component": "Progress",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 144,
+      "preserveActions": [
+        "Find every recorded marker",
+        "Choose dated source results and reference overlays",
+        "Open original source/corrections"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/athlete/:section",
+      "component": "AthleteWorkspace",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 145,
+      "preserveActions": [
+        "Review existing training/fueling/recovery/competition section",
+        "Use canonical saved source history"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/athlete",
+      "component": "AthleteWorkspace",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 146,
+      "preserveActions": [
+        "Log training and actuals",
+        "Review future plans separately from performed activity"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/plan-day",
+      "component": "PlanDay",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 147,
+      "preserveActions": [
+        "Review sourced meal targets",
+        "Save a reviewed meal plan"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/weekly-review",
+      "component": "WeeklyReview",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 148,
+      "preserveActions": [
+        "Log/edit check-ins",
+        "Review descriptive experiment outcomes"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/saved-meals",
+      "component": "SavedMeals",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 149,
+      "preserveActions": [
+        "Reuse a reviewed saved meal",
+        "Edit or remove own saved source"
+      ],
+      "baselineLayout": "RENDERED_SAVED_MEALS_16_MODE_THEME_VIEWPORT_STATES_PLUS_200_TEXT",
+      "mutationProof": "docs/verification/V06_SAVED_MEAL_REFLOW_20261115.json; exact receipt/retry fixture plus actual encrypted SQL source scaling/correction/new journal entry, original recipe unchanged and owner isolation",
+      "themeStatus": "SCOPED_FOOD_HEADING_AND_REFLOW_IMPLEMENTED_AND_ENGINEERING_TESTED; exact publication/independent review pending"
+    },
+    {
+      "path": "/nutrition",
+      "component": "NutritionHistory",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 150,
+      "preserveActions": [
+        "Open recorded meal/source details",
+        "Add/review food and portions"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed",
+      "functionalEvidence": "docs/verification/V06_FOOD_EDITORIAL_20261115.json; scoped source/action preservation,32 synthetic layout states and actual saved-meal edit/retry/account-isolation journey; full owner theme/independent review still pending"
+    },
+    {
+      "path": "/activity",
+      "component": "ActivityLog",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 153,
+      "preserveActions": [
+        "Describe and review individual activity sets",
+        "Log a routine occurrence",
+        "Edit/delete own actual history"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/log-meal",
+      "component": "LogMeal",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 154,
+      "preserveActions": [
+        "Review ingredients/serving units",
+        "Correct before save",
+        "Save/reload original food source"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed",
+      "functionalEvidence": "docs/verification/V06_FOOD_EDITORIAL_20261115.json; scoped source/action preservation,32 synthetic layout states and actual saved-meal edit/retry/account-isolation journey; full owner theme/independent review still pending"
+    },
+    {
+      "path": "/microbiome",
+      "component": "Microbiome",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 157,
+      "preserveActions": [
+        "Review original report organisms/food rows",
+        "Manage source selection and deletion"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/upload",
+      "component": "Upload",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 160,
+      "preserveActions": [
+        "Review and import original supported report",
+        "Keep missing collection date optional"
+      ],
+      "baselineLayout": "RENDERED_REPORT_INPUT_AND_PREVIEW_32_WIDTH_THEME_TEXT_STATES",
+      "mutationProof": "docs/verification/V06_SHARED_CONTROL_REFLOW_20261115.json; actual native PDF.js synthetic94-organism/22-assessment/299-food review/correction/minimized one-save/reload and privacy canaries with mocked HTTP; not actual database or authentic private report verification",
+      "themeStatus": "SHARED_BUTTON_REFLOW_ENGINEERING_TESTED; independent design/VoiceOver and full theme adoption pending"
+    },
+    {
+      "path": "/demo",
+      "component": "Demo",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 163,
+      "preserveActions": [
+        "Inspect clearly marked existing synthetic examples"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/health-insights",
+      "component": "Redirect",
+      "accessFrame": "redirect",
+      "source": "client/src/App.tsx",
+      "line": 166,
+      "preserveActions": [
+        "Retain redirect to Progress"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/precision",
+      "component": "PrecisionNutrition",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 169,
+      "preserveActions": [
+        "Import/review/edit lab, genetic and microbiome records",
+        "Manage original report/provider preferences",
+        "Export/delete scoped owned sources"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed",
+      "functionalEvidence": "docs/verification/V06_BLOODWORK_ATLAS_20261115.json; original50-source-row text/order parity and existing system\u2192marker/source navigation, two-owner withdrawal,16 lab-entry mode/theme/width states plus200% text; overview/nonlab tabs retained"
+    },
+    {
+      "path": "/meal-planner",
+      "component": "PlannerExperience",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 172,
+      "preserveActions": [
+        "Use existing Everyday planner",
+        "Retain Athlete redirect to fueling"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/insights",
+      "component": "ScienceCoach",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 175,
+      "preserveActions": [
+        "Open existing Diet coach/evidence views",
+        "Retain source/science/capability restrictions"
+      ],
+      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    },
+    {
+      "path": "/profile",
+      "component": "ProfileWrapper",
+      "accessFrame": "protected-route",
+      "source": "client/src/App.tsx",
+      "line": 188,
+      "preserveActions": [
+        "Edit source-native profile values",
+        "Review privacy/consent/export",
+        "Erase own account with current safeguards"
+      ],
+      "baselineLayout": "BASELINE_RENDERED_SYNTHETIC_72_STATE_MATRIX",
+      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
+      "themeStatus": "Full new owner theme adoption not claimed"
+    }
+  ],
+  "fallback": {
+    "component": "NotFound",
+    "preserve": "Unknown paths remain an explicit not-found view"
+  },
+  "legacyEverydayNavigation": [
+    "/",
+    "/precision",
+    "/progress",
+    "/nutrition",
+    "/activity",
+    "/plan-day",
+    "/meal-planner",
+    "/saved-meals",
+    "/explore",
+    "/microbiome",
+    "/insights",
+    "/upload",
+    "/profile"
+  ],
+  "pendingExactDesignInputs": [
+    "Original ten-screen Stitch archive bc3da1a7a068f86d61af8aab1bb4750275e61202bbbb0cf4ea99f223d947f298 is not in the accessible workspace/repository",
+    "Approved BVA delivery archives in Shared Library have no current file-access connector; no replacement assets generated"
+  ]
+}

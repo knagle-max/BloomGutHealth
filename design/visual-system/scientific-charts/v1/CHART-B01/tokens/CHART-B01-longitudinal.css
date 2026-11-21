@@ -1,0 +1,35 @@
+/* CHART-B01 — opt-in styles, consumes CHART-A01 tokens, no global selectors. */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] {
+ --bv-b01-radius: 26px;
+ --bv-b01-line-width: 2.5px;
+ --bv-b01-selected-width: 3.5px;
+ --bv-b01-min-touch: 44px;
+ --bv-b01-plot-min-height: 216px;
+ color: var(--bvc-ink);
+ background: var(--bvc-surface);
+ border: 1px solid var(--bvc-border);
+ border-radius: var(--bv-b01-radius);
+ min-width: 0;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] .bv-b01-observed {
+ fill: none; stroke: var(--bvc-series-primary); stroke-width:var(--bv-b01-line-width);
+ stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] .bv-b01-crosshair {
+ stroke: var(--bvc-focus); stroke-width: 1; stroke-dasharray: 3 5; vector-effect:non-scaling-stroke;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] .bv-b01-hit-target {
+ min-width:44px; min-height:44px; touch-action: manipulation;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] :is(button,a,[tabindex="0"]):focus-visible {
+ outline:3px solid var(--bvc-focus); outline-offset:3px;
+}
+@media (max-width: 420px) {
+ .app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] { --bv-b01-radius: 22px; }
+}
+@media (forced-colors: active) {
+ .app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] :is(.bv-b01-observed,.bv-b01-crosshair) { stroke: CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-bv-family="longitudinal"] * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,78 @@
+{
+  "task": "V06-C3-N03-DIETARY-REFERENCE-SUBSET",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
+  "baseCommit": "035be673efb71149a3dd192f91381b5bdf3f5c38",
+  "scope": "Initial general reference-information vertical slice within approved M2, not personal reference eligibility/intake assessment, complete DRI coverage or full M2 acceptance.",
+  "material": {
+    "curatedPayloadSha256": "45fcd6dd4147b664a367e33263afa655760f542ffbf18a7d0803c8c4b86f3e79",
+    "curatedPayload": "shared/data/canadian-dietary-reference-subset.json",
+    "rows": 14,
+    "nutrients": [
+      "vitamin_c_mg",
+      "magnesium_mg"
+    ],
+    "authority": "Health Canada",
+    "retrievedOn": "2026-11-17",
+    "sourcePublishedOn": null,
+    "effectiveFrom": null,
+    "sourceOriginalBytesAcquired": false,
+    "sources": [
+      {
+        "id": "hc-vitamins",
+        "title": "Health Canada: Dietary reference values for vitamins",
+        "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+        "location": "Table 2, Vitamin C adult male/female rows and footnote 8",
+        "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL."
+      },
+      {
+        "id": "hc-elements",
+        "title": "Health Canada: Dietary reference values for elements",
+        "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
+        "location": "Table 2, Magnesium adult male/female rows and footnote 19",
+        "note": "The magnesium UL covers pharmacological agents only and excludes food and water."
+      }
+    ],
+    "verification": "Actual official source tables/age-sex rows and footnotes read directly through web tool. Current factual subset has its own pinned version; no original HTML/PDF digest, publisher effective date or independent clinical approval is fabricated."
+  },
+  "implementation": [
+    "Immutable typed source rows carry age/sex/life-stage, kind, source/intake/smoking scope, usual-daily reference period and curated version. Unknown/unsupported nutrients stay absent; no0/Infinity reference, compound conversion or laboratory substitution.",
+    "EAR/RDA/UL remain distinct. Magnesium350mg/day UL is pharmacological-only, excluding food/water. Vitamin C non-smoking base requirements and smoking footnote stay separate from its2000mg/day UL; no automatic smoking adjustment or personal dose.",
+    "Single lazy reusable disclosure beside existing Nutrient forms & units; source information takes two interactions from review. Actual14 rows grouped by identical source/cohort/version/unit context without combining amounts; EAR/RDA side by side, UL source scope explicit. Existing original food/label tables, quantities, targets and whole intake math preserved.",
+    "General published adult19+ nonpregnant/nonlactating facts only, explicitly not matched to Profile or used for personal adequacy/historical comparisons. No new profile fields, questions, API, persistence, optimizer, chart, healthcare score or consent/role change."
+  ],
+  "validation": [
+    "7 focused source/reference/definition/observation tests PASS: exact independently read source facts and age/sex distinctions, valid-schema baseline before negative mutations, bad Mg food UL/source/unit/amount/age/life-stage/period rejection, absent unsupported/clinical analytes, immutable versioned source reads.",
+    "Actual mounted App/authenticated HTTP/encrypted-label/PGlite SQL source workflow PASS: public references in original meal-review source flow; native keyboard/two-interaction sibling structure/lazy rendering; actual420kcal/source0protein/unknown sodium, generic source21 fields, single-save/reload/reuse/label deletion/outage/retry/changed-owner privacy all retained; no provider calls.",
+    "60 generic saved-source/reference layout states PASS:320/390/768/1024/1440 \u00d7Everyday/Athlete \u00d7light/dark \u00d7normal/200% text/200% page zoom. Original keyboard-scrollable source tables and source-link wrapping assertions retained. Inherited private-label checks also pass.",
+    "Eight actual320/390px light/dark Everyday/Athlete source-reference screenshots captured; forest/blue source panel and separate pharmacological UL examined. Source grouping reduces repeated cohort/type/total-intake text, without removing scientific facts.",
+    "Final TypeScript and production build PASS; all original delivered art/source/build byte verifiers retained. New source files staged before tracked-file source audit."
+  ],
+  "artifacts": [
+    "/workspace/bloom-dietary-references-unit.log",
+    "/workspace/bloom-dietary-references-types.log",
+    "/workspace/bloom-dietary-references-browser.log",
+    "/workspace/bloom-dietary-reference-screens/",
+    "/workspace/bloom-dietary-references-final-build.log"
+  ],
+  "independentAcceptance": {
+    "physicalVoiceOverDevice": "NOT_TESTED",
+    "independentClinicalDesignUserReview": "NOT_CLAIMED",
+    "engineeringBrandAndPurposeReview": "PASS scoped source-disclosure render review; no new primary header or direct new header-fixture acceptance claimed."
+  },
+  "remaining": [
+    "Personal reference eligibility and Profile age/sex/life-stage/source-form matching remain open; no personal numeric assessment is produced by this slice.",
+    "Broader DRI/AI/CDRR/ND coverage, B6 authority divergence, form-specific conversions/safety and confirmed supplement contribution remain scoped M2/M3 work.",
+    "Official CNF2026 ZIP acquisition remains blocked by403 as recorded separately; no source substitutions or corpus-rights claim. Full v0.6/RC remains unfinished."
+  ],
+  "privacy": "Only synthetic local records and public primary-source reading. No private health query, production write, main merge/manual deployment or external message.",
+  "qualification": {
+    "commit": "f16fb32a7ccb1c04ac670ef48578cd95d264598e",
+    "workflowRun": 44164157369,
+    "job": 134325607444,
+    "result": "SUCCESS including full unit/SQL, production build, all exact hosted checks, isolated Neon persistence and cleanup",
+    "renderDeploy": "dep-dbub3ae1egvs73ahe7u0",
+    "renderStatus": "LIVE",
+    "renderFinishedAt": "2026-11-17T19:59:17.575326Z",
+    "scope": "Engineering qualification of this bounded source/reference-information slice; no full M2/M3 or integrated RC/scientific approval inferred."
+  }
+}

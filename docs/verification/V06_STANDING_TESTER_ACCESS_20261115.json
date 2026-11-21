@@ -1,0 +1,33 @@
+{
+  "task": "V06-EXP-ACCESS-01",
+  "implementation": "PUBLISHED_ENGINEERING_TESTED",
+  "exposure": "Existing explicit synthetic-only Food Photo UI preview; no model, clinical, research or feature-control execution granted",
+  "risk": "HIGH: server tester authorization. Preserve account/service/environment/territory/kill/revocation, legacy expiry and full-scope fingerprints; only explicitly typed standing-internal grants omit expiry.",
+  "validation": {
+    "unitAndHTTP": "8/8 PASS: legacy fingerprint identity/expiry, standing2035, malformed/duplicate/wrong-user/service/environment/territory/kill denials, real HTTP+PGlite CAS transition/OFF/ON/revocation, no-store, other-account unchanged",
+    "permissionRegression": "13/13 PASS development scope, separate feature-admin role, effective capability rules and state mapping",
+    "browser": "PASS actual App+capability HTTP server with synthetic session/pref fixtures, standing eligibility evaluated at2035; ordinary absence, one existing Profile Advanced toggle, in-situ local PNG preview, OFF/service revocation unmount/objectURL/restricted-query cleanup, retained manual text and single reviewed save,320/1440px,zero model calls",
+    "browserFixtureCorrection": "Updated October fixture to current Profile Advanced disclosure and canonical food-method disclosure; no application checks removed",
+    "types": "PASS",
+    "productionBuild": "PASS; original media hashes and35-ID registry source parity",
+    "sourceAudits": "Capability52 entries unchanged, one server source hash reviewed; biology522 identities unchanged",
+    "actualAccountTransition": "Exact case Tester1 in runtime-bound named isolated review DB: one account, enabled true, stored fingerprint exactly matches reconstructed previous authorized scope. Private immutable ID and full grants not logged or committed. CAS write/config still pending.",
+    "exactPublicationCI": "CI43777601736 failed on planner QA request-capture race; standing preview browser step passed. Precise fixture synchronization correction locally PASS, republish pending."
+  },
+  "runtime": {
+    "standingGrantConfiguration": "APPLIED after direct owner approval: only supplemental preview grant merged; existing account/service/territory/features/revocation unchanged. Review deployment dep-dbt4f26i0phs73elmh60 live 2026-11-16T00:01:52Z at7944e264e3a22262542b8e90ab4da3ac845fd3ae.",
+    "preferenceRebind": "PASS one account, exact previous-scope fingerprint compare-and-set; enabled stayed true, new fingerprint matches canonical grant. Readback verified; no password/health record read.",
+    "realTesterSession": "Not inspected or fabricated; authenticated synthetic routes tested. No password/health record read."
+  },
+  "remaining": [
+    "Publish planner fixture synchronization and verify exact CI",
+    "Real Tester1 password/session not accessed; no fabricated authenticated UI acceptance",
+    "Integrated physical/device/owner RC acceptance not claimed"
+  ],
+  "publication": {
+    "source": "7944e264e3a22262542b8e90ab4da3ac845fd3ae",
+    "tree": "25a9fb0e0f4024c15af7bfa9471a5382aaa0246e",
+    "local": "bfbe945b77a527d87082419f0a96e1c92dac1349"
+  },
+  "approvalHistory": "Initial expiry-free env mutation auto-review rejected; no side effect. Owner explicitly approved standing access in chat; authorized retry succeeded. No other permissions expanded."
+}

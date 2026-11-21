@@ -1,6 +1,6 @@
 import type { ReportOrganism } from './structured-report';
 export type ReportedTaxon = {
- id:string; bacterialName:string; taxonomyLevel?:string|null; abundance?:number|null;
+ id:string; sampleId?:string; reportedGroup?:string|null; bacterialName:string; taxonomyLevel?:string|null; abundance?:number|null;
  reportedAbundance?:string|null; reportedStatus?:string|null; reportedNotes?:string|null; reportedOrganismSourceId?:string;
 };
 /** Read-only original-source projection. Exact unique spellings may link the two

@@ -5,7 +5,7 @@ export async function setAppTheme(page,theme){
  if(await page.evaluate(()=>document.documentElement.classList.contains('dark'))!==dark){
   const header=page.getByTestId('button-theme-toggle');
   if(await header.isVisible())await header.click();
-  else{await page.getByRole('button',{name:'Open navigation',exact:true}).click();await page.getByTestId('button-menu-theme-toggle').click();}
+  else{await page.getByRole('button',{name:'Open navigation',exact:true}).click();await page.getByTestId('button-menu-theme-toggle').click();await page.getByRole('dialog',{name:'Explore Bloom',exact:true}).waitFor({state:'hidden'});}
  }
  await page.waitForFunction(expected=>document.documentElement.classList.contains('dark')===expected,dark);
  assert.equal(await page.evaluate(()=>document.documentElement.classList.contains('dark')),dark);

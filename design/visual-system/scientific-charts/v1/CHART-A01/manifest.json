@@ -1,0 +1,43 @@
+{
+  "assetId": "CHART-A01",
+  "version": "1.0.0",
+  "creationDate": "2026-11-15",
+  "status": "Designer candidate; not app integrated",
+  "files": [
+    {
+      "path": "README.md",
+      "sizeBytes": 1899,
+      "sha256": "9621bb0794cdfe7abb2637606d1d1daf0c319f4b0a6edd00659d6129bdabe9b4"
+    },
+    {
+      "path": "accessibility/contrast-matrix.json",
+      "sizeBytes": 9198,
+      "sha256": "15fa4e9bacc1650e8fdda678d23ac7dad150766486984e56db09953af4936751"
+    },
+    {
+      "path": "accessibility/contrast-matrix.md",
+      "sizeBytes": 953,
+      "sha256": "178a8c6c02914e40e2dfab1dd8837c6731834547dca1ab33428ec3037d2d06f0"
+    },
+    {
+      "path": "editable/CHART-A01-four-theme-token-map.svg",
+      "sizeBytes": 19380,
+      "sha256": "6b4e5a2ee0a5b82f14398f7e878cc87be4eddb7d27859b8d97474f54e98c15db"
+    },
+    {
+      "path": "handoff/integration-contract.md",
+      "sizeBytes": 2317,
+      "sha256": "1803092b0d3ad7286dc0aaad2edfc95355f2758dd6c0adeda3714c615f565adc"
+    },
+    {
+      "path": "tokens/scientific-chart-tokens.css",
+      "sizeBytes": 4291,
+      "sha256": "707f46cc33b35702825ae5aacdea9969bfdbe2e4431495c422dda0e002b06089"
+    },
+    {
+      "path": "tokens/scientific-chart-tokens.json",
+      "sizeBytes": 5925,
+      "sha256": "79c89a1b9b6a0a0e63551df88f18ca3ccdb0ee637269eda8d26fb14cd201a4c3"
+    }
+  ]
+}

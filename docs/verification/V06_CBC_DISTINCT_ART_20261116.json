@@ -1,0 +1,21 @@
+{
+  "task": "T1d-CBC-distinct-art",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "archiveSha256": "0388641a489c069dd05f21bf5a5e6d37707544b237b93cd80ae16e2a8e16cfa0",
+  "manifestSha256": "cf5a791a77f8ced0f5b9a611b3a82caf612cf2b2e44e79a067e33c5fb0449fe5",
+  "sourceImagesVerified": 2,
+  "optimizedImageBytes": 112558,
+  "sourceWebPSha256": "e95b820fac2c9edcc7cbdf2c7e3f47f0a5da76b98d797eca8a7a7311f851d1fb",
+  "originalPng": "Verified source bytes/dimensions; retained in Library",
+  "publicPath": "/images/editorial/bloodwork/BVA-0036-complete-blood-count.webp",
+  "tests": [
+    "50 original source rows retained",
+    "16 mode/width/theme states and 200% text",
+    "10 unique original artwork IDs, CBC and Iron URLs distinct",
+    "Full 64/72px image fit, source drill-ins/focus, foreign owner withdrawal, zero writes",
+    "3 registry tests, TypeScript PASS",
+    "Production build PASS;26 other originals+8 Biology originals verified in source and built output"
+  ],
+  "scope": "No chart/science/permissions change; final independent RC review remains. Illustrated inline chart consolidation follows.",
+  "commitAuthorization": "Owner explicitly permits GitHub commits for next12 hours; existing development branch authorization remains. No new main/production/data authority."
+}

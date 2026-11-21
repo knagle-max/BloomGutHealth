@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-19",
+  "baseCommit": "239672e0649dfbb2aa14af3d12f92d733a7d2fc8",
+  "status": "IMPLEMENTED_AND_TESTED_SOURCE_ONLY",
+  "scope": "Candidate-only metadata retention, current-authority checks, persistent withdrawal across rollback; no raw model prose or private account records retained",
+  "checks": {
+    "candidateAndStorageTests": 44,
+    "integrationTests": 24,
+    "failures": 0,
+    "skips": 0,
+    "typescript": "PASS",
+    "productionBuildAndMediaAudits": "PASS"
+  },
+  "artifacts": [
+    {
+      "path": "server/gemini-science-research.ts",
+      "sha256": "c133660bac4e3b5f54394ae6608250b56a723b9ac4848a59fa5cdcb47c9adbac"
+    },
+    {
+      "path": "server/scientific-evidence-retrieval.ts",
+      "sha256": "bf3025b1f922d96620d7ea3d2eb6af2302611fd461d148e739b800af14087c99"
+    },
+    {
+      "path": "server/scientific-release-storage.ts",
+      "sha256": "9c1a1b3857c83a2661d2bd67ba1a3b4b4550f21fc091ac8bcaece268d6d34480"
+    },
+    {
+      "path": "shared/schema.ts",
+      "sha256": "b7a8f187ab345d1840718b552e9edbdc5ce3726555764a6e490ba231951df5ad"
+    },
+    {
+      "path": "tests/gemini-science-research.test.ts",
+      "sha256": "3e9bbe747cf681c81820a86a9621fb23b3e24433e9933693f10c7f90c734c607"
+    },
+    {
+      "path": "tests/scientific-evidence-retrieval.test.ts",
+      "sha256": "38a77bc0a202f75a2911f9ce779e978e6bc0c11fa1ab3d84775c8bae6956a8ce"
+    },
+    {
+      "path": "tests/scientific-release-storage.test.ts",
+      "sha256": "3c94e3459543cd4f3bb26a4ec392ed4f413924b10ac94192da61ea71b3db42e2"
+    },
+    {
+      "path": "migrations/proposed/0019_biology_scientific_candidate_receipts.sql",
+      "sha256": "7a528ceb3679ada007b833fb68bff5ff2cfe79f6cb22c5aeb6743043f8d4cbbf"
+    },
+    {
+      "path": "server/scientific-candidate-provenance.ts",
+      "sha256": "f50ba8c8ead212402bbb954663d00c404ef42a9e652fa258ceed40dcb6392751"
+    },
+    {
+      "path": "tests/fixtures/scientific-candidate.ts",
+      "sha256": "09e9b65bee07478ad61cb8de086da543d0eeabf62bd3b14e3edbc13a353a3e08"
+    },
+    {
+      "path": "tests/scientific-candidate-provenance.test.ts",
+      "sha256": "c125b92c1f80880a5634c10e45f72c00942917f3d395096577bc1db4895bc24d"
+    },
+    {
+      "path": "tests/scientific-candidate-storage.test.ts",
+      "sha256": "af6b3fe2c81c5ee3b911188f0b87fd6dfa60306fe2e165db1912ee32ba75023f"
+    }
+  ],
+  "limits": [
+    "Only synthetic fixtures and isolated in-process databases",
+    "No live database migration or consumer enablement",
+    "No scientific claim review, personal inference, clinical validation or full v0.6 RC acceptance",
+    "Remote Mac integration remains paused"
+  ],
+  "activation": {
+    "providerEnabled": false,
+    "networkChanged": false,
+    "migrationAppliedToHostedDatabase": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "task": "T2a-prepared-mass-transfer-remaining-paths",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "revises": "V06_DINNER_PORTION_REVIEW_20261116.json",
+  "change": "Practical PlanDay and Athlete fueling links retain exact prepared recipe masses, matching the already-corrected Today/weekly paths. No target/ranking/nutrient algorithm changed.",
+  "red": "Actual sourced choice112.5g encoded as113g",
+  "green": "All three source recipe links in both routes and their actual composer inputs preserve112.5g; no consumption writes",
+  "tests": [
+    "Actual App source-derived practical/Athlete link/composer browser PASS",
+    "20 Athlete/practical constraint/Today planner tests PASS",
+    "TypeScript PASS"
+  ],
+  "integrationQualification": {
+    "sourceOnly": "PASS actual encrypted source review/delete/reimport/date conflict/lost-response preservation",
+    "datedPanel": "PASS34-row source,48 display states,31-row/7candidate duplicate workflow and two-owner isolation",
+    "referenceOverlay": "PASS original/verified comparison/one-sided/SK/ON/None/same-date separate reports/mode/account/reload-original;48 display states. Reload heading follows canonical Bloodwork destination.",
+    "reportManagement": "PASS70 original facts/three sources,96 display states,source\u2194chart navigation,metadata corrections and account withdrawal",
+    "privateContext": "PASS private source context/label/generic estimates/zero/unknown/reload/delete/foreign owner,all display states"
+  },
+  "deployment": "Pending exact source publication/CI/preview qualification",
+  "limitations": "Synthetic engineering tests; full T2a substitution/protected-goal and whole-panel Response work still tracked, independent RC/device review not claimed."
+}

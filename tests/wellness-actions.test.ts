@@ -116,3 +116,18 @@ test("actual source-scoped action APIs preserve ordinary settings JSON and requi
   }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
  });
 });
+test('bounded sources never hide unrelated choices or claim an empty movement day; incomplete choice history only stops new choice writes',async()=>{
+ await fixture(async({pg,choices,experience}:any)=>{
+  const before=await choices.view('a',day),firstCommand=command(before),receipt=await choices.create('a',firstCommand);
+  const current=await experience.createActivity('a',activitySchema.parse({title:'Current-day source outside loaded page',startedAt:now.toISOString(),minutes:null}),randomUUID());
+  const older=activitySchema.parse({title:'Synthetic older record',startedAt:'2026-11-06T12:00:00Z',minutes:null});
+  const payload=encryptPrecision(older,'a');
+  await pg.query("INSERT INTO experience_records(id,user_id,kind,encrypted_payload,created_at,updated_at) SELECT 'bounded-movement-'||i,'a','activity',$1,'2030-01-01'::timestamp,'2030-01-01'::timestamp FROM generate_series(1,6000) i",[payload]);
+  const partial=await choices.view('a',day);assert.equal(partial.choiceHistoryComplete,true);assert.equal(partial.history.length,1,'A large activity history cannot displace saved choices');assert.equal(partial.actions.find((row:any)=>row.action.id==='balanced-meal-pattern').choice.id,receipt.id);assert.equal(partial.actions.find((row:any)=>row.action.id==='balanced-meal-pattern').eligible,true);assert.equal(partial.movementSources.status,'unavailable');assert.equal(partial.movementSources.limited,true);assert.deepEqual(partial.movementSources.observations,[]);assert.equal(partial.actions.find((row:any)=>row.action.id==='familiar-movement').eligible,false,'Unseen current-day activity must not become another movement suggestion');assert.deepEqual(await choices.create('a',firstCommand),receipt);
+  assert.equal((await choices.view('b',day)).movementSources.limited,false);
+  await pg.query("DELETE FROM experience_records WHERE user_id='a' AND id LIKE 'bounded-movement-%'");const complete=await choices.view('a',day);assert.equal(complete.movementSources.status,'available');assert.equal(complete.movementSources.limited,false);assert.deepEqual(complete.movementSources.observations.map((row:any)=>row.sourceId),[current.id]);
+  const routine=command(complete,'later','record-usual-meal');await choices.create('a',routine);
+  await pg.query("INSERT INTO experience_records(id,user_id,kind,encrypted_payload,created_at,updated_at) SELECT 'bounded-choice-'||i,'a','wellness-choice',$1,'2030-01-01'::timestamp,'2030-01-01'::timestamp FROM generate_series(1,2000) i",[encryptPrecision(receipt.payload,'a')]);
+  const incomplete=await choices.view('a',day);assert.equal(incomplete.choiceHistoryComplete,false);assert.equal(incomplete.history.length,2000);assert.ok(incomplete.actions.every((row:any)=>!row.eligible));assert.equal(incomplete.primaryActionId,null);await assert.rejects(choices.create('a',{...firstCommand,intentId:randomUUID()}),(error:any)=>error.code==='not-eligible');assert.deepEqual(await choices.create('a',firstCommand),receipt,'An exact completed receipt remains recoverable without reactivating a new event');
+ });
+});

@@ -1,0 +1,24 @@
+{
+  "task": "V06-M2-DIETARY-VITAMIN-D-REFERENCE",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "140e10b3",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+  "sourceRetrievedOn": "2026-11-18",
+  "sourceLocation": "Table1 VitaminD adult rows and footnotes **/4",
+  "change": [
+    "Four coalesced adult rows in source micrograms/day: EAR10 at19+, RDA15 at19\u201370 and20 at71+, total-intake UL100 at19+. These general references assume minimal sun exposure.",
+    "Reuse owned current Profile possible-age matcher. Age70\u201371 preserves common EAR/UL and abstains on differing RDA. Shared reference sex category does not invent sex-specific requirements.",
+    "Keep dietary vitaminD separate from blood25-OH/1,25-dihydroxy measurements, IU and individual D2/D3 form conversions. No treatment dose, blood prediction or intake adequacy calculated.",
+    "Per-nutrient unit/source schema guard retains original mg/day references; existing recorded-source renderer derives supported nutrients from one registry. Original26rows unchanged."
+  ],
+  "verification": {
+    "focused": "12/12 source/schema/eligibility tests PASS including incompatible mg/IU/nmol/pmol units and age70\u201371 boundary.",
+    "apiAudits": "9/9 existing account-scoped encrypted-context API and refreshed API/capability/Biology audit tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile male36 RDA15\u00b5g/day, female72 RDA20, male70\u201371 noRDA/commonUL100; source no-blood-conversion explanation. Existing C/Mg/calcium/potassium, history/outage/retry/life-stage/account/deep-link and32responsive mode/theme/width/zoom states PASS;0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media verification PASS."
+  },
+  "limits": [
+    "Exact commit CI/review Render pending.",
+    "No production query/write/manual deploy, clinical assessment or independent human/device acceptance. Full M2/C2/Core/RC unfinished."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "task": "V06-M2-recorded-B6-overlap",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED",
+  "implementation": "Existing canonical confirmed supplement intake \u2192 source view \u2192 nutrient coverage; no new store, API, or recommendation engine. Two distinct saved labels with positive native B6 mg expose a scoped overlap only in selected source details.",
+  "admission": {
+    "source_fact": "SOURCE_FACT_READY",
+    "engineering": "ENGINEERING_TESTED",
+    "consumer_promotion": "NOT_RELEASED: detail-only pending supported applicability and interpretation",
+    "independent_science": "NOT_CLAIMED",
+    "hosted": "PENDING_EXACT_SHA"
+  },
+  "verification": [
+    "11 focused unit tests pass, including saved/planned, unknown/zero, unsupported units/compound mass, duplicate label, date, source revision/deletion and account controls",
+    "Actual App/owned HTTP/encrypted SQL browser flow passes:175\u2192125\u219275mg; removing remaining second label retracts overlap while known subtotal remains; source503 retracts and retry restores",
+    "Existing32 reference responsive/theme/zoom states plus8 overlap layouts at320/390/768/1440 light/dark200% pass",
+    "Typecheck and production build pass;8 existing exposure/source coverage audits pass"
+  ],
+  "limits": [
+    "Not complete-day or usual intake; food/unrecorded products excluded",
+    "Distinct saved label identities do not prove distinct physical products",
+    "Source arithmetic is not independently reviewed clinical interpretation, personal safety/adequacy or prescribed-dose advice",
+    "BIO-VALUE04 is partially implemented; remaining meaningful reference applicability/evidence/goal/action admission stays active"
+  ],
+  "source_files": [
+    "shared/nutrient-coverage.ts",
+    "shared/scientific-contracts.ts",
+    "client/src/components/RecordedIntakeSources.tsx",
+    "tests/recorded-b6-overlap.test.ts",
+    "scripts/qa/lib/vitamin-b6-reference-flow.mjs"
+  ]
+}

@@ -18,3 +18,29 @@ bloom-coach-*.png
 
 # Local synthetic QA scratch output; curated evidence lives under docs/review.
 /work/
+
+# Private scientific work stays outside Git; these are defense in depth only.
+# Existing tracked files/history require separate sensitive-data review.
+.venv*/
+.science-private/
+local-datasets/
+personal-uploads/
+simulation-outputs/
+private-models/
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.log
+*.pem
+*.key
+
+# Private local experiment and operator scratch directories (not shared assets).
+/private-experiments/
+/private-credentials/
+/local-secrets/
+/local-logs/
+/tmp/
+*.tmp
+*.temp

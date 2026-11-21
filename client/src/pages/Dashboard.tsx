@@ -1,3 +1,4 @@
+import ActivityRoutines from '@/components/ActivityRoutines';
 import { bloomCopy } from "@/content/bloomCopy";
 import {reportDateText} from "@shared/report-dates";
 import {useLocalClock} from "@/lib/use-local-clock";
@@ -90,6 +91,7 @@ export default function Dashboard() {
 
       <TodayFocus now={now} mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={checkingMeals} journalError={mealError} />
       <TodayFoodSummary summary={summary} loading={checkingMeals} error={mealError} energyUnit={settings.displayUnits.energy}/>
+      <ActivityRoutines/>
       <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={checkingMeals} unavailable={mealError} />
       {(checkingMeals || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>

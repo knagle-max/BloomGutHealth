@@ -1,3 +1,4 @@
+import {LabReportOverlayProvider} from "@/lib/lab-report-overlays";
 import { ExperienceProvider, useExperience } from "@/lib/experience";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Switch, Route, useLocation, Redirect } from "wouter";
@@ -206,12 +207,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <LabReportOverlayProvider>
         <ExperienceProvider>
         <TooltipProvider>
           <AppContent />
           <Toaster />
         </TooltipProvider>
         </ExperienceProvider>
+        </LabReportOverlayProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

@@ -14,9 +14,9 @@ export async function readProfileMeasurementSource(database:any,id:string,values
  if(!profileMeasurementFieldsMatch(fields,values))throw Error("Profile entry source does not match saved values");
  return{available:true,revision:row.revision,fields};
 }
-export async function updateProfileMeasurementSource(tx:any,id:string,current:any,next:any,write?:ProfileMeasurementWrite){
+export async function updateProfileMeasurementSource(tx:any,id:string,current:any,next:any,write?:ProfileMeasurementWrite,birthYear?:number|null){
  const available=await profileMeasurementStorageAvailable(tx);
- if(!available){if(write)throw new ProfileMeasurementUnavailable();return;}
+ if(!available){if(write||birthYear!==undefined)throw new ProfileMeasurementUnavailable();return;}
  const source=await readProfileMeasurementSource(tx,id,current);
  if(!source.available)throw new ProfileMeasurementUnavailable();
  if(write&&write.expectedRevision!==source.revision)throw new ProfileRevisionConflict();
@@ -26,6 +26,7 @@ export async function updateProfileMeasurementSource(tx:any,id:string,current:an
   if(current[column]!==next[column])delete fields[key];
  }
  Object.assign(fields,write?.fields??{});
+ if(birthYear!==undefined){if(birthYear===null)delete fields.birthYear;else fields.birthYear=birthYear;}
  // No row/key required for old accounts until actual original tokens are captured.
  if(source.revision==="none"&&!Object.keys(fields).length)return;
  if(JSON.stringify(fields)===JSON.stringify(source.fields))return;

@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-20",
+  "scope": "P3 encrypted SQL source to private investigator to explicit review admission composition",
+  "status": "LOCAL_SYNTHETIC_ENGINEERING_PROOF",
+  "checks": {
+    "firstAttempt": "FAIL: incomplete synthetic lab payload excluded by canonical validator",
+    "fixtureCorrection": "Supply complete canonical lab source fields; no runtime validator relaxed",
+    "targetedIntegration": "PASS",
+    "finalCombinedFollowup": {
+      "passed": 14,
+      "failed": 0
+    },
+    "typescript": "PASS",
+    "productionBuildAndMedia": "PASS",
+    "integratedWorkspaceBaseline": {
+      "tests": 1014,
+      "passed": 1014,
+      "failed": 0,
+      "skips": 0,
+      "newSourceBindingAndPipeline": "Covered separately by14 final focused tests; not falsely included in this earlier run"
+    }
+  },
+  "verifiedBoundaries": [
+    "Actual encrypted precision SQL and owned microbiome SQL readers feed canonical snapshot",
+    "Only current owner's lab and organism facts enter the private synthetic engine",
+    "Public reviewed-evidence retrieval fixture stays distinct from private observations",
+    "Engine output remains research-only, with null consumer interpretation",
+    "Model/client review flags cannot self-approve; exact trusted synthetic review digest required",
+    "Admitted fixture keeps exact source revisions and has no clinical meaning or practical action",
+    "Different account and withdrawn review cannot reuse admission",
+    "Source deletion during engine work abstains and invalidates earlier candidate",
+    "Other-account sources survive owner source deletion",
+    "Evidence withdrawal and permission revocation prevent further engine invocation"
+  ],
+  "notEstablished": [
+    "Actual private reasoning engine installation or isolation",
+    "Independent scientific review or truth of generated explanations",
+    "Unfamiliar held-out usefulness or clinical performance",
+    "Consumer release or public-provider personal-data permission"
+  ],
+  "activation": {
+    "newRuntimeService": false,
+    "networkConfigurationChanged": false,
+    "realModelOrProviderInvoked": false,
+    "personalData": false,
+    "deployed": false
+  },
+  "sourceBindingCorrection": {
+    "redRegression": "PASS_REPRODUCED_DEFECT_BEFORE_FIX",
+    "scope": "Uninstalled review-admission adapter only",
+    "priorBehavior": "Known observation ID could carry caller-relabelled source ID/revision/date",
+    "correction": "Require a current canonical source-reference map, exact ID coverage and exact source/revision/date match; derive returned references from that canonical map",
+    "regressions": [
+      "Fabricated source",
+      "Fabricated revision",
+      "Relabelled source date",
+      "Missing canonical map",
+      "Duplicate canonical fact",
+      "Unknown canonical fact",
+      "Partial ID coverage",
+      "Invalid canonical date"
+    ],
+    "doesNotProve": "Truth of the reviewed prose or independent reviewer authenticity"
+  },
+  "artifacts": [
+    {
+      "path": "server/investigation-candidate-admission.ts",
+      "sha256": "d445997f988bb896e68dfe1a2827d7c4eb066c730ab4646b445e04b0c464703f"
+    },
+    {
+      "path": "tests/investigation-candidate-admission.test.ts",
+      "sha256": "9ced7fdfa43d0f50e5c104a368b215dbc0ee7aeae91f33c97186c279d0fc1236"
+    },
+    {
+      "path": "tests/private-investigation-pipeline.test.ts",
+      "sha256": "aa227776930397a39ecf01f469dc5a6e29082cbdfb2d4f8be994d00079037f08"
+    }
+  ]
+}

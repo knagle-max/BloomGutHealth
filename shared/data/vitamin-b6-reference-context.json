@@ -1,0 +1,73 @@
+{
+  "version": "vitamin-b6-source-context-2026-11-18-v1",
+  "checkedOn": "2026-11-18",
+  "sourceOriginalBytesAcquired": false,
+  "entries": [
+    {
+      "id": "nasem-1998-b6-adult-ul",
+      "authority": "NASEM / Institute of Medicine",
+      "referenceEdition": "1998",
+      "sourcePublishedOn": "2023-06-16",
+      "sourceDatePrecision": "day",
+      "sourceTitle": "NIH ODS Vitamin B6 health professional fact sheet, Table 3",
+      "sourceUrl": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "sourceBasis": "Official NIH summary of the 1998 reference.",
+      "kind": "reference_ul",
+      "amount": 100,
+      "unit": "mg/day",
+      "ageMinYears": 19,
+      "intakeScope": "total-food-and-supplement-intake",
+      "note": "The older adult UL covers food and supplements. It is not an intake goal or proof of safe use below this amount."
+    },
+    {
+      "id": "efsa-2023-b6-adult-ul",
+      "authority": "EFSA NDA Panel",
+      "referenceEdition": "2023",
+      "sourcePublishedOn": "2023-05-17",
+      "sourceDatePrecision": "day",
+      "sourceTitle": "EFSA Journal 2023;21(5):8006, section 3.7",
+      "sourceUrl": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2023.8006",
+      "sourceBasis": "Original scientific opinion, DOI 10.2903/j.efsa.2023.8006.",
+      "kind": "reference_ul",
+      "amount": 12,
+      "unit": "mg/day",
+      "ageMinYears": 18,
+      "intakeScope": "total-food-and-supplement-intake",
+      "note": "EFSA's adult UL includes dietary and supplemental intake and all B6 vitamers, including during pregnancy and lactation. It is not a personal dose recommendation."
+    },
+    {
+      "id": "hc-2026-06-b6-nhp-warning",
+      "authority": "Health Canada",
+      "referenceEdition": "June 2026 safety brief",
+      "sourcePublishedOn": "2026-06",
+      "sourceDatePrecision": "month",
+      "sourceTitle": "Health Product InfoWatch: June 2026, Vitamin B6 health products and peripheral neuropathy",
+      "sourceUrl": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medeffect-canada/health-product-infowatch/june-2026.html",
+      "sourceBasis": "Official safety brief describing the natural-health-product monograph update.",
+      "kind": "health_product_warning",
+      "amount": 10,
+      "operator": ">=",
+      "unit": "mg/day",
+      "intakeScope": "natural-health-product-labelled-daily-dose",
+      "note": "The notice describes a possible association with peripheral neuropathy and a warning for B6-containing natural health products. This is not a universal UL or a toxicity diagnosis."
+    },
+    {
+      "id": "hc-pasf-2609-b6-proposal",
+      "authority": "Health Canada",
+      "referenceEdition": "PASF-2609, October 22, 2026",
+      "sourcePublishedOn": "2026-10-22",
+      "sourceDatePrecision": "day",
+      "sourceTitle": "Proposal to modify the List of Permitted Supplemental Ingredients (vitamin B6)",
+      "sourceUrl": "https://www.canada.ca/en/health-canada/services/food-nutrition/legislation-guidelines/acts-regulations/notices-proposal-notices-modification/list-permitted-supplemental-ingredients-vitamin-b6.html",
+      "sourceBasis": "Notice of Proposal, Table 1 and implementation/enforcement section; consultation closes January 20, 2027.",
+      "kind": "regulatory_proposal",
+      "status": "proposal",
+      "amount": 10,
+      "unit": "mg/serving",
+      "cautionAbove": 2,
+      "intakeScope": "supplemented-foods-including-caffeinated-energy-drinks",
+      "effectiveFrom": null,
+      "note": "Proposes a 10 mg per-serving maximum and cautionary labelling above 2 mg per serving. This is a supplemented-food proposal, not an enacted universal daily-intake limit."
+    }
+  ]
+}

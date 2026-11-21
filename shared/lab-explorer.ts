@@ -1,3 +1,5 @@
+import {labSourceAnalyteFamily,type PsaSourceFamilyIdentity} from './lab-source-identity';
+import {additionalLabMarkers,type AdditionalLabMarkerId} from './additional-lab-markers';
 import type {PrecisionReport,SourceOnlyLab,MarkerId} from './precision-nutrition';
 import {markerDefinitions} from './precision-nutrition';
 import {labMarkerSearchTerms} from './lab-paste';
@@ -9,11 +11,12 @@ export const labCategories=[
  {id:'liver',name:'Liver & biliary'}, {id:'kidney',name:'Kidney & electrolytes'},
  {id:'blood-count',name:'Complete blood count'}, {id:'nutrients',name:'Iron & blood nutrients'},
  {id:'hormones',name:'Hormones & thyroid'}, {id:'inflammation',name:'Inflammation & immunity'},
- {id:'bone',name:'Bone & micronutrients'}, {id:'other',name:'Other / needs identification'},
+ {id:'bone',name:'Bone & micronutrients'}, {id:'other',name:'Other'},
 ]as const;
 export type LabCategoryId=typeof labCategories[number]['id'];
-const navigation:Record<MarkerId,readonly LabCategoryId[]>={ldl:['heart'],apob:['heart'],triglycerides:['heart'],hdl:['heart'],alt:['liver'],ast:['liver'],ggt:['liver'],glucose:['sugar'],hba1c:['sugar'],b12:['nutrients'],vitamin_d:['bone'],ferritin:['nutrients'],folate:['nutrients'],homocysteine:['nutrients','heart']};
-export type LabExplorerEntry={id:string;name:string;categories:readonly LabCategoryId[];trend?:PrecisionReport['trends'][number];pending:PrecisionReport['pendingLabs'];sourceOnly:(SourceOnlyLab&{id:string})[];recordCount:number;searchKey:string};
+const addedNavigation=Object.fromEntries(additionalLabMarkers.map(marker=>[marker.id,marker.categories])) as unknown as Record<AdditionalLabMarkerId,readonly LabCategoryId[]>;
+const navigation:Record<MarkerId,readonly LabCategoryId[]>={...addedNavigation,ldl:['heart'],apob:['heart'],triglycerides:['heart'],hdl:['heart'],alt:['liver'],ast:['liver'],ggt:['liver'],glucose:['sugar'],hba1c:['sugar'],b12:['nutrients'],vitamin_d:['bone'],ferritin:['nutrients'],folate:['nutrients'],homocysteine:['nutrients','heart']};
+export type LabExplorerEntry={id:string;name:string;categories:readonly LabCategoryId[];trend?:PrecisionReport['trends'][number];pending:PrecisionReport['pendingLabs'];sourceOnly:(SourceOnlyLab&{id:string})[];recordCount:number;searchKey:string;familyIdentity?:PsaSourceFamilyIdentity};
 const nonSearchCharacter=new RegExp('[^\\p{L}\\p{N}]','gu');
 export const normalizeLabSearch=(text:string)=>text.toLowerCase().replace(nonSearchCharacter,'');
 /** Read projection: shares canonical trends/records, does not copy or recalculate history. */
@@ -27,6 +30,6 @@ export function labExplorerEntries(report:Pick<PrecisionReport,'trends'|'pending
  }
  // Exact original labels group source records for browsing, not analyte equivalence.
  const labels=new Map<string,(SourceOnlyLab&{id:string})[]>();for(const row of report.sourceOnlyLabs||[]){const group=labels.get(row.reportedAnalyte)||[];group.push(row);labels.set(row.reportedAnalyte,group);}
- for(const [name,sourceOnly]of Array.from(labels.entries())){const id='source:'+sourceOnly.map(r=>r.id).sort()[0];entries.push({id,name,categories:['other'],pending:[],sourceOnly,recordCount:new Set(sourceOnly.map(r=>r.id)).size,searchKey:normalizeLabSearch([name,...sourceOnly.map(r=>r.sourceInput.text)].join(' '))});}
+ for(const [name,sourceOnly]of Array.from(labels.entries())){const id='source:'+sourceOnly.map(r=>r.id).sort()[0],familyIdentity=labSourceAnalyteFamily(name)||undefined;entries.push({id,name:familyIdentity?.name||name,categories:['other'],pending:[],sourceOnly,recordCount:new Set(sourceOnly.map(r=>r.id)).size,searchKey:normalizeLabSearch([name,familyIdentity?.name||'',...sourceOnly.map(r=>r.sourceInput.text)].join(' ')),...(familyIdentity?{familyIdentity}:{})});}
  return entries;
 }

@@ -1,0 +1,60 @@
+{
+  "task": "V06-M3-CONFIRMED-SUPPLEMENT-READER",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
+  "baseCommit": "872443ab01522a14dcfeac9dc6893f274f816e91",
+  "integratedArchitectSource": "f8af579a10ec61cfa91cf1da06a053d0b52e1e2f",
+  "phase": "Compatibility reader first; ordinary/dedicated ingestion producers are not active. Full M3 remains open.",
+  "implementation": [
+    "Version1 strict confirmed-taken value with exact frozen label, dose serving, actual vs confirmation time, source-native mineral basis, unknown formulation fields, immutable original/current and bounded correction snapshots. Reject orphan/repeated/contradictory correction history.",
+    "Use existing encrypted Experience records and existing schema. No new nutrition/intake table, optimizer, inference model or migration. New kind is explicit supplement-intake; generic workspace consumers exclude it.",
+    "Projection uses canonical label scaling, only current value once. Original/history are provenance, never extra doses. Unknown/compound mineral basis or absent label-serving basis stays unknown; other native label declarations not converted/added again.",
+    "Quality reviews and schedules do not validate as confirmed ingestion. A confirmation made before takenAt never matures into actual ingestion with passing time. Owner IDs and exact record/source date remain separate from retrieval/formulation dates.",
+    "Generic create/edit/delete denied400 for intake records; spent-intent kind hidden and protected from generic delete, excluded before workspace count limits/account export. Future dedicated controls must enforce source review, current lifecycle, CAS/retry and actual erasure semantics.",
+    "Private explicit-kind reader, reload and source export supported. Default reads do not silently pass new intake records to older food/activity/wellbeing consumers."
+  ],
+  "verification": {
+    "regression": "9/9 tests PASS: source projection + actual encrypted reader/HTTP/auth/owner/no-store/generic producer denial, existing Experience storage/API/export/erasure.",
+    "finalFocused": "8/8 source/export/audit tests PASS after missing serving-basis and history guards.",
+    "integratedAssets": "8/8 asset-registry/source reader/account export/API tests PASS after incoming Architect requests.",
+    "types": "Final npm run check PASS",
+    "build": "Final npm run build PASS with original byte/media verifiers",
+    "sourceAudits": "API, capability and Biology inventories refreshed.52 capability IDs/279 referenced sources,785 scanned code/test files. Review states remain required/draft, not clinical approval.",
+    "liveWrites": "NONE; only synthetic PGlite fixtures. No production health data queried or changed.",
+    "ui": "No new UI in reader phase; actual controls/browser acceptance is next, not claimed here."
+  },
+  "incomingAssetRequests": {
+    "addedIDs": "BVA-0053\u2013BVA-0077",
+    "count": 25,
+    "state": "Briefed",
+    "filesDelivered": 0,
+    "proof": "Compared parsed actual canonical registry/projection against872443ab: all original52 objects and all runtime bindings exactly unchanged. Regenerated only type/ID projection to77 permanent IDs. No new artwork, taxonomy approval, mapping activation or art substitution."
+  },
+  "remaining": [
+    "Deploy/qualify compatibility reader, then implement dedicated reviewed confirmed-taken create/correct/remove controls with exact replay/CAS and source snapshot history.",
+    "All new writes must bind current account/settings lifecycle: explicit all-Experience erasure destroys that epoch, so stale requests cannot recreate erased intake. Individual deletion must scrub source/health content and retain only spent opaque intent.",
+    "Join consumed contributions once by canonical event identity; never count review/schedule/original/history as extra intake or infer duplicate events from product similarity.",
+    "Actual UI/HTTP/SQL two-intake/correction/delete/retry/clear/owner and 320/390/tablet/desktop/theme/zoom/keyboard tests; M2 scientific reference eligibility/form applicability, broader B6 source/divergence and final RC remain open."
+  ],
+  "publication": {
+    "readerCommit": "070c739b69fa8b38c940f4afc4274295af4376b1",
+    "status": "VERIFIED_ON_REVIEW_BRANCH",
+    "qualifiedCommit": "3b41fa0343d5d47d8a471d0873a8aa977ec775dd",
+    "exactCi": {
+      "run": 44217409665,
+      "conclusion": "success"
+    },
+    "render": {
+      "status": "live",
+      "deploy": "dep-dbug3cei0phs73b06d5g",
+      "finishedAt": "2026-11-18T01:40:29Z"
+    }
+  },
+  "unknownSourceAmendment": {
+    "status": "VERIFIED_ON_REVIEW_BRANCH",
+    "reason": "Actual ingestion must remain recordable when dose quantity or source composition is unknown; never force a fabricated amount/zero/label.",
+    "contract": "Nullable servings and label; missing label requires explicit user-reported name/optional unit with mineral basis unknown. Unknown quantity yields unknown contribution even for source-reported zero. Source-unavailable differs from an unsupported/corrupt record.",
+    "readerProtocolHeader": "X-Bloom-Supplement-Reader: supplement-intake-v1 on authenticated explicit-kind reads",
+    "verification": "8 focused source/API/audit tests + types/build PASS; actual encrypted SQL/HTTP/export/reload preserves an unlabelled null-quantity event and hides it from generic consumers.",
+    "writers": "Reader qualification complete before subsequent dedicated writer/UI publication; phase descriptions above remain historical."
+  }
+}

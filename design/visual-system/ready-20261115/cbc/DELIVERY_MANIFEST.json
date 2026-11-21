@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "BVA-0036",
+  "name": "Complete blood count category artwork",
+  "createdUTC": "2026-11-16T01:28:27.368502+00:00",
+  "purpose": "Distinct square thumbnail for Bloodwork systems > Complete blood count category",
+  "sourceType": "AI-generated conceptual editorial illustration; not patient data or diagnostic evidence",
+  "files": [
+    {
+      "path": "originals/BVA-0036-complete-blood-count.png",
+      "bytes": 1869843,
+      "sha256": "2cd43741460dcac4668a021d733dbc439769bbe18bf711d17d678df6ae770ef0",
+      "format": "png",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "path": "webp/BVA-0036-complete-blood-count.webp",
+      "bytes": 112558,
+      "sha256": "e95b820fac2c9edcc7cbdf2c7e3f47f0a5da76b98d797eca8a7a7311f851d1fb",
+      "format": "webp",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    }
+  ]
+}

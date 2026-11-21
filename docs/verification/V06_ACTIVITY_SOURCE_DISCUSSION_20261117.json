@@ -1,0 +1,91 @@
+{
+  "task": "V06-C2-ACTIVITY-SOURCE-DISCUSSION",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "baseCommit": "5340f473",
+  "change": [
+    "Existing owned activity chronology now supplies narrowly labelled general discussion context for triglycerides and ALT, linked to actual current source/event IDs and the existing canonical reference. No new evidence graph, source ledger, observations, causal weights or clinical decision rule.",
+    "Recorded activity is not automatically increased activity, adherence, verified intensity or a cause. No logs stays unknown. Unchanged/rising TG explicitly limits a simplistic success story. Other analytes retain existing source-faithful chronology/education; no TG rule is borrowed.",
+    "Practical existing activity action appears before secondary date/log details. Exact dates, durations/unknowns, occurrence vs log time, original reference and general guidance remain available. Source/method/date withdrawal, errors/retry, corrections/deletion and account change retract dependent discussion.",
+    "Expanded desktop zoom test exposed1024px/200% category-grid overflow1028px. Replaced viewport two-column breakpoint with42rem actual-content container query. Original category artwork, chart/data, tokens, interactions and root overflow assertion preserved."
+  ],
+  "tests": [
+    "21 focused activity/panel/family tests PASS: exact source/event IDs, actual canonical citation, no input mutation, unknown history, unchanged/rising TG derived from real source pairs, ALT-specific reference, unsupported marker and stale date/identity/compatibility withdrawal.",
+    "Actual App authenticated-source browser PASS: original typed walking/unknown duration/late log date; specific ALT vs TG discussion, current deletion\u2192unknown, outage/withdrawal/retry, original-date withdrawal, other owner, original activity action/reference and no writes.20 layouts at320/390/768/1024/1440, both modes/themes,200% zoom; same1024/200% failure is now green.",
+    "Full existing grouped explorer actual-App regression PASS:92labels\u00d76original records, zero/trace/unknown units, source links, aliases/search, one chart/deep URL/reload/Back/focus, selected-source withdrawal,5widths/both modes/themes, legacy/offline/network/owner guards, no writes.",
+    "Final TypeScript, source API/capability/Biology audits and production build PASS. Biology audit refreshed tracked-file count and QA source hash only; no scientific content/review status or asset bytes changed.",
+    "Prior milestone full local integrated unit/SQL suite PASS811/811 at saved-explanation snapshot5340f473. This subsequent activity change has the21 scoped tests above; next exact CI includes four added tests. Do not claim a new full-suite result before it runs.",
+    "Complete local production-navigation/media harness PASS80 states across10routes,28 raster/SVG/terminal/reserved/recovery cases, actual menu keyboard/200% text/reduced motion, no mutations. Reserved/no-source slots retain reserved state and never borrow art during recovery."
+  ],
+  "sourceChecks": {
+    "preparedAt": "2026-11-17",
+    "scope": "Next C2 recorded activity discussion-context slice; source reading, not implementation or clinical approval. Reuse canonical Biology citations and existing labActivityContext.",
+    "sources": [
+      {
+        "url": "https://medlineplus.gov/lab-tests/triglycerides-test/",
+        "canonicalMarker": "triglycerides",
+        "retrieval": "Direct page text retrieved2026-11-17 through web tool",
+        "support": "General patient test reference lists insufficient exercise among multiple factors associated with higher triglycerides. Eating pattern, diseases, alcohol and medicines are other factors.",
+        "permittedUse": "General discussion context for actual saved activity between confirmed comparable source dates; no claim that exercise increased, lowered this person\u2019s value, or accounts for a percentage of change.",
+        "action": "Review or record actual activity using the existing activity route. No new exercise dose, calorie target or prescription."
+      },
+      {
+        "url": "https://medlineplus.gov/lab-tests/alt-blood-test/",
+        "canonicalMarker": "alt",
+        "retrieval": "Direct page text retrieved2026-11-17 through web tool",
+        "support": "General patient test reference identifies intense exercise among factors that can affect ALT; other liver results and clinical context remain relevant.",
+        "permittedUse": "Use current canonical ALT higher/discussion text with source citation. Generic recorded activity does not prove intensity, injury or cause; no benefit/organ recovery inferred.",
+        "action": "Review collection and activity context; no instruction to stop exercise or medicine."
+      }
+    ],
+    "unretrieved": [
+      {
+        "url": "https://doi.org/10.1016/j.jacc.2025.11.016",
+        "result": "Publisher redirect inaccessible/nonretryable through web tool; no full guideline retrieval or new clinical threshold claim."
+      }
+    ],
+    "constraints": [
+      "No second evidence registry/model or new observation write.",
+      "No interval can stand in for a reviewed clinical decision rule.",
+      "No fabricated exposures/intensity/frequency/adherence; same-day/future/outside-window exclusion unchanged.",
+      "Unknown source date/assay/units/comparability withdraws personal chronology.",
+      "Source correction/deletion, activity update/delete and account switch recompute existing derived view.",
+      "No generalization to HbA1c/iron-CBC from TG/ALT evidence. Broader Response15 remains partial."
+    ]
+  },
+  "artifacts": [
+    "/workspace/bloom-activity-discussion-unit.log",
+    "/workspace/bloom-activity-discussion-types.log",
+    "/workspace/bloom-activity-discussion-browser.log",
+    "/workspace/bloom-activity-discussion/",
+    "/workspace/bloom-activity-discussion-explorer.log",
+    "/workspace/bloom-activity-discussion-final-build.log",
+    "/workspace/bloom-activity-discussion-final-audits.log",
+    "/workspace/bloom-m1-full-parity.log",
+    "/workspace/bloom-m1-full-parity/parity.json"
+  ],
+  "visualReview": {
+    "engineering": "PASS actual mobile/desktop/zoom render review of this source panel; practical action before detailed chronology, original category imagery/control fidelity retained.",
+    "physicalVoiceOverAndIndependentDesign": "NOT_TESTED",
+    "headerFixture": "No primary hero redesign or direct new header-reference comparison claimed."
+  },
+  "remaining": "Full Response15 multi-exposure/analyte-specific hypothesis/action and reviewed clinical relevance remain partial; no personalized clinical effect or integrated RC claim. Continue remaining Core source/guidance work; advanced clinical/causal exposure gates stay scoped.",
+  "privacy": "Only synthetic local accounts/fixtures and public source-reference reading. No production data write, private health query, main merge/manual deployment or messages to others.",
+  "integrationRepair": {
+    "parentCommit": "7d3f88a664ce4cea4966dceca101a6634b66ad8c",
+    "workflow": 44150421590,
+    "result": "Full local CI browser steps, unit step, build and exact isolated hosted persistence passed; deployed media harness failed at its obsolete assumption that a no-source reserved hero enters failed state.",
+    "repair": "Use actual source-aware reserved/svg/failed lifecycle in forced raster/all/recovery checks. Preserve original image failure/recovery assertions, geometry, semantic ordering, all IDs and no borrowed art. Full local80-state/28-case harness PASS; next exact hosted CI pending."
+  },
+  "qualification": {
+    "commit": "408cc4fd62ad2c61a885f3f925cd31305c982e55",
+    "workflow": 44155187400,
+    "conclusion": "success",
+    "unitTests": 815,
+    "unitFail": 0,
+    "unitSkipped": 0,
+    "exactHostedChecks": "All3 PASS: isolated persistence, navigation/media and Biology media/source recovery",
+    "render": "live",
+    "deploy": "dep-dbuabru1egvs739h4j40",
+    "liveAt": "2026-11-17T19:09:56Z"
+  }
+}

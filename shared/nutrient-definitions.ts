@@ -30,3 +30,9 @@ export function reviewedNutrientName(key:string,name:string,source:ReturnType<ty
  if(source==="form-not-recorded"&&key==="folate_ug")return "Folate (basis unconfirmed)";
  return name;
 }
+
+/** Source-view identity only. No generic-food mapping or new generic producer
+ * is enabled without inspected authority metadata. Existing21 fields stay put. */
+export const labelVitaminB6Definition=Object.freeze({key:'vitamin_b6_mg',analyteId:'bloom:nutrient:vitamin-b6',name:'Vitamin B6',amountUnit:'mg',chemicalForm:null,activityUnit:null,sourceBasis:'Explicit Vitamin B6 nutrient declaration in milligrams per captured label serving; individual vitamers and compound-equivalent mass are not inferred.',conversionBasis:'source-reported-field-only' as const,sourceMappings:Object.freeze({usda:null,cnf:null}),version:'label-b6-mg-2026-11-18.1'});
+export function recordedNutrientDefinitionDetails(){return[...nutrientDefinitionDetails(),labelVitaminB6Definition];}
+export function isVitaminB6NutrientDeclaration(name:string){return /^vitamin b[ -]?6(?:\s*\(as (?:pyridoxine(?: hydrochloride| hcl)?|pyridoxal(?:[ -]5[′’']?[ -]phosphate)?|pyridoxamine(?:[ -]5[′’']?[ -]phosphate)?)\))?$/i.test(name.trim().replace(/\s+/g,' '));}

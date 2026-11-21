@@ -1,0 +1,63 @@
+{
+  "task": "V06-MICRO-M1-GENERIC-OBS-01",
+  "state": "IMPLEMENTED_AND_ENGINEERING_TESTED_LOCALLY",
+  "versionScope": "v0.6 M1 partial: saved generic food sources only",
+  "sourceRequirements": [
+    "BIO-MICRO-01",
+    "BIO-MICRO-07",
+    "BIO-MICRO-13",
+    "UX-MICRO-2101",
+    "UX-MICRO-2102",
+    "UX-MICRO-2108",
+    "UX-MICRO-2109"
+  ],
+  "implemented": [
+    "Owned saved meal projection reuses canonical portion scaling on immutable saved generic snapshots",
+    "Native per100g values and recorded portion estimates remain distinct",
+    "Source reported zero remains an estimate; unknown/conflicting units and unsupported definition versions abstain",
+    "Missing/ambiguous/impossible record timestamps stay unknown",
+    "Preview excluded; no source refetch for legacy rows; closed source tables lazy",
+    "Existing review/save/SQL/reload/keyboard source controls and account isolation preserved",
+    "Narrow enlarged-text journal totals wrap without altering values or target eligibility"
+  ],
+  "validation": {
+    "focusedTests": 8,
+    "TypeScript": "PASS",
+    "productionBuild": "PASS",
+    "sourceInventories": "PASS",
+    "actualAppAPIEncryptedSQL": "PASS",
+    "responsiveStates": 48,
+    "viewports": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "modes": [
+      "everyday",
+      "athlete"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "scales": [
+      "100percent",
+      "200percent text",
+      "200percent page zoom"
+    ],
+    "sourceRows": "all captured rows retained",
+    "screenshots": "NOT_CREATED",
+    "independentHumanDeviceVoiceOver": "NOT_RUN"
+  },
+  "notClaimed": [
+    "complete M1 forms and labels",
+    "usual intake or adequacy",
+    "Canadian reference eligibility",
+    "confirmed supplement consumption",
+    "biological absorption or deficiency",
+    "independent acceptance"
+  ],
+  "v05MergedAt": "fb8b24ae6da60a0386a446ad323444272b3ecd41",
+  "publication": "Pending development PR; no v0.6 main merge authorized"
+}

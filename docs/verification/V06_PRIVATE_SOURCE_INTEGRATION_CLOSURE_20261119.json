@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-19",
+  "baseCommit": "4ed8a45b8039e5d3231d59ac672dc0e39d87034d",
+  "status": "IMPLEMENTED_AND_TESTED_SOURCE_ONLY",
+  "scope": "Canonical private microbiome and selected-genetic snapshots, monotonic deadline, current-source revocation and inventory closure",
+  "tests": {
+    "initialFull": {
+      "total": 1001,
+      "passed": 999,
+      "failed": 2,
+      "reason": "Stale capability hashes and SQL-managed table inventory; repaired without permission changes"
+    },
+    "repairedInventories": {
+      "passed": 5
+    },
+    "finalFull": {
+      "total": 1002,
+      "passed": 1002,
+      "failed": 0,
+      "skipped": 0
+    },
+    "focusedPrivateSource": 29,
+    "actualEncryptedSQLSourceLifecycle": 1,
+    "typescript": "PASS",
+    "productionBuildAndMediaAudits": "PASS",
+    "progressBrowser": "PASS_ACTUAL_APP_HTTP_ENCRYPTED_SQL",
+    "responsiveBrowserStates": 16,
+    "productionDependencyVulnerabilities": 0
+  },
+  "guarantees": [
+    "Explicitly selected genetics only; no silent historical reactivation",
+    "Canonical microbiome source presence/abundance kept distinct from measured function",
+    "Unknown source dates/amounts preserved; no inferred genotype effect or metabolite production",
+    "Source revocation and deletion change the snapshot epoch; other accounts excluded",
+    "Late private-engine output rejected by monotonic elapsed budget",
+    "SQL-managed candidate receipts excluded from ordinary application schema push",
+    "Browser navigation waits for document then asserts actual screen/data readiness; no timeout increase"
+  ],
+  "artifacts": [
+    {
+      "path": "server/biological-investigation-snapshot.ts",
+      "sha256": "129d1a3b7ef185d6bdea546e8c6fe34fc95538e49690eef1ea81457dc6e2f80a"
+    },
+    {
+      "path": "server/precision-storage.ts",
+      "sha256": "f950607aa93413afc514a76fb5b013ca2d6424cbb1cb2b40553dfc31198c268a"
+    },
+    {
+      "path": "server/private-investigation-runner.ts",
+      "sha256": "8191fcdbbf98797ccd07bdb89c6f79203b867c48b1128bccf59d8d96d6d49459"
+    },
+    {
+      "path": "server/genetic-source-version.ts",
+      "sha256": "657dafcb1bdab0518868faa10209378a8321302094555b18249b54147919b45e"
+    },
+    {
+      "path": "server/private-genetic-source-facts.ts",
+      "sha256": "a23667a701efc17c4950346cd01e6becf361fd879a311b16d119fbff3f234b33"
+    },
+    {
+      "path": "server/private-microbiome-source-facts.ts",
+      "sha256": "aa83af0b2c3999dcbe8c2df33914e74f0c714e78cf0f2da8f52163a795ab9ffa"
+    },
+    {
+      "path": "tests/private-investigation-runner.test.ts",
+      "sha256": "1cfb90fef2111d4a2e866c72e932397c3909dcb1733c7df5a70178e9b7ec5ec0"
+    },
+    {
+      "path": "tests/private-genetic-source-facts.test.ts",
+      "sha256": "388d749ccb0d7761ba33ea4c6d18fefcaed297d2ba35e3ff48c30fa500e0d30a"
+    },
+    {
+      "path": "tests/private-microbiome-source-facts.test.ts",
+      "sha256": "ffbe3c6ec25ae39a5f0958419d18453c184a17f4da6f5ac6263829a58378125e"
+    },
+    {
+      "path": "tests/private-investigation-source-storage.test.ts",
+      "sha256": "09a015c1772fc21288293da617411f19e0e91f1c0fc486260008f7ce00d90bf0"
+    },
+    {
+      "path": "tests/schema-management.test.ts",
+      "sha256": "9dd2a30f4c964624daf784e2041226245a72f68215cfcc31f313f6a3f508e875"
+    },
+    {
+      "path": "docs/operations/CAPABILITY_EXPOSURE_MAP.json",
+      "sha256": "994d952b472e06468ac4efc5ef8eb753485e8ed4ef57d1219b9d4a3c3dc16bfe"
+    },
+    {
+      "path": "scripts/qa/lib/micronutrient-progress-flow.mjs",
+      "sha256": "0b5a475184f5f63070e2015a59839a2b46d20c4122d1cd5ed03032958501a616"
+    },
+    {
+      "path": "NEXT_ACTIONS.md",
+      "sha256": "8ce455036df8485d1cc2293437d7a45061c48549c435f89df2d3c6c04121e777"
+    }
+  ],
+  "limits": [
+    "Synthetic tests and isolated databases only; no personal records used",
+    "No installed private reasoning engine or independently qualified model capability",
+    "No real source/clinical claim review or full v0.6 acceptance",
+    "No hosted schema migration, provider enablement, network/Render change or deployment"
+  ],
+  "remoteIntegration": "PAUSED_BY_OWNER"
+}

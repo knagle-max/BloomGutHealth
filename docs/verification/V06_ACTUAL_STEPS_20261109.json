@@ -1,0 +1,46 @@
+{
+  "version": "v0.6",
+  "status": "ENGINEERING_TESTED_FIRST_SLICE",
+  "authority": "docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md",
+  "implemented": [
+    "Nullable nonnegative integer actual steps and explicit session/whole-day scope on existing canonical activities/components",
+    "Manual source label; no device synchronization or target count copied",
+    "Same existing editor, owned encrypted save/correction/export/delete and frozen receipt retry",
+    "Source child observations drive compatibility projection; multi-component counts never summed",
+    "Repeat clears actual count; old client omission preserves existing counts by stable child ID",
+    "Activity history/Today/Progress reuse source display; normal compact five-column set rows preserved and enlarged available-width reflow keeps separate44px controls",
+    "Header/Activity button/nav reflow at enlarged zoom without removing page overflow assertions"
+  ],
+  "evidence": {
+    "focusedTests": {
+      "passed": 12,
+      "failed": 0,
+      "includes": "Invalid/fractional/scope/zero/unknown;12400session+14100whole-day never26500;repeat;actual SQL owned retry/correction/export/deletion and unaware client preservation"
+    },
+    "actualActivityBrowser": "PASS actual App/HTTP/encrypted SQL Today\u2192save\u2192committed lost reply\u2192same retry\u2192correction\u2192Today\u2192Progress\u2192delete; manually recorded12400 retained;320px keyboard and other owner isolation",
+    "mixedActivityBrowser": "PASS actual reviewed parent/child source identities, independent sets, same-source retry, reload both modes; source actual12400 retained;96 mode/theme/viewport/text/page-zoom states",
+    "headerBrowser": "PASS local and exact Chrome156 CI1280/pageZoom2; diagnostic proved header action wrapping fixed",
+    "typecheck": "PASS",
+    "productionBuild": "PASS final build and exact original asset byte checks",
+    "exactPublicationCI": {
+      "commit": "c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6",
+      "run": 42694146238,
+      "conclusion": "SUCCESS",
+      "tests": 719,
+      "failed": 0
+    },
+    "firstPublicationCI": {
+      "commit": "abeda3a0bb5a0f0da952a244c3e0843ac745cc0e",
+      "run": 42692878438,
+      "browserChecks": "ALL_PASS including Chrome156 header/source deletion at1280x2 and actual activities",
+      "stoppedAt": "Capability source crosswalk hash drift; runtime source and API inventory/types passed",
+      "fix": "Reviewed six changed source hashes and regenerated crosswalk in clean published-commit worktree;52 registry IDs remain review required, no authorization changed"
+    }
+  },
+  "remaining": [
+    "Named selected-weekday routines, due Today quick log, pause/skip/reschedule and stable occurrence transaction tests remain to implement",
+    "No fake device feed or native bridge",
+    "Physical VoiceOver, independent usability/design/science review not performed",
+    "Full v0.6 RC not ready; no main merge"
+  ]
+}

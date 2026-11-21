@@ -1,0 +1,22 @@
+{
+  "task": "V06-T2B-consumer-panel-admission",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "outcome": "Main existing panel review now shows bounded paired glycemic and above-source-bound lipid explanations with original-result action/evidence, instead of promoting any opposing lipid directions. In-range/tiny changes remain inspectable only in optional details.",
+  "sourceRules": [
+    "Glycemic: same exact report/collection, verified plot/source units and canonical identities, recorded fasting glucose, actual glucose two-sided supplied bounds and HbA1c above its own supplied bound. Keep timescale and red-cell/condition caveat visible.",
+    "Lipids: existing comparable aligned opposing pair facts plus actual current LDL/ApoB above its supplied upper bound; combine supported members once. No magnitude leaderboard or invented significance/noise threshold.",
+    "Both: canonical editorial sources required, original observations retained, clinical significance/attribution not assessed, no risk score/diagnosis/treatment target/dose advice or urgency. No new API/store/insight service."
+  ],
+  "verification": [
+    "16 focused panel/family tests PASS including tiny in-range opposing changes/no bounds not promoted, above-bound members/evidence/source IDs, glucose source/date/fasting gates and source correction/deletion",
+    "Actual34row/31marker App browser PASS16 responsive320/390/768/1440 mode/theme states at200% text; main meaning visible without opening family, raw directions hidden initially and retained when details opened; explicit in-range correction removes only lipid explanation; original ALT drilldown, source removal/outage/owner withdrawal retained",
+    "Actual App\u2192owned HTTP\u2192encrypted SQL glycemic browser PASS with main explanation requiring no family expansion, keyboard exact original source row/focus, unchanged observations, reload, logical deletion/nonqualifying replacement/restoration,503withdrawal/retry and two-owner isolation; no browser writes",
+    "Typecheck and production build PASS"
+  ],
+  "limits": [
+    "This supersedes the earlier detail-only presentation decision for the same bounded glycemic source explanation; it does not authorize clinical interpretation, consequential release or prove individual cause/significance.",
+    "Full multi-marker/cross-domain Response, Food/M4 and integrated RC remain unfinished. Independent science/design/device acceptance not claimed.",
+    "Current published fd70aa87b7ab9ebb015adbc9053ee047e4eb0af8 CI44389390514 is held stable; source-aware question23a322d0 and this slice remain local until its exact gate qualifies."
+  ]
+}

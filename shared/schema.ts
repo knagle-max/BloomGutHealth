@@ -1,3 +1,4 @@
+import {birthYearSchema} from './profile-demographics';
 import { sql } from "drizzle-orm";
 import {
   pgTable,
@@ -48,6 +49,7 @@ export const updateUserProfileSchema = createInsertSchema(users)
     dietaryPreferences: true,
   })
   .extend({
+    birthYear: birthYearSchema.refine(year=>year<=new Date().getUTCFullYear()&&new Date().getUTCFullYear()-year<=120,"Birth year must correspond to an age from 0 to 120").nullable().optional(),
     sex: z.enum(["male", "female"]).nullable().optional(),
     age: z.number().int().min(1).max(120).nullable().optional(),
     heightCm: z.number().positive().max(250).nullable().optional(),
@@ -335,6 +337,13 @@ export const precisionRecords = pgTable(
   ],
 );
 
+// Provider assertions are annotations, never laboratory observations or clinical ranges.
+export const labReportMetadataVersions=pgTable('lab_report_metadata_versions',{
+ id:varchar('id').primaryKey(),userId:varchar('user_id').notNull().references(()=>users.id,{onDelete:'cascade'}),
+ sourceId:varchar('source_id').notNull(),sourceRecordIds:text('source_record_ids').array().notNull(),
+ encryptedPayload:jsonb('encrypted_payload').notNull(),createdAt:timestamp('created_at').notNull().defaultNow(),
+},table=>[index('lab_report_metadata_owner_source_idx').on(table.userId,table.sourceId,table.createdAt.desc()),index('lab_report_metadata_members_idx').using('gin',table.sourceRecordIds),check('lab_report_metadata_source_id',sql`${table.sourceId} ~ '^[a-f0-9]{64}$'`),check('lab_report_metadata_members',sql`cardinality(${table.sourceRecordIds})>0 AND array_position(${table.sourceRecordIds},NULL) IS NULL`)]);
+
 // Personal product labels are private and encrypted, separate from public reference data.
 export const nutritionProducts = pgTable(
   "nutrition_products",
@@ -447,3 +456,18 @@ export const featureControlStepUpReceipts=pgTable("feature_control_step_up_recei
  ...[table.proofKey,table.sessionKey,table.actorKey,table.intentKey,table.grantKey].map(column=>check(`feature_control_step_up_${column.name}_check`,sql`${column} ~ '^[a-f0-9]{64}$'`)),
  check("feature_control_step_up_service_check",sql`${table.serviceId} ~ '^srv-[a-z0-9]+$'`),check("feature_control_step_up_environment_check",sql`${table.environment} IN ('development-review','isolated-synthetic')`),check("feature_control_step_up_lifetime_check",sql`${table.expiresAt} > ${table.createdAt} AND ${table.expiresAt} <= ${table.createdAt} + interval '120 seconds'`),check("feature_control_step_up_consumed_check",sql`${table.consumedAt} IS NULL OR ${table.consumedAt} >= ${table.createdAt}`),
 ]);
+
+/** Proposed source-reviewed nonpersonal knowledge persistence; excluded from
+ * application db:push by the existing biology_* migration boundary. */
+export const biologyScientificReleases=pgTable('biology_scientific_releases',{
+ id:text('id').primaryKey(),digest:text('digest').notNull().unique(),manifest:jsonb('manifest').notNull(),createdAt:timestamp('created_at').defaultNow().notNull(),
+});
+export const biologyScientificWithdrawals=pgTable('biology_scientific_withdrawals',{
+ kind:text('kind').notNull(),targetId:text('target_id').notNull(),createdAt:timestamp('created_at').defaultNow().notNull(),
+},table=>[primaryKey({columns:[table.kind,table.targetId]}),check('biology_scientific_withdrawals_kind',sql`${table.kind} IN ('relationship','source','review','rights')`)]);
+/** Proposed provenance-only receipts. No raw generated claims, prompts or user
+ * records. Not exported by application-schema.ts or installed at startup. */
+export const biologyScientificCandidateReceipts=pgTable('biology_scientific_candidate_receipts',{
+ id:text('id').primaryKey(),candidateDigest:text('candidate_digest').notNull(),receipt:jsonb('receipt').notNull(),
+ createdAt:timestamp('created_at').defaultNow().notNull(),
+});

@@ -64,10 +64,10 @@ export function explainGenotypes(
     const genotype = entry.genotype.toUpperCase().split("").sort().join("");
     const annotation = genotypeAnnotations.find((v) => v.rsid === entry.rsid);
     const referenceCompatibility = genotypeReferenceCompatibility(entry.rsid, genotype);
-    const status = !annotation
-      ? ("not-curated" as const)
-      : genotype === "--"
-        ? ("no-call" as const)
+    const status = genotype === "--"
+      ? ("no-call" as const)
+      : !annotation
+        ? ("not-curated" as const)
         : !orientationConfirmed
           ? ("orientation-unconfirmed" as const)
           : !Object.hasOwn(annotation.comparisons, genotype)

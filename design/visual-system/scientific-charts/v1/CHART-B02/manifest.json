@@ -1,0 +1,663 @@
+{
+  "assetId": "CHART-B02",
+  "version": "1.0.0",
+  "created": "2026-11-15",
+  "status": "generated, published pending, NOT runtime integrated",
+  "source": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+  "svgCount": 97,
+  "specimens": {
+    "fullMatrix": 64,
+    "adaptations": 24,
+    "editableMasters": 8
+  },
+  "files": [
+    {
+      "file": "README.md",
+      "type": "md",
+      "bytes": 1160,
+      "sha256": "b9ff78ec585a1a54b16ef19ab0e78bb673ea37bca49ac164929fceeb11671bfc"
+    },
+    {
+      "file": "accessibility/CHART-B02-review-matrix.md",
+      "type": "md",
+      "bytes": 923,
+      "sha256": "9e58e91e625727922119c9dd0721125a36dc23036d3e8ca31cfefc3b2e8ec80d"
+    },
+    {
+      "file": "editable/CHART-B02-athlete-dark-1440-master.svg",
+      "type": "svg",
+      "bytes": 8779,
+      "sha256": "5484a9f99ffac3c7ed32cd163ab225a9d835ffb413dd9e59b8f09d119f3b6eac"
+    },
+    {
+      "file": "editable/CHART-B02-athlete-dark-390-master.svg",
+      "type": "svg",
+      "bytes": 7952,
+      "sha256": "e68f4e646937142ca64458cec19df2e0411f94022ff0ab90e1b1537f20360820"
+    },
+    {
+      "file": "editable/CHART-B02-athlete-light-1440-master.svg",
+      "type": "svg",
+      "bytes": 8780,
+      "sha256": "63ee9dd085ec5c428ca6d3d4d7667e3d9a1bfe5b77fc5f7b7985d79c47ba9d1e"
+    },
+    {
+      "file": "editable/CHART-B02-athlete-light-390-master.svg",
+      "type": "svg",
+      "bytes": 7953,
+      "sha256": "4985f1c0c0a14a64d79070134e0ff8b32c33db492d4ac6b78f6dbb70b450dbf1"
+    },
+    {
+      "file": "editable/CHART-B02-everyday-dark-1440-master.svg",
+      "type": "svg",
+      "bytes": 8780,
+      "sha256": "dcd582c5e4606a566cb006f91d944e16c08358c0f96ee9926e6d678dc209c79a"
+    },
+    {
+      "file": "editable/CHART-B02-everyday-dark-390-master.svg",
+      "type": "svg",
+      "bytes": 7953,
+      "sha256": "611b87ac60a11bb324642bb6e2adf13a1c34c545b963f7248ac2c9f141788f43"
+    },
+    {
+      "file": "editable/CHART-B02-everyday-light-1440-master.svg",
+      "type": "svg",
+      "bytes": 8781,
+      "sha256": "dfa82220feeebc73501dba1ed81ad7bfe1f6c869691a0943728c30b90d50a5fb"
+    },
+    {
+      "file": "editable/CHART-B02-everyday-light-390-master.svg",
+      "type": "svg",
+      "bytes": 7954,
+      "sha256": "1316d8f0460c450bc530270914b28ff7bf464e54e4afe3a2e4770037bcd6aa7f"
+    },
+    {
+      "file": "fixtures/B02-FICTIONAL-ONLY.json",
+      "type": "json",
+      "bytes": 1120,
+      "sha256": "cce93d3edcfe3b4d18c4b3e4868d76870d1af6cba10990f90abd257170eddc34"
+    },
+    {
+      "file": "handoff/CHART-B02-implementation.md",
+      "type": "md",
+      "bytes": 3392,
+      "sha256": "9354a92ae1a599928889c2392b7bf1463829f2a71cfeac214446ea54abef9bda"
+    },
+    {
+      "file": "previews/B02-desktop-athlete-dark.png",
+      "type": "png",
+      "bytes": 62553,
+      "sha256": "fd73dd6716a588ed14c2689c5f4d7127ade13cdae9654d11fc5cec00449d5095"
+    },
+    {
+      "file": "previews/B02-desktop-athlete-light.png",
+      "type": "png",
+      "bytes": 67415,
+      "sha256": "cadaa961f6a39ce0a83d64a96254ae8ce911dbbefb464a65eb07a3144dc58ab9"
+    },
+    {
+      "file": "previews/B02-mobile-320-incompatible.png",
+      "type": "png",
+      "bytes": 33440,
+      "sha256": "bd4e6e539e5c14c2db68b3422771e3fae2644dd0a70b6dfc9f526a57b465f1fc"
+    },
+    {
+      "file": "previews/B02-mobile-everyday-dark.png",
+      "type": "png",
+      "bytes": 36099,
+      "sha256": "dc924ec53a12269cbddc5c576bbf2261824059d957ba965bb6cb42f322526ef8"
+    },
+    {
+      "file": "previews/B02-mobile-everyday-light.png",
+      "type": "png",
+      "bytes": 36861,
+      "sha256": "4cb75447bbda3a7dff798fb79f0d21578e517818cba2e0c5d64641696cff602f"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-alternate-method.svg",
+      "type": "svg",
+      "bytes": 8779,
+      "sha256": "5484a9f99ffac3c7ed32cd163ab225a9d835ffb413dd9e59b8f09d119f3b6eac"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 8056,
+      "sha256": "c063cd63d34043314518c5a9da1b8e825ebc8a6249315e556b3dcf9736bd7533"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-method-changing.svg",
+      "type": "svg",
+      "bytes": 8781,
+      "sha256": "972aac09d1bbeb2e219208d219a1aea11098acd1bcf68e38af81cf12139462cf"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-non-comparable.svg",
+      "type": "svg",
+      "bytes": 8155,
+      "sha256": "b7fe7828f5ee6a0417918859245c824f572d9194c649013627f715700a8faa08"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-published-comparison.svg",
+      "type": "svg",
+      "bytes": 8108,
+      "sha256": "10002ab5ff81565a68abc37d7c5cf72c36b2430beee11c65d81f5021413f1a41"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-selected-only.svg",
+      "type": "svg",
+      "bytes": 8241,
+      "sha256": "fcdd0da789a1c39db35a8b01b6ee954239b976e9f69e2ffa006a67c00b06e36c"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-source-interval.svg",
+      "type": "svg",
+      "bytes": 8084,
+      "sha256": "a7fe6643a37bc374374e015a4aa1f038fcbe28175788417c1f83540936dced9e"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-dark-1440-unavailable.svg",
+      "type": "svg",
+      "bytes": 7725,
+      "sha256": "f6f3ba8258678e0645f944cd271f73a3117526dd44de5917a23da764d46bca39"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-alternate-method.svg",
+      "type": "svg",
+      "bytes": 8780,
+      "sha256": "63ee9dd085ec5c428ca6d3d4d7667e3d9a1bfe5b77fc5f7b7985d79c47ba9d1e"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 8057,
+      "sha256": "04dcf5d4eee4064c536131a466f0bcdd82acdc6993b7794fa54739149863d38e"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-method-changing.svg",
+      "type": "svg",
+      "bytes": 8782,
+      "sha256": "1d489599950bdbbc2563848861c8d1b1386473e1e1067192b2a823da12928150"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-non-comparable.svg",
+      "type": "svg",
+      "bytes": 8156,
+      "sha256": "ee6696afff6ec713e7d796d599212beebc9920bef385ff92fa2dd31b21aaaa03"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-published-comparison.svg",
+      "type": "svg",
+      "bytes": 8109,
+      "sha256": "e050efc7afdd9a1f12aec2acb58584306b77bd6b90c6614ebbb4fac79866f186"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-selected-only.svg",
+      "type": "svg",
+      "bytes": 8242,
+      "sha256": "0976af206e77316d7a6a0ca678acced62faf5e8f80bc7442cda00d7e45f050f5"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-source-interval.svg",
+      "type": "svg",
+      "bytes": 8085,
+      "sha256": "5d8cc797fc3f45dbaeb848cae45891a36d8385be9c18840796ac6454b558701c"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-athlete-light-1440-unavailable.svg",
+      "type": "svg",
+      "bytes": 7726,
+      "sha256": "0683263e978d23462c11c1f9571ccae8a6e114c986e3a8d7a195fd5e84888d9f"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-alternate-method.svg",
+      "type": "svg",
+      "bytes": 8780,
+      "sha256": "dcd582c5e4606a566cb006f91d944e16c08358c0f96ee9926e6d678dc209c79a"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 8057,
+      "sha256": "d744ec83264c8b2792a871858b13e86ade2a74f55c8ff481ee4814adfbf0d8a2"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-method-changing.svg",
+      "type": "svg",
+      "bytes": 8782,
+      "sha256": "f9c4d33989ef9154e426345dc83a07a909d491645244997e7294f75cfef47b5d"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-non-comparable.svg",
+      "type": "svg",
+      "bytes": 8156,
+      "sha256": "2b77b08c3b88def2666a3388bc15ed787c22e1b8c4dfdab4df1bd26ec9566f6d"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-published-comparison.svg",
+      "type": "svg",
+      "bytes": 8109,
+      "sha256": "57be2c626282e815e93073cd15cd0a3a959f9297088156453106e3d4213153d5"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-selected-only.svg",
+      "type": "svg",
+      "bytes": 8242,
+      "sha256": "432587c29060f56a1fbfccc612d1f5ae5c46fc16e17380fa13bf3b18ff685cc6"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-source-interval.svg",
+      "type": "svg",
+      "bytes": 8085,
+      "sha256": "e2abe9683f2fefe0e13946a4c193bacf4a3210a1f4247d2b0eecb76f2a34b9f6"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-dark-1440-unavailable.svg",
+      "type": "svg",
+      "bytes": 7726,
+      "sha256": "8f1fc4c0e9221783a2bd9e6650b3a54cc06d60e2511f294a6365b5a428511b90"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-alternate-method.svg",
+      "type": "svg",
+      "bytes": 8781,
+      "sha256": "dfa82220feeebc73501dba1ed81ad7bfe1f6c869691a0943728c30b90d50a5fb"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 8058,
+      "sha256": "e3e7dc1818134f3e59b8db5d7ff1853bfa22093e5006e1e27773d51dca480613"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-method-changing.svg",
+      "type": "svg",
+      "bytes": 8783,
+      "sha256": "8fef1fc45b40cd2b0cc8aeafa8ad5bead2f110fc3d1695a93c6735a239987d0f"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-non-comparable.svg",
+      "type": "svg",
+      "bytes": 8157,
+      "sha256": "2ebfe73839fc05d4fc62c565fd7372b6bdf55c2781fb83169ebbaeb4f0826c83"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-published-comparison.svg",
+      "type": "svg",
+      "bytes": 8110,
+      "sha256": "df1ae44fa9af5516bda9730bfc32a23ffd0a1cddb1cbbab3dce06bc8f99ab63e"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-selected-only.svg",
+      "type": "svg",
+      "bytes": 8243,
+      "sha256": "6c2d86d522cde8229f7bbc66972ae3acf0a74c560d8b796aa9701239bc655879"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-source-interval.svg",
+      "type": "svg",
+      "bytes": 8086,
+      "sha256": "9d969353ed8e6ed2b8f6bd696027cfa6de81bb64f8e012779c10e9260d3aa522"
+    },
+    {
+      "file": "responsive/1440/CHART-B02-everyday-light-1440-unavailable.svg",
+      "type": "svg",
+      "bytes": 7727,
+      "sha256": "f5e994524d6cc166f086995de4fcb119469f47e2189a88ebbc90e33e37fb99ba"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-dark-320-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7961,
+      "sha256": "61f672326bfa03652df852cf36b8ffbe637b75284e88a3f71bf24ea91a50b514"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-dark-320-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7342,
+      "sha256": "f64a7bcb3601707437619486cec012ac6b68002bd2ceced792fe851966fce897"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-dark-320-source-interval.svg",
+      "type": "svg",
+      "bytes": 7271,
+      "sha256": "3aede3291133eccaab412691603170d45302c16ef42689b554d97f0f7c043ee7"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-light-320-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7962,
+      "sha256": "21279808355a8e2c20b4d33ed2ac3aa65d4d46e1e4d44e37ae411daac5ae1f30"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-light-320-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7343,
+      "sha256": "f33e84b1cea88de620cba87f7c643c452bea7204ea4d36837e5656a9b500ddc0"
+    },
+    {
+      "file": "responsive/320/CHART-B02-athlete-light-320-source-interval.svg",
+      "type": "svg",
+      "bytes": 7272,
+      "sha256": "0f2f4c3e5be895b92c6aa74914ba3babe6290babd03d4e1b425efcc22ea1336c"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-dark-320-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7962,
+      "sha256": "787a5ad5fbf237c1ede9128cef92b6483d7df8efe15ca0fd655bfe8fafafd9a5"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-dark-320-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7343,
+      "sha256": "8704112ea1dbd64eb125c52534c18ba9b816f7181d4bbd868ff9475d9f1984d8"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-dark-320-source-interval.svg",
+      "type": "svg",
+      "bytes": 7272,
+      "sha256": "a1b332e89bc5ba8c11706dc3b739d29d4e109305cff9f9a8a40d0b448042fba1"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-light-320-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7963,
+      "sha256": "1ba504b8a487795ab402bd3f5ccf6fadadb144e66eab1c572be7c5c5b3d5c437"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-light-320-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7344,
+      "sha256": "60a9f41abf4aba2e26abccea369d78ebd95e0e2b6c16b72f644fdd7e0d557f4c"
+    },
+    {
+      "file": "responsive/320/CHART-B02-everyday-light-320-source-interval.svg",
+      "type": "svg",
+      "bytes": 7273,
+      "sha256": "cf9f2a32be5f84a5c920dfeedd91adb2983e41efbe59b5f2dc95327283dcf8d7"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7952,
+      "sha256": "e68f4e646937142ca64458cec19df2e0411f94022ff0ab90e1b1537f20360820"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 6950,
+      "sha256": "8fbf51cdc94133376feb85dde21dba4d35aff50ed1e0cab8c7a590fc37ae1bee"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-method-changing.svg",
+      "type": "svg",
+      "bytes": 7956,
+      "sha256": "cdb55f5a5f33119c7dff89223e2d4bb452591327f5905272819dd56bfd5a898e"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7221,
+      "sha256": "ab9d987600658567a2eca498b335a116405b3e38b5c2d0ac8d7f8869863746fb"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-published-comparison.svg",
+      "type": "svg",
+      "bytes": 7183,
+      "sha256": "df0df6574baaa3e99d915e6c5e0b809b51a2ace01bbc10eb566378135514160a"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-selected-only.svg",
+      "type": "svg",
+      "bytes": 7434,
+      "sha256": "6e5526bcffc9c649460b92850d2df0baa68fc883fcd199c489fa304f2b2ce467"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-source-interval.svg",
+      "type": "svg",
+      "bytes": 7271,
+      "sha256": "b3dd71816286575f0c1c7992093281c0c45ea46b702ebd4d38f0570aa316a657"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-dark-390-unavailable.svg",
+      "type": "svg",
+      "bytes": 6795,
+      "sha256": "1be70cfe32cb1f167fbe128e5b558ba55b59879492e87d418e452f672d5233c7"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7953,
+      "sha256": "4985f1c0c0a14a64d79070134e0ff8b32c33db492d4ac6b78f6dbb70b450dbf1"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 6951,
+      "sha256": "712b3168119a6ebb7008be0b09330169b78102b1a3cd721d513bc1dd2c2e3b56"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-method-changing.svg",
+      "type": "svg",
+      "bytes": 7957,
+      "sha256": "08d7b966b941b6d7d77cce7b5014bb7d2046af929ec3208ca69eadc6bdb98693"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7222,
+      "sha256": "8280a6b3af36d0cdf45af8ae6be69593c533ac580d3fa4dd196faa2a1c90e474"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-published-comparison.svg",
+      "type": "svg",
+      "bytes": 7184,
+      "sha256": "819e219369380c09b3374f75b54ef469eda6bcd00926c14c3ef8d93b4335be38"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-selected-only.svg",
+      "type": "svg",
+      "bytes": 7435,
+      "sha256": "fc935802ad52d940666c36272b7ec5b5575b161142aef3b04ffdd306e9a630ec"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-source-interval.svg",
+      "type": "svg",
+      "bytes": 7272,
+      "sha256": "7b8eab255fb771c08636a81b0a66e3b4ef0a007706526fb435e9f7a2ed2cffa7"
+    },
+    {
+      "file": "responsive/390/CHART-B02-athlete-light-390-unavailable.svg",
+      "type": "svg",
+      "bytes": 6796,
+      "sha256": "00aa222c3b6d61b86eebeb400f9e9ded985de6a3ba63c966ecdee8d2a71041bc"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7953,
+      "sha256": "611b87ac60a11bb324642bb6e2adf13a1c34c545b963f7248ac2c9f141788f43"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 6951,
+      "sha256": "f5c1cb224ff4781e97710f3faa096ed5d2a95a332d305bd9a6232a667abe5794"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-method-changing.svg",
+      "type": "svg",
+      "bytes": 7957,
+      "sha256": "e9c0c54649c51c9ace4c7dd898fe2242c31dbce9164d2f5ac562daf8bfe1ff25"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7222,
+      "sha256": "0ab157f8983b456a265e02ced3be7a1504f3606d4002b3b4d49d1c556d5cc18d"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-published-comparison.svg",
+      "type": "svg",
+      "bytes": 7184,
+      "sha256": "c9f4fe25f755678124609598dc7a0676564bf04f39ac8c9987dec6a3b4b0e9a6"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-selected-only.svg",
+      "type": "svg",
+      "bytes": 7435,
+      "sha256": "91c67adbde93190c5514058acb19c5a7edc227b298654c69808513a09efebe8c"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-source-interval.svg",
+      "type": "svg",
+      "bytes": 7272,
+      "sha256": "5adb36237b1c159a3bba64791874ab9c37a54e1ff37c924589a580788916d510"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-dark-390-unavailable.svg",
+      "type": "svg",
+      "bytes": 6796,
+      "sha256": "773c89cac6bdc73f9aaf14c5bdd5da24ce5ef4f82b8644c201d4877bec4cbd24"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7954,
+      "sha256": "1316d8f0460c450bc530270914b28ff7bf464e54e4afe3a2e4770037bcd6aa7f"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-decision-threshold.svg",
+      "type": "svg",
+      "bytes": 6952,
+      "sha256": "91897e6fabcc9608c09bd784d167e8677c36f41d38afb6c3d5cec8e7b8983f5c"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-method-changing.svg",
+      "type": "svg",
+      "bytes": 7958,
+      "sha256": "269942e9c9d8136867f7d7a6de6ff9666a291889c1371e7f6068b15c66724a29"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-non-comparable.svg",
+      "type": "svg",
+      "bytes": 7223,
+      "sha256": "d1519cdac6d77b09bf13c7c21374a3e407081a72bfda98795ba9bd26ee633a07"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-published-comparison.svg",
+      "type": "svg",
+      "bytes": 7185,
+      "sha256": "fdbf4691b19075b94dc127cbd855d7c5f13c84b54597162461759303b86c27a6"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-selected-only.svg",
+      "type": "svg",
+      "bytes": 7436,
+      "sha256": "11f3b0458b54522e3be152054c0fd9ea9abfdd6e2f55a01740da0717fb8e3ccd"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-source-interval.svg",
+      "type": "svg",
+      "bytes": 7273,
+      "sha256": "d15446891384bcff62fdefad31b3d3715e6705b15786d07a9e72c9c3eee4b4cb"
+    },
+    {
+      "file": "responsive/390/CHART-B02-everyday-light-390-unavailable.svg",
+      "type": "svg",
+      "bytes": 6797,
+      "sha256": "ef34721782ad2c2a353dccbd25870f23b98c756f75e0cd75c2f9a807ce535e57"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-dark-768-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7520,
+      "sha256": "fd8897869bf0bd831be4a14ca65795ff80b840b4c14a712966908b4617eae02f"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-dark-768-non-comparable.svg",
+      "type": "svg",
+      "bytes": 6871,
+      "sha256": "44b2b191280b47fc646f097e3c2ca24328cb4da5234dcdc9c3461c35f3e6be34"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-dark-768-source-interval.svg",
+      "type": "svg",
+      "bytes": 6798,
+      "sha256": "be44638f298baa622b878acd2aebde4dc3e7504a26c38bc7fd51d4eabdf7ce9a"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-light-768-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7521,
+      "sha256": "05bb6883b4031b3503a46800bfe9f0df9026d239c8c42e38ed297a56981d7728"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-light-768-non-comparable.svg",
+      "type": "svg",
+      "bytes": 6872,
+      "sha256": "1069231f8c5f5e72b583321ae59fa1fa1c7a30266173a7d1978b21700255d3ea"
+    },
+    {
+      "file": "responsive/768/CHART-B02-athlete-light-768-source-interval.svg",
+      "type": "svg",
+      "bytes": 6799,
+      "sha256": "5ec3a66ffe88311e5f1467adf11c00e3cb9f1f327668da993dc6b1ed2a13da82"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-dark-768-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7521,
+      "sha256": "a37535c804545aa258d756b4ce1dd61bc1d68c0a1437025d811272cda02987ce"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-dark-768-non-comparable.svg",
+      "type": "svg",
+      "bytes": 6872,
+      "sha256": "b5b6dacddecb219b137f233da7786550650658b772cfc37bcbcdb6ae661b1743"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-dark-768-source-interval.svg",
+      "type": "svg",
+      "bytes": 6799,
+      "sha256": "f30f3e2552cc614fee0611f1852631cc67972e5c91c6849e5d90ae16293503b2"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-light-768-alternate-method.svg",
+      "type": "svg",
+      "bytes": 7522,
+      "sha256": "a95965fa7bf1b304c2f6d702cae23c84a6345e3c738455be48c142a4db7ad54f"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-light-768-non-comparable.svg",
+      "type": "svg",
+      "bytes": 6873,
+      "sha256": "0a6a7b27829bb63de7497ba31085884299646ae789f34e19b53cc4dd949e87a8"
+    },
+    {
+      "file": "responsive/768/CHART-B02-everyday-light-768-source-interval.svg",
+      "type": "svg",
+      "bytes": 6800,
+      "sha256": "1c4fcf77bd3845f9d71439f8e30d11e9027361c8b487164f224b746e71343ac6"
+    },
+    {
+      "file": "svg/CHART-B02-reference-primitives.svg",
+      "type": "svg",
+      "bytes": 1694,
+      "sha256": "e2ee67e63cdaf464d0ab812546b7d43a689536d895fecb9b6827fe6a9e423c17"
+    },
+    {
+      "file": "tokens/CHART-B02-contract.json",
+      "type": "json",
+      "bytes": 4102,
+      "sha256": "b80624bc0b2fe7d96f4c69389d155a8c516984a19231926fec0327c9da1913bb"
+    },
+    {
+      "file": "tokens/CHART-B02-laboratory-biomarker.css",
+      "type": "css",
+      "bytes": 2527,
+      "sha256": "0ca1917c160816908a21a09c86b543099267d20f9ac89a64c080a953ea0180e4"
+    }
+  ]
+}

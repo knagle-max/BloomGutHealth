@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-19",
+  "baseCommit": "3bf012f0e95c40f84a3b2dbeb64edf45772b8d63",
+  "status": "IMPLEMENTED_AND_TESTED_READ_ONLY_SYNTHETIC_SLICE",
+  "tests": {
+    "focusedIncludingProductionGraphIsolation": 8,
+    "failures": 0,
+    "skips": 0,
+    "typescript": "PASS",
+    "concurrentRevocationDraftRegression": "RED_THEN_GREEN",
+    "fullApplicationBaseline": {
+      "commit": "cbc90d130f543943a759b58f0bd91d1ddad09272",
+      "passed": 1002
+    },
+    "freshFullSuiteIncludingNewPrototypeTests": "NOT_RUN"
+  },
+  "artifacts": [
+    {
+      "path": "shared/private-data-contracts.ts",
+      "sha256": "2f13b994e630383ecd69080de5bcd35d12f89e6b7147a065bc411704f0ff93c9"
+    },
+    {
+      "path": "server/private-data-prototype.ts",
+      "sha256": "0b28477e1b88c5ed7b1d00a1b84be4c2aa3e9a3d921e6b6fb045a86521d2ca24"
+    },
+    {
+      "path": "tests/private-data-contracts.test.ts",
+      "sha256": "ceaadaee5190359f6b90c9c7506dd1eb1445d2b83ac3ebc313732236be7e71aa"
+    },
+    {
+      "path": "tests/production-science-isolation.test.ts",
+      "sha256": "ae379cb6fec3333785a8394c769549daa78911da79396d25c688ec65fc941bff"
+    },
+    {
+      "path": "docs/scientific-models/PRIVATE_DATA_READ_PROTOCOL_PROTOTYPE.md",
+      "sha256": "c4659fa66a338bebe5af392f7968c7041ceba6c4484eaf48e6880d622261a6a4"
+    }
+  ],
+  "activation": {
+    "defaultMode": "bloom_cloud",
+    "prototypeInstalledInApplication": false,
+    "consumerNavigationAdded": false,
+    "cloudDatabaseRoutingChanged": false,
+    "networkOrRenderChanged": false,
+    "deployed": false,
+    "realDataEnrolled": false
+  },
+  "limits": [
+    "Read-only supported-lab synthetic fixtures only",
+    "No real Cloud adapter/authentication, writes, recovery, encryption, gateway or TUF implementation",
+    "Observed revocation latch is in-memory, not cross-restart authority",
+    "No independent security/scientific/clinical/full-v0.6 acceptance"
+  ]
+}

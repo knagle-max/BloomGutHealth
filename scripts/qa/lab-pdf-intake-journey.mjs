@@ -99,7 +99,7 @@ try{
  const extracted=await entry.getByLabel('Results',{exact:true}).inputValue();assert.match(extracted,/ALT,0\.00,U\/L/);assert.match(extracted,/Test assay,<0\.50,source-unit,<2\.0/);
  assert.equal(await entry.getByLabel('Test date',{exact:true}).inputValue(),'');assert.equal((await own()).length,0);assert.equal(attempts.length,0);
  await entry.getByLabel('Test date',{exact:true}).fill('2026-10-20');await entry.getByRole('button',{name:'Preview results',exact:true}).click();
- await entry.getByRole('button',{name:'Keep 1 source-only row(s)',exact:true}).click();assert.equal(attempts.length,0);
+ await entry.getByRole('checkbox',{name:/^Include /}).first().waitFor();assert.equal(await entry.getByRole('checkbox',{name:/^Include /}).count(),1);for(const sourceRow of await entry.getByRole('checkbox',{name:/^Include /}).all())assert.equal(await sourceRow.isChecked(),true,'Source-only rows are included by default');assert.equal(attempts.length,0);
  await entry.getByRole('button',{name:'Save 2 result(s) after review',exact:true}).click();await entry.getByText('2 result(s) saved.',{exact:false}).waitFor();
  const saved=await own(),canonical=await report();assert.equal(saved.length,2);assert.equal(canonical.labHistory[0].value,0);assert.equal(canonical.sourceOnlyLabs[0].reportedValue,'<0.50');assert.equal(JSON.stringify(saved).includes('private-report.pdf'),false);
  await page.waitForFunction(()=>window.__labWorkers.size===0);

@@ -1,3 +1,9 @@
+import {geneticSourceRevision} from './genetic-source-version';
+import {referenceHash,referenceStreamId,referenceSourceRevision,referenceCorrectionView} from './lab-reference-corrections';
+import {labReferenceCorrectionCommandSchema,labReferenceCorrectionSchema,type LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
+import {copiedReferenceIntervalForPlot} from '../shared/lab-reference-interval';
+import {LAB_REPORT_METADATA_KIND,labReportMetadataSchema,labReportMetadataCommandSchema,LabReportMetadataError,type LabReportMetadataCommand,type LabReportMetadata,type LabReportMetadataView} from '../shared/lab-report-metadata';
+import {labSourceReviewSchema,labReviewRevisionText,applyLabSourceReview,type LabSourceReview} from '../shared/lab-source-review';
 import{knownPlanUsesSources}from'./plan-history';
 import{viomeSource}from"../shared/viome-report-context";
 import type{MicrobiomeFoodSource,MicrobiomeFoodControl}from"../shared/microbiome-food-influence";
@@ -8,8 +14,8 @@ import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shared/lab-date-correction";
 import { createHash,randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
-import { precisionProfiles, precisionRecords, users,microbiomeSamples } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
+import { precisionProfiles, precisionRecords,labReportMetadataVersions, users,microbiomeSamples } from "../shared/schema";
+import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, canonicalLab, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -35,7 +41,7 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
  const facts=new Map<string,Lab|SourceOnlyLab>();
  for(const row of rows){const known=labSchema.safeParse(row.payload),raw=sourceOnlyLabSchema.safeParse(row.payload);const fact=known.success?known.data:raw.success?raw.data:null;if(!fact)continue;facts.set(row.id,fact);
   if(fact.sourceReport){const source=fact.sourceReport,key=JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]);imports.set(key,[...(imports.get(key)||[]),row.id]);}
-  const parents=[fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
+  const parents=[fact.sourceCorrection?.supersedes,fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
   for(const parent of parents)if(parent&&byId.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
  }
  for(const ids of Array.from(imports.values()))for(const id of ids.slice(1)){links.get(ids[0])!.add(id);links.get(id)!.add(ids[0]);}
@@ -43,14 +49,17 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
   const members=ids.map(id=>byId.get(id)!),parsed=ids.flatMap(id=>facts.has(id)?[{...facts.get(id)!,id}]:[]);
   const sourceKeys=Array.from(new Set(parsed.flatMap(fact=>fact.sourceReport?[JSON.stringify([fact.sourceReport.importId,fact.sourceReport.reportIdentifier??null,fact.sourceReport.specimenIdentifier??null])]:[]))).sort();
   // Conflicting explicitly recorded source identities are not silently combined into a report.
-  const valid=sourceKeys.length<=1;
-  const key=sourceKeys.length===1?['import',sourceKeys[0]]:['entry',ids[0]];
+  const roots=ids.filter(id=>{const fact=facts.get(id);return !fact||!(fact.sourceCorrection?.supersedes||fact.dateCorrection?.supersedes||('unitReview'in fact&&fact.unitReview?.supersedes));});
+  const valid=sourceKeys.length<=1&&(sourceKeys.length===1||roots.length===1);
+  const key=sourceKeys.length===1?['import',sourceKeys[0]]:['entry',roots[0]??ids[0]];
+  const legacyKey=sourceKeys.length===1?['import',sourceKeys[0]]:['entry',ids[0]];
+  const legacyId=createHash('sha256').update(JSON.stringify(['lab-source-v1',userId,legacyKey])).digest('hex');
   const id=createHash('sha256').update(JSON.stringify(['lab-source-v1',userId,key])).digest('hex');
   const revision=createHash('sha256').update(JSON.stringify(['lab-source-version-v1',userId,members])).digest('hex');
   const detailRecordId=activeLabRows(parsed)[0]?.id;
   const savedTimes=members.map(row=>+new Date(row.createdAt)).filter(Number.isFinite),savedAt=savedTimes.length?new Date(Math.min(...savedTimes)).toISOString():null;
-  const summary:LabSourceSummary={id,revision,manageable:valid,savedAt,...(detailRecordId?{detailRecordId}:{}),scope:sourceKeys.length===1?'report':'result',results:parsed.length===members.length?activeLabRows(parsed).length:null,records:members.length,dates:Array.from(new Set(parsed.map(fact=>fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10)))).sort()};
-  return[{summary,members,valid}];
+  const summary:LabSourceSummary={id,revision,manageable:valid,savedAt,groupKey:sourceKeys.length===1?sourceKeys[0]:null,originalLaboratories:Array.from(new Set(parsed.map(fact=>fact.laboratory))),reportIdentifiers:Array.from(new Set(parsed.flatMap(fact=>fact.sourceReport?.reportIdentifier?[fact.sourceReport.reportIdentifier]:[]))),specimenIdentifiers:Array.from(new Set(parsed.flatMap(fact=>fact.sourceReport?.specimenIdentifier?[fact.sourceReport.specimenIdentifier]:[]))),dateContexts:activeLabRows(parsed).map(fact=>({date:fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10),precision:fact.dateCorrection?.enteredDate?(fact.dateCorrection.enteredTime?'source-time':'source-date'):fact.sourceReport?.enteredDate?(fact.sourceReport.enteredTime?'source-time':'source-date'):'stored-timestamp-only'})),...(detailRecordId?{detailRecordId}:{}),scope:sourceKeys.length===1?'report':'result',results:parsed.length===members.length?activeLabRows(parsed).length:null,records:members.length,dates:Array.from(new Set(parsed.map(fact=>fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10)))).sort()};
+  return[{summary,members,valid,legacyId}];
  });
 }
 export class PrecisionStorage {
@@ -113,6 +122,7 @@ export class PrecisionStorage {
     saveKey?: string,
     reviewedLabMatches?:readonly string[],
   ): Promise<PrecisionRecord> {
+    if(kind===LAB_REPORT_METADATA_KIND)throw new LabReportMetadataError(400,'Use the source-reviewed report metadata action.');
     const encryptedPayload = encryptPrecision(payload, userId);
     return this.db.transaction(async (tx) => {
       await tx.execute(
@@ -128,11 +138,11 @@ export class PrecisionStorage {
         }
       }
       const plan = payload as any;
-      if (kind === "lab" && plan?.dateCorrection && plan?.unitReview?.status !== "confirmed") throw Error("LAB_SOURCE_CHANGED");
+      if (kind === "lab" && (plan?.sourceCorrection && plan?.unitReview?.status !== "confirmed" || plan?.dateCorrection && plan?.unitReview?.status !== "confirmed")) throw Error("LAB_SOURCE_CHANGED");
       if(reviewedLabMatches!==undefined){
         const known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);
         const incoming=known.success?known.data:raw.success?raw.data:null;
-        if(kind!=="lab"||!saveKey||!incoming||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
+        if(kind!=="lab"||!saveKey||!incoming||incoming.sourceCorrection||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
         const owned=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
         const rows=owned.map(row=>{
           const decoded=decryptPrecision(row.encryptedPayload,userId),supported=labSchema.safeParse(decoded),source=sourceOnlyLabSchema.safeParse(decoded);
@@ -150,7 +160,7 @@ export class PrecisionStorage {
         const prior = active.find(row=>row.unitReview?.supersedes===plan.unitReview.supersedes);
         const source = decoded.find(r=>r.id===plan.unitReview.supersedes);
         const parsed = labSchema.safeParse(source?.payload);
-        if(!parsed.success||!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection))throw Error("LAB_SOURCE_CHANGED");
+        if(!parsed.success||(!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection)||!isDeepStrictEqual(parsed.data.sourceCorrection,plan.sourceCorrection)))throw Error("LAB_SOURCE_CHANGED");
         if(prior){const record=decoded.find(row=>row.id===prior.id)!;return {id:record.id,kind:record.kind,payload:record.payload,createdAt:record.createdAt};}
         if(!active.some(row=>row.id===source?.id))throw Error("LAB_SOURCE_CHANGED");
         if(!parsed.success || parsed.data.unitReview?.status!=="pending" ||
@@ -267,6 +277,30 @@ export class PrecisionStorage {
       return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
   }
+  async reviewLabSource(userId:string,sourceId:string,input:LabSourceReview,saveKey:string):Promise<PrecisionRecord>{
+    const request=labSourceReviewSchema.parse(input);
+    if(!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey))throw Error("LAB_REVIEW_INVALID");
+    const id="lab_review_"+createHash("sha256").update(JSON.stringify(["lab-source-review-v1",userId,saveKey])).digest("hex");
+    const fingerprint=createHash("sha256").update(JSON.stringify([sourceId,request])).digest("hex");
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+      const [receipt]=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if(receipt){
+        const parsed=labSchema.safeParse(decryptPrecision(receipt.encryptedPayload,userId));
+        if(receipt.kind!=="lab"||!parsed.success||parsed.data.sourceCorrection?.requestFingerprint!==fingerprint)throw Error("PRECISION_SAVE_CONFLICT");
+        return{id:receipt.id,kind:receipt.kind,payload:parsed.data,createdAt:receipt.createdAt};
+      }
+      const rows=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
+      if(!rows.some(row=>row.id===sourceId))throw Error("LAB_NOT_FOUND");
+      const owned=rows.map(row=>{const payload=decryptPrecision(row.encryptedPayload,userId),known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);if(!known.success&&!raw.success)throw Error("LAB_SOURCE_CHANGED");return{...(known.success?known.data:raw.data!),id:row.id};});
+      const source=activeLabRows(owned).find(row=>row.id===sourceId);
+      if(!source||createHash("sha256").update(labReviewRevisionText(source)).digest("hex")!==request.expectedRevision)throw Error("LAB_SOURCE_CHANGED");
+      const payload=applyLabSourceReview(source,sourceId,request,fingerprint,new Date().toISOString());
+      const [row]=await tx.insert(precisionRecords).values({id,userId,kind:"lab",encryptedPayload:encryptPrecision(payload,userId)}).returning();
+      await this.removeSourcePlans(tx,userId,new Set([sourceId]));
+      return{id:row.id,kind:row.kind,payload,createdAt:row.createdAt};
+    });
+  }
   private microbiomeFoodSources(rows:any[]):MicrobiomeFoodSource[]{return rows.flatMap(row=>{const data=row.processingStatus==='completed'?viomeSource(row.structuredData):null;if(!data||data.documentKind!=='health-scores-foods'||!data.foods.length)return[];const foods=data.foods.map(food=>({name:food.correctedName||food.name,reportedCategory:food.correctedCategory||food.reportedCategory,sourcePage:food.position.page,sourceColumn:food.position.column,notes:null}));const revision=createHash('sha256').update(JSON.stringify(['microbiome-food-source-v1',row.id,foods,data.biologicalDates])).digest('hex');return[{id:row.id,revision,provider:data.provider,date:data.biologicalDates.collectedOn||data.biologicalDates.reportedOn||null,foods}];});}
   async getMicrobiomeFood(userId:string){
    const context=contextSchema.parse(await this.getPrecisionContext(userId)||{}),control=context.microbiomeFood||{enabled:false,reportId:null,reportRevision:null,ignoredFoodIds:[],nonce:null};
@@ -288,18 +322,105 @@ export class PrecisionStorage {
    });
    return this.getMicrobiomeFood(userId);
   }
-  async getLabSources(userId:string):Promise<LabSourceSummary[]>{return labSourceGroups(userId,await this.getPrecisionRecords(userId)).map(group=>group.summary);}
+  private async labMetadataReady(tx:any,write=false):Promise<boolean>{
+   const result=await tx.execute(sql`SELECT to_regclass('public.lab_report_metadata_versions') IS NOT NULL
+    AND EXISTS(SELECT 1 FROM pg_trigger WHERE tgname='lab_report_metadata_immutable' AND tgrelid=to_regclass('public.lab_report_metadata_versions') AND tgenabled='O' AND NOT tgisinternal)
+    AND EXISTS(SELECT 1 FROM pg_trigger WHERE tgname='lab_report_metadata_source_cleanup' AND tgrelid=to_regclass('public.precision_records') AND tgenabled='O' AND NOT tgisinternal) AS ready`);
+   if(!result.rows[0]?.ready)return false;
+   const rights=await tx.execute(sql`SELECT has_table_privilege(current_user,'public.lab_report_metadata_versions','SELECT') AND (${write}=false OR (has_table_privilege(current_user,'public.lab_report_metadata_versions','INSERT') AND has_table_privilege(current_user,'public.lab_report_metadata_versions','DELETE'))) AS allowed`);return !!rights.rows[0]?.allowed;
+  }
+  private async metadataRows(tx:any,userId:string):Promise<PrecisionRecord[]>{return(await tx.select().from(labReportMetadataVersions).where(eq(labReportMetadataVersions.userId,userId))).map((row:any)=>({id:row.id,kind:LAB_REPORT_METADATA_KIND,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));}
+  async getLabReportMetadataHistory(userId:string):Promise<{available:boolean;records:PrecisionRecord[]}>{
+   try{return await this.db.transaction(async tx=>await this.labMetadataReady(tx)?{available:true,records:await this.metadataRows(tx,userId)}:{available:false,records:[]});}catch{return{available:false,records:[]};}
+  }
+  private async deleteLabMetadata(tx:any,userId:string,sourceIds:string[]){
+   if(!sourceIds.length)return;const exists=await tx.execute(sql`SELECT to_regclass('public.lab_report_metadata_versions') IS NOT NULL AS present`);
+   if(exists.rows[0]?.present)await tx.delete(labReportMetadataVersions).where(and(eq(labReportMetadataVersions.userId,userId),inArray(labReportMetadataVersions.sourceId,sourceIds)));
+  }
+  private labMetadataView(sourceId:string,sourceRevision:string,records:PrecisionRecord[]):LabReportMetadataView{
+   const invalid=records.some(row=>{if(row.kind!==LAB_REPORT_METADATA_KIND||labReportMetadataSchema.safeParse(row.payload).success)return false;const claimed=(row.payload as {sourceId?:unknown}|null)?.sourceId;return typeof claimed!=='string'||claimed===sourceId;});
+   const candidates=records.filter(row=>row.kind===LAB_REPORT_METADATA_KIND).flatMap(row=>{const parsed=labReportMetadataSchema.safeParse(row.payload);return parsed.success&&parsed.data.sourceId===sourceId?[{id:row.id,payload:parsed.data}]:[];});
+   const superseded=new Set(candidates.flatMap(row=>row.payload.supersedes?[row.payload.supersedes]:[])),heads=candidates.filter(row=>!superseded.has(row.id));
+   const byId=new Map(candidates.map(row=>[row.id,row])),head=heads.length===1?heads[0]:null,chain:typeof candidates=[];let cursor=head;const visited=new Set<string>();
+   while(cursor){if(visited.has(cursor.id))return{current:null,sourceCurrent:false,history:[],historyCount:candidates.length,available:false};visited.add(cursor.id);chain.push(cursor);cursor=cursor.payload.supersedes?byId.get(cursor.payload.supersedes)??null:null;}
+   const available=!invalid&&new Set(candidates.map(row=>row.payload.revision)).size===candidates.length&&(candidates.length===0||!!head&&chain.length===candidates.length&&chain.at(-1)?.payload.supersedes===null),current=available?head?.payload??null:null;
+   return{current,sourceCurrent:!!current&&current.sourceRevision===sourceRevision,history:chain.slice(1,21).map(row=>({revision:row.payload.revision,recordedAt:row.payload.recordedAt,sourceRevision:row.payload.sourceRevision,identity:row.payload.identity,identityAssertedAt:row.payload.identityAssertedAt,overlay:row.payload.overlay})),historyCount:Math.max(0,candidates.length-1),available};
+  }
+  async getLabSources(userId:string):Promise<LabSourceSummary[]>{
+   const records=await this.getPrecisionRecords(userId),metadata=await this.getLabReportMetadataHistory(userId),indexed=new Map<string,PrecisionRecord[]>(),unattributed:PrecisionRecord[]=[];
+   for(const row of metadata.records)if(row.kind===LAB_REPORT_METADATA_KIND){const id=(row.payload as {sourceId?:unknown}|null)?.sourceId;if(typeof id==='string')indexed.set(id,[...(indexed.get(id)||[]),row]);else unattributed.push(row);}
+   return labSourceGroups(userId,records).map(group=>{
+    const view=metadata.available?this.labMetadataView(group.summary.id,group.summary.revision,[...(indexed.get(group.summary.id)||[]),...unattributed]):{current:null,sourceCurrent:false,history:[],historyCount:0,available:false};
+    const facts=group.members.flatMap(row=>{const parsed=labSchema.safeParse(row.payload);return parsed.success?[{...parsed.data,id:row.id}]:[];});
+    return{...group.summary,metadata:view,referenceCorrections:{available:metadata.available,observations:activeLabRows(facts).map(fact=>referenceCorrectionView(userId,fact.id,referenceSourceRevision(fact,view.current?.identity??null),metadata.records,metadata.available&&view.available))}};
+   });
+  }
+  async saveLabReferenceCorrection(userId:string,sourceId:string,input:LabReferenceCorrectionCommand,key:string):Promise<LabSourceSummary>{
+   input=labReferenceCorrectionCommandSchema.parse(input);if(!/^[a-f0-9-]{36}$/i.test(key))throw new LabReportMetadataError(400,'Choose a valid range save reference.');
+   await this.db.transaction(async tx=>{
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+    if(!await this.labMetadataReady(tx,true))throw new LabReportMetadataError(503,'Laboratory range annotations are unavailable. Original observations remain available.');
+    const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)),records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
+    const group=labSourceGroups(userId,records).find(group=>group.summary.id===sourceId);
+    if(!group)throw new LabReportMetadataError(404,'Laboratory source not found in your account.');
+    const facts=group.members.flatMap(row=>{const parsed=labSchema.safeParse(row.payload);return parsed.success?[{...parsed.data,id:row.id}]:[];}),fact=activeLabRows(facts).find(row=>row.id===input.observationId);
+    if(!fact)throw new LabReportMetadataError(404,'Current laboratory observation not found in this source.');
+    const annotations=await this.metadataRows(tx,userId),provider=this.labMetadataView(sourceId,group.summary.revision,annotations),revision=referenceSourceRevision(fact,provider.current?.identity??null),view=referenceCorrectionView(userId,fact.id,revision,annotations);
+    if(!group.valid||!provider.available||!view.available)throw new LabReportMetadataError(409,'The source or range history needs review before changing a range.');
+    const stream=referenceStreamId(userId,fact.id),id=referenceHash(['lab-reference-save-v1',userId,stream,key]),fingerprint=referenceHash(input),receipt=annotations.find(row=>row.id===id);
+    if(receipt){const parsed=labReferenceCorrectionSchema.safeParse(receipt.payload);if(!parsed.success||parsed.data.requestFingerprint!==fingerprint)throw new LabReportMetadataError(409,'This save reference already contains different range details.');return;}
+    if(revision!==input.sourceRevision||(view.current?.revision??null)!==input.expectedCorrectionRevision)throw new LabReportMetadataError(409,'The result, laboratory identity or range changed. Reload and review the latest source.');
+    if(input.limits){
+     if(fact.unitReview?.status==='pending')throw new LabReportMetadataError(400,'Confirm the original source unit before adding a laboratory range.');
+     const comparable=(value:string)=>value.trim().replace(/\s+/g,' ').toLowerCase(),known=(value:string)=>!!value.trim()&&!/^(?:unknown|not supplied|not recorded|unspecified)$/i.test(value.trim());
+     const identity=provider.current?.identity,confirmedLaboratory=identity&&identity.provider!=='unknown'?(identity.provider==='other'?identity.otherProvider:identity.provider):fact.laboratory;
+     for(const [copied,original,label]of[[input.limits.laboratory,confirmedLaboratory,'laboratory'],[input.limits.reportIdentifier,fact.sourceReport?.reportIdentifier??'','report identifier'],[input.limits.method,fact.method,'method']]){
+      if(copied&&known(original)&&comparable(copied)!==comparable(original))throw new LabReportMetadataError(400,`The copied ${label} differs from this saved source. Review its source details before applying a range; absent report details may stay blank.`);
+     }
+     const canonical=canonicalLab(fact),interval=copiedReferenceIntervalForPlot(fact.marker,{sourceValue:fact.value,sourceUnit:fact.unit,unit:canonical.unit,method:fact.method,sourceInput:fact.sourceInput,unitReview:fact.unitReview},input.limits);
+     if(!interval)throw new LabReportMetadataError(400,'The copied unit or assay cannot be validated for this result. Review the original source identity first.');
+    }
+    const previous=view.current?annotations.find(row=>{const parsed=labReferenceCorrectionSchema.safeParse(row.payload);return parsed.success&&parsed.data.sourceId===stream&&parsed.data.revision===view.current!.revision;}):null;
+    const payload=labReferenceCorrectionSchema.parse({version:1,valueKind:'lab-reference-range-correction',sourceId:stream,observationId:fact.id,reportSourceId:sourceId,revision:key,supersedes:previous?.id??null,sourceRevision:revision,limits:input.limits,recordedAt:new Date().toISOString(),requestFingerprint:fingerprint});
+    await tx.insert(labReportMetadataVersions).values({id,userId,sourceId:stream,sourceRecordIds:[fact.id],encryptedPayload:encryptPrecision(payload,userId)});
+   });
+   const source=(await this.getLabSources(userId)).find(row=>row.id===sourceId);if(!source)throw new LabReportMetadataError(404,'The source was removed.');return source;
+  }
+
+  async saveLabReportMetadata(userId:string,sourceId:string,input:LabReportMetadataCommand,key:string):Promise<LabSourceSummary>{
+   input=labReportMetadataCommandSchema.parse(input);if(!/^[a-f0-9-]{36}$/i.test(key))throw new LabReportMetadataError(400,'Choose a valid report save reference.');
+   await this.db.transaction(async tx=>{
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+    if(!await this.labMetadataReady(tx,true))throw new LabReportMetadataError(503,'Report annotations are not ready in this deployment. Original observations remain available.');
+    const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)),records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
+    const group=labSourceGroups(userId,records).find(group=>group.summary.id===sourceId);if(!group)throw new LabReportMetadataError(404,'Laboratory source not found in your account.');
+    const annotations=await this.metadataRows(tx,userId),view=this.labMetadataView(sourceId,group.summary.revision,annotations);
+    if(!group.valid||group.summary.results===null||!view.available)throw new LabReportMetadataError(409,'This source or annotation history needs review before metadata can be changed.');
+    const id=createHash('sha256').update(JSON.stringify(['lab-report-metadata-v1',userId,sourceId,key])).digest('hex'),receiptHash=createHash('sha256').update(JSON.stringify(input)).digest('hex'),receipt=annotations.find(row=>row.id===id);
+    if(receipt){const parsed=labReportMetadataSchema.safeParse(receipt.payload);if(receipt.kind!==LAB_REPORT_METADATA_KIND||!parsed.success||parsed.data.receiptHash!==receiptHash)throw new LabReportMetadataError(409,'This save reference already has different report details.');return{...group.summary,metadata:view};}
+    if(group.summary.revision!==input.sourceRevision||(view.current?.revision??null)!==input.metadataRevision)throw new LabReportMetadataError(409,'The source or its laboratory metadata changed. Reload and review the latest report.');
+    const changedIdentity=!isDeepStrictEqual(input.identity,view.current?.identity??null),needsReview=!!input.identity&&(changedIdentity||!view.sourceCurrent);
+    if((changedIdentity||needsReview)&&!input.identityReviewed)throw new LabReportMetadataError(400,'Confirm the performing laboratory and testing jurisdiction against the source report.');
+    const now=new Date().toISOString(),currentRecord=view.current?annotations.find(row=>row.kind===LAB_REPORT_METADATA_KIND&&labReportMetadataSchema.safeParse(row.payload).success&&(row.payload as LabReportMetadata).sourceId===sourceId&&(row.payload as LabReportMetadata).revision===view.current!.revision):undefined;
+    const metadata=labReportMetadataSchema.parse({version:1,sourceId,groupKey:group.summary.groupKey??null,revision:key,supersedes:currentRecord?.id??null,sourceRevision:input.sourceRevision,identity:input.identity,identityAssertedAt:input.identity?(input.identityReviewed?now:view.current?.identityAssertedAt??now):null,overlay:input.overlay,recordedAt:now,receiptHash});
+    const [saved]=await tx.insert(labReportMetadataVersions).values({id,userId,sourceId,sourceRecordIds:group.members.map(row=>row.id),encryptedPayload:encryptPrecision(metadata,userId)}).returning();
+    return{...group.summary,metadata:this.labMetadataView(sourceId,group.summary.revision,[...annotations,{id:saved.id,kind:LAB_REPORT_METADATA_KIND,payload:metadata,createdAt:saved.createdAt}])};
+   });
+   const source=(await this.getLabSources(userId)).find(row=>row.id===sourceId);if(!source)throw new LabReportMetadataError(404,'The source was removed.');return source;
+  }
   async deleteLabSource(userId:string,id:string,revision:string):Promise<void>{
    await this.db.transaction(async tx=>{
     await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
     const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId));
     const records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
-    const group=labSourceGroups(userId,records).find(group=>group.summary.id===id);
+    const group=labSourceGroups(userId,records).find(group=>group.summary.id===id||group.legacyId===id);
     if(!group)return; // Same authoritative absence response for missing or foreign sources.
     if(!group.valid||group.summary.revision!==revision)throw Error('LAB_SOURCE_CHANGED');
     const ids=group.members.map(row=>row.id),removed=new Set(ids);
+
     const plans=records.filter(row=>row.kind==='plan'&&knownPlanUsesSources(row.payload,removed)).map(row=>row.id);
     await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),inArray(precisionRecords.id,[...ids,...plans])));
+    await this.deleteLabMetadata(tx,userId,[group.summary.id]);
    });
   }
   // Explicit logical-entry deletion; typed lab rows cannot use the generic row-only endpoint.
@@ -329,8 +450,9 @@ export class PrecisionStorage {
         }
       }
       for(const row of [...supported,...raw]){
-        const parent=row.dateCorrection?.supersedes;
-        if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        for(const parent of [row.dateCorrection?.supersedes,row.sourceCorrection?.supersedes]){
+         if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        }
       }
       if (!activeLabRows([...supported,...raw]).some(row => row.id === id))
         throw Error("LAB_SOURCE_CHANGED");
@@ -342,6 +464,7 @@ export class PrecisionStorage {
       }
       await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "lab"), inArray(precisionRecords.id, ids)));
       await this.removeSourcePlans(tx,userId,seen);
+
     });
   }
   async deletePrecisionRecord(userId: string, id: string): Promise<boolean> {
@@ -351,6 +474,7 @@ export class PrecisionStorage {
       );
       const[target]=await tx.select({kind:precisionRecords.kind}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
       if(target?.kind==="genetics")throw new GeneticSourceError("read-only");
+      if(target?.kind===LAB_REPORT_METADATA_KIND)throw new LabReportMetadataError(400,'Report annotation history is removed with its laboratory source, not as an observation.');
       if(target?.kind==="lab"){
         const[row]=await tx.select({encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
         const payload=decryptPrecision(row.encryptedPayload,userId);
@@ -379,7 +503,7 @@ export class PrecisionStorage {
     const ids=plans.flatMap((row:any)=>{const payload=decryptPrecision(row.encryptedPayload,userId);return knownPlanUsesSources(payload,sourceIds)?[row.id]:[];});
     if(ids.length)await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan"),inArray(precisionRecords.id,ids)));
   }
-  private geneticSourceVersion(userId:string,row:PrecisionRecord){return createHash("sha256").update(JSON.stringify(["genetic-source-v1",userId,row.id,row.kind,row.createdAt,row.payload])).digest("hex");}
+  private geneticSourceVersion(userId:string,row:PrecisionRecord){return geneticSourceRevision(userId,row);}
   private geneticSnapshot(userId:string,records:PrecisionRecord[],context:PrecisionContext):GeneticSourceSnapshot{
     const selected=selectedGeneticSource(records,context.geneticsSelection);
     const sources=records.filter(r=>r.kind==="genetics").map(row=>{
@@ -432,6 +556,8 @@ export class PrecisionStorage {
       await tx
         .delete(precisionRecords)
         .where(eq(precisionRecords.userId, userId));
+      const metadataTable=await tx.execute(sql`SELECT to_regclass('public.lab_report_metadata_versions') IS NOT NULL AS present`);
+      if(metadataTable.rows[0]?.present)await tx.delete(labReportMetadataVersions).where(eq(labReportMetadataVersions.userId,userId));
       await tx
         .delete(precisionProfiles)
         .where(eq(precisionProfiles.userId, userId));

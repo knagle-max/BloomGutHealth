@@ -245,7 +245,7 @@ export function registerPlannerRoutes(
     try {
       const receipt = key ? mealSaveReceipt(req.session.userId!, key, match===undefined?p.data:{...p.data,reviewRevision:match.slice(1,-1),...(complete?{completeIngredients:true}:{})}) : undefined;
       if (receipt) {
-        const previous = await storage.getMeal(receipt.id,req.session.userId!);
+        const previous = await (storage.getMealSaveRecord ?? storage.getMeal).call(storage,receipt.id,req.session.userId!);
         if (previous) {
           if (previous.userId !== req.session.userId!) throw new Error("MEAL_SAVE_CONFLICT");
           return res.json(checkMealReceipt(previous, receipt));
@@ -288,6 +288,8 @@ export function registerPlannerRoutes(
       } as any, receipt);
       res.json(meal);
     } catch (error) {
+      if(error instanceof Error && error.message==='MEAL_SAVE_DELETED')
+        return res.status(409).json({error:'This meal was deleted. Start a new entry if you want to log it again.',code:'MEAL_SAVE_DELETED'});
       if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       if (error instanceof Error && error.message === "MEAL_SAVE_CONFLICT")
         return res.status(409).json({ error: "This save reference was already used for different meal details. Check your journal before saving again." });

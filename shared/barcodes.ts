@@ -9,7 +9,7 @@ export function normalizeBarcode(value: string): string | null {
 }
 export function productSearchText(value: string) {
   const text = value.trim();
-  if (/^\d{8,14}$/.test(text)) return text;
+  if (isBarcodeSearch(text)) return text;
   return text
     .replace(
       /\b\d+(?:\.\d+)?\b|\b(heaping|rounded|level|tablespoons?|teaspoons?|tbsp|tsp|grams?|of|one|two)\b/gi,

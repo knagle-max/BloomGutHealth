@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-19",
+  "status": "OFFLINE_MAC_PREPARATION_COMPLETE_NETWORK_NOT_ACTIVATED",
+  "sourceBaseCommit": "1717ba69f77883746ffb6b56cccda43d5154e338",
+  "macEvidence": {
+    "origin": "OWNER_REPORTED_NOT_REMOTE_INSPECTION",
+    "pinnedValidationEnvironment": true,
+    "uvicorn": "0.54.0",
+    "click": "8.5.1",
+    "pipCheck": "NO_BROKEN_REQUIREMENTS",
+    "privateCredentialsInitialized": true,
+    "developmentServiceCheck": "PASS",
+    "operationalTestsPassed": 6,
+    "listenersActivated": false,
+    "tailscaleNetworkingActivated": false
+  },
+  "followupOfflineTests": {
+    "pythonScientificAndOperational": 69,
+    "nodeIncludingRealASGIAndMICOM": 20,
+    "failures": 0,
+    "skips": 0,
+    "transport": "IN_PROCESS_ASGI_AND_STDIO_NO_LISTENERS"
+  },
+  "policyReview": {
+    "earlierTaggedNodeReplacement": "WITHDRAWN_DO_NOT_APPLY",
+    "personalMacOwnership": "RETAIN_USER_OWNED_DO_NOT_RETAG_OR_REENROLL",
+    "newTemplate": "docs/scientific-models/tailscale-personal-access-policy.template.json",
+    "scope": "Preserve member-to-member connectivity; restricted caller tag to existing Mac TCP443 only; private inventory of tagged/shared/routed flows still required",
+    "placeholder": "REQUIRES_PRIVATE_COMPLETION_NOT_READY_TO_APPLY",
+    "controlPlaneValidation": "NOT_RUN",
+    "liveNetworkTests": "NOT_RUN"
+  },
+  "approvalBoundary": [
+    "Localhost service listener",
+    "Privately reviewed complete policy and HTTPS Serve, only after personal flow inventory and validation",
+    "Dedicated staging caller enrollment, userspace runtime and private Render configuration; any necessary deployment/restart separately authorized"
+  ],
+  "privacy": {
+    "personalDataOrRealInfrastructureIdentifiersIncluded": false,
+    "actualPolicyExportIncluded": false,
+    "credentialsOrSimulationOutputsIncluded": false
+  },
+  "activation": {
+    "networking": false,
+    "renderSettingsChanged": false,
+    "deployed": false
+  },
+  "remaining": [
+    "Private inventory of existing personal access and Serve/443 conflicts",
+    "Supported auxiliary Tailscale execution on actual Render runtime",
+    "Real restricted transport/auth/replay/TLS/outage/recovery qualification",
+    "Live Mac resource/cancellation qualification",
+    "Independent biological and predictive validation; no clinical claim"
+  ]
+}

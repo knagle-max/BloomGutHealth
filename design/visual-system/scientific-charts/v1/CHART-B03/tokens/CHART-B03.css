@@ -1,0 +1,12 @@
+/* CHART-B03 — additive layout styling, opt-in. Do not include any demo values. */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-comparison{display:grid;gap:12px;min-width:0}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-observation{border-radius:14px;background:var(--bvc-surface-muted,var(--bv-mist));padding:12px;min-width:0}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-observation [data-value]{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-unavailable{border-bottom:2px dashed var(--bvc-uncertainty,var(--bv-secondary))}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-source{border:1px solid var(--bvc-border,var(--bv-line));border-radius:14px;padding:14px;min-width:0}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-source :is(button,a){min-height:44px;min-width:44px}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(button,a):focus-visible{outline:3px solid var(--bvc-focus,var(--bv-focus));outline-offset:3px}
+@media(max-width:420px){.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-pair{gap:8px}}
+@media(forced-colors:active){.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-observation,.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-source{border:1px solid CanvasText;forced-color-adjust:auto}}
+@media(prefers-reduced-motion:reduce){.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b03-comparison *{animation:none!important;transition:none!important}}

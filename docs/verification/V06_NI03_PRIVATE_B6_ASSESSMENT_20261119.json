@@ -1,0 +1,31 @@
+{
+  "task": "V06-NI03-private-B6-assessment",
+  "date": "2026-11-19",
+  "status": "ENGINEERING_TESTED_PARTIAL",
+  "outcome": "Versioned account-private NutrientPersonalAssessment reuses current B6 coverage/reference/overlap calculations and renders through the existing source review. Recorded contributions, representative usual exposure, absorption, population reference, biological status, individual requirement, harm and goals remain explicitly separate.",
+  "integration": "Existing scientific-contracts output boundary, canonical source DTO/coverage, one shared owned reference matcher and current source/Progress/Nutrition components. No new API, store, optimizer, graph, medical authority or private global export. Canonical source DTO is passed separately from cached UI-derived coverage metadata.",
+  "semantics": [
+    "Known subtotals remain source/basis groups; zero stays source zero, missing B6 food field unknown. Food timestamp is labelled food-record-time, confirmed supplement timestamp confirmed-taken-time. A recorded day is partial, not a representative usual exposure.",
+    "Absorbed amount/biological status/individual requirement/personal benefit unknown, not zero. UL-only matching does not become a requirement estimate. Published reference eligibility is not a full clinical interaction check.",
+    "Candidate delegated to the already tested B6 source-reference rule; no new toxicity, dose or causal calculation. No executable action proposed or action ID invented; NI04/protein-fiber family still next.",
+    "Private purpose/actor/date-window and exact canonical reference row identity/count/version guarded; source/reference revisions feed a versioned dependency token, not a cryptographic claim or global scientific asset."
+  ],
+  "verification": [
+    "26focused existing coverage/source/reference API/eligibility and new assessment tests PASS, including source125mg+unknown, missing food B6, food-record vs taken dates, source0/sparse/no absorption/status/requirement/benefit,50\u201351UL-only, unknown pregnancy, wrong account/purpose/window/extra raw prompt, correction/reference epoch and duplicate reference IDs",
+    "Actual App\u2192HTTP\u2192encrypted SQL B6 browser PASS:175\u2192125\u219275 source/current corrections/deletion/Profile/ref/source outages/owner and32source+8overlap responsive states; new no-usual/absorption/status/individual-requirement disclosure opened and verified",
+    "Existing complete reference App/HTTP/encrypted Profile regression PASS32generic+8B6 states after extracting canonical reference guard; public source values remain visible on unmatched/outage",
+    "Types and production build PASS"
+  ],
+  "publication_repair": {
+    "parent": "dbe754d6b9ec9ff63fe2d959edd24b541f8c2fc6",
+    "run": 44396117731,
+    "job": 135131053633,
+    "result": "FAIL at old Paired lipid direction context browser expectation before unit/hosted completion; not qualified",
+    "repair": "Existing lab-explorer direction flow now asserts in-range changes are not promoted, deliberately opens How each marker was reviewed on initial/reload/source restore, and retains exact numerical/source mismatch/no clinical worsening/account/write assertions.48states PASS. No product gate or assertion removed."
+  },
+  "limits": [
+    "NI03 first B6 family only; protein/fiber protected goals/approved action eligibility and M4food options/Today cue remain actionable",
+    "No usual intake model, absorption estimate, nutrient biomarker interpretation, clinical/personal optimum/dose release, global science release or model training claimed",
+    "Independent science/physical VoiceOver not tested/accepted; full v0.6 RC unfinished"
+  ]
+}

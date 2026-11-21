@@ -1,0 +1,61 @@
+/* Existing Bloom palette roles; real results/navigation remain owned by the
+   precision report and grouped explorer. Reserved art is decorative only. */
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas {min-width:0;display:grid;gap:1rem;container: bloodwork-atlas / inline-size;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero {
+ --bloodwork-hero-bg:#102B25;--bloodwork-hero-ink:#F5F3EB;
+ position:relative;isolation:isolate;overflow:hidden;min-width:0;
+ border-radius:24px;padding:clamp(1.5rem,4vw,3rem);
+ background:var(--bloodwork-hero-bg);color:var(--bloodwork-hero-ink);
+}
+.app-shell[data-bloom-visual="premium"].athlete-mode .bloodwork-atlas-hero {--bloodwork-hero-bg:#0F1B2E;--bloodwork-hero-ink:#F1F6FF;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero > .bv-media {position:absolute;inset:0;margin:0;width:100%;height:100%;border:0;border-radius:inherit;background:transparent;z-index:-1;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero > .bv-media img {width:100%;height:100%;block-size:100%;opacity:.28;object-fit:cover;object-position:80% center;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero .bv-media-placeholder {
+ position:absolute;inset:0;block-size:100%;
+ background:radial-gradient(ellipse at 92% 10%,color-mix(in srgb,var(--bv-brand) 25%,transparent),transparent 57%),radial-gradient(ellipse at 85% 85%,color-mix(in srgb,var(--bv-brand) 12%,transparent),transparent 48%);
+}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-intro {position:relative;max-width:48rem;overflow-wrap:anywhere;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-intro h1 {font-size:clamp(2.75rem,5vw,4.25rem);line-height:1.05;font-weight:400;letter-spacing:-.035em;margin:.75rem 0 1rem;color:inherit;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-intro :is(p,.eyebrow) {color:inherit;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-intro > p:not(.eyebrow) {max-width:44ch;line-height:1.65;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-count {font-variant-numeric:tabular-nums;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-actions {display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.5rem;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-actions .text-link {color:inherit;min-height:44px;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-actions .hero-button {background:var(--bloodwork-hero-ink);color:var(--bloodwork-hero-bg);max-width:100%;white-space:normal;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-actions :is(a,button):focus-visible {outline:3px solid var(--bloodwork-hero-ink);outline-offset:4px;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-list {display:grid;gap:.65rem;min-width:0;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {
+ display:grid;grid-template-columns:72px minmax(0,1fr) 20px;align-items:center;gap:1rem;
+ font-family:var(--bv-sans);min-width:0;min-height:96px;padding:1rem;border:1px solid var(--bv-line);
+ border-radius:18px;background:var(--bv-porcelain);color:var(--bv-forest);text-decoration:none;
+}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link > span {min-width:0;overflow-wrap:anywhere;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link strong {display:block;font-size:1rem;font-weight:600;line-height:1.4;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link small {display:block;margin-top:.35rem;font-size:.875rem;line-height:1.5;color:var(--bv-secondary);}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link > :is(.bv-media,.lab-category-icon) {position:relative;margin:0;width:72px;height:72px;min-width:0;border-radius:12px;overflow:hidden;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link > .bv-media img {display:block;width:100%;height:100%;block-size:100%;object-fit:contain;object-position:center;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link .bv-media-placeholder {position:absolute;inset:0;block-size:100%;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link:focus-visible {outline:3px solid var(--bv-focus);outline-offset:3px;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link:hover {background:var(--bv-mist);}
+/* Use actual content space, including browser zoom and the desktop sidebar. */
+@container bloodwork-atlas (min-width:42rem){.app-shell[data-bloom-visual="premium"] .bloodwork-system-list {grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:360px){.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {grid-template-columns:64px minmax(0,1fr) 18px;gap:.65rem;padding:.85rem;}.app-shell[data-bloom-visual="premium"] .bloodwork-system-link > :is(.bv-media,.lab-category-icon){width:64px;height:64px;}}
+@media(forced-colors:active){.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero {background:Canvas;color:CanvasText;border:1px solid CanvasText;}.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero > .bv-media {display:none;}.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {background:Canvas;color:LinkText;border-color:CanvasText;}}
+
+/* The existing explorer opens charts inside the illustrated category. */
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-group {min-width:0;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-group[open] {grid-column:1/-1;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {cursor:pointer;list-style:none;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-link::-webkit-details-marker {display:none;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-group[open] > summary > svg {transform:rotate(90deg);}
+.app-shell[data-bloom-visual="premium"] .bloodwork-system-group > .lab-explorer-markers {padding:1rem 0;}
+
+/* Report overview shares the canonical explorer and preserves compact artwork navigation. */
+.lab-panel-review {min-width:0;overflow-wrap:anywhere;}
+.lab-panel-review > * + * {margin-top:.75rem;}
+.lab-panel-review summary {min-height:44px;cursor:pointer;padding:.65rem 0;font-family:var(--bv-font-body,inherit);}
+.lab-panel-review summary:focus-visible,.lab-panel-review button:focus-visible {outline:3px solid var(--bv-focus,currentColor);outline-offset:3px;}
+.lab-panel-review-list {list-style:none;margin:0;padding:0;}
+.lab-panel-review-observation {padding:.85rem 0;border-top:1px solid var(--bv-line,currentColor);}
+.lab-panel-review-observation p {margin:.35rem 0;}
+.lab-panel-review-tradeoff {padding:.75rem;border-inline-start:3px solid currentColor;}

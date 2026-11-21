@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-19",
+  "baseCommit": "46673361adf8d9ee5ed19eb09c77327ff2e4b120",
+  "scope": "Test-only deadline scenario coordination; runtime budgets and implementation unchanged",
+  "initialFullRun": {
+    "tests": 1009,
+    "passed": 1008,
+    "failed": 1,
+    "skips": 0,
+    "failure": "Slow-engine test assumed its10ms setup budget always reached engine under host load"
+  },
+  "correction": [
+    "Control timer delivery after an explicit engine-entered handshake",
+    "Retain actual native monotonic elapsed clock during75ms CPU-blocked engine scenario",
+    "Require engine invocation and prove timer callback was not delivered during the blocked interval",
+    "Keep existing10ms/25ms budgets and runtime monotonic guard unchanged"
+  ],
+  "checks": {
+    "focusedRunnerProtocolIsolation": 17,
+    "loadedRunnerAndSQLStorageRegression": 25,
+    "failures": 0,
+    "typescript": "PASS",
+    "freshFullRunAfterTestRepair": "PENDING_NEXT_INTEGRATED_SLICE"
+  },
+  "artifacts": [
+    {
+      "path": "tests/private-investigation-runner.test.ts",
+      "sha256": "33be82748b353700fc83179a2263e9661d9ccb674625a5b0b22664caa99418d1"
+    },
+    {
+      "path": "server/private-investigation-runner.ts",
+      "sha256": "8191fcdbbf98797ccd07bdb89c6f79203b867c48b1128bccf59d8d96d6d49459"
+    }
+  ],
+  "activation": {
+    "runtimeCodeChanged": false,
+    "networkOrRenderChanged": false,
+    "deployed": false,
+    "personalDataUsed": false
+  }
+}
