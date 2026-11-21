@@ -24,6 +24,27 @@
 | ONB-A11 | P2 conditional | First-use dashboard botanical empty-state vignette | **Only if** existing approved media cannot serve | Post-setup dashboard | SVG + optional 1x/2x WebP |
 | ONB-A12 | P0 design specification | Fully responsive complete screen compositions | Design references, **not runtime screens** | All 3 steps + empty dashboard | Figma frames, handoff redlines |
 
+## Approved photographic goal-card media — 2026-11-21
+
+**Owner approval:** All six photorealistic card media selections approved on 2026-11-21. **This approval covers the images only**, not separate editable SVG goal icons, interactive selection tiles, responsive implementation or scientific meaning. Original ONB-A01–A06 SVG requests remain REQUESTED pending reuse review and actual vector delivery. These approved editorial raster media are supplemental card artwork and must not be mistaken for six completed SVG glyphs.
+
+- **Package:** Shared Library `/Bloom gut health/Agent Handoffs/Bloom_ONB_Six_Goals_Approved_2026-11-21.zip` (six 1536×1024 original PNGs plus 384/768/1536 WebP exports).
+- **Manifest:** `/Bloom gut health/Agent Handoffs/Bloom_ONB_Six_Goals_Manifest_2026-11-21.json` (file-by-file hashes and variant names).
+- **Readme:** `/Bloom gut health/Agent Handoffs/Bloom_ONB_Six_Goals_README_2026-11-21.md`.
+- **Detailed production crosswalk:** [Approved onboarding photography delivery](onboarding-v1/APPROVED_GOAL_PHOTOGRAPHY_DELIVERY_20261121.md).
+- **Status:** Owner-approved assets delivered to Shared Library; **not installed**, not user-interface accepted, not sign-off for scientific representation, not deployed.
+
+| Registry concept | Approved photograph | File basename (without size suffix) |
+| --- | --- | --- |
+| ONB-A01 — Gut health | Macro green bacteria illustration | `ONB-A01-gut-health` |
+| ONB-A02 — Longevity | Translucent green/gold DNA helix | `ONB-A02-longevity` |
+| ONB-A03 — General health | Translucent human whole-body wellness visual | `ONB-A03-general-health` |
+| ONB-A04 — Metabolic health | Golden mitochondrion on forest-green background | `ONB-A04-metabolic-health` |
+| ONB-A05 — Weight management | Golden adipose-cell artwork (symbolic, not diagnostic) | `ONB-A05-weight-management` |
+| ONB-A06 — Athletic performance | **Revised** running athlete with green and athlete-blue accents | `ONB-A06-athletic-performance` |
+
+**Implementation note:** Keep the exact approved six primary goal titles and working radio selection. Raster media are decorative; labels, selection state, focus and 44px touch geometry are DOM UI. Check per-card crops at 320/390/768/1440 and four themes, 200% text. Do not imply literal medical imaging, measured biology, proven longevity or weight-loss outcome. Do not use the rejected A06 muscle-only original.
+
 ## Production-ready art direction
 
 ### ONB-A01 — Gut health / botanical intestinal loop
