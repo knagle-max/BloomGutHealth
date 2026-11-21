@@ -44,6 +44,10 @@
 
 ## 4. Specification index — scoped requirements, not additional queue items
 
+**Feature-preservation audit (not a task queue):** [116-family feature/function crosswalk](docs/architecture/BLOOM_FEATURE_FUNCTION_PRESERVATION_AND_BACKLOG_AUDIT_20261121.md). Use only to verify that approved scope, deferred dependencies and current components are not silently dropped or duplicated during a selected task. It does not add 116 deliverables or change P0→P4 ordering.
+
+
+
 | Triggered by current eligible task | Read exact current architecture/acceptance |
 | --- | --- |
 | P1 investigator and multi-model privacy/routing | [INV architecture + blinded benchmarks](docs/architecture/BLOOM_EVIDENCE_GROUNDED_AI_BIOLOGICAL_INVESTIGATION_IMPLEMENTATION_DECISION_20261118.md); [routing/verification and INT-MM-01..18](docs/architecture/BLOOM_ROUTING_VERIFICATION_AND_FLEXIBLE_TRACK_EXECUTION_DECISION_20261120.md); [preserved source](docs/agent-handoffs/Bloom_Multi_Model_Privacy_Routing_Architect_Codex_Handoff_2026-11-20.md). Private vs public provider taskId, source/value verifier, actor/revision, spend ledger, no unsupported model promotion. |
