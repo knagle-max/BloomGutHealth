@@ -243,10 +243,11 @@
         "existingPath": "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
         "existingArtifactByteVerified": true
       },
-      "lifecycle": "Identified",
-      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner-approved refined Biology natural-history anatomical studio hero delivered to Shared Library with PNG desktop/mobile WebPs and SHA manifest. Illustrative anatomy and rights QA, app import and real-screen QA PENDING.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-biology-abstract-cells.webp"
+        "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0003_Biology_Approved_2026-11-21.zip"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -254,8 +255,8 @@
         "componentAssetIdReferenced": true
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
+        "design": "Owner approved final BVA-0003 anatomical botanical studio art 2026-11-21",
+        "scientific": "pending; conceptual model with anatomy requires expert review",
         "rights": "pending",
         "rendered": "pending"
       },
@@ -271,6 +272,13 @@
             }
           ],
           "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        },
+        "replacementDelivery": {
+          "date": "2026-11-21",
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0003_Biology_Approved_2026-11-21.zip",
+          "deliverables": "Original 1672x941 RGB PNG, desktop WebP 1672/1200/800 and portrait WebP 768x1024/576x1024, README and SHA-256 manifest",
+          "runtime": "NOT_INTEGRATED",
+          "notes": "Preserve prior slot image until actual frontend QA. Portrait art requires separate overlay/text panel as dark left margin is not retained."
         }
       },
       "productionBriefV2": {
