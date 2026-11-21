@@ -333,10 +333,11 @@
         "existingPath": "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
         "existingArtifactByteVerified": true
       },
-      "lifecycle": "Identified",
-      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner-approved Explore natural-history still-life replacement delivered to Shared Library with original PNG, desktop/mobile WebP and checksum manifest; NOT INTEGRATED OR VISUALLY VERIFIED.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-explore-blueberry-macro.webp"
+        "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0004_Explore_Approved_2026-11-21.zip"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -344,8 +345,8 @@
         "componentAssetIdReferenced": true
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
+        "design": "Owner approved BVA-0004 Explore botanical discovery still life 2026-11-21",
+        "scientific": "pending for conceptual microbiome and anatomy motifs",
         "rights": "pending",
         "rendered": "pending"
       },
@@ -361,6 +362,14 @@
             }
           ],
           "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        },
+        "replacementDelivery": {
+          "date": "2026-11-21",
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0004_Explore_Approved_2026-11-21.zip",
+          "sourceDimensions": "1671x941",
+          "variants": "Desktop WebP 1671/1200/800 and mobile 768x1024/576x1024",
+          "status": "APPROVED_ART_NOT_INTEGRATED",
+          "notes": "Keep old blueberry image and separately delivered BVA-0019 Explore living atlas intact. Reconcile page-level placement with Architect; mobile crops require text panel."
         }
       },
       "productionBriefV2": {
