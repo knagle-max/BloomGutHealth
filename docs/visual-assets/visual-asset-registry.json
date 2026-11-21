@@ -424,10 +424,11 @@
         "existingPath": "/images/editorial/heroes/bloom-athlete-mountains.webp",
         "existingArtifactByteVerified": true
       },
-      "lifecycle": "Identified",
-      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner-approved Athlete trail-running mountain hero delivered as source PNG and desktop/mobile WebP in Shared Library; NOT integrated, rights/rendered review pending.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-athlete-mountains.webp"
+        "/images/editorial/heroes/bloom-athlete-mountains.webp",
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0005_Athlete_Approved_2026-11-21.zip"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -435,8 +436,8 @@
         "componentAssetIdReferenced": true
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
+        "design": "Owner approved BVA-0005 Athlete runner hero 2026-11-21",
+        "scientific": "Not applicable to decorative athlete scene; verify no implied user performance or inaccurate action",
         "rights": "pending",
         "rendered": "pending"
       },
@@ -452,6 +453,15 @@
             }
           ],
           "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        },
+        "replacementDelivery": {
+          "date": "2026-11-21",
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0005_Athlete_Approved_2026-11-21.zip",
+          "sourceDimensions": "1672x941",
+          "variants": "Desktop 1672/1200/800 WebP; mobile portrait crops 768x1024/576x1024",
+          "checksums": "manifest.json inside delivered ZIP",
+          "runtime": "NOT_INTEGRATED",
+          "notes": "Original mountain hero remains bound. Mobile crops lack left text-safe dark region, so use separate text panel or tested overlay. Athlete original blue tokens must be retained."
         }
       },
       "productionBriefV2": {
