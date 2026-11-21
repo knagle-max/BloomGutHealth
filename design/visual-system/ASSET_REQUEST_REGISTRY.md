@@ -45,6 +45,28 @@
 
 **Implementation note:** Keep the exact approved six primary goal titles and working radio selection. Raster media are decorative; labels, selection state, focus and 44px touch geometry are DOM UI. Check per-card crops at 320/390/768/1440 and four themes, 200% text. Do not imply literal medical imaging, measured biology, proven longevity or weight-loss outcome. Do not use the rejected A06 muscle-only original.
 
+## Owner-approved onboarding component delivery — 2026-11-21
+
+**Owner approvals:** ONB-A07 selectable goal-card design; ONB-A08 three-step navigation design; ONB-A09a–A09d all four section SVG icons; ONB-A10 interactive expandable forms and consent-state **design**; ONB-A12 integrated responsive onboarding and empty-dashboard **design**. These are approved DESIGN DELIVERABLES, not deployed application features. Designs passed ZIP integrity checks; live screen, accessibility, data persistence and consent correctness are **NOT VERIFIED**.
+
+**One canonical package:** Shared Library `/Bloom gut health/Agent Handoffs/Bloom_ONB_Approved_Design_Handoff_2026-11-21.zip` (contains all six original source-package ZIPs, original goal photography, a delivery index with SHA-256 and README). Individual approved photo package and individual A07–A12 packages remain available inside the combined ZIP.
+
+**Manifest:** `/Bloom gut health/Agent Handoffs/Bloom_ONB_A07_A12_Approved_Delivery_Index_2026-11-21.json`.
+
+**Developer/Architect handoff:** [Approved onboarding components, extraction and acceptance](onboarding-v1/APPROVED_COMPONENTS_A07_A12_DELIVERY_20261121.md).
+
+| ID | Approved deliverable | Design lifecycle | Runtime lifecycle | Source archive inside combined delivery |
+| --- | --- | --- | --- | --- |
+| ONB-A07 | Selectable goal cards, selected/hover/focus/disabled/error | DELIVERED — owner approved | NOT INTEGRATED | `Bloom_ONB_A07_Goal_Cards_Review.zip` |
+| ONB-A08 | Exactly three-step progress, back/continue/skip/resume/save states | DELIVERED — owner approved | NOT INTEGRATED | `Bloom_ONB_A08_Progress_Navigation_Review.zip` |
+| ONB-A09 | Four approved source-editable SVG icons (conditions, medications/supplements, allergies/intolerances, dietary preferences) | DELIVERED — owner approved | NOT INTEGRATED | `Bloom_ONB_A09_Four_Approved_Icons_2026-11-21.zip` |
+| ONB-A10 | Health-context accordion, chips, unknown/none/skip, illustrative consent and errors | DELIVERED — owner approved | NOT INTEGRATED | `Bloom_ONB_A10_Expandable_Forms_Review_2026-11-21.zip` |
+| ONB-A12 | Goals, About you, four-section optional Health context, zero-data dashboard responsive compositions | DELIVERED — owner approved | NOT INTEGRATED | `Bloom_ONB_A12_Responsive_Compositions_Review_2026-11-21.zip` |
+
+**Still outstanding:** six original ONB-A01–A06 SVG goal-icon requests remain REQUESTED (the six separately approved photographic card media do not complete these vector requests); ONB-A11 remains CONDITIONAL/NOT PRODUCED. Architect may approve reuse of existing glyphs instead of commissioning redundant artwork. The third step contains FOUR optional health-context sections—not six data-import tiles—and has a distinct Skip action. Dashboard is **not** a fourth wizard step.
+
+**Implementation guards:** save/resume/account scope; explicit revocable consent separate from Finish; medications distinct from supplements; allergies distinct from intolerances; unknown/skip/none distinct; existing-account bypass; accurate sex-for-reference, optional units; 320/390/768/1440 in all four themes, 200% zoom, keyboard, screen reader, focus, 44px controls and same-SHA actual app screenshots. Do not claim integrated/verified until Codex and independent UX complete their checks.
+
 ## Production-ready art direction
 
 ### ONB-A01 — Gut health / botanical intestinal loop
