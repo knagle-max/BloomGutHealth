@@ -4955,8 +4955,10 @@
         "wide desktop context header"
       ],
       "accessibility": "decorative; visible marker/category/count text supplies meaning",
-      "lifecycle": "Briefed",
-      "assetStatus": "requested; no source bytes or approval claimed",
+      "lifecycle": "Artwork approved",
+      "assetStatus": "Owner-approved candidate 3, delivered in Shared Library; NOT_INTEGRATED / NOT_VERIFIED",
+      "ownerApproval": {"approved": true, "date": "2026-11-21", "scope": "specific candidate 3 visual artwork only; not science, rights, integration or hosted verification"},
+      "approvedArtworkDelivery": {"state": "ARTWORK_APPROVED_NOT_INTEGRATED", "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0051_Microbiome_Overview_Approved_2026-11-21.zip", "zipSha256": "df51cca56cdf8c1ba49dd0f15e6161086cb5b681a3599567282b3022b5ca6904", "originalSha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00", "originalDimensions": {"width": 1774, "height": 887}, "handoff": "docs/visual-assets/BVA_0051_MICROBIOME_OVERVIEW_APPROVED_DELIVERY_20261121.md", "manifest": "manifest.json inside ZIP", "formats": ["png","webp"], "responsiveVerification": "pending", "scientificReview": "pending", "rightsReview": "pending"} ,
       "filePaths": [],
       "sha256": null,
       "license": null,
@@ -4967,12 +4969,12 @@
       },
       "integration": {
         "verified": false,
-        "state": "Intentional reserved placeholder only. No existing image reused; no new image bytes or approval claimed."
+        "state": "Approved artwork package delivered; reserved runtime placeholder remains, NOT_INTEGRATED"
       },
       "review": {
-        "design": "requested",
+        "design": "owner explicitly approved candidate 3, 2026-11-21; two prior food scenes rejected",
         "scientific": "not reviewed",
-        "rights": "no source file/licence yet",
+        "rights": "original AI-generated artwork; commercial rights review pending",
         "rendered": "reserved fallback engineering testing pending"
       },
       "authority": "Owner2026-11-17 microbiome overview and organism detail reference; docs/design-references/microbiome/",
