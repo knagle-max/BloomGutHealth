@@ -61,10 +61,11 @@
         "existingPath": "/images/editorial/heroes/bloom-today-meadow.webp",
         "existingArtifactByteVerified": true
       },
-      "lifecycle": "Identified",
-      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner approved replacement Today botanical hero; final dark-left text-safe source PNG and desktop/mobile WebP exports delivered to Shared Library 2026-11-21. NOT committed to app, not visually verified, no rights/science/rendered acceptance claimed.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-today-meadow.webp"
+        "/images/editorial/heroes/bloom-today-meadow.webp",
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0001_Today_Approved_2026-11-21.zip"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -72,7 +73,7 @@
         "componentAssetIdReferenced": true
       },
       "review": {
-        "design": "pending",
+        "design": "owner-approved replacement concept and final text-safe adjustment; rendered crop verification pending",
         "scientific": "pending where relevant",
         "rights": "pending",
         "rendered": "pending"
@@ -89,6 +90,14 @@
             }
           ],
           "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        },
+        "replacementDelivery": {
+          "date": "2026-11-21",
+          "source": "Shared Library /Bloom gut health/Agent Handoffs/Bloom_BVA_0001_Today_Approved_2026-11-21.zip",
+          "sourceFormat": "PNG 1672x941; WebP desktop/mobile; SHA-256 manifest included",
+          "production": "DELIVERED",
+          "runtimeIntegration": "NOT_INTEGRATED",
+          "notes": "Keep previous hero and editorialMedia.ts binding intact until Codex imports/tests replacement. User accepted text-free Today botanical image and dark-left final refinement."
         }
       },
       "productionBriefV2": {
