@@ -231,6 +231,53 @@ export interface OfflineDraftMetadata {
 - **PREV-01..07 / CP-06 reminders**: governed by territorial, age, anatomy, date-effective guideline applicability and source/rights review; separate routine cadence vs diagnostic warning. No generic automatically “overdue” claims without confirmed records.
 - **Caregiver and multiple health profiles**: future distinct per-person identity/consent, pediatric clinical safety, guardian permissions, revocation and independent scientific snapshots. Defer until source-safe single-user experience proven.
 
+## BL-05 — Preserved coverage supplements from original six-capability proposal (DEFERRED; no new engines)
+
+The 2026-11-22 six-capability proposal included subfeatures that were only partially specified by BL-03/BL-04. The entries below close the *planning documentation* gap and do **not** imply demand, implementation authorization, validated numerical improvements, or another active task. Reconcile every item with actual current schemas and flows on future selection.
+
+### BL-05A — Reviewable custom recipes / repeat meals, receipt import, grocery list and pantry bridge
+- **Custom recipe builder (small, source-based):** reuse existing confirmed meal / ingredients / meal-template and source-native recipe calculations, not a second nutrient store. Save versioned ingredient identities, quantities, raw-to-cooked/edible yields when measured, portion count, substitutions, preparation and missing nutrients; preserve source-reported zeros vs unknown values, exact source/units and changes. User can re-log a recipe by confirming actual portion/ingredients; a template or plan is not consumption. An estimated cooked yield never becomes a measured value.
+- **Receipt/grocery scan (conditional research option, not Wave 1):** paper/digital store receipts are purchase evidence only; receipt line items may lack units, brand, food identity or quantity and must remain candidate purchases until user review. Never auto-create meal consumption, nutrient totals or another household member's intake. Assess OCR privacy, retailer receipt rights, refunds, returns and ambiguous product mapping; defer until evidence that users value it over barcode/meal capture.
+- **Grocery list / pantry bridge (optional convenience):** derive planned shopping amounts from **explicitly chosen** meals/recipes and household food preferences, not inferred from someone's incomplete nutrient diary. Pantry stock is user-confirmed/estimated, not silently reconciled to actual intake. If highlighting nutrient-containing foods, qualify generic composition and missingness; do not claim that a shopping list corrects an individual deficiency, microbiome problem or clinical outcome. Shopping, possession, preparation and eating are separate event states.
+- **Household food exclusions:** combined menu/shopping filters may accept voluntary preference and declared caution flags from multiple people, but must not represent another family member's confirmed medical diagnosis, nor override the known-conflict / needs-verification separation in the restaurant handoff.
+
+Suggested *adapt-to-existing* contract, not authorization for a new global data store:
+~~~ts
+export interface PlannedRecipeUse {
+  existingTemplateId: string;
+  sourceRevision: string;
+  plannedServings: number; // shopping plan only; not consumption
+  recipeYieldEvidence: "measured" | "source-estimate" | "unknown";
+}
+export interface GroceryPurchaseCandidate {
+  rawReceiptLine: string; // raw user-reviewed receipt record
+  matchedProductSourceId: string | null;
+  quantity: number | null;
+  state: "unreviewed" | "user-confirmed-purchase" | "unmatched";
+  // Neither a purchase nor a pantry item is an eaten meal.
+}
+~~~
+**Deferred acceptance:** recipe changes and portion scaling retain provenance; micronutrient omissions remain unknown; repeat does not auto-save; receipt false matches rejected; planned grocery and pantry quantities do not affect nutrient totals; household filters never assert medical safety.
+
+### BL-05B — Explicit offline coverage for hydration and supplements
+BL-03D's first bounded draft scope is meal and activity sets. Preserve **later optional** hydration and confirmed supplement-intake draft support through the *same* reviewed identity/idempotency/offline mechanism only after source security, medical/supplement status and double-write controls pass. Planned/scheduled supplements are not confirmed ingestion; a pending water entry is not yet a recorded intake; duplicate ingestion after reconnect could affect exposure and nutrition calculations. Device data retention, actor isolation, logout, conflict states and expiry are required. Do not promise offline third-party menu/OCR/biological analysis.
+~~~ts
+type FutureOfflineDraftKind =
+  | "meal_draft" | "activity_set_draft"
+  | "hydration_draft" | "supplement_intake_draft";
+// Future eligible extensions only, not currently supported storage schemas.
+~~~
+
+### BL-05C — Patient data export vs backup and restore
+BL-03B's account-scoped JSON export plus optional CSV and qualified FHIR maps is **portability/export**; that does not prove the application can restore safely or that exported records include every underlying protected attachment. Preserve a separate possible **backup and restore** research item: versioned authenticated full archive, original source/revision IDs, correction/revocation semantics, attachment inclusion or omission manifest, schema migration compatibility, checksums/integrity validation, foreign-account/replayed-identity rejection and a tested dry-run preview before import. A user must never overwrite canonical records or reintroduce revoked observations through an unchecked restore. Compare export manifest against server-authoritative owned records, rights and retention; do not export signing keys, tokens or unrelated accounts. No hidden automatic cross-device backup promises or irreversible restore on import.
+
+### BL-05D — Pediatric/caregiver records and preventive lab cadence (later medical scope)
+- **Dependents / minors:** if BL-04C is ever authorized, explicitly evaluate age-appropriate growth metrics, pediatric laboratory reference ranges, symptom/sleep/medication events and optional device-derived data. Yoto or other child-device integration is a *candidate external connector*, not an existing source or required integration. Prevent per-person data contamination and apply actual guardian/consent, retention, rights, revocation and transition-to-adulthood policies. Do not use adult reference ranges, meal targets or genetic/biological investigator inference for a child.
+- **Lab and preventive follow-up cadence:** BL-04B also encompasses age/history/territory-appropriate **lab recheck and clinician follow-up** suggestions (e.g., lipids, HbA1c, blood pressure), but only when a reviewed guideline/clinician-prescribed plan supports interval, actual prior performance date and purpose. Distinguish routine due/unknown history, provider instruction and urgent diagnostic alarm; an absent prior test record is not proof that care is overdue. No autonomous test order, diagnosis or universal threshold.
+
+### Scope precedence
+BL-05 is a **retention-of-requirements appendix**, subordinate to the earlier BL-01..BL-04 entries, the governing handoffs and the actual live queue. Future selection must first ask whether an equivalent existing implementation already meets the outcome; **REUSE / NARROW CHANGE / DEFER**. These additions do not change Wave 1/2/3, active GI work or current Codex authorization.
+
 ## Future acceptance and receipt discipline
 For each future owner-selected slice: confirm current HEAD/file:line/actual implementation and evidence; reuse-first diff; baseline of actual user outcome; original source/right/licence/version; account/consent and negative tests; accessible real UI; type/API/browser and source-correction fixtures; explicit NOT_TESTED vs engineering-only vs scientifically/legally/hosted qualified; exact SHA and remaining blocker. No invented metrics, menu nutritional precision, muscle physiology, allergy-safety certification, provider retention or offline encryption guarantees.
 
