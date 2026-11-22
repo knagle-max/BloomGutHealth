@@ -123,3 +123,32 @@ Owner supplied a precise markup crosswalk. Verified directly against V4 `muscle-
 **One additional implementation caution:** V4's hidden second-path siblings are pointer-selectable by the demo even though they have `aria-hidden=true`; the adjacent accessible selector must provide equivalent function. Ensure visual selection, keyboard list, and descriptive state stay synchronized. The repeated gradient IDs and reattached event listener issue in section 7 still apply.
 
 **Acceptance remains readiness-triggered.** No new code, catalog, tests, asset art or queue changes are authorized by this clarification. Active GI work still precedes eligible exercise work.
+
+## 9. Bloom Anatomy V10.1 — read-only design handoff intake (2026-11-22)
+
+**Exact source read:** `Bloom_V10_1_Read_Only_Design_Handoff.md`, 78 lines, user's shared ChatGPT Library source, authored 2026-11-22. The document itself identifies an inspected V10.1 archive: `bloom_anatomy_v10_1/interactive-demo.html`, `visual-groups-provisional.json`, `assets/bloom-neutral-front.svg`, `assets/bloom-neutral-back.svg`, `README.md` and `qa-manifest.json`. **The underlying V10.1 archive/media bytes were not attached to this review or found available in the current library search; this architect review confirms the handoff text, not its claimed visual/structural inspections.** Do not claim V10.1 SHA, original assets, tests, rendering or integration as independently verified.
+
+**Intake decision:** **ACCEPT the V10.1 design-review and integration-gate findings as the latest reported V10.1 *handoff guidance*. DO NOT interpret it as approval to alter the frozen V10.1 baseline, production signoff or permission to build an exercise feature.** Retain V4 and V3 source provenance, their verified technical findings and registry identifiers BVA-0078/0079. Until the actual V10.1 archive is accessible and verified, its status is **REPORTED_FROZEN_DESIGN_BASELINE / ORIGINAL_BYTES_UNVERIFIED**, not a proven supersession or integrated asset. No new asset ID necessary.
+
+### Accepted observations from the read-only handoff (claims about V10.1 are source-reported)
+
+- Clear prototype copy: illustrative primary/secondary targets, no measured activation, effort, growth, recovery or injury; example push/pull/legs presets, with no workout history connected.
+- Delineated empty states: preset cleared; no example target supplied; no authoritative mapping; no workout input; unknown/unavailable information. `None` chips are tolerable in the visual study, but require differentiated and origin-aware text before live use.
+- **Fix later in integration, not frozen V10.1:** screen-reader/live-region output for idle selection currently reads `{Group} selected (idle target)`; prefer `{Group} selected for inspection; not listed as a primary or secondary example target` (or shorter equivalent) without inventing a training role. Selecting a region must not upgrade or synthesize its primary/secondary status.
+- Fifteen **provisional visual keys**, *not canonical ID proof*: `traps`, `shoulders`, `chest`, `biceps`, `triceps`, `forearms`, `core`, `hips`, `quads`, `lower-legs`, `upper-back`, `lats`, `lower-back`, `glutes`, `hamstrings`. The read-only audit reports front/back coverage; see its exact per-view table in the source document.
+- Existing exercise architecture separately proposes canonical 15 `pectorals`, `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, `triceps`, `biceps`, `forearms_grip`, `upper_back_traps`, `latissimus_dorsi`, `erector_spinae`, `abdominals_obliques`, `glutes`, `quadriceps`, `hamstrings`, `calves`; these remain **suggested pending Biology/UX taxonomy tests**, not approved merely by matching the number 15. The specific risk of shins/tibialis anterior being collapsed into calf training persists.
+- The handoff asks for explicit adapter cardinality, rationale and reviewer, side and view behavior, collision precedence for multiple canonical roles into one visible region, unknown/stale-ID abstention, and synchronicity of SVG/JSON/ARIA/chips/fixtures. Preserve source-specific exercise truth; no color for unmapped unknowns.
+- Later actual workout-screen checks: don't displace sets/reps/completion controls; narrow-screen and theme/contrast accessibility, keyboard/VoiceOver/TalkBack/reduced-motion, qualified primary/secondary roles, separate missingness and privacy/source authorization, one maintained SVG source and generated variants to prevent drift.
+- Five gates remain: GI read-only baseline → explicit owner approval of next task → taxonomy/movement/role verification → source-safe extraction with existing workout infrastructure → independent design/accessibility/science claim testing.
+
+### Authority/nomenclature correction
+
+V10.1 uses **GI-07/GI-09 as general review lenses**, expressly noting it does not certify those cases. GI-07/GI-09 are actual **gastrointestinal investigator** acceptance IDs. For exercise implementation, use `EX-MAP-01..EX-MAP-22`, `ML-ACT`, `UT-EXAI`, `MKT-EXAI`, ATH/SNAP/UX/PRIV/SYS cases as applicable; apply the *principles* of missingness and calibrated claims without reclassifying GI tests as muscle-map tests. Do not let those labels expand the active GI case inventory into exercise work.
+
+### Codex/Designer receipt boundary
+
+**Now:** no code, current registry lifecycle promotions, changed visual ZIPs, source transfer, new build tasks, broad acceptance testing or queue changes. Keep `NEXT_ACTIONS.md`'s GI-01..GI-10 evidence inventory and owner-review STOP unchanged.
+
+**When owner explicitly selects future eligible exercise integration:** obtain/fingerprint actual V10.1 original files and inspect source (the Library handoff alone is insufficient), verify rights/visual output/geometry/ARIA/unique SVG defs and selectors, compare to V4 provenance, formally reconcile canonical role/movement identity, then run only ready EX-MAP acceptance slices and actual app user journey tests. Maintain `BVA-0078`/`BVA-0079` rather than duplicating registry identities.
+
+**Conclusion:** V10.1 read-only review accepted as guidance; independent V10.1 asset acceptance and consumer integration **NOT VERIFIED**.
