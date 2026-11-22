@@ -36,10 +36,11 @@ Bloom’s investigative discipline is designed to separate signal from noise and
 
 ## Everyday & Athlete
 
-Bloom is designed around two consumer experiences built on the same underlying biological system:
+Bloom is designed around two consumer experiences built on the same underlying biological system, with a planned Coach experience to help users translate evidence into practical next steps:
 
 - **Everyday:** Focused on accessible daily logging, nutrition and symptom context, longitudinal awareness, and calm, understandable guidance without requiring specialized athletic or external-device workflows.
 - **Athlete:** Built on the same core system to account for training load, recovery, exercise timing, and fueling context alongside everyday biology—without requiring connected wearables for core functionality or making unsupported performance claims.
+- **Coach (planned expansion):** Intended to help people work toward their own health, nutrition, and performance goals using their authorized observations, relevant scientific evidence, thoughtful questions, and proportionate suggestions. Bloom already has a limited evidence-linked Diet coach foundation; a broader personalized, conversational Coach remains future work, subject to scientific validation, privacy controls, and explicit activation—not a currently validated clinical coaching service.
 
 ---
 
