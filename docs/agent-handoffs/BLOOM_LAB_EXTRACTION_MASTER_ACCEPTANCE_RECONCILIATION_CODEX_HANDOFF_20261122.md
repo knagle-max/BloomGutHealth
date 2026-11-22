@@ -55,6 +55,18 @@ Find the *existing* Master Acceptance reconciliation and update there; **do not 
 
 A schema alone is not end-to-end verification. Historical receipts are not actual-HEAD test results. If behavior cannot be established, use `UNVERIFIED`, not an invented pass/fail.
 
+## Owner clarification — acceptance tests are readiness-triggered, not build instructions (2026-11-22)
+
+**LAB-01..LAB-10 and LAB-X-01..LAB-X-14 are the acceptance criteria for functionality when that functionality is implemented and eligible for verification.** Their inclusion in the catalog is **not** a request to implement unbuilt features, construct test harnesses prematurely, execute impossible end-to-end checks, or prioritize lab extraction ahead of the current queue.
+
+- **Already implemented functionality:** check the applicable behavior against existing tests/receipts and rerun focused tests when appropriate to the current authorized task; record genuine failures only when an executable capability exists.
+- **Partially implemented functionality:** test only the implemented boundary that can genuinely execute; identify remaining acceptance criteria as `NOT_READY` or `NOT_TESTED`, never as a passing feature or as a defect that must be built immediately.
+- **Specified but unimplemented functionality:** retain the acceptance definition and mark execution `NOT_READY — FUNCTIONALITY_NOT_IMPLEMENTED`; defer test execution and implementation until independently selected by `NEXT_ACTIONS.md`.
+- **Blocked by provider, rights, privacy, original-file, clinical or independent-review conditions:** mark the exact dependency and `BLOCKED`; do not simulate or assume clearance.
+- **When an approved implementation slice becomes functional:** run the relevant acceptance tests against actual behavior and supported fixtures, report results and failures, then make only the narrow corrections within the selected task. Only run end-to-end tests once all necessary links of that path actually exist.
+
+**Separation of concerns:** acceptance catalog = future proof obligations; task queue = what Codex builds now; verification receipt = what was actually tested and proved. Do not convert a missing acceptance test into an autonomous feature-build assignment. The current GI baseline assignment remains unchanged.
+
 ## Stage boundaries and safety invariants
 
 **A — verbatim source candidate (untrusted).** Preserve precisely printed analyte/value/operator, unit, date, specimen, issued date, reference interval, method, page/row/crop provenance, flags and uncertainties; never treat OCR/model confidence as acceptance. Report absent bounding boxes as absent; do not fabricate citations.
