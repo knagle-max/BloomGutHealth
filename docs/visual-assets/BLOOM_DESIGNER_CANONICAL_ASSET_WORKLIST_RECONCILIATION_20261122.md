@@ -55,15 +55,15 @@ Each row is a permanent registry requirement; the canonical JSON contains the fu
 | BVA-0003 | Biology editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
 | BVA-0004 | Explore editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
 | BVA-0005 | Athlete editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
-| BVA-0025 | Onboarding welcome atmosphere | Briefed | Verify source package and handoff exact approved bytes; NO redesign |
-| BVA-0051 | Microbiome editorial overview hero | Artwork approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0025 | Onboarding welcome atmosphere | Approved (design source only) | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0051 | Microbiome editorial overview hero | Approved (design source only) | Verify source package and handoff exact approved bytes; NO redesign |
 
 ### C. Delivered original source / reuse review
 
 | ID | Asset / family | Existing record | Next designer decision |
 | --- | --- | --- | --- |
 | BVA-0080 | Onboarding six goal photographs — approved source collection | Approved | Verify attached source package and runtime presence; do not regenerate |
-| BVA-0084 | EE-03 conceptual DNA discovery SVG | Briefed | Verify attached source package and runtime presence; do not regenerate |
+| BVA-0084 | EE-03 conceptual DNA discovery SVG | Approved (design source only) | Verify attached source package and runtime presence; do not regenerate |
 
 ### D. Existing reusable/prototype artwork — review, not redraw
 
@@ -160,6 +160,18 @@ Each row is a permanent registry requirement; the canonical JSON contains the fu
 **Canadian nutrition / restaurant / laboratory:** Their latest handoffs describe source/data/information-first workflows; this source review found no independent mandatory hero/photo requirement. Existing Food, Nutrition, Biology and accessible neutral components should be reused. Avoid inventing restaurant photography, logo rights or microscopy images to fill unspecified screens. New imagery needs a specific justified real-component gap and a permanent BVA ID only then.
 
 **Coach:** BVA-0024 already covers the existing coach editorial identity. Do not automatically commission separate professional-portal hero media while the optional Coach workspace remains gated; inspect actual approved layouts and reuse first.
+
+## Reconciliation corrections and actual design-delivery state — 2026-11-22
+
+The count of **86 distinct requirements/families** and seven designer disposition groups above is confirmed, but neither a row nor a historical `Integrated` lifecycle state is evidence of a currently shipped, rendered component. **All 86 registry `integration.verified` flags remain false at this review.** The disposition totals are classification counts, not completed design counts. No full current-checkout byte or browser QA was performed.
+
+**Explicit owner-approved source corrections:** BVA-0025 onboarding atmosphere, BVA-0051 microbiome overview hero and BVA-0084 EE-03 DNA Discovery previously had stale/noncanonical `Briefed`/`Artwork approved` lifecycle labels. Their registry lifecycle is now `Approved` *for design/source only*; their source ZIPs exist in agent Library, but no approved runtime replacement/import is established. EE-03 authoritative agent package: `/Bloom gut health/Agent Handoffs/Bloom_EE03_DNA_Discovery_Approved_2026-11-21.zip`; approval handoff: [EE-03 owner-approved delivery](EE_03_DNA_DISCOVERY_OWNER_APPROVED_DELIVERY_20261121.md). EE-03 is not equivalent to independently reviewed DNA structural geometry.
+
+**REL-A01..A06 is a mixed-status family, not one unanimous production sign-off:** A01 v3 tile design approved; A02/A03/A04 source files exist but inner-package review/pending fields contradict the outer approved label, so formal approval precedence still needs clarification; A05 launch promo artwork owner-approved but only 16:9, 1:1, 9:16 are delivered (**requested 4:5 missing**); A06 four-theme/motion direction approved, **not accessibility/actual-browser certified**. Existing REL A05 and A06 GitHub handoffs document source locations. No Hydrogen public launch is authorized and the major-only cadence in a design draft does not override current explicitly named release-line version policy.
+
+**Other preserved outstanding work:** BVA-0081 distinct six onboarding goal SVG glyphs, BVA-0078/0079 interactive anterior/posterior anatomically reviewed SVGs, and BVA-0052 suitable Activity Log hero. BVA-0022 previously rejected source is not approved; do not repurpose a wrong-theme microbiome image for Activity Log. ONB-A09 four delivered icons do **not** by themselves prove the separate six-goal glyph request was satisfied. BVA-0053..0077 remain science/taxonomy-conditional, and EE-04 / ASSET-EE-08/09 remain indefinitely deferred.
+
+**Work still needed to claim production readiness:** exact Shared Library/source byte checkout with hashes, current consumer UI bindings, rights and scientific approval where applicable, desktop/mobile crop and four-theme tests, actual browser/assistive technology/200%-zoom checks, CI/hosted deployment receipts. Do not change current execution priority, production routes or runtime binaries simply because this documentation was reconciled.
 
 ## What was and was not verified
 
