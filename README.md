@@ -34,13 +34,16 @@ Bloom’s investigative discipline is designed to separate signal from noise and
 
 ---
 
-## Everyday & Athlete
+## Everyday, Athlete & Planned Coaching
 
-Bloom is designed around two consumer experiences built on the same underlying biological system, with a planned Coach experience to help users translate evidence into practical next steps:
+Bloom is designed around two consumer experiences built on the same underlying biological system, with two complementary **planned coaching capabilities**:
 
 - **Everyday:** Focused on accessible daily logging, nutrition and symptom context, longitudinal awareness, and calm, understandable guidance without requiring specialized athletic or external-device workflows.
 - **Athlete:** Built on the same core system to account for training load, recovery, exercise timing, and fueling context alongside everyday biology—without requiring connected wearables for core functionality or making unsupported performance claims.
-- **Coach (planned expansion):** Intended to help people work toward their own health, nutrition, and performance goals using their authorized observations, relevant scientific evidence, thoughtful questions, and proportionate suggestions. Bloom already has a limited evidence-linked Diet coach foundation; a broader personalized, conversational Coach remains future work, subject to scientific validation, privacy controls, and explicit activation—not a currently validated clinical coaching service.
+- **AI Coach (planned expansion):** A conversational, evidence-grounded assistant intended to help users understand their recorded context, explore questions and competing explanations, and work toward nutrition, activity and health goals. Suggestions and proposed plans remain subject to scientific and safety boundaries; the AI does not independently diagnose, prescribe, or activate a professional's plan. Bloom has an existing limited evidence-linked Diet coach foundation, but the broader AI Coach is not a validated or generally enabled service.
+- **Human Coach workspace (planned):** An optional dedicated experience for trainers and nutrition coaches to support multiple consenting Bloom users. Coaches would be able to create reusable workout and diet-plan templates in advance, customize them for individuals, assign or share plans with clients, and manage assigned plans across their client roster. Users would be able to review their assigned plans and record actual activity or intake in their own Everyday/Athlete experience. Templates, assigned plans and performed actions remain distinct; assigning a workout or meal plan never means it was completed or consumed.
+
+The human-coach model is designed around **user-controlled, purpose-limited access**: a coach relationship must not grant blanket access to genetics, laboratory results or other sensitive health records. Plan activation and changes require the appropriate authorized review, with permissions and revocation enforced by the application. These coaching capabilities are architectural plans, not claims of current availability or authorization to begin implementation.
 
 ---
 
