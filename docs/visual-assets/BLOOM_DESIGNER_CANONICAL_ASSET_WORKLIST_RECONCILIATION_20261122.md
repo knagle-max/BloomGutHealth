@@ -1,0 +1,170 @@
+# Bloom — Designer production worklist, audit of canonical visual asset registry
+
+**Architect source-document review: 2026-11-22.** Canonical machine-readable source: [visual-asset-registry.json](visual-asset-registry.json). **86 permanent BVA IDs (some multi-image/design families), not 86 new images to generate.** All 77 previously registered items were reviewed at the level of registry metadata and linked handoff documents. BVA-0078..0086 were included for discoverability without implementing or generating any assets.
+
+**Authority:** `AGENTS.md` and `NEXT_ACTIONS.md` remain sole task selectors. Current single Codex assignment is GI-01..GI-10 baseline; no asset design, implementation, external provider, paid source or deployment is authorized by this catalog alone. This document is a designer worklist for when asset work is eligible, **not a second execution queue**.
+
+## Required workflow per item
+
+1. Open the canonical asset ID and its full `productionBriefV2` / `designerDeliverables`, original source package and existing component mapping. Confirm **actual checkout bytes and SHA**; registry file paths or ZIP mentions are not proof of integration.
+2. Decide **reuse / approved-source transfer / conditional revision / new source required / defer** *before* generating. Check current designer/owner decisions, rights, scientific accuracy and responsive variant availability. Never regenerate already-approved source just to improve a screenshot.
+3. When eligible to produce, deliver exact source-format originals (editable SVG when specified, source PNG plus optimized WebPs for photography), own licensing and source hashes, manifest, crop/contrast, light/dark/Everyday/Athlete, meaningful alt text and neutral fallback. No baked-in data/clinical values; any anatomical image needs proper human anatomy review.
+4. Separate lifecycle events: brief → source delivered → design reviewed → science/rights review → integration → actual-browser QA → hosted/consumer verification. Never promote one on the strength of another.
+
+## Audit summary
+
+| Disposition | Count | Designer interpretation |
+| --- | ---: | --- |
+| A. Design / source gaps — assess or produce only if needed | 13 | Inspect exact brief and source availability, produce only when needed/eligible |
+| B. Approved source replacement — transfer/integrate, DO NOT regenerate | 7 | Existing owner-approved ZIP source; transfer/import, no redesign |
+| C. Delivered original source / reuse review | 2 | Source, license, reuse, QA and deployment state checks; no automatic generation |
+| D. Existing reusable/prototype artwork — review, not redraw | 4 | Source, license, reuse, QA and deployment state checks; no automatic generation |
+| E. Existing source slot requiring QA / rights | 5 | Source, license, reuse, QA and deployment state checks; no automatic generation |
+| F. Previously integrated — reverify instead of producing again | 30 | Source, license, reuse, QA and deployment state checks; no automatic generation |
+| G. Conditional species portrait requests — science/taxonomy first | 25 | Not an automatic commission, taxonomic justification required |
+| **Total indexed** | **86** | **Not a count of missing images** |
+
+## Per-ID designer worklist
+
+Each row is a permanent registry requirement; the canonical JSON contains the full original prompt, restrictions, source relation and review evidence. Existing statuses remain historical claims until current checkout verification.
+
+### A. Design / source gaps — assess or produce only if needed
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0015 | Meal suggestion photograph | Identified | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0016 | Food nutrient journal accent | Identified | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0022 | Athlete exercise technique study | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0026 | No lab records empty state | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0027 | No activity recorded state | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0028 | Source-import education | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0048 | What is LDL cholesterol? educational thumbnail | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0049 | Why does it matter? educational thumbnail | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0050 | LDL editorial arterial atmosphere | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0052 | Activity Log editorial page hero | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0078 | Muscle coverage — anterior interactive SVG | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0079 | Muscle coverage — posterior interactive SVG | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+| BVA-0081 | Onboarding six goal SVG glyphs — unfulfilled separate request | Briefed | Review brief, existing assets, source/license and approved priority before creating artwork |
+
+### B. Approved source replacement — transfer/integrate, DO NOT regenerate
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0001 | Today editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0002 | Food editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0003 | Biology editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0004 | Explore editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0005 | Athlete editorial hero | Approved | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0025 | Onboarding welcome atmosphere | Briefed | Verify source package and handoff exact approved bytes; NO redesign |
+| BVA-0051 | Microbiome editorial overview hero | Artwork approved | Verify source package and handoff exact approved bytes; NO redesign |
+
+### C. Delivered original source / reuse review
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0080 | Onboarding six goal photographs — approved source collection | Approved | Verify attached source package and runtime presence; do not regenerate |
+| BVA-0084 | EE-03 conceptual DNA discovery SVG | Briefed | Verify attached source package and runtime presence; do not regenerate |
+
+### D. Existing reusable/prototype artwork — review, not redraw
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0082 | Release identity visual family — REL-A01..A06 | Briefed | Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI |
+| BVA-0083 | EE-01 interactive 118-element periodic table visual adaptation | Briefed | Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI |
+| BVA-0085 | EE-02 Genesis-to-Hydrogen preview — source reuse | Briefed | Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI |
+| BVA-0086 | EE-05 restrained existing Bloom flower mark flourish | Briefed | Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI |
+
+### E. Existing source slot requiring QA / rights
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0006 | Progress botanical accent | Identified | Audit existing source and fallback first; create only after genuine gap is confirmed |
+| BVA-0007 | Profile botanical accent | Identified | Audit existing source and fallback first; create only after genuine gap is confirmed |
+| BVA-0008 | Empty Food journal | Identified | Audit existing source and fallback first; create only after genuine gap is confirmed |
+| BVA-0020 | Explore pathway diagram kit | Generated | Audit existing source and fallback first; create only after genuine gap is confirmed |
+| BVA-0024 | Coach editorial header | Approved | Audit existing source and fallback first; create only after genuine gap is confirmed |
+
+### F. Previously integrated — reverify instead of producing again
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0009 | Immersive bloodwork landing hero | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0010 | Cardiovascular system thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0011 | Glycaemic system thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0012 | Liver and biliary thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0013 | Iron and blood thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0014 | Bone and micronutrient thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0017 | Microbiome editorial category backdrop | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0018 | Genetic biology editorial accent | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0019 | Explore living atlas scene | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0021 | Progress longitudinal editorial scene | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0023 | Athlete recovery editorial | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0029 | Hormones & thyroid thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0030 | Inflammation & immunity thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0031 | Other / needs identification thumbnail | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0032 | Biology overview — Bloodwork with vial (text-safe) | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0033 | Biology overview — Gut Reports (text-safe) | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0034 | Biology overview — Genetics (text-safe) | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0035 | Biology overview — Measurements (text-safe) | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0036 | Complete blood count category artwork | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0037 | Microbe morphology C01 — Cocci in chains or pairs | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0038 | Microbe morphology C02 — Round or oval cocci | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0039 | Microbe morphology C03 — Short / oval bacterial rods | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0040 | Microbe morphology C04 — Elongated bacterial rods | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0041 | Microbe morphology C05 — Branched / irregular bacterial rods | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0042 | Microbe morphology F01 — Dark yeast-like fungi | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0043 | Microbe morphology F02 — Filamentous fungi | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0044 | Microbe morphology V01 — Rigid rod-shaped plant viruses | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0045 | Microbe morphology V02 — Head-and-tail bacteriophages | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0046 | Microbe morphology V03 — Enveloped spherical virus | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+| BVA-0047 | Microbe morphology U00 — shape-unverified neutral background | Integrated | Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default |
+
+### G. Conditional species portrait requests — science/taxonomy first
+
+| ID | Asset / family | Existing record | Next designer decision |
+| --- | --- | --- | --- |
+| BVA-0053 | Microorganism candidate — Amedibacterium intestinale | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0054 | Microorganism candidate — Adlercreutzia sp. 8CFCBH1 | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0055 | Microorganism candidate — Dysosmobacter welbionis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0056 | Microorganism candidate — Longibaculum sp. KGMB06250 | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0057 | Microorganism candidate — Massilistercora timonensis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0058 | Microorganism candidate — Oscillibacter sp. PEA192 | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0059 | Microorganism candidate — Gordonibacter urolithinfaciens | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0060 | Microorganism candidate — Mogibacterium diversum | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0061 | Microorganism candidate — Ruthenibacterium lactatiformans | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0062 | Microorganism candidate — Agathobacter rectalis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0063 | Microorganism candidate — Eubacterium rectale | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0064 | Microorganism candidate — Mediterraneibacter gnavus | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0065 | Microorganism candidate — Butyricicoccus pullicaecorum | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0066 | Microorganism candidate — Subdoligranulum variabile | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0067 | Microorganism candidate — Dorea longicatena | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0068 | Microorganism candidate — Dorea formicigenerans | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0069 | Microorganism candidate — Oscillibacter valericigenes | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0070 | Microorganism candidate — Phascolarctobacterium succinatutens | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0071 | Microorganism candidate — Phascolarctobacterium faecium | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0072 | Microorganism candidate — Dialister invisus | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0073 | Microorganism candidate — Dialister succinatiphilus | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0074 | Microorganism candidate — Sutterella stercoricanis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0075 | Microorganism candidate — Bilophila wadsworthia | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0076 | Microorganism candidate — Gordonibacter pamelaeae | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+| BVA-0077 | Microorganism candidate — Christensenella massiliensis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
+
+## Additional approved sources and important gaps
+
+**Approved revisions already delivered, not yet proven installed:** BVA-0001..0005 hero replacements, BVA-0025 onboarding and BVA-0051 microbiome hero. These seven are source-transfer and responsive/integration tasks, **not generation tasks**. The approved six ONB-A01..A06 goal photographs are BVA-0080 (six separate images in one existing delivered source collection); the distinct six goal glyphs BVA-0081 remain an unfulfilled request pending audit of existing ONB-A09 icons. Do not mistake the earlier embedded demo photos for the newer approved files.
+
+**Muscle anatomy:** BVA-0078 and 0079 (front/back original editable, selectable SVGs) came from the submitted design delta. They are `Briefed`, not produced or integrated. They need stable path-to-group IDs, human anatomical verification, source/exercise-taxonomy review and accessible list fallback. Avoid fake muscle activation or recovery claims. Existing BVA-0005/0022/0023 cannot substitute for interactive anatomy. BVA-0022's earlier rejected image is **not** an approved exercise-technique photograph.
+
+**Release and scientific Easter eggs:** BVA-0082 covers REL-A01..06 sources; BVA-0083 EE-01 table prototype; BVA-0084 EE-03 delivered DNA concept; BVA-0085 EE-02 future preview; BVA-0086 EE-05 reuse of canonical Bloom logo. Some design bundles have contradictory approval metadata for REL-A02/03/04; resolve that before asserting approved production. REL-A05 future launch 4:5 rendition is missing, but future-only. Current Genesis is not released Hydrogen. **EE-04 / ASSET-EE-08/09 are expressly deferred indefinitely: no commissions, generated images, taxon research or delivery estimates.** BVA-0053..0077 are separate pre-existing conditional species-portrait requests; scientific/morphology review determines whether any should be commissioned, and they are not a back door to EE-04.
+
+**Canadian nutrition / restaurant / laboratory:** Their latest handoffs describe source/data/information-first workflows; this source review found no independent mandatory hero/photo requirement. Existing Food, Nutrition, Biology and accessible neutral components should be reused. Avoid inventing restaurant photography, logo rights or microscopy images to fill unspecified screens. New imagery needs a specific justified real-component gap and a permanent BVA ID only then.
+
+**Coach:** BVA-0024 already covers the existing coach editorial identity. Do not automatically commission separate professional-portal hero media while the optional Coach workspace remains gated; inspect actual approved layouts and reuse first.
+
+## What was and was not verified
+
+**Verified at documentation level:** every current canonical registry entry's metadata; seven newer approved hero-source handoff records; six goal-photo source collection plus separate icon request; REL-A01..06/EE-01..05 source statuses; exercise muscle-map delta and new Canadian/restaurant source directions.
+
+**Not verified in this audit:** full `client/public` file-by-file bytes against current Git HEAD, current app visual screenshots/physical-device rendering, independent rights clearance, biological illustration review, ZIP import into Codex workspace, hosted Render deployment or consumer release. Preserve existing receipt status rather than falsely promoting any asset.
+
+**Output expected from the designer when an asset slice is selected:** BVA ID, reuse/generation decision, source SHA and exact file paths, source design files/exports, component placement/crop, design/rights/anatomy status, accessible fallback and next open blocker. Codex integrates only with the current authorized execution queue.
