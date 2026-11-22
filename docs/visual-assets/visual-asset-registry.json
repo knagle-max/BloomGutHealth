@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "86 unique permanent BVA requirements/asset families catalogued; each has designer disposition. Approved design source is distinct from runtime integration/verification. See designerAudit20261122; no source import, browser QA, scientific rights clearance or hosted release established by this desk review.",
+  "registryStatus": "86 canonical BVA assets/families; BVA-0078/79 now source-candidate delivered inside user upload only, not GitHub-integrated. Source/style QA and scientific anatomy verification pending; see designerAudit20261122 for exact states.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -7054,14 +7054,14 @@
         "existingAssetAuditRequired": true
       },
       "lifecycle": "Briefed",
-      "productionStatus": "DELTA_BRIEF_ONLY — design/source/anatomy review and SVG geometry not produced or integrated",
+      "productionStatus": "OWNER-SUPPLIED v3 ORIGINAL SOURCE ZIP REVIEWED AS DESIGN PRODUCTION CANDIDATE; 4 SVGs + static PNG previews physically present in uploaded archive, not imported into repo. NOT SCIENCE/ANATOMY/A11Y/APP-VERIFIED. Source blocked on approved transfer plus 20→15 taxonomy crosswalk and undefined SVG skin-ambient paint.",
       "filePaths": [],
       "integration": "NOT_INTEGRATED",
       "review": {
-        "design": "requires original geometry QA",
-        "scientific": "human anatomy and exercise mapping review required",
+        "design": "Candidate source inspected; visually promising, specific corrections required",
+        "scientific": "Independent expert anatomy review and muscle identity mapping pending",
         "rights": "first-party original source/license proof needed",
-        "rendered": "not tested"
+        "rendered": "ZIP preview only; not tested in Bloom app"
       },
       "statusEvidence": {
         "date": "2026-11-22",
@@ -7084,10 +7084,25 @@
         "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
       },
       "designerDisposition20261122": {
-        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
-        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "status": "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS",
+        "action": "Reuse owner-supplied original v3 source SVG; fix missing skin-ambient gradient, map 20 visual groups to 15 canonical groups with expert review, perform anatomical/accessible/responsive QA. Do NOT regenerate or claim integrated.",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
+      },
+      "sourceCandidate20261122": {
+        "status": "CANDIDATE_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
+        "archive": "bloom_anatomy_final_v3(1).zip",
+        "archiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
+        "sourceFormat": "4 editable source SVGs (male/female front/back) + static PNG previews",
+        "reactExample": "BloomMuscleMap.jsx (reference only, not production code)",
+        "interactiveDemo": "interactive-demo.html (same exact bytes as separate uploaded HTML)",
+        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md",
+        "criticalBlockers": [
+          "Visual 20-group versus reviewed canonical 15-group mismatch, including unsupported/ambiguous surfaces",
+          "Undefined fill url(#skin-ambient) in four SVG silhouettes",
+          "Independent anatomy and accessibility review outstanding",
+          "No verified imported app media bytes or hosted UI"
+        ]
       }
     },
     {
@@ -7112,14 +7127,14 @@
         "existingAssetAuditRequired": true
       },
       "lifecycle": "Briefed",
-      "productionStatus": "DELTA_BRIEF_ONLY — design/source/anatomy review and SVG geometry not produced or integrated",
+      "productionStatus": "OWNER-SUPPLIED v3 ORIGINAL SOURCE ZIP REVIEWED AS DESIGN PRODUCTION CANDIDATE; 4 SVGs + static PNG previews physically present in uploaded archive, not imported into repo. NOT SCIENCE/ANATOMY/A11Y/APP-VERIFIED. Source blocked on approved transfer plus 20→15 taxonomy crosswalk and undefined SVG skin-ambient paint.",
       "filePaths": [],
       "integration": "NOT_INTEGRATED",
       "review": {
-        "design": "requires original geometry QA",
-        "scientific": "human anatomy and exercise mapping review required",
+        "design": "Candidate source inspected; visually promising, specific corrections required",
+        "scientific": "Independent expert anatomy review and muscle identity mapping pending",
         "rights": "first-party original source/license proof needed",
-        "rendered": "not tested"
+        "rendered": "ZIP preview only; not tested in Bloom app"
       },
       "statusEvidence": {
         "date": "2026-11-22",
@@ -7142,10 +7157,25 @@
         "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
       },
       "designerDisposition20261122": {
-        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
-        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "status": "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS",
+        "action": "Reuse owner-supplied original v3 source SVG; fix missing skin-ambient gradient, map 20 visual groups to 15 canonical groups with expert review, perform anatomical/accessible/responsive QA. Do NOT regenerate or claim integrated.",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
+      },
+      "sourceCandidate20261122": {
+        "status": "CANDIDATE_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
+        "archive": "bloom_anatomy_final_v3(1).zip",
+        "archiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
+        "sourceFormat": "4 editable source SVGs (male/female front/back) + static PNG previews",
+        "reactExample": "BloomMuscleMap.jsx (reference only, not production code)",
+        "interactiveDemo": "interactive-demo.html (same exact bytes as separate uploaded HTML)",
+        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md",
+        "criticalBlockers": [
+          "Visual 20-group versus reviewed canonical 15-group mismatch, including unsupported/ambiguous surfaces",
+          "Undefined fill url(#skin-ambient) in four SVG silhouettes",
+          "Independent anatomy and accessibility review outstanding",
+          "No verified imported app media bytes or hosted UI"
+        ]
       }
     },
     {
@@ -7749,8 +7779,9 @@
       "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING": 7,
       "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS": 5,
       "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE": 30,
-      "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW": 13,
+      "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW": 11,
       "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION": 25,
+      "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS": 2,
       "SOURCE_DELIVERED_CHECKOUT_AND_QA_PENDING": 2,
       "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION": 4
     },
@@ -7785,6 +7816,7 @@
       "lifecycle": "BVA-0025 and BVA-0051 corrected to allowed Approved lifecycle. BVA-0084 changed from stale Briefed to Approved after owner signoff; no runtime integration.",
       "release": "BVA-0082 mixed REL-A01–A06 statuses recorded separately; A05 4:5 still missing, A02–A04 approval conflict retained.",
       "verification": "No additional actual checkout, screen reader, source-rights or hosted rendering audit performed"
-    }
+    },
+    "latestSourceReview": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md"
   }
 }
