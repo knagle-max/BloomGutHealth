@@ -1,4 +1,5 @@
 import {ageInYear} from '@shared/profile-demographics';
+import { BLOOM_CURRENT_RELEASE } from "@shared/product-release";
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
@@ -306,6 +307,7 @@ export default function Profile({
       </div></details>
       <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Training data controls</strong><span>Export or remove experience records</span></summary><div className="pt-4"><ExperienceDataControls/></div></details>
       </div></details>
+      <p className="mt-5 border-t pt-3 text-xs text-muted-foreground" aria-label="About Bloom version">{BLOOM_CURRENT_RELEASE.label}<span className="block">{BLOOM_CURRENT_RELEASE.descriptor}</span></p>
       </section>
     </main>
   );
