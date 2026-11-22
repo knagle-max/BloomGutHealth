@@ -85,3 +85,21 @@ Follow existing authoritative `shared/product-release.ts`; don't ship a duplicat
 **Non-goals:** no full-table browser, no six independent element images, no investor/clinical claims, no animated chemistry, no presence throughout core product pages, no version change or public launch authorization.
 
 **Immediate next review candidate:** REL-A01 periodic tile, Hydrogen fixture for visualization only; design status **NOT YET APPROVED**.
+
+
+## 7. Owner approval and asset delivery receipts (2026-11-21)
+
+**REL-A01 — OWNER DESIGN APPROVED (v3).** Owner explicitly approved the visually denser third iteration of the Hydrogen periodic element tile. The approved **reference image** is `assets/REL-A01-approved-representative-v3.jpg` in the approved ZIP. An editable SVG reconstruction and data-driven `createElementTile` JavaScript helper are supplied as implementation source; the reference JPG is the decisive visual benchmark, while the SVG reconstruction remains pending font/pixel/browser fidelity checks.
+
+- **Persistent approved archive:** `/Bloom gut health/Agent Handoffs/Bloom_REL_A01_Periodic_Tile_Approved_v3_2026-11-21.zip`.
+- **Included:** approved Hydrogen JPG, editable SVG reconstruction, reusable dynamic element-tile JS, README, SHA-256 manifest.
+- **Design cues confirmed:** compact periodic tile, minimal unused space, large centered serif H, atomic number upper-left, element name below, deep botanical-green ground, fine restrained sage rim, pale warm-ivory type. Avoid roomier v1/v2 treatment.
+- **States:** owner approved appearance only; NOT app-integrated, NOT font/pixel QA verified, NOT public-release authorization.
+
+**REL-A02 — DESIGN REVIEW CANDIDATE, NOT APPROVED.** Full Concept A composition is built from the **same REL-A01 editable tile component**, with live DOM version/title/subtitle and optional About metadata, responsive horizontal and vertical compositions, four mode themes, and no fabricated release date or release-notes link.
+- **Review archive:** `/Bloom gut health/Agent Handoffs/Bloom_REL_A02_ConceptA_Review_2026-11-21.zip`.
+- **Includes:** `index.html`, `style.css`, `preview.js`, shared REL-A01 tile JS/source SVG, flattened **representative** desktop and mobile JPG examples (not screenshots of browser runtime), README, SHA-256 manifest.
+- **QA warning:** Browser rendering was blocked in this environment; prototype has NOT been live-browser visually verified. Fallback system fonts differ from requested Newsreader/Plus Jakarta Sans, pending app font/licensing checks.
+- **Decision pending:** Owner to approve or refine REL-A02 before final composition integration.
+
+**Supersession:** This section replaces the older “REL-A01 unapproved” status line below. Resolve major-only vs minor-release cadence conflict before changing any release-identity logic.
