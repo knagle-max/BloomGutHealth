@@ -7754,6 +7754,7 @@
       "Some approved artwork resides only in exact external ZIP archives",
       "Existing source map and actual component usage not revalidated against every route at current HEAD",
       "No generated production assets or rendering verified by this review"
-    ]
+    ],
+    "worklist": "docs/visual-assets/BLOOM_DESIGNER_CANONICAL_ASSET_WORKLIST_RECONCILIATION_20261122.md"
   }
 }
