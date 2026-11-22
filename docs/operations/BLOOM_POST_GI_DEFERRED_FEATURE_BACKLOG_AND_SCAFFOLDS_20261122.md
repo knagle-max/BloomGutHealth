@@ -8,6 +8,20 @@ This is a durable feature preservation / future implementation reference, **not 
 
 **Source of truth:** existing source files, current actual HEAD, immutable nutrition/health data contracts and already approved detailed handoffs govern over illustrative sketches here. No parallel workout tables, nutrient truth system, experiment engine, food diary, recommendation system, clinician diagnosis engine or visual asset registry. Existing feature != qualified shipped feature. Every row below requires FOUND/PARTIAL/MISSING/RIGHTS_PENDING/NOT_TESTED gap checks at eligible HEAD.
 
+## Product value tiers — explicit owner prioritization (2026-11-22)
+
+**Core usability requirements to preserve and validate first after the GI gate (not proof of missing code or permission to build immediately):**
+1. **Fast, reviewable meal capture** — existing voice/photo/label/barcode flows and saved templates must be discoverable, quick, resilient and reliable; add confirmed frequent-meal shortcuts and a source-aware custom recipe/portion workflow *only where an actual usability gap remains* (BL-03A, BL-05A). Repeat/recognition is a **candidate** until the user reviews and confirms consumption. Never introduce a duplicate food pipeline or auto-log based on recognition.
+2. **Clinician Visit Brief + portable user archive** — CP-07 selected print/PDF-ready professional brief and a distinct authenticated JSON export with optional CSV / standards-validated FHIR mapping, source dates/units/assay caveats, actual medications/supplements and NPN when verified; raw speculative AI hypotheses excluded by default; explicit preview/selection/redaction (BL-03B). A full export is not automatically a tested restore/backup (BL-05C).
+
+**Important differentiators, not day-one blockers:** safely bridge already-modeled N-of-1 experiments to admitted hypotheses (BL-03C) and evaluate account-isolated durable offline drafts/recovery beyond existing visit-scoped FOOD-12 (BL-03D, later BL-05B). Prioritize based on reproduced friction, safety and evidence; neither justifies a new platform or clinical intervention engine.
+
+**Conditional/deferred convenience:** shared household food preferences, pantry/grocery assistance and optional receipt capture (BL-04A/BL-05A); later prevention/vaccination/lab cadence with reviewed applicable guidelines (BL-04B/BL-05D); true multi-person/caregiver and child health profiles require independent consent/identity/safety architecture (BL-04C/BL-05D).
+
+**Avoid unverified benchmark claims:** “80% less logging,” “manual entry is the #1 reason people abandon apps within two weeks,” and “three days vs six months of retained data” are proposed product hypotheses, **not validated Bloom performance or substantiated industry benchmark**. Collect current mobile/desktop task time, completion, correction, return-to-log metrics and actual longitudinal retention in consented, privacy-preserving evaluation before claiming an effect.
+
+**Important:** “Must-have” here means *owner-preferred functional completeness and quality before broad consumer adoption*, not a current P0 defect, live release gate, mandated implementation sequence or authorization to interrupt GI-01–GI-10. The active task selector remains NEXT_ACTIONS.md.
+
 ## Index and proposed future waves
 | ID | User outcome | Existing foundation / controlling handoff | Proposed future wave | Status |
 | --- | --- | --- | --- | --- |
