@@ -1,0 +1,18 @@
+# Bloom Product Release Naming — Genesis → Periodic Table
+
+**Owner-approved 2026-11-21. Codename is brand identity, not technical/security/science readiness or authorization.**
+
+- **Pre-release:** all product 0.x builds and **all** 1.0.0 pre-release suffixes, including 1.0.0-rc.1, are **Project Genesis**. Example: **Bloom 0.6.0 · Project Genesis**, subtitle **Pre-release development build**.
+- **First *actually authorized public* product release:** **Bloom 1.0.0 · Hydrogen**, symbol **H**, atomic number **1**.
+- **Next minor feature release:** **Bloom 1.1.0 · Helium** (He, 2).
+- **Following minor feature release:** **Bloom 1.2.0 · Lithium** (Li, 3).
+- Patch releases preserve the minor line's element: **1.0.1 · Hydrogen**, **1.1.1 · Helium**, etc. Future 1.x minor increments advance one periodic-table element in atomic-number order, up to the 118th element. The eventual version scheme after element 118 requires an independent owner decision rather than silently wrapping or reusing names.
+- Release candidates, e.g. **1.0.0-rc.1**, **remain Genesis**. No milestone, freeze, npm package version, Codex commit or CI success automatically renames the product to Hydrogen.
+- **Critical current mismatch:** root `package.json` and lockfile say `1.0.0` for the `rest-express` tooling package, **NOT** an approved Bloom product release. Do not infer public launch or Hydrogen from npm. Avoid blindly changing package metadata and lockfile before checking package-release/build dependencies.
+- Keep **one authoritative product release identity** and a pure version→codename function, not a database, release workflow, user-profile attribute or duplicated platform constants. If a product version is not reliably available at runtime, display a truthful development identity, not the npm version. No public product launch activated.
+- In current Profile/About or an existing appropriate low-priority surface, the compact development string may read **Bloom 0.6.0 · Project Genesis** and **Pre-release development build** only after that display is wired to an explicit product version source. Do not add a new top-level page or disrupt approved onboarding/asset work.
+- **1.0+ optional design:** the periodic-table **tile** (symbol, atomic number, name) belongs in an understated existing About view, never as a health/science/status claim. The release-history timeline/gallery is an idea for a later independently justified scope, **not a current implementation requirement**.
+- **Readiness remains independent:** SECURITY SEC-01..08, G1..G5 for the actual environment/capabilities, evidence/licence/review, data source/consent/rights, accessibility and owner authorization all apply unchanged.
+- **Work order:** owner-prioritized approved asset transfer/swap remains first. Codex may make the minimal release identity/display change as an independent small task when appropriate, without preempting actual P0 privacy/safety defects or P1/P2 work. Existing `AGENTS.md`/`NEXT_ACTIONS.md` stay the only startup/active task instructions.
+
+**Implementation status:** Release naming policy approved/documented; no user-facing release version code or official public-release label is demonstrated by this document.
