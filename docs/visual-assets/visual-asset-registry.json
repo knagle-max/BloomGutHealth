@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "lastArchitectReview": "2026-11-14",
-  "registryStatus": "28 active requirements; nine historically owner-approved images noted, five previously rejected imagery entries pending replacement, image requirements remain active. Codex may generate/integrate without per-image owner approval; final owner review at RC. Full rendered audit pending.",
+  "lastArchitectReview": "2026-11-22",
+  "registryStatus": "86 permanent BVA requirements/asset families catalogued; design source and reuse status differentiated from runtime integration. See designerAudit20261122 for action grouping, source/rights blockers, deferred assets and readiness. No generation, app QA or hosted release verified by this audit.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -110,6 +110,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A quiet early-morning botanical landscape, seen from a natural human-height perspective at the edge of a meadow rather than an aerial panorama. A small grouping of dark forest-green leaves, pale grasses and dew-speckled stems sits in the RIGHT third, with the left 45% falling gently into soft, dark evergreen defocus for the greeting and daily action. The scene should feel like stepping into a real garden in the first hour after sunrise; no visible people, buildings, lettering or obvious health equipment. 35mm lens, f/2.8, warm low-angle sunrise from upper right; slight film grain, translucent dew and real vein texture in leaves. Deep greens and cream-tinted fog, with restrained amber highlights. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Keep the subject outside the mobile headline-safe area; avoid a giant flower or overly decorative leaves. It should support the existing Today greeting, not impersonate a physiological metric. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -201,6 +207,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A single credible breakfast arrangement: handmade off-white shallow ceramic bowl containing visibly hydrated cooked rolled oats, five or six irregular blueberries with blossom scars and slight bloom, a modest scatter of seeds, and an optional small spoon of plain yogurt, on a lightly wrinkled unbleached linen tablecloth. The bowl sits just RIGHT of center in a calm window-lit kitchen, its rim and whole food portion physically plausible; ample LEFT negative space for title. No forced ingredient claims, nutritional badges or hands. 50mm lens, f/4, soft daylight from upper left, restrained film grain, authentic wet oats and glazed ceramic reflections, no impossible steam on cold dairy. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Crop so complete bowl survives at desktop width and a 390px portrait hero crop; actual consumed meal photographs should never be represented by this illustrative banner. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -291,6 +303,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An immersive but restrained editorial biological landscape: softly translucent organic cell membranes and a few rounded vesicle-like structures partly revealed among shadowed botanical contours. Main dimensional focal structures cluster on the RIGHT half; LEFT remains uncluttered deep forest haze for Biology heading. It should read as an abstract scientific atlas introduction, neither medical scan nor microscopic photograph from a patient. Fine membranes, irregular structures and soft organic depth rather than glittering spheres. 35–50mm conceptual macro camera language, f/3.5, low warm side light, matte translucent textures, subtle grain. Deep evergreen, ivory mist and small sage edge illumination. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Educational and conceptual; no labeled organelle, measured molecule, highlighted disease state or fake patient slide. Designer may use a non-photographic composed illustration if more scientifically controlled. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -382,6 +400,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A botanical-to-biochemistry editorial still life built around one real blueberry cut longitudinally with authentic indigo skin bloom, delicate flesh and seeds, paired with a nearby slender green leaf and fine dark stem. Subject clusters to the RIGHT, with a gently blurred olive background free on the LEFT for the Explore headline; a quiet suggestion of scientific curiosity, not a literal animation of molecules entering blood. No hovering pills, glowing chemical formulae or synthetic microbiome readouts. 60mm close-focus lens, f/4, natural window sidelighting, visible berry skin imperfections, soft photographic grain, nonmetallic green-blue palette. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: This scene is a category opener only; deeper diagrams must be true reviewed pathways with app-rendered captions rather than effects baked into the hero. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -474,6 +498,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect athlete-blue-light, athlete-blue-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A solitary recreational athlete on a real winding mountain or woodland path, three-quarter back view or candid side profile, correctly proportioned stride with practical sportswear and shoes. The person occupies the RIGHT third and the surrounding landscape opens into a softly atmospheric LEFT heading zone. Greens can exist naturally in vegetation, but the design-accent wardrobe and environmental tonality clearly favour Bloom Athlete's ORIGINAL approved blue colour tokens; avoid neon or icy artificial skin tones. 35mm lens, f/2.8, crisp early daylight through cool mist, believable shadows, dust and cloth folds, natural skin texture and slight motion energy; subdued photographic grain. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Do not suggest this is the user's recorded workout, a performance measurement or medical form demonstration. No unnatural knee, ankle or arm position. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -555,6 +585,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A single thin botanical sprig with exactly three distinct natural leaves, slightly asymmetrical veining and one gently curled edge. The isolated sprig should enter from the lower-right or top-right edge of a paper-like Progress panel without crossing the actual trend chart. Off-white or genuine transparent background; shadows must be subtle and internal to the leaf, with no visible pot, hand or elaborate still-life. 60mm close-focus lens, f/5.6, diffuse overhead window light, fine ridges, translucent leaf tips, restrained sage and moss colours. Composition: 1:1; text external to image, not baked in Restrictions: Decorative only, never interpreted as a scientific marker. In compact Progress tables hide entirely rather than covering values. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS",
+        "action": "Audit existing source and fallback first; create only after genuine gap is confirmed",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -636,6 +672,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A delicate three-leaf botanical sprig matching the approved Progress ornament's real leaf morphology and lighting, rendered as a small clipped accent tucked into the upper-right of Profile's welcome area. It should have natural asymmetric spacing, one subtle shadow and lots of surrounding transparent canvas, never resemble a clickable user avatar or profile badge. 60mm close-focus lens, f/5.6, neutral window fill from upper left; soft leaf vein detail, muted sage edges, transparent isolation. Composition: 1:1; text external to image, not baked in Restrictions: Do not place vegetation on privacy controls, consent text, form fields or source values. A repeated sprig should be rare and intentional, not a stamp on every card. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS",
+        "action": "Audit existing source and fallback first; create only after genuine gap is confirmed",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -717,6 +759,12 @@
         "deliverableNotes": "Deliver svg/png in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An elegant, spare journal illustration featuring one cream paper notebook lying half open on a warm off-white surface, with a modest botanical seedling or two leaves crossing a corner. The page is completely blank—not a fake meal record—and the only implied object is a faint debossed line suggesting a fresh start. Keep ample open area around the illustration for app-rendered 'nothing logged yet' copy and action button; avoid food guilt metaphors, utensils, scales or clocks. Original vector editorial illustration or 50mm f/4 quiet still-life style; warm diffuse daylight, delicate paper fibres, a restrained deep-green line and a single soft grounded shadow. Composition: 1:1; text external to image, not baked in Restrictions: Illustration should remain appealing at 120px and full empty-state size; alt text handled by component, no embedded text. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS",
+        "action": "Audit existing source and fallback first; create only after genuine gap is confirmed",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -838,6 +886,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -958,6 +1012,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1065,6 +1125,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1185,6 +1251,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1305,6 +1377,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1425,6 +1503,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1494,6 +1578,12 @@
         "deliverableNotes": "Deliver webp/avif in 1200×900 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "One fixed, clearly specified illustrative dinner option, not an automatically invented image for arbitrary personalized meals: roasted chicken breast slices with irregular caramelized edges, a modest mound of cooked pearl barley, a small serving of gently roasted carrots and bright green steamed broccoli on a single handmade warm-ivory ceramic dinner plate. Ingredients remain visibly separate, portions realistic and not arranged as identical geometric blocks. Plate centered slightly right on pale linen, shallow three-quarter overhead angle; no sauce, lemon, herbs or hidden seafood ingredients. If actual selected recipe differs, use generic illustration/fallback instead of misrepresenting it. 50mm lens, f/4, diffuse side window light from upper-left, tactile moist cooked chicken, true barley grain texture and roasted vegetables, delicate natural grain and no excessive gloss. Composition: 4:3; text external to image, not baked in Restrictions: Square/4:3 crop-safe; this asset is a specific example photograph only and must never be attached to a conflicting recipe, excluded ingredient or user meal as if user captured it. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1563,6 +1653,12 @@
         "deliverableNotes": "Deliver webp/avif in 1200×900 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An intimate food texture study featuring a loose cluster of four to six ordinary oat grains, a small open dish of pumpkin seeds and scattered dark chia seeds on softly rumpled natural linen. Each seed has irregular physical size, matte or naturally subtle sheen and believable shadows. The composition is cropped tightly on the RIGHT half with left-side pale parchment breathing room for the nutrition section heading. No utensils, pills, supplements or laboratory vials. 65mm macro lens, f/5, warm side daylight, visible linen thread structure and grain surfaces, natural shallow depth of field and fine film grain. Composition: 4:3; text external to image, not baked in Restrictions: Food/plant ingredient identity matters. Do not imply quantitated nutrients, protein bioavailability or a personal microbiome effect from this decorative accent. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1678,6 +1774,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1792,6 +1894,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -1896,6 +2004,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2058,6 +2172,12 @@
           }
         ],
         "scope": "Original-byte import verified; actual component/hosted stages tracked separately"
+      },
+      "designerDisposition20261122": {
+        "status": "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS",
+        "action": "Audit existing source and fallback first; create only after genuine gap is confirmed",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2162,6 +2282,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2241,6 +2367,12 @@
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce webp/avif with target 1000×1250, 1x; 2x when justified; ensure athlete-blue-light, athlete-blue-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
         "generationInstruction": "Show ONE adult recreational athlete performing a conventional standing dumbbell hammer curl at the midpoint of the lift, viewed from the front-right three-quarter angle. The athlete wears a muted blue performance shirt and dark navy shorts, with a neutral wrist, elbows close to ribs, both hands around clearly defined dumbbell handles, the forearms at approximately 90 degrees and upper arms hanging naturally; shoulders relaxed, knees softly unlocked. Frame from upper thigh to above head, emphasizing the working forearm, biceps and grip while keeping both weights and the entire elbow region clearly visible. Background: a real daylight-lit gym with indistinct wooden bench and dark blue-grey wall, never floating barbells or anatomy overlays. An adult of an ordinary healthy build, not exaggerated bodybuilding physique. 50mm lens, f/3.5; soft side-window lighting from camera-left with gentle directional definition on muscles and forearms, natural skin pores, fine arm hair, believable understated sweat only if credible, realistic fabric weave and weight-metal wear; slight natural grain, cool-neutral blue accents, no neon shine. Compact 4:5 exercise card; subject centered just right of middle, 12% safe margin around head, elbow and dumbbells to tolerate 1:1 mobile inset crop; no baked-in instructions, counters or text. If full dumbbells cannot fit, reframe, do not crop wrists or exercise form. Accuracy and exclusions: Educational movement illustration, not evidence of user's performed workout. No wrist extension, lifted shoulders, impossible elbow rotation, extra fingers or disconnected weight plates. For exercise instructions, actual movement mechanics and safe relevance require qualified review; don't generate a generic unsuitable exercise and label it as an arbitrary workout. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0022 requirement restored unchanged in identity; earlier image rendition rejected, **not** this request. Previous files not approved. New generated candidate must undergo design and, if presented as technique guidance, safety/anatomical review plus design/scientific/rights review before public release."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2400,6 +2532,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2555,6 +2693,12 @@
           }
         ],
         "scope": "Original-byte import verified; actual component/hosted stages tracked separately"
+      },
+      "designerDisposition20261122": {
+        "status": "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS",
+        "action": "Audit existing source and fallback first; create only after genuine gap is confirmed",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2633,9 +2777,15 @@
         "handoff": "docs/visual-assets/BVA_0025_ONBOARDING_KITCHEN_APPROVED_REPLACEMENT_DELIVERY_20261121.md",
         "originalGeneratedSourceSha256": "7c6d8272c5fc861d08d90ead26c9cf9df4117a70c006115ca1bf68e1e67dbc1c",
         "packagedOriginalSha256": "d905f57f3f17831d586f9157ffa1c909a54978f1ec3f8d4dd8cba6996fe04cf2",
-        "originalDimensions": {"width": 1672, "height": 941},
+        "originalDimensions": {
+          "width": 1672,
+          "height": 941
+        },
         "manifest": "manifest.json inside delivery ZIP",
-        "formatsDelivered": ["png", "webp"],
+        "formatsDelivered": [
+          "png",
+          "webp"
+        ],
         "avif": "not yet exported",
         "responsiveAndThemeVerification": "pending",
         "integrationVerified": false
@@ -2650,6 +2800,12 @@
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce webp/avif with target 1600×900, mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
         "generationInstruction": "A welcoming modern home kitchen and plant-filled breakfast nook at morning light, photographed from just inside a doorway. In the RIGHT foreground, an imperfect ceramic mug on a light-oak counter beside a thriving small green herb plant; behind, softly out-of-focus linen curtains, matte ceramic tile and leaves near the sunlit window. No people, specific meals, medical instruments or devices are necessary. The entire LEFT half is an intentionally calm atmospheric forest-to-ivory transitional wall area with subtle botanical shadows so that Bloom's app onboarding message can remain legible. Tone should evoke a lived-in healthy home, not a showroom. 35mm environmental lens, f/2.8; window daylight from upper right, authentic light through leaves, real porcelain glaze and wooden grain, natural film grain, gentle highlights without artificial gloss; warm ivory and evergreen contrast. 16:9 desktop and separately planned 3:4 or 4:5 mobile hero crop; keep main plant, mug and bright light safely on right, left 45% clear for onboarding/title/forms. Forms must rest on accessible solid/gradient overlay rather than low contrast image detail. Accuracy and exclusions: No embedded 'Welcome' text, branding, fake user portraits, staged overly polished wellness props, gratuitous pill bottles or clinical data. The image is decorative and onboarding must work perfectly without it. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0025 need, not its rejected artwork. Maintain a beautiful layout fallback until a newly generated, quality-reviewed asset exists."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2729,6 +2885,12 @@
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce svg/png with target 1024×1024, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
         "generationInstruction": "A precise but warm editorial empty-state illustration of a single CLOSED cream-paper lab notebook with one blank specimen envelope and an empty transparent glass sample vial, arranged in a small triangular grouping on a neutral ivory surface. One delicate sage leaf curves into the upper-right edge, all objects resting with credible contact shadows. The notebook is deliberately unmarked and the sample vial contains no colored liquid, patient label, blood or diagnosis. The mood is calm, inviting the person to add their first real bloodwork report without visually implying their results already exist. Original editable vector illustration with subtle drawn paper fibre, thin forest-green ink contours, restrained ivory/sage tones, and one soft shadow; if rendered as a still-life reference, 55mm lens f/5.6 with diffuse upper-left daylight. Maintain original artwork identity, not a fake clinical photograph. 1:1 transparent or clean neutral-background empty-state illustration; complete notebook/vial/leaf within central 72% with generous margins, readable at 120–220px, no space-dependent details. App renders headings, help and upload CTA outside image. Accuracy and exclusions: No actual lab numbers, graphs, fake medical paperwork, syringes, needles, frightening blood, or excessive clipart. Do not use a blank vial to imply the user has taken a specimen; strictly decorative empty state. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0026 request while rejecting only the previous poor image. Use dimension-stable approved fallback until fresh quality-reviewed work is available."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2808,6 +2970,12 @@
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce svg/png with target 1024×1024, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
         "generationInstruction": "An understated, reassuring illustration of ONE pair of ordinary running shoes with slightly imperfect laces, placed beside a short winding segment of pale gravel trail on an ivory surface. Only the shoes and a small curved green trail marker line are foreground subjects; the rest remains quietly spacious. Shoes are practical neutral stone-grey with tiny sage-blue details, small scuffs and natural woven fabric, not floating, glowing or arranged as a product advertisement. This means 'ready whenever you are', not an invented workout session. Editorial ink-and-wash style with subtle real-material fabric and rubber texture; optional still-life photography reference on a 50mm f/4 lens with diffuse natural window light and delicate grain. Matte surfaces, soft believable ground shadows and restrained contrast. 1:1/4:5 compact empty state with centred single visual grouping, 15% safe margin and clear negative space above/below for actual app text and first activity CTA; background transparent/neutral to adapt to both light and dark modes. Accuracy and exclusions: No activity rings, step counts, clocks, timers, active route map, smartwatch screens, intense athletes or guilt-inducing messaging. Avoid brand logos or inaccurate safety cues. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Restore BVA-0027 requirement; prior visual execution was rejected only. Designer produces new candidate, then normal design/rights review and RC inclusion."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2887,6 +3055,12 @@
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce webp/avif with target 1200×900, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
         "generationInstruction": "A tactile editorial still-life about bringing existing health records into Bloom: THREE blank cream paper sheets partially overlapping, one simple sealed kraft-paper envelope at lower right, and a closed charcoal folder underneath. At top right a tiny sage leaf casts a delicate shadow; all paper is blank except possibly indistinct non-readable horizontal marks that do not resemble actual results. Natural worn paper edges and fine grain. Photographed from an elevated three-quarter angle on an unbleached linen desk, with no laptop needed; clean empty LEFT third reserved for app's source-import explanation. 50mm lens, f/5, diffuse side-window light from upper left, physically credible paper grain, slight corner curl, natural inkless page shadows, desaturated forest/ivory palette; gentle natural film grain. 4:3 wide accent, composition grouped on RIGHT 60%, left quiet enough for text if needed; 1:1 responsive thumbnail crop keeps envelope and sheets entirely visible. App overlays all upload instructions, file types and error information separately. Accuracy and exclusions: No names, dates, synthetic bloodwork values, barcodes, QR codes, readable text, real logos, floating files, connected doctors or fabricated endorsements. Not a representation of any actual user-uploaded medical record. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. BVA-0028 restored as visual requirement; previous image remains rejected/unusable. A new image needs design/scientific/rights QA before moving to publication or developer delivery."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -2979,6 +3153,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3071,6 +3251,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3163,6 +3349,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3286,6 +3478,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3387,6 +3585,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3488,6 +3692,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3589,6 +3799,12 @@
           }
         ],
         "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3668,7 +3884,13 @@
       "relatedRegistryIds": [
         "BVA-0013"
       ],
-      "notes": "Use exclusively for Complete blood count; Iron & blood nutrients retains its separate BVA-0013 asset. Preserve counts, source details, navigation, accessible text, and dark/light layouts."
+      "notes": "Use exclusively for Complete blood count; Iron & blood nutrients retains its separate BVA-0013 asset. Preserve counts, source details, navigation, accessible text, and dark/light layouts.",
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0037",
@@ -3769,6 +3991,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3870,6 +4098,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -3971,6 +4205,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4072,6 +4312,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4173,6 +4419,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4274,6 +4526,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4375,6 +4633,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4476,6 +4740,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4577,6 +4847,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4678,6 +4954,12 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -4780,7 +5062,13 @@
         "date": "2026-11-15",
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
       },
-      "presentationDisclaimer": "Shape not verified for this report entry."
+      "presentationDisclaimer": "Shape not verified for this report entry.",
+      "designerDisposition20261122": {
+        "status": "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE",
+        "action": "Review current source SHA, actual rendered QA, rights and biological accuracy; no regeneration by default",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0048",
@@ -4829,7 +5117,13 @@
         "rendered": "reserved fallback engineering testing pending"
       },
       "authority": "BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
-      "fallback": "reserved-surface and existing-icon"
+      "fallback": "reserved-surface and existing-icon",
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0049",
@@ -4878,7 +5172,13 @@
         "rendered": "reserved fallback engineering testing pending"
       },
       "authority": "BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
-      "fallback": "reserved-surface and existing-icon"
+      "fallback": "reserved-surface and existing-icon",
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0050",
@@ -4927,7 +5227,13 @@
         "rendered": "reserved fallback engineering testing pending"
       },
       "authority": "Owner original LDL screenshot supplied2026-11-17; BLOOM_BLOODWORK_EDITORIAL_VISUAL_FIDELITY_CORRECTION_20261116.md",
-      "fallback": "existing original category artwork and canonical surface; no embedded reference image copied"
+      "fallback": "existing original category artwork and canonical surface; no embedded reference image copied",
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0051",
@@ -4957,8 +5263,30 @@
       "accessibility": "decorative; visible marker/category/count text supplies meaning",
       "lifecycle": "Artwork approved",
       "assetStatus": "Owner-approved candidate 3, delivered in Shared Library; NOT_INTEGRATED / NOT_VERIFIED",
-      "ownerApproval": {"approved": true, "date": "2026-11-21", "scope": "specific candidate 3 visual artwork only; not science, rights, integration or hosted verification"},
-      "approvedArtworkDelivery": {"state": "ARTWORK_APPROVED_NOT_INTEGRATED", "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0051_Microbiome_Overview_Approved_2026-11-21.zip", "zipSha256": "df51cca56cdf8c1ba49dd0f15e6161086cb5b681a3599567282b3022b5ca6904", "originalSha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00", "originalDimensions": {"width": 1774, "height": 887}, "handoff": "docs/visual-assets/BVA_0051_MICROBIOME_OVERVIEW_APPROVED_DELIVERY_20261121.md", "manifest": "manifest.json inside ZIP", "formats": ["png","webp"], "responsiveVerification": "pending", "scientificReview": "pending", "rightsReview": "pending"} ,
+      "ownerApproval": {
+        "approved": true,
+        "date": "2026-11-21",
+        "scope": "specific candidate 3 visual artwork only; not science, rights, integration or hosted verification"
+      },
+      "approvedArtworkDelivery": {
+        "state": "ARTWORK_APPROVED_NOT_INTEGRATED",
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0051_Microbiome_Overview_Approved_2026-11-21.zip",
+        "zipSha256": "df51cca56cdf8c1ba49dd0f15e6161086cb5b681a3599567282b3022b5ca6904",
+        "originalSha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00",
+        "originalDimensions": {
+          "width": 1774,
+          "height": 887
+        },
+        "handoff": "docs/visual-assets/BVA_0051_MICROBIOME_OVERVIEW_APPROVED_DELIVERY_20261121.md",
+        "manifest": "manifest.json inside ZIP",
+        "formats": [
+          "png",
+          "webp"
+        ],
+        "responsiveVerification": "pending",
+        "scientificReview": "pending",
+        "rightsReview": "pending"
+      },
       "filePaths": [],
       "sha256": null,
       "license": null,
@@ -4987,6 +5315,12 @@
         "existingAssetAndApprovalHandling": "Owner explicitly requires a new hero and forbids reusing existing imagery for this slot. Do not recolor, crop, composite or overwrite any current hero or organism art. Current implementation is a reserved placeholder; original organism image IDs/bytes stay unchanged. Requested is not delivered, licensed, generated or scientifically approved.",
         "deliverableNotes": "Original standalone source art and optimized WebP, landscape 1600×800, suitable mobile right-focused crop, light/dark readability and Everyday/Athlete modes. Preserve original production bytes and record actual hashes and rights only when files exist. Owner review is integrated RC, no new per-image approval checkpoint.",
         "generationInstruction": "Create an original premium Bloom conceptual microbial-ecosystem editorial scene: a restrained group of broad rounded and rod-like forms on softly folded biological terrain, clustered on the right 60%, with a quiet forest background across the left 45% for live typography. Use muted violet, sage and warm ivory accents, matte fine texture, soft raking light and shallow conceptual macro depth. Use a 2:1 landscape 1600×800 composition and preserve the subject in mobile crops. Do not depict a named species or a person’s sample; do not imply active functions, healthy/harmful amounts or a clinical result. No embedded text, UI, labels, numbers, scale bars, arrows, watermarks or third-party branding. This must be new artwork: never reuse, recolor or composite existing Bloom imagery or the owner’s reference screenshot."
+      },
+      "designerDisposition20261122": {
+        "status": "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING",
+        "action": "Verify source package and handoff exact approved bytes; NO redesign",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5040,6 +5374,12 @@
         "framingAndUsage": "Headline on quiet left, image responsive mobile and desktop, no baked-in text",
         "accuracyAndExclusions": "No invented physiological outcomes, false sport intensity or unsupported medical visuals, no third-party brand, text or watermark",
         "existingAssetAndApprovalHandling": "Search approved assets before commissioning. Preserve all existing original art/IDs; use BVA-0052 only if a genuinely distinct original asset is needed."
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5100,6 +5440,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Amedibacterium intestinale using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5160,6 +5506,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Adlercreutzia sp. 8CFCBH1 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5220,6 +5572,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Dysosmobacter welbionis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5280,6 +5638,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Longibaculum sp. KGMB06250 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5340,6 +5704,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Massilistercora timonensis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5400,6 +5770,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Oscillibacter sp. PEA192 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5460,6 +5836,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Gordonibacter urolithinfaciens using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5520,6 +5902,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Mogibacterium diversum using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5580,6 +5968,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Ruthenibacterium lactatiformans using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5640,6 +6034,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Agathobacter rectalis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5700,6 +6100,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Eubacterium rectale using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5760,6 +6166,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Mediterraneibacter gnavus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5820,6 +6232,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Butyricicoccus pullicaecorum using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5880,6 +6298,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Subdoligranulum variabile using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -5940,6 +6364,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Dorea longicatena using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6000,6 +6430,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Dorea formicigenerans using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6060,6 +6496,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Oscillibacter valericigenes using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6120,6 +6562,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Phascolarctobacterium succinatutens using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6180,6 +6628,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Phascolarctobacterium faecium using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6240,6 +6694,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Dialister invisus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6300,6 +6760,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Dialister succinatiphilus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6360,6 +6826,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Sutterella stercoricanis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6420,6 +6892,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Bilophila wadsworthia using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6480,6 +6958,12 @@
         "sceneDescription": "Only after authoritative morphology review, depict Gordonibacter pamelaeae using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     },
     {
@@ -6540,6 +7024,463 @@
         "sceneDescription": "Only after authoritative morphology review, depict Christensenella massiliensis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
         "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
         "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      },
+      "designerDisposition20261122": {
+        "status": "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION",
+        "action": "First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0078",
+      "name": "Muscle coverage — anterior interactive SVG",
+      "route": "/activity | /athlete",
+      "component": "MuscleCoverageMap",
+      "purpose": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "category": "scientific-interactive-svg",
+      "subject": "Adult neutral anatomical anterior body silhouette showing only supported superficial muscle display-group shapes, bilateral clean paths and truthful anatomy.",
+      "composition": "Produce an original clean anterior front-view anatomical muscle-region vector for a premium consumer workout-history dashboard. Full adult neutral human silhouette from head/neck to feet, natural proportions, calm pose with arms slightly separated and palms appropriately oriented. Clear region boundaries for pectorals, anterior/lateral deltoid, biceps/forearm, abdominals/obliques, quadriceps and calves where actually visible; do not pretend posterior muscles are visible from front. No organs, transparent X-ray or physiology gauges. Each clickable group represented by stable nonoverlapping SVG path IDs for sides, semantically grouped to the 15-group taxonomy; unrepresented regions neutral. Provide complete source SVG with unobstructed outlines plus separately reviewed JSON path→muscle mappings, viewBox and orientation. Consistent stroke and spatial proportions with posterior pair. CSS tokenized blue/light/dark; no embedded numbers, labels, heatmap color values, text, logos, diagnosis symbols or gradients that obscure click regions.",
+      "scientificAccuracy": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "No baked-in text; all counts, headings, legends, selection and accessible labels rendered from live UI",
+      "aspectRatio": "2:3",
+      "priority": "DEFERRED UNTIL EXERCISE SCOPE ELIGIBLE",
+      "sourceRelation": {
+        "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
+        "existingAssetAuditRequired": true
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "DELTA_BRIEF_ONLY — design/source/anatomy review and SVG geometry not produced or integrated",
+      "filePaths": [],
+      "integration": "NOT_INTEGRATED",
+      "review": {
+        "design": "requires original geometry QA",
+        "scientific": "human anatomy and exercise mapping review required",
+        "rights": "first-party original source/license proof needed",
+        "rendered": "not tested"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "existing submitted design delta; registry inclusion for future designer discoverability"
+      },
+      "designerDeliverables": {
+        "format": "Editable SVG",
+        "requiredPathMapping": true,
+        "accessibleListFallback": true,
+        "fullBrief": "Produce an original clean anterior front-view anatomical muscle-region vector for a premium consumer workout-history dashboard. Full adult neutral human silhouette from head/neck to feet, natural proportions, calm pose with arms slightly separated and palms appropriately oriented. Clear region boundaries for pectorals, anterior/lateral deltoid, biceps/forearm, abdominals/obliques, quadriceps and calves where actually visible; do not pretend posterior muscles are visible from front. No organs, transparent X-ray or physiology gauges. Each clickable group represented by stable nonoverlapping SVG path IDs for sides, semantically grouped to the 15-group taxonomy; unrepresented regions neutral. Provide complete source SVG with unobstructed outlines plus separately reviewed JSON path→muscle mappings, viewBox and orientation. Consistent stroke and spatial proportions with posterior pair. CSS tokenized blue/light/dark; no embedded numbers, labels, heatmap color values, text, logos, diagnosis symbols or gradients that obscure click regions.",
+        "reviewCriteria": [
+          "Geometry corresponds to actual superficial orientation and muscle coverage",
+          "No fictional measured activation intensity",
+          "Screen-reader alternate list and pointer+keyboard parity",
+          "Mobile touch testing and light/dark contrast",
+          "Path IDs consistent with independently versioned mapping",
+          "Actual source files and SHA plus licensed origin confirmed",
+          "No auto promotion to integrated or anatomy-approved"
+        ],
+        "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0079",
+      "name": "Muscle coverage — posterior interactive SVG",
+      "route": "/activity | /athlete",
+      "component": "MuscleCoverageMap",
+      "purpose": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "category": "scientific-interactive-svg",
+      "subject": "Adult neutral anatomical posterior body silhouette showing only supported superficial posterior muscle group shapes, anatomically accurate symmetrical left/right path geometry.",
+      "composition": "Produce an original anatomically accurate posterior back-view muscle-region vector matching BVA-0078 in proportions and pose. Neutral adult rear silhouette, arms gently offset from torso, legs naturally separated, with clearly mapped rear deltoids, traps/upper back, lats, erector spinae region, triceps/forearms, glutes, hamstrings and posterior calves only where surface anatomy supports them. Explicit separate left/right path IDs grouped to the reviewed canonical taxonomy. Keep shoulder blade/back anatomy plausible; no invented separated muscles, false internal anatomy, labels, text, baked-in data or user-specific body attributes. Deliver source SVG with region map JSON and CSS-tokenized neutral/selected/disabled states consistent with anterior companion.",
+      "scientificAccuracy": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "No baked-in text; all counts, headings, legends, selection and accessible labels rendered from live UI",
+      "aspectRatio": "2:3",
+      "priority": "DEFERRED UNTIL EXERCISE SCOPE ELIGIBLE",
+      "sourceRelation": {
+        "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
+        "existingAssetAuditRequired": true
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "DELTA_BRIEF_ONLY — design/source/anatomy review and SVG geometry not produced or integrated",
+      "filePaths": [],
+      "integration": "NOT_INTEGRATED",
+      "review": {
+        "design": "requires original geometry QA",
+        "scientific": "human anatomy and exercise mapping review required",
+        "rights": "first-party original source/license proof needed",
+        "rendered": "not tested"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "existing submitted design delta; registry inclusion for future designer discoverability"
+      },
+      "designerDeliverables": {
+        "format": "Editable SVG",
+        "requiredPathMapping": true,
+        "accessibleListFallback": true,
+        "fullBrief": "Produce an original anatomically accurate posterior back-view muscle-region vector matching BVA-0078 in proportions and pose. Neutral adult rear silhouette, arms gently offset from torso, legs naturally separated, with clearly mapped rear deltoids, traps/upper back, lats, erector spinae region, triceps/forearms, glutes, hamstrings and posterior calves only where surface anatomy supports them. Explicit separate left/right path IDs grouped to the reviewed canonical taxonomy. Keep shoulder blade/back anatomy plausible; no invented separated muscles, false internal anatomy, labels, text, baked-in data or user-specific body attributes. Deliver source SVG with region map JSON and CSS-tokenized neutral/selected/disabled states consistent with anterior companion.",
+        "reviewCriteria": [
+          "Geometry corresponds to actual superficial orientation and muscle coverage",
+          "No fictional measured activation intensity",
+          "Screen-reader alternate list and pointer+keyboard parity",
+          "Mobile touch testing and light/dark contrast",
+          "Path IDs consistent with independently versioned mapping",
+          "Actual source files and SHA plus licensed origin confirmed",
+          "No auto promotion to integrated or anatomy-approved"
+        ],
+        "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0080",
+      "name": "Onboarding six goal photographs — approved source collection",
+      "route": "/onboarding",
+      "component": "Existing goal selection cards",
+      "purpose": "Six approved individual goal visuals; latest revisions supersede embedded older prototypes.",
+      "category": "multi-image-set",
+      "subject": "Onboarding six goal photographs — approved source collection",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "REUSE_APPROVED_SOURCE_NOT_GENERATE",
+        "reference": [
+          "ONB-A01..A06",
+          "Bloom_ONB_Six_Goals_Approved_2026-11-21.zip",
+          "sha256:ca5c37ecb429f93c845d3ca23faf95c03ab392538ddf631d4b82b4c6a38f1ea3"
+        ]
+      },
+      "lifecycle": "Approved",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "SOURCE_DELIVERED_CHECKOUT_AND_QA_PENDING",
+        "action": "Verify attached source package and runtime presence; do not regenerate",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0081",
+      "name": "Onboarding six goal SVG glyphs — unfulfilled separate request",
+      "route": "/onboarding",
+      "component": "Existing goal selection cards / icons",
+      "purpose": "Six original consistent goal SVG glyphs; distinguish approved photographic media from undelivered icons.",
+      "category": "icon-family",
+      "subject": "Onboarding six goal SVG glyphs — unfulfilled separate request",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "PRODUCE_ONLY_IF_EXISTING_APPROVED_GLYPHS_ABSENT",
+        "reference": [
+          "ONB-A01..A06 goal icon request",
+          "ONB-A09 four SVG icons are a separate existing delivered/design requirement; audit before production"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW",
+        "action": "Review brief, existing assets, source/license and approved priority before creating artwork",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0082",
+      "name": "Release identity visual family — REL-A01..A06",
+      "route": "/profile | /about | /release",
+      "component": "Existing profile/about release identity",
+      "purpose": "Use approved tile v3 and release policy; reconcile candidate A02/A03/A04, approved A05 announcement format and A06 themes; Genesis 0.x has no Hydrogen tile.",
+      "category": "release-identity-family",
+      "subject": "Release identity visual family — REL-A01..A06",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "SOURCE_REUSE_AND_REVIEW_NOT_NEW_LOGO",
+        "reference": [
+          "docs/visual-assets/BLOOM_REL_A01_A06_RELEASE_IDENTITY_ASSET_REVIEW_20261121.md",
+          "REL-A01..A06",
+          "REL-A05 future-only 4:5 requested not delivered"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION",
+        "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0083",
+      "name": "EE-01 interactive 118-element periodic table visual adaptation",
+      "route": "/profile | /about",
+      "component": "Existing release identity interaction",
+      "purpose": "Adapt source prototype and canonical release tile; accessible swipe/drag/keyboard/fallback; future-only table muted with no false releases.",
+      "category": "interactive-art-family",
+      "subject": "EE-01 interactive 118-element periodic table visual adaptation",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "REUSE_PROTOTYPE_AND_APPROVED_TILE",
+        "reference": [
+          "EE-01",
+          "Bloom_Secret_Periodic_Table_Swipe_to_Unfold_Prototype(2).zip",
+          "sha256:1c6c89825110b42375fa26e6a678f0164ad5cebce00626a81b9452a27cc7e4f9"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION",
+        "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0084",
+      "name": "EE-03 conceptual DNA discovery SVG",
+      "route": "/precision | /genetics",
+      "component": "Existing educational discovery surface, future",
+      "purpose": "Preserve delivered conceptual helix; no diagnostic basepair geometry or personal genotype claim; source/science/accessibility review pending.",
+      "category": "scientific-educational-svg",
+      "subject": "EE-03 conceptual DNA discovery SVG",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "REUSE_DELIVERED_APPROVED_SVG",
+        "reference": [
+          "EE-03",
+          "dna-helix-concept.svg",
+          "sha256 ZIP:cebba941d4dd9795a4c6e496de245f2ff1366dca5e225558eaf3413fd54019b4"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "SOURCE_DELIVERED_CHECKOUT_AND_QA_PENDING",
+        "action": "Verify attached source package and runtime presence; do not regenerate",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0085",
+      "name": "EE-02 Genesis-to-Hydrogen preview — source reuse",
+      "route": "/profile | /about",
+      "component": "Existing release identity; optional preview",
+      "purpose": "Reuse Genesis visual and future Hydrogen assets with clearly unlaunched state; avoid current H tile.",
+      "category": "motion-design",
+      "subject": "EE-02 Genesis-to-Hydrogen preview — source reuse",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "REUSE_APPROVED_IDENTITY",
+        "reference": [
+          "EE-02",
+          "REL-A04",
+          "REL-A05",
+          "Bloom_Easter_Eggs_EE02_EE05_Design_Review_2026-11-21(2).zip"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION",
+        "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0086",
+      "name": "EE-05 restrained existing Bloom flower mark flourish",
+      "route": "/profile | /about",
+      "component": "Existing canonical brand mark",
+      "purpose": "Reuse actual current approved logo/icon; short accessible intentional flourish with reduced-motion static alternative; no separate logo generation.",
+      "category": "motion-design",
+      "subject": "EE-05 restrained existing Bloom flower mark flourish",
+      "composition": "Use existing Bloom art direction; no baked-in clinical values, user data or interface text.",
+      "scientificAccuracy": "Conceptual/illustrative only. Do not imply observed physiology, clinical validity or personal results.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "App-rendered accessible text only",
+      "aspectRatio": "As specified in named source; responsive versions required where applicable",
+      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "sourceRelation": {
+        "action": "REUSE_CURRENT_LOGO_NO_REDESIGN",
+        "reference": [
+          "EE-05",
+          "Bloom_Easter_Eggs_EE02_EE05_Design_Review_2026-11-21(2).zip"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "filePaths": [],
+      "integration": "NOT_VERIFIED",
+      "review": {
+        "design": "per source handoff",
+        "scientific": "as applicable, not presumed",
+        "rights": "verify exact asset rights",
+        "rendered": "not verified"
+      },
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "basis": "architect source documentation review, not deployed app inspection"
+      },
+      "designerDisposition20261122": {
+        "status": "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION",
+        "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
+        "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
+        "validatedAtHead": false
       }
     }
   ],
@@ -6775,5 +7716,44 @@
     "sourceFixtureEntries": 94,
     "scientificReviewPending": true,
     "renderedVisualQAPending": true
+  },
+  "designerAudit20261122": {
+    "date": "2026-11-22",
+    "scope": "canonical registry all 86 entries plus crosswalk to recently approved ONB, REL, EE, muscle-map docs and Food/Restaurant/Canadian source design",
+    "status": "SOURCE_DOCUMENTATION_RECONCILIATION_ONLY",
+    "counts": {
+      "OWNER_APPROVED_SOURCE_TRANSFER_INTEGRATION_PENDING": 7,
+      "REUSE_EXISTING_SOURCE_CHECK_RENDER_AND_RIGHTS": 5,
+      "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE": 30,
+      "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW": 13,
+      "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION": 25,
+      "SOURCE_DELIVERED_CHECKOUT_AND_QA_PENDING": 2,
+      "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION": 4
+    },
+    "requirements": "Designer works from entries and full original briefs. Current design source approval is not integrated or runtime verified. No image generation automatically authorized, and no queue reprioritization.",
+    "specialControls": {
+      "onboarding": "New six-photo collection BVA-0080 reused, BVA-0081 six icon glyphs separate and verify existing A09 icons first",
+      "release": "BVA-0082 REL A01–A06 existing approved/candidate sources, do not change release cadence; future Hydrogen not launched",
+      "easterEggs": "BVA-0083..0086 reuse existing sources; EE-04 and ASSET-EE-08/09 explicitly deferred indefinitely and NOT commissioned",
+      "muscleMap": "BVA-0078/79 newly indexed as Briefed; requires human anatomical review and editable SVG/source mapping; no asset bytes installed",
+      "microbes": "BVA-0053..0077 conditional on taxon/morphology specificity; no automatic production, no duplication with morphology C01–U00; do not interpret as EE-04 authorization",
+      "canadianRestaurant": "No independently necessary visual asset identified; information-first UI uses existing brand and food source components; add BVA only after actual gap audit",
+      "coach": "Existing BVA-0024 coach editorial; no speculative new portal artwork until enabled role/route/UI gap justifies design"
+    },
+    "sourceDocuments": [
+      "docs/visual-assets/BLOOM_APPROVED_ASSET_REVISIONS_INTAKE_20261121.md",
+      "docs/visual-assets/BLOOM_REL_A01_A06_RELEASE_IDENTITY_ASSET_REVIEW_20261121.md",
+      "docs/visual-assets/BLOOM_SCIENTIFIC_EASTER_EGGS_ASSET_AND_EXECUTION_REVIEW_20261121.md",
+      "docs/architecture/Bloom_Exercise_Intelligence_Muscle_Map_Handoff_2026-11-22.md",
+      "docs/visual-assets/Bloom_Exercise_Muscle_Map_Asset_Registry_Delta_2026-11-22.json",
+      "docs/architecture/BLOOM_RESTAURANT_SELECTED_MEAL_ASSISTANT_HANDOFF_20261122.md",
+      "docs/architecture/BLOOM_CANADIAN_NUTRITION_LNHPD_SOURCE_NATIVE_HANDOFF_20261122.md"
+    ],
+    "limitations": [
+      "No full client/public binary or browser screenshot audit executed here",
+      "Some approved artwork resides only in exact external ZIP archives",
+      "Existing source map and actual component usage not revalidated against every route at current HEAD",
+      "No generated production assets or rendering verified by this review"
+    ]
   }
 }
