@@ -122,3 +122,12 @@ It contains the HTML/CSS/JavaScript prototype, the shared REL-A01 data-driven SV
 **Status:** `REL-A03: DESIGN_CANDIDATE / OWNER_REVIEW_PENDING`. Hydrogen 1.0.0 remains future *illustrative only*; current app is Genesis. No release-naming policy conflict resolved and no change to `shared/product-release.ts`.
 
 **Next:** Present A03 owner preview and wait for approval/refinement before marking A03 approved or starting A04 Genesis.
+
+
+## 9. REL-A03 approval and REL-A04 Genesis review candidate
+
+**REL-A03: OWNER DESIGN APPROVED (2026-11-21).** The owner approved the compact Hydrogen release signature reusing REL-A01 tile geometry in medium About/Settings and small update-dialog variants. The approved content is the unchanged review ZIP, uploaded under the approved filename `/Bloom gut health/Agent Handoffs/Bloom_REL_A03_Compact_Approved_2026-11-21.zip`. The previous REL-A03 REVIEW_PENDING status is historical and superseded here. **Design approval and Shared Library delivery only; no runtime integration, browser QA or public release claimed.**
+
+**REL-A04: NEW DESIGN CANDIDATE, NOT APPROVED.** Genesis typographic lockup for the pre-release development era, with a large serif `Project Genesis`, subordinate `Bloom 0.6.0` and `Pre-release development build`, plus an About/Settings compact variant. No periodic element tile, atomic number or implied Hydrogen. Editable HTML/CSS theme selector (Everyday Light/Dark; Athlete Light/Dark), static editable SVG, representative desktop/mobile JPGs, README and SHA-256 manifest. JPG files are manually rendered representative previews, **not browser/app screenshots**. Font/viewport/browser/release-state integration QA pending. No live release code changed.
+
+**Library reference for latest REL-A04 review package:** `/Bloom gut health/Agent Handoffs/Bloom_REL_A04_Genesis_Review_2026-11-21(2).zip` (Library duplicate-safe name). Owner to review before marking A04 approved. Preserve owner/Architect major-vs-minor periodic release cadence conflict pending reconciliation.
