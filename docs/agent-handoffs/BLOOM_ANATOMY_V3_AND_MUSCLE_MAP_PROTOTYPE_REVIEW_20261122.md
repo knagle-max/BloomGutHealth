@@ -90,3 +90,36 @@ The owner independently inspected the supplied `interactive-demo.html` and confi
 7. **Release/code scope.** This is a designer-delivered replacement for *source candidate v3*, not a new BVA ID, an instruction to regenerate originals, a new app feature or current Codex task. Preserve previous v3 ZIP as provenance and fallback until v4 art/science/integration review.
 
 **Updated decision:** BVA-0078/0079 now have owner-supplied v4 candidate artwork. **Source structure has been verified, but full production integration, anatomical fidelity, accessibility, cross-instance SVG behavior, exact canonical training taxonomy, rights and actual in-app rendering are NOT VERIFIED.** Prefer v4 for future designer refinement, with later scoped engineering work only when selected by `NEXT_ACTIONS.md`.
+
+## 8. V3 → V4 → proposed canonical exercise taxonomy crosswalk clarification (2026-11-22)
+
+Owner supplied a precise markup crosswalk. Verified directly against V4 `muscle-groups.json` and `interactive-demo.html`. These are **three different vocabularies**, not three equivalent sets of 15. The V4 file enumerates 20 V3 `data-display-group` keys that roll up to 15 **visual selector** keys; the exercise architecture independently proposes 15 `CanonicalMuscleId` keys (pending Biology/UX review). Their numerical equality is coincidence, not equivalence.
+
+**Source of proposed exercise IDs:** `docs/architecture/Bloom_Exercise_Intelligence_Muscle_Map_Handoff_2026-11-22.md`, section 3 (the precise list below); *not* GI-01..GI-10 and *not* the independent React sample whose some names differ.
+
+| V4 visual key | Source V3 display keys | Proposed exercise canonical mapping / disposition |
+| --- | --- | --- |
+| `traps` | `neck`, `trapezius` | `trapezius` is a candidate for `upper_back_traps`; `neck` is **not automatically equivalent**. Preserve region provenance; unresolved neck remains neutral or illustrative-only. |
+| `shoulders` | `deltoids` | **Ambiguous**: must split/review geometry into `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, or display a generic shoulder selection with no false per-head counting. |
+| `chest` | `chest` | Candidate `pectorals`, subject to anatomical review. |
+| `biceps` | `biceps` | Candidate `biceps`. |
+| `triceps` | `triceps` | Candidate `triceps`. |
+| `forearms` | `forearms` | Candidate `forearms_grip`; don't assert grip from any isolated silhouette segment. |
+| `core` | `serratus`, `abdominals`, `obliques` | `abdominals`/`obliques` candidates for `abdominals_obliques`; `serratus` requires separate evidence and cannot be silently reassigned. |
+| `hips` | `hip-flexors`, `adductors` | **No canonical ID in proposed 15**. Both remain descriptive surface/neutral or explicitly unavailable; never merge into `glutes`, `quadriceps` or `hamstrings` just to fill a heatmap. |
+| `quads` | `quadriceps` | Candidate `quadriceps`. |
+| `lower-legs` | `tibialis-anterior`, `calves` | Posterior `calves` candidate `calves`; anterior `tibialis-anterior` **not `calves`**, and not a surrogate for plantarflexion or running work. |
+| `upper-back` | `upper-back` | Candidate `upper_back_traps`, avoiding accidental overlap/double-count with `trapezius`. |
+| `lats` | `lats` | Candidate `latissimus_dorsi`. |
+| `lower-back` | `lower-back` | Candidate `erector_spinae` only if geometry/labels support it. |
+| `glutes` | `glutes` | Candidate `glutes`. |
+| `hamstrings` | `hamstrings` | Candidate `hamstrings`. |
+
+**Proposed canonical 15 keys from the architecture document (not yet final, independently verified registry):**
+`pectorals`, `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, `triceps`, `biceps`, `forearms_grip`, `upper_back_traps`, `latissimus_dorsi`, `erector_spinae`, `abdominals_obliques`, `glutes`, `quadriceps`, `hamstrings`, `calves`.
+
+**Implementation representation when eligible:** Preserve immutable `SvgRegionId` and source `data-display-group` plus `VisualSelectorId`; a reviewed, versioned association can map an exact region to `CanonicalMuscleId | null`. Do not implement a broad V4-selector-key `Record<15, CanonicalMuscleId>`: some selectors contain multiple anatomically distinct originals and some canonical groups require finer separation than the artwork supports. Resolve at the **region/display-key level** with `reviewStatus`, `mappingVersion` and precise rationale. Never infer clinical muscle activation, source-backed completion or coverage from presence of a colored SVG shape.
+
+**One additional implementation caution:** V4's hidden second-path siblings are pointer-selectable by the demo even though they have `aria-hidden=true`; the adjacent accessible selector must provide equivalent function. Ensure visual selection, keyboard list, and descriptive state stay synchronized. The repeated gradient IDs and reattached event listener issue in section 7 still apply.
+
+**Acceptance remains readiness-triggered.** No new code, catalog, tests, asset art or queue changes are authorized by this clarification. Active GI work still precedes eligible exercise work.
