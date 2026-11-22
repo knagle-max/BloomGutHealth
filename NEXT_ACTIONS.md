@@ -59,6 +59,9 @@
 
 ## 4. Specification index — scoped requirements, not additional queue items
 
+**November 22 handoff intake — specification/acceptance only, NOT a task-selector change:** [Architect reconciliation of five newly submitted handoffs](docs/agent-handoffs/BLOOM_ARCHITECT_NEW_HANDOFFS_RECONCILIATION_CODEX_20261122.md) indexes the [Master Acceptance catalog (152 scenarios)](docs/architecture/Bloom_Master_Acceptance_Codex_Handoff_2026-11-22.md), [Canadian CNF 2026/LNHPD](docs/architecture/BLOOM_CANADIAN_NUTRITION_LNHPD_SOURCE_NATIVE_HANDOFF_20261122.md), [restaurant-selected meal assistant](docs/architecture/BLOOM_RESTAURANT_SELECTED_MEAL_ASSISTANT_HANDOFF_20261122.md), [exercise intelligence/muscle coverage](docs/architecture/Bloom_Exercise_Intelligence_Muscle_Map_Handoff_2026-11-22.md), and [provisional muscle-map visual-asset delta](docs/visual-assets/Bloom_Exercise_Muscle_Map_Asset_Registry_Delta_2026-11-22.json). All new acceptance cases are **readiness-triggered proof obligations**, not commands to implement missing features. **Current assignment remains GI-01..GI-10 read-only baseline, then STOP for owner review.** Do not convert the 152-case catalog into a concurrent audit or test-building campaign; no new providers/art/registry merge or release approval from this intake.
+
+
 **Feature-preservation audit (not a task queue):** [116-family feature/function crosswalk](docs/architecture/BLOOM_FEATURE_FUNCTION_PRESERVATION_AND_BACKLOG_AUDIT_20261121.md). Use only to verify that approved scope, deferred dependencies and current components are not silently dropped or duplicated during a selected task. It does not add 116 deliverables or change P0→P4 ordering.
 
 
