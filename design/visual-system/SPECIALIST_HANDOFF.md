@@ -13,6 +13,12 @@
 
 **Authority:** This is a visual asset production supplement, not a change to the Visual Lane Amendment's UX/IA ownership; old 2026-11-07 illustrative route compositions below are subordinate to the current Architect-approved shared page-header standard and owner's 2026-11-21 actual artwork choices. Design approval is never equivalent to production integration or science/rights verification.
 
+## Release identity assets — REL-A01–A06 (2026-11-21)
+
+**All Visual Designers, Architect, Codex and UX agents:** Read the [periodic-release identity handoff](./release-identity/RELEASE_IDENTITY_REL_A01_A06_HANDOFF_20261121.md) before working on release-related artwork or UI. This defines six individually reviewed deliverables REL-A01–REL-A06, exact periodic table geometry, Everyday/Athlete themes, typography proposal, responsive/accessibility requirements, single data-driven component, source/manifest delivery and owner design approvals. It is **not** a new app release permission or a parallel Codex task queue.
+
+**Crucial versioning conflict:** The user's newest major-release-only element mapping (all 1.x Hydrogen) differs from current Architect-approved `shared/product-release.ts` (1.1 Helium, 1.2 Lithium). The handoff explicitly requires Architect reconciliation before any production identity changes. Release candidates remain Genesis. REL-A01 is an **unapproved design review candidate**, not shipped software. Typography Newsreader/Plus Jakarta Sans is requested, but current font availability/licensing needs verification.
+
 ## Sources and boundaries
 - Reviewed attached `bloom_brand_delivery_v1(1).zip`, including tokens, handoff, screen blueprints, logos and brand concept reference.
 - Reviewed attached Nutrition & Biology handoff, dated 2026-10-18, which explicitly disallows unsupported user-specific microbiome concentration, health scores and genotype=activity claims.
