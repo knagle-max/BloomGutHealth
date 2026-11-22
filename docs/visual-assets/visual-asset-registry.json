@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "86 permanent BVA requirements/asset families catalogued; design source and reuse status differentiated from runtime integration. See designerAudit20261122 for action grouping, source/rights blockers, deferred assets and readiness. No generation, app QA or hosted release verified by this audit.",
+  "registryStatus": "86 unique permanent BVA requirements/asset families catalogued; each has designer disposition. Approved design source is distinct from runtime integration/verification. See designerAudit20261122; no source import, browser QA, scientific rights clearance or hosted release established by this desk review.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -2741,7 +2741,7 @@
         "existingPath": null,
         "existingArtifactByteVerified": false
       },
-      "lifecycle": "Briefed",
+      "lifecycle": "Approved",
       "productionStatus": "Owner-approved replacement candidate 3, packaged and delivered; NOT_INTEGRATED / NOT_VERIFIED",
       "filePaths": [],
       "integration": {
@@ -5261,7 +5261,7 @@
         "wide desktop context header"
       ],
       "accessibility": "decorative; visible marker/category/count text supplies meaning",
-      "lifecycle": "Artwork approved",
+      "lifecycle": "Approved",
       "assetStatus": "Owner-approved candidate 3, delivered in Shared Library; NOT_INTEGRATED / NOT_VERIFIED",
       "ownerApproval": {
         "approved": true,
@@ -7271,7 +7271,7 @@
         ]
       },
       "lifecycle": "Briefed",
-      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
+      "productionStatus": "REL-A01..A06 design family source packages received; approval varies by sub-asset. A01 approved v3, A05 approved promotional templates (16:9,1:1,9:16 only), A06 approved direction; A02/A03/A04 contain conflicting inner review metadata despite approved outer bundle. No runtime import/actual-app verification or public release.",
       "filePaths": [],
       "integration": "NOT_VERIFIED",
       "review": {
@@ -7289,6 +7289,17 @@
         "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
+      },
+      "delivery": {
+        "subAssetReview": {
+          "REL-A01": "Owner-approved tile v3; editable SVG reconstruction not pixel identical to reference JPG; integration pending",
+          "REL-A02": "Delivered; outer approved-bundle label conflicts with inner review-candidate status; confirm approval precedence",
+          "REL-A03": "Delivered; outer approved-bundle label conflicts with inner candidate status; confirm approval precedence",
+          "REL-A04": "Delivered; outer approved-bundle label conflicts with inner candidate status; verify monogram and approval precedence",
+          "REL-A05": "Owner-approved promo templates; 16:9, 1:1, 9:16 delivered; requested 4:5 missing; not launched",
+          "REL-A06": "Owner-approved four-theme design direction and optional 180ms reveal; app/device/accessibility QA pending",
+          "naming": "Canonical named-release-line sequencing across minor and major boundaries; do not impose major-only visual mapping"
+        }
       }
     },
     {
@@ -7366,15 +7377,18 @@
           "sha256 ZIP:cebba941d4dd9795a4c6e496de245f2ff1366dca5e225558eaf3413fd54019b4"
         ]
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
-      "filePaths": [],
+      "lifecycle": "Approved",
+      "productionStatus": "EE-03 DNA Discovery owner-approved conceptual SVG and standalone design prototype, packaged in Shared Library and documented on GitHub; no runtime integration, scientific validation, actual-app accessibility QA or deployment.",
+      "filePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_EE03_DNA_Discovery_Approved_2026-11-21.zip",
+        "docs/visual-assets/EE_03_DNA_DISCOVERY_OWNER_APPROVED_DELIVERY_20261121.md"
+      ],
       "integration": "NOT_VERIFIED",
       "review": {
-        "design": "per source handoff",
-        "scientific": "as applicable, not presumed",
-        "rights": "verify exact asset rights",
-        "rendered": "not verified"
+        "design": "OWNER_APPROVED: EE-03 illustration and interaction prototype (2026-11-21); implementation and real-app design QA pending",
+        "scientific": "Conceptual DNA depiction not yet independently reviewed for accurate base-pair or bond geometry",
+        "rights": "First-party artwork package supplied; verify downstream usage rights before release",
+        "rendered": "Standalone design prototype only; real Bloom app/device/assistive technology QA not performed"
       },
       "statusEvidence": {
         "date": "2026-11-22",
@@ -7385,6 +7399,16 @@
         "action": "Verify attached source package and runtime presence; do not regenerate",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
+      },
+      "delivery": {
+        "ownerApproved": {
+          "date": "2026-11-21",
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_EE03_DNA_Discovery_Approved_2026-11-21.zip",
+          "handoffPath": "docs/visual-assets/EE_03_DNA_DISCOVERY_OWNER_APPROVED_DELIVERY_20261121.md",
+          "zipSha256": "cebba941d4dd9795a4c6e496de245f2ff1366dca5e225558eaf3413fd54019b4",
+          "integration": "NOT_INTEGRATED",
+          "scope": "Design approved only; source assets unchanged, runtime/science/accessibility/deployment pending"
+        }
       }
     },
     {
@@ -7755,6 +7779,12 @@
       "Existing source map and actual component usage not revalidated against every route at current HEAD",
       "No generated production assets or rendering verified by this review"
     ],
-    "worklist": "docs/visual-assets/BLOOM_DESIGNER_CANONICAL_ASSET_WORKLIST_RECONCILIATION_20261122.md"
+    "worklist": "docs/visual-assets/BLOOM_DESIGNER_CANONICAL_ASSET_WORKLIST_RECONCILIATION_20261122.md",
+    "corrections20261122": {
+      "scope": "Documentation-level correction only; classifications and 86-ID coverage unchanged",
+      "lifecycle": "BVA-0025 and BVA-0051 corrected to allowed Approved lifecycle. BVA-0084 changed from stale Briefed to Approved after owner signoff; no runtime integration.",
+      "release": "BVA-0082 mixed REL-A01–A06 statuses recorded separately; A05 4:5 still missing, A02–A04 approval conflict retained.",
+      "verification": "No additional actual checkout, screen reader, source-rights or hosted rendering audit performed"
+    }
   }
 }
