@@ -103,3 +103,22 @@ Follow existing authoritative `shared/product-release.ts`; don't ship a duplicat
 - **Decision pending:** Owner to approve or refine REL-A02 before final composition integration.
 
 **Supersession:** This section replaces the older “REL-A01 unapproved” status line below. Resolve major-only vs minor-release cadence conflict before changing any release-identity logic.
+
+
+## 8. REL-A02 owner approval and REL-A03 review delivery
+
+### REL-A02 — owner design APPROVED, archived source delivered
+Owner approved the existing **REL-A02 Concept A** responsive full Hydrogen release composition (following REL-A01 v3 approval). The source content is unchanged from the review ZIP. The same source ZIP was re-uploaded under an approved delivery name:
+`/Bloom gut health/Agent Handoffs/Bloom_REL_A02_ConceptA_Approved_2026-11-21.zip`.
+It contains the HTML/CSS/JavaScript prototype, the shared REL-A01 data-driven SVG tile, and representative desktop/mobile JPGs. **Design approved ≠ app-integrated, browser-tested, font-licensed or public-release-authorized.** The prior receipt in §7 saying A02 'not approved' is historical and superseded by this section.
+
+### REL-A03 — compact release signature DESIGN CANDIDATE
+`/Bloom gut health/Agent Handoffs/Bloom_REL_A03_Compact_Review_2026-11-21.zip`.
+
+**Visual grammar:** Derive directly from the approved REL-A01 shared `createElementTile()` renderer. For About/Settings use a compact horizontal row with approximately 122px tile and live `Bloom · Hydrogen` / `Version 1.0.0` text. For update-dialog context use a 60–68px tile adjacent to readable live identity text; the tiny tile's name is not sufficiently readable on its own, so the external text is mandatory. No tagline, invented release date or fake release-notes link. Preview theme switcher covers Everyday Light/Dark, Athlete Light/Dark and uses existing theme colours.
+
+**Contents:** `index.html`, `styles.css`, `preview.js`, same REL-A01-tile-component.js and SVG, desktop/mobile representative JPG previews, README, SHA256 manifest. The JPGs are Pillow-made representative **static mockups**, **not Chromium browser screenshots**: the sandbox blocked browser access to both file:// and localhost. HTML/DOM layout, font fidelity and 320/390/768/1440 live browser testing still pending.
+
+**Status:** `REL-A03: DESIGN_CANDIDATE / OWNER_REVIEW_PENDING`. Hydrogen 1.0.0 remains future *illustrative only*; current app is Genesis. No release-naming policy conflict resolved and no change to `shared/product-release.ts`.
+
+**Next:** Present A03 owner preview and wait for approval/refinement before marking A03 approved or starting A04 Genesis.
