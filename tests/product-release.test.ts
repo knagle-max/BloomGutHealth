@@ -25,5 +25,8 @@ test("Hydrogen is reserved for actual first public release, not merely a package
 test("unknown future releases do not silently reuse an element or fabricate readiness",()=>{
  assert.equal(bloomReleaseIdentity("1.3.0",true).codename,null);
  assert.equal(bloomReleaseIdentity("2.0.0",true).codename,null);
+ // No speculative claim: atomic sequence crosses major-version boundaries only when named lines are assigned.
+ assert.equal(bloomReleaseIdentity("1.9.0",true).codename,null);
+ assert.equal(bloomReleaseIdentity("3.0.0",true).codename,null);
  assert.throws(()=>bloomReleaseIdentity("not-a-version"));
 });
