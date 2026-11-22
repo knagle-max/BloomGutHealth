@@ -28,24 +28,28 @@ export function bloomReleaseIdentity(version: string, publiclyReleased = false):
       symbol: null, atomicNumber: null,
     };
   }
-  // Planned 1.x release series. Additional entries must be added in periodic-table order.
-  const releases = [
-    { name: "Hydrogen", symbol: "H" },
-    { name: "Helium", symbol: "He" },
-    { name: "Lithium", symbol: "Li" },
+  // Approved version-to-element assignments, not arithmetic on major/minor.
+  // Each new named feature/major release takes the next unused atomic number,
+  // even if the SemVer sequence jumps. Patches inherit their release line.
+  // Extend this list ONLY on an explicit release-naming decision; never
+  // preassign a future 2.0.0 or skip elements just because 1.x was skipped.
+  const namedReleaseLines = [
+    { major: 1, minor: 0, name: "Hydrogen", symbol: "H", atomicNumber: 1 },
+    { major: 1, minor: 1, name: "Helium", symbol: "He", atomicNumber: 2 },
+    { major: 1, minor: 2, name: "Lithium", symbol: "Li", atomicNumber: 3 },
   ] as const;
-  if (major !== 1 || minor >= releases.length) {
+  const element = namedReleaseLines.find(line => line.major === major && line.minor === minor);
+  if (!element) {
     return {
       version, codename: null, publicRelease: true,
       label: `Bloom ${version}`, descriptor: "Public release",
       symbol: null, atomicNumber: null,
     };
   }
-  const element = releases[minor];
   return {
     version, codename: element.name, publicRelease: true,
     label: `Bloom ${version} · ${element.name}`, descriptor: "Public release",
-    symbol: element.symbol, atomicNumber: minor + 1,
+    symbol: element.symbol, atomicNumber: element.atomicNumber,
   };
 }
 
