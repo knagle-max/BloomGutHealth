@@ -46,6 +46,8 @@
 
 **Interpretation:** These four entries are the **only current task-selection order**, not an order to build all consumer, evidence, ML or design specifications. If an item is already satisfied at actual HEAD, record its exact receipt and proceed. If blocked by permissions, model, reviewer, asset or deployment, record the feature-scoped blocker and work on another independently eligible current slice. Do not start an all-handoff implementation campaign.
 
+**Owner-approved release identity (bounded, non-priority-changing):** [Project Genesis → Hydrogen/Helium/Lithium](docs/architecture/BLOOM_PRODUCT_RELEASE_NAMING_20261121.md). Pure `shared/product-release.ts` mapping, focused test and existing Profile development label added on this branch; product release `0.6.0` is deliberately independent of legacy `package.json` version `1.0.0`. No public launch, no E2EE/security/science/clinical permission, no standalone About/gallery project. Verify current HEAD and tests before any later edit. This does not preempt owner-prioritized approved asset import, P0 or the P1/P2 queue.
+
 ## 4. Specification index — scoped requirements, not additional queue items
 
 **Feature-preservation audit (not a task queue):** [116-family feature/function crosswalk](docs/architecture/BLOOM_FEATURE_FUNCTION_PRESERVATION_AND_BACKLOG_AUDIT_20261121.md). Use only to verify that approved scope, deferred dependencies and current components are not silently dropped or duplicated during a selected task. It does not add 116 deliverables or change P0→P4 ordering.
