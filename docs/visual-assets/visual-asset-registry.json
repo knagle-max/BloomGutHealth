@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged. Microbe morphology: 11 previously integrated visual styles preserved as completed; BVA-0091/C06 and BVA-0092/F03 newly briefed for 190-entry coverage; scientific review and runtime import pending.",
+  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged. Microbe morphology: 11 previously integrated visual styles preserved as completed; BVA-0091/C06 and BVA-0092/F03 newly briefed for 190-entry coverage; scientific review and runtime import pending. Updated morphology visual program: all 190 entries assigned; 11 existing Integrated styles retained, six additional briefs BVA-0091–0096. U00 remains technical fallback only; science/release QA pending.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -8330,6 +8330,278 @@
         "source": "Full 190-organism scientific morphology audit; existing 11 archetypes already integrated, only two new style families identified"
       },
       "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization"
+    },
+    {
+      "id": "BVA-0093",
+      "name": "Microbe morphology A01 — Methanogenic archaea — short oval and spherical cells",
+      "route": "/microbiome | /explore",
+      "component": "OrganismPortrait / canonical morphology resolver",
+      "purpose": "Reusable scientifically bounded microbial visual archetype. Avoid generic fallback in expanded 190-organism catalogue; visual concept must be independently reviewed.",
+      "category": "scientific-illustration-family",
+      "subject": "Composite conceptual illustration representing oval/short-rod and coccoid archaeal morphologies. Explicitly label as archaea, not bacteria; no impossible single-celled hybrid.",
+      "composition": "Premium editorial scientific illustration consistent with the already integrated BVA-0037–0047; clear silhouette at 36px; cohesive 180px portrait",
+      "scientificAccuracy": "Representative conceptual morphology only; not a taxonomic family, actual source image, clinical diagnosis, personal abundance, gene expression, or measured cell activity.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "Labels, taxonomy, evidence and source disclosure rendered outside the artwork",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256px thumbnail",
+        "1024px portrait",
+        "mobile and desktop browser review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "artworkStyleId": "A01",
+      "mappedCatalogueEntries": 4,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "existingCompletedArt": "BVA-0037–0047",
+        "domain": "archaea"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "scientific category rationale documented; final illustration morphology pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "First-party original conceptual image with production source and rights record",
+        "256px thumbnail and 1024px portrait derivatives with hashes and asset manifest",
+        "Runtime source-based mapping (no genus/strain implied personal measurement)",
+        "Actual mobile, desktop, dark/light and accessibility verification"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
+      },
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+    },
+    {
+      "id": "BVA-0094",
+      "name": "Microbe morphology P01 — Vacuolated intestinal protists",
+      "route": "/microbiome | /explore",
+      "component": "OrganismPortrait / canonical morphology resolver",
+      "purpose": "Reusable scientifically bounded microbial visual archetype. Avoid generic fallback in expanded 190-organism catalogue; visual concept must be independently reviewed.",
+      "category": "scientific-illustration-family",
+      "subject": "Spherical Blastocystis-type vacuolated morphotype, phase-specific and not species diagnostic.",
+      "composition": "Premium editorial scientific illustration consistent with the already integrated BVA-0037–0047; clear silhouette at 36px; cohesive 180px portrait",
+      "scientificAccuracy": "Representative conceptual morphology only; not a taxonomic family, actual source image, clinical diagnosis, personal abundance, gene expression, or measured cell activity.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "Labels, taxonomy, evidence and source disclosure rendered outside the artwork",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256px thumbnail",
+        "1024px portrait",
+        "mobile and desktop browser review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "artworkStyleId": "P01",
+      "mappedCatalogueEntries": 1,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "existingCompletedArt": "BVA-0037–0047",
+        "domain": "eukaryotic protists"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "scientific category rationale documented; final illustration morphology pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "First-party original conceptual image with production source and rights record",
+        "256px thumbnail and 1024px portrait derivatives with hashes and asset manifest",
+        "Runtime source-based mapping (no genus/strain implied personal measurement)",
+        "Actual mobile, desktop, dark/light and accessibility verification"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
+      },
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+    },
+    {
+      "id": "BVA-0095",
+      "name": "Microbe morphology P02 — Amoeboid intestinal protists",
+      "route": "/microbiome | /explore",
+      "component": "OrganismPortrait / canonical morphology resolver",
+      "purpose": "Reusable scientifically bounded microbial visual archetype. Avoid generic fallback in expanded 190-organism catalogue; visual concept must be independently reviewed.",
+      "category": "scientific-illustration-family",
+      "subject": "Irregular amoeboid Dientamoeba trophozoite, without visible external flagella; stage-specific.",
+      "composition": "Premium editorial scientific illustration consistent with the already integrated BVA-0037–0047; clear silhouette at 36px; cohesive 180px portrait",
+      "scientificAccuracy": "Representative conceptual morphology only; not a taxonomic family, actual source image, clinical diagnosis, personal abundance, gene expression, or measured cell activity.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "Labels, taxonomy, evidence and source disclosure rendered outside the artwork",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256px thumbnail",
+        "1024px portrait",
+        "mobile and desktop browser review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "artworkStyleId": "P02",
+      "mappedCatalogueEntries": 1,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "existingCompletedArt": "BVA-0037–0047",
+        "domain": "eukaryotic protists"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "scientific category rationale documented; final illustration morphology pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "First-party original conceptual image with production source and rights record",
+        "256px thumbnail and 1024px portrait derivatives with hashes and asset manifest",
+        "Runtime source-based mapping (no genus/strain implied personal measurement)",
+        "Actual mobile, desktop, dark/light and accessibility verification"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
+      },
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+    },
+    {
+      "id": "BVA-0096",
+      "name": "Microbe morphology P03 — Flagellated pear-shaped intestinal protists",
+      "route": "/microbiome | /explore",
+      "component": "OrganismPortrait / canonical morphology resolver",
+      "purpose": "Reusable scientifically bounded microbial visual archetype. Avoid generic fallback in expanded 190-organism catalogue; visual concept must be independently reviewed.",
+      "category": "scientific-illustration-family",
+      "subject": "Pear-shaped Giardia-type trophozoite with flagella and appropriate representative cell anatomy, stage-specific, not a personal observed specimen.",
+      "composition": "Premium editorial scientific illustration consistent with the already integrated BVA-0037–0047; clear silhouette at 36px; cohesive 180px portrait",
+      "scientificAccuracy": "Representative conceptual morphology only; not a taxonomic family, actual source image, clinical diagnosis, personal abundance, gene expression, or measured cell activity.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "Labels, taxonomy, evidence and source disclosure rendered outside the artwork",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256px thumbnail",
+        "1024px portrait",
+        "mobile and desktop browser review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "artworkStyleId": "P03",
+      "mappedCatalogueEntries": 1,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+        "existingCompletedArt": "BVA-0037–0047",
+        "domain": "eukaryotic protists"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "scientific category rationale documented; final illustration morphology pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "First-party original conceptual image with production source and rights record",
+        "256px thumbnail and 1024px portrait derivatives with hashes and asset manifest",
+        "Runtime source-based mapping (no genus/strain implied personal measurement)",
+        "Actual mobile, desktop, dark/light and accessibility verification"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
+      },
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
@@ -8565,13 +8837,9 @@
     "scientificReviewPending": true,
     "renderedVisualQAPending": true,
     "coverageRevision20261122": {
-      "status": "FULL_190_AUDIT_PUBLISHED_NEW_ARTWORK_PENDING",
+      "status": "190_ENTRIES_FULLY_CLASSIFIED; SIX_NEW_STYLE_BRIEFS; NO_U00_PRIMARY_ASSIGNMENTS",
       "count": 190,
-      "bacteria": 163,
-      "archaea": 4,
-      "eukaryotes": 12,
-      "viruses": 11,
-      "sourceTestFixtureCount": 94,
+      "sourceReportCoverage": 94,
       "existingCompletedStyles": 11,
       "existingCompletedBvaIds": [
         "BVA-0037",
@@ -8588,30 +8856,42 @@
       ],
       "newStylesToGenerate": [
         {
-          "styleId": "C06",
           "id": "BVA-0091",
-          "useCount": 2,
-          "status": "Briefed — not generated"
+          "style": "C06",
+          "count": 2
         },
         {
-          "styleId": "F03",
           "id": "BVA-0092",
-          "useCount": 4,
-          "status": "Briefed — not generated"
+          "style": "F03",
+          "count": 4
+        },
+        {
+          "id": "BVA-0093",
+          "style": "A01",
+          "count": 4
+        },
+        {
+          "id": "BVA-0094",
+          "style": "P01",
+          "count": 1
+        },
+        {
+          "id": "BVA-0095",
+          "style": "P02",
+          "count": 1
+        },
+        {
+          "id": "BVA-0096",
+          "style": "P03",
+          "count": 1
         }
       ],
-      "neutralStyle": "U00",
-      "neutralCount": 19,
-      "registryOfRecord": "docs/visual-assets/visual-asset-registry.json",
-      "fullCrosswalk": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
-      "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
-      "limitations": "BVA-0037..0047 Integrated/asset-delivered; do not mark independently scientifically accepted. Existing 94-item runtime crosswalk remains current and cannot automatically resolve 96 expanded organisms. Full mapping needs explicit code import; observed taxonomic families still require authenticated authority resolution. No personal abundance or taxonomy inference.",
-      "requiresCodex": [
-        "Import reviewed full 190-name visual mapping into existing resolver without breaking 94 source-scoped exact matches",
-        "Correct legacy visual assignments for 20 expanded names after scientific review",
-        "Produce C06 and F03 originals and 2 sizes; update hashes in canonical crosswalk; test no wrong F01/F02 for ordinary yeasts",
-        "Verify exact source/correction/reimport, UI and 2-account isolation, dark/light accessible fallback"
-      ]
+      "plannedUnclassifiedCount": 0,
+      "renderFallbackU00Preserved": true,
+      "fullCrosswalk": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+      "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
+      "scientificCaveat": "Some entries are provisional genus-level illustrations; canonical identity/morphology require independent review. Shapes are not taxonomic families.",
+      "implementationStatus": "Only first 11 assets are Integrated in original 94-report resolver; expanded catalogue map must be imported by Codex; six newly briefed assets not generated."
     }
   },
   "designerAudit20261122": {
