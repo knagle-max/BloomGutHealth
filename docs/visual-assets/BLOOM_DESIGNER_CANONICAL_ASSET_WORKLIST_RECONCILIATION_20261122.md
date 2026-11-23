@@ -1,6 +1,6 @@
 # Bloom — Designer production worklist, audit of canonical visual asset registry
 
-**Architect source-document review: 2026-11-22.** Canonical machine-readable source: [visual-asset-registry.json](visual-asset-registry.json). **90 permanent BVA IDs (some multi-image/design families), not 90 new images to generate.** All 77 previously registered items were reviewed at the level of registry metadata and linked handoff documents. BVA-0078..0086 were included for discoverability without implementing or generating any assets.
+**Architect source-document review: 2026-11-22.** Canonical machine-readable source: [visual-asset-registry.json](visual-asset-registry.json). **101 permanent BVA IDs (some multi-image/design families), not 101 new images to generate.** All 77 previously registered items were reviewed at the level of registry metadata and linked handoff documents. BVA-0078..0086 were included for discoverability without implementing or generating any assets.
 
 **Authority:** `AGENTS.md` and `NEXT_ACTIONS.md` remain sole task selectors. Current single Codex assignment is GI-01..GI-10 baseline; no asset design, implementation, external provider, paid source or deployment is authorized by this catalog alone. This document is a designer worklist for when asset work is eligible, **not a second execution queue**.
 
@@ -24,7 +24,8 @@
 | G. Conditional species portrait requests — science/taxonomy first | 25 | Not an automatic commission, taxonomic justification required |
 | H. Owner-approved anatomy visual source — integration gated | 2 | Exact 28-file hybrid raster+SVG design package verified, not imported or integrated; canonical mapping/scientific/a11y/rights gates pending |
 | I. Recently received symptom and nutrition design source kits | 4 | BVA-0087..0090 present as source prototypes, not integrated/production validated |
-| **Total indexed** | **90** | **Not a count of missing images** |
+| J. Owner-approved morphology source receipt / optional source styles | 11 | Six required style families received, five additional optional unmapped image families |
+| **Total indexed** | **101** | **Not a count of missing images** |
 
 ## Per-ID designer worklist
 
@@ -203,3 +204,23 @@ The count of **86 distinct requirements/families** and seven designer dispositio
 **Not verified in this audit:** full `client/public` file-by-file bytes against current Git HEAD, current app visual screenshots/physical-device rendering, independent rights clearance, biological illustration review, ZIP import into Codex workspace, hosted Render deployment or consumer release. Preserve existing receipt status rather than falsely promoting any asset.
 
 **Output expected from the designer when an asset slice is selected:** BVA ID, reuse/generation decision, source SHA and exact file paths, source design files/exports, component placement/crop, design/rights/anatomy status, accessible fallback and next open blocker. Codex integrates only with the current authorized execution queue.
+
+### J. Owner-approved morphology source receipts — 2026-11-23
+
+The [Architect package inspection and crosswalk](../agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md) verified both original source ZIPs: `Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip` (13 original PNGs + 13 portrait and 13 thumbnail WebPs, all 39 hashes/dimensions valid) and `Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip` (six identical selected primaries + five truly new optional images). **18 unique originals total across both packages.** The six required style families are delivered; five additional visual families have **zero assignments in the current provisional 190-organism crosswalk**.
+
+| Canonical BVA | Style / asset | Source state | Designer next step |
+| --- | --- | --- | --- |
+| BVA-0091 | C06 curved/sigmoid rods | 2 original + WebP variants delivered, owner-approved | Reuse M01/M02; primary v2 image = M02; no regeneration; Biology mapping/rights/app QA pending |
+| BVA-0092 | F03 budding yeasts | 4 original + WebP variants delivered, owner-approved | Reuse Y01–Y04; primary v2 = Y04; biology/rights/app QA pending |
+| BVA-0093 | A01 methanogenic archaea broad forms | 4 original + WebP variants delivered, owner-approved | Reuse A01–A04; primary v2 = A04; specialist review especially for irregular/lobed forms; no specimen claim |
+| BVA-0094 | P01 vacuolated intestinal protist | Original PNG + optimized WebPs delivered, owner-approved | Reuse approved P01; Biology/source rights review before catalog identity mapping |
+| BVA-0095 | P02 amoeboid intestinal protist | Original PNG + optimized WebPs delivered, owner-approved | Reuse approved P02; Biology/source rights review before catalog identity mapping |
+| BVA-0096 | P03 flagellated pear-shaped intestinal protist | Original PNG + optimized WebPs delivered, owner-approved | Reuse approved P03; specialist verify flagella morphology for eventual taxa |
+| BVA-0097 | C07 helical/spiral bacteria | One owner-approved original PNG in broader v2 ZIP; **zero assigned taxa** | Keep optional, don't auto-map or deploy; need approved source evidence and later optimized exports |
+| BVA-0098 | C08 thin spirochetes | One owner-approved original PNG in broader v2 ZIP; **zero assigned taxa** | Keep optional, don't auto-map or deploy; overlap C06/C07 scientifically review |
+| BVA-0099 | C09 segmented filamentous bacteria | One owner-approved original PNG in broader v2 ZIP; **zero assigned taxa** | Keep optional, don't auto-map or deploy; specialist morphology review |
+| BVA-0100 | C10 pleomorphic bacteria | One owner-approved original PNG in broader v2 ZIP; **zero assigned taxa** | Keep optional, don't auto-map or deploy; no evidence of one species from mixed pictured forms |
+| BVA-0101 | C11 fusiform/spindle-shaped bacteria | One owner-approved original PNG in broader v2 ZIP; **zero assigned taxa** | Keep optional, don't auto-map or deploy; specialist morphology review |
+
+**Source manifest alias correction:** the broader v2 ZIP calls the last five `BVA-C07` to `BVA-C11`. Those are source aliases only, **not valid permanent numeric BVA IDs**. The registry retains C07–C11 as style identifiers and uses BVA-0097..0101 as permanent BVA IDs. **These are source-approval states, not scientific review, runtime integration or an exercise of the currently deferred EE-04.**
