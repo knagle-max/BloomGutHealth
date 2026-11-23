@@ -169,6 +169,9 @@ Each row is a permanent registry requirement; the canonical JSON contains the fu
 
 [Architect source verification and exact blockers](../agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md). Source files remain owner attachments and are **not confirmed in Codex checkout**. Receipt is not production design certification, implementation or an addition to the active GI queue.
 
+
+**Later V1.0 canonical reconciliation intake (2026-11-22):** [Architect review and exact ZIP receipt](../agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md). The owner-shared six-file V1 crosswalk contains 49 visual source rows, 58 **proposed/unapproved** canonical candidate edges, 10 canonical IDs lacking even a candidate, 10 pending decision-register questions and six explicitly conflicting laterality/refinement rows. The 77 canonical anchors remain unmeasured. Review the exact original at `/Bloom/Agent Handoffs/Bloom_BVA_0087_0089_Reconciliation_Architect_Codex_Handoff_v1.zip` or the identically named `/Bloom gut health/Agent Handoffs/` counterpart. This is design review evidence only, not geometry/mapping signoff or Codex authorization.
+
 ## Additional approved sources and important gaps
 
 **Approved revisions already delivered, not yet proven installed:** BVA-0001..0005 hero replacements, BVA-0025 onboarding and BVA-0051 microbiome hero. These seven are source-transfer and responsive/integration tasks, **not generation tasks**. The approved six ONB-A01..A06 goal photographs are BVA-0080 (six separate images in one existing delivered source collection); the distinct six goal glyphs BVA-0081 remain an unfulfilled request pending audit of existing ONB-A09 icons. Do not mistake the earlier embedded demo photos for the newer approved files.
