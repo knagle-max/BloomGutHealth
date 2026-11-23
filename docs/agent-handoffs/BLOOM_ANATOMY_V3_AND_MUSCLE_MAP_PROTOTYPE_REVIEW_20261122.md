@@ -152,3 +152,40 @@ V10.1 uses **GI-07/GI-09 as general review lenses**, expressly noting it does no
 **When owner explicitly selects future eligible exercise integration:** obtain/fingerprint actual V10.1 original files and inspect source (the Library handoff alone is insufficient), verify rights/visual output/geometry/ARIA/unique SVG defs and selectors, compare to V4 provenance, formally reconcile canonical role/movement identity, then run only ready EX-MAP acceptance slices and actual app user journey tests. Maintain `BVA-0078`/`BVA-0079` rather than duplicating registry identities.
 
 **Conclusion:** V10.1 read-only review accepted as guidance; independent V10.1 asset acceptance and consumer integration **NOT VERIFIED**.
+
+## 10. Owner-approved consolidated Anatomy Stages 1–3 visual handoff (2026-11-22)
+
+**Source physically inspected this turn:** user-uploaded `Bloom_Approved_Anatomy_Design_Handoff(1).zip` SHA-256 **`a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511`** (4,776,270 bytes); ZIP CRC check passed. Package contains a root folder `Bloom_Approved_Anatomy_Design_Handoff/` and 28 files listed in `PACKAGE_MANIFEST.json`; **all 28 byte-length and SHA-256 manifest entries matched actual uncompressed members**. This is stronger source verification than the prior V10.1 Library-only read-only handoff. **Original ZIP binaries remain in the owner's uploaded attachment, not in GitHub/Codex checkout**; no transfer or integration is asserted.
+
+**Approval authority as reported in source:** `APPROVED_HANDOFF_README.md` states **owner-approved consolidated visual design** after Stages 1 (torso/back), 2 (lower body), 3 (arms/shoulders), and consolidated QA. `QA_HANDOFF.md` is an earlier/conservative design-QA report that says review candidate subject to final owner visual signoff; the package-level approved README is the latest disposition for **visual design only**. Do not conflate approval of the appearance with approval of anatomy accuracy, exercise taxonomy, product integration, data-source rights, release or production use. The independent source artwork origin/licence evidence and specialist anatomical review remain outstanding.
+
+### Source-of-truth and physical file verification
+
+- `assets/bloom-neutral-front.svg` — **267,919 bytes**, SHA-256 `fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106`.
+- `assets/bloom-neutral-back.svg` — **267,265 bytes**, SHA-256 `f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e`.
+- `assets/body-front.png` — SHA-256 `7199ba6bb11129b7cb9826f77c61a2fc24acb935f38b50063628b5cde42feec2`.
+- `assets/body-back.png` — SHA-256 `ab5b12c40c4e6936c50e49675c7d78d1c9e2fdf16b61318a73fae0b8e9c11338`.
+- `interactive-demo.html` — SHA-256 `610099acccca17c03bdfc7f19c4c230df8a0bf071a0d8319b923ce1a4ce08314`, **visual QA demo only**, not production integration.
+- `visual-groups-provisional.json` — 15 unapproved visual keys, **not** canonical exercise IDs; `structure-audit.json`, `browser-qa.json`, `QA_HANDOFF.md`, source previews and contact sheets are review evidence, not scientific approval.
+- I parsed both original SVGs: front has **24** selectable paths, **9** distinct displayed visual groups with exactly one keyboard focus representative per group; back has **20** paths and **10** displayed visual groups with exactly one representative per group. All element `id` values are unique **within each SVG**. The combined visual vocabulary is **15** distinct provisional group keys. Structural source inspection found no unresolved `skin-ambient` fill reference.
+- SVG roots have `viewBox="0 0 320 820"` and each includes one embedded raster `image` node. **This is a hybrid raster-body + vector-overlay product**, not solely original vector anatomical geometry. The separate original `body-front.png`/`body-back.png` are also included. Verify embedded versus external body image provenance, cross-instance clip/paint ID uniqueness and the app's CSP/data-URI handling in any eventual integration.
+- I viewed the `browser-contact-everyday.png` source screenshot grid: professionally restrained dark anatomical figure, differentiated colored primary/secondary regions and readable example legend. A screenshot is not proof of actual device/assistive technology or biological correctness.
+- `browser-qa.json` **reports 35/35 Chromium checks passed, zero console errors**, including example states, theme, Explore/keyboard, focus retention, 390px viewport and minimum 44px exercise-selector targets. This turn independently verified the QA record, not the tests; never cite as independent current-app QA. Open gates explicitly include VoiceOver, TalkBack, real touch devices, exhaustive WCAG/contrast, anatomy-specialist review and full integrated-route checks.
+
+### Impact on earlier candidates and historical findings
+
+1. **This package is now the owner-design-approved visual source for canonical BVA-0078 (front) and BVA-0079 (back)**, superseding V4 as the preferred *artwork* while preserving V3/V4/V10.1 history. The two BVA identities remain unchanged; do not make a parallel asset registry or duplicate images.
+2. The handoff describes a **V12.1-derived separate Stage 1–3 staging copy**, with 42 path replacements and unchanged body PNGs. The older V10.1 remains a previous frozen technical baseline, not proof that this newer visual approval is already installed.
+3. Use the two original SVG files as the maintained vector-overlay geometry masters. `interactive-demo.html` embeds generated copies of those SVGs; maintain generated parity rather than hand-editing three independent versions. The original body PNG layer is required. Do not reconstruct from contact-sheet screenshots or a screenshot-based tracing exercise.
+4. **Still not canonical taxonomy:** 15 visual labels, e.g. `shoulders`, `hips`, `core`, `lower-legs`, remain **not** a one-to-one map to the proposed 15 exercise IDs; preserve region-level provenance and the crosswalk reviewed in §8. Front tibialis/anterior shins are not posterior calves; deltoids cannot be collapsed into one reviewed exercise head. For unknown/unmapped regions abstain. Never invent a workout participation value from a beautiful colored shape.
+5. **Not workout data:** Push/Pull/Legs/All-lit/None are design fixtures. All-lit is for alignment QA, not one workout or 15 trained muscles; the source never establishes an actual user session or a physiological metric.
+6. **Scientific/accessibility gate:** Clearer contours and browser smoke tests do not equal qualified anatomical precision or accessibility certification. Preserve equivalent adjacent list, focus semantics and the distinction between descriptive grouping/selected/example roles.
+
+### Later integration gates (no current execution authorization)
+
+- GI-01..GI-10 source/evidence baseline must finish, followed by owner review; no change to `NEXT_ACTIONS.md` priority or infrastructure pause.
+- Owner explicitly selects exercise integration task and authorizes exact source transfer; verify ZIP checksum and 28-member manifest in Codex's workspace.
+- Review canonical exercise target IDs, mapping-version, rights, manual versus completed data, source lineage and correction/invalidation first. Use existing Activity/Athlete logs and EX-MAP-01..22 acceptance when genuinely ready; avoid another workout backend/logger.
+- Evaluate exact four-theme app requirements, mobile, light/dark, 200% zoom, physical touch, screen reader, fallback on unavailable raster/SVG, unique clip/paint IDs, security and full user flows. Distinguish designer's limited reported QA from actual build tests, anatomy review and consumer release gates.
+
+**Architect disposition: OWNER-APPROVED VISUAL DESIGN SOURCE; 28/28 MANIFEST SOURCES VERIFIED; INTEGRATION / TAXONOMY / SCIENTIFIC ANATOMY / INDEPENDENT ACCESSIBILITY / RIGHTS / HOSTED RELEASE NOT APPROVED OR VERIFIED.** No application code, schemas, migrated data, execution priorities or asset original bytes were changed by this handoff update.
