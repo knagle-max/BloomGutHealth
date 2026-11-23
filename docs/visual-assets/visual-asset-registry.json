@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged.",
+  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged. Microbe morphology: 11 previously integrated visual styles preserved as completed; BVA-0091/C06 and BVA-0092/F03 newly briefed for 190-entry coverage; scientific review and runtime import pending.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -8190,6 +8190,146 @@
         "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
         "validatedAtHead": false
       }
+    },
+    {
+      "id": "BVA-0091",
+      "name": "Microbe morphology C06 — Curved / comma-shaped bacterial rods",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "New generic scientifically bounded artwork archetype required by the 190-entry catalogue audit; reuse for multiple organisms, not individual portraits",
+      "category": "scientific-illustration-family",
+      "subject": "Representative curved or sigmoid rods; broadly suitable for Desulfovibrio species, with no false flagella or motility claim",
+      "composition": "Premium editorial biological image, consistent optical scale, lighting and palette with BVA-0037–0047; 256px thumbnail and 1024px portrait with 36px/180px UI checks",
+      "scientificAccuracy": "Conceptual visual morphological group only. Not a taxonomic family, actual micrograph, observed source strain, morphology measurement, metabolic evidence, abundance, diagnosis or personal biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256x256 WebP thumbnail",
+        "1024x1024 WebP portrait",
+        "320/390/768/1440 CSS px rendered review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "impact": "catalogue coverage and visual correctness",
+      "artworkStyleId": "C06",
+      "mappedCatalogueEntries": 2,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "baselineStyles": "BVA-0037 through BVA-0047",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+        "otherSharedLibrary": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT_GENERATED — output must be produced and hash-verified by design/Codex after scientific review; source/runtime not yet available",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "morphology class concept accepted as provisional; independent image QA pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "Original first-party conceptual illustration consistent with 11 existing morphology artworks",
+        "Export and hash source master, 256x256 thumbnail and 1024x1024 portrait; include provenance, manifest and rights record",
+        "Integrate into existing crosswalk and OrganismPortrait; do not regenerate completed 11 families",
+        "Real screen checks including mobile, desktop, all themes and neutral fallback"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Full 190-organism scientific morphology audit; existing 11 archetypes already integrated, only two new style families identified"
+      },
+      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization"
+    },
+    {
+      "id": "BVA-0092",
+      "name": "Microbe morphology F03 — Budding yeasts (non-dark generic)",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "New generic scientifically bounded artwork archetype required by the 190-entry catalogue audit; reuse for multiple organisms, not individual portraits",
+      "category": "scientific-illustration-family",
+      "subject": "Neutral budding oval fungal cells; do not depict melanized Exophiala, obligated hyphae, or imply Candida always has one growth form",
+      "composition": "Premium editorial biological image, consistent optical scale, lighting and palette with BVA-0037–0047; 256px thumbnail and 1024px portrait with 36px/180px UI checks",
+      "scientificAccuracy": "Conceptual visual morphological group only. Not a taxonomic family, actual micrograph, observed source strain, morphology measurement, metabolic evidence, abundance, diagnosis or personal biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256x256 WebP thumbnail",
+        "1024x1024 WebP portrait",
+        "320/390/768/1440 CSS px rendered review"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P2-SCIENTIFIC_VISUAL_DELTA",
+      "impact": "catalogue coverage and visual correctness",
+      "artworkStyleId": "F03",
+      "mappedCatalogueEntries": 4,
+      "sourceRelation": {
+        "action": "NEW_REQUIRED_STYLE_PENDING_GENERATION",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "baselineStyles": "BVA-0037 through BVA-0047",
+        "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+        "otherSharedLibrary": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "NOT_GENERATED — output must be produced and hash-verified by design/Codex after scientific review; source/runtime not yet available",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_IMPLEMENTED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "morphology class concept accepted as provisional; independent image QA pending",
+        "rights": "pending",
+        "rendered": "not tested"
+      },
+      "designerDeliverables": [
+        "Original first-party conceptual illustration consistent with 11 existing morphology artworks",
+        "Export and hash source master, 256x256 thumbnail and 1024x1024 portrait; include provenance, manifest and rights record",
+        "Integrate into existing crosswalk and OrganismPortrait; do not regenerate completed 11 families",
+        "Real screen checks including mobile, desktop, all themes and neutral fallback"
+      ],
+      "statusEvidence": {
+        "date": "2026-11-22",
+        "source": "Full 190-organism scientific morphology audit; existing 11 archetypes already integrated, only two new style families identified"
+      },
+      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization"
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
@@ -8423,7 +8563,56 @@
     "legacyRemovalApproved": false,
     "sourceFixtureEntries": 94,
     "scientificReviewPending": true,
-    "renderedVisualQAPending": true
+    "renderedVisualQAPending": true,
+    "coverageRevision20261122": {
+      "status": "FULL_190_AUDIT_PUBLISHED_NEW_ARTWORK_PENDING",
+      "count": 190,
+      "bacteria": 163,
+      "archaea": 4,
+      "eukaryotes": 12,
+      "viruses": 11,
+      "sourceTestFixtureCount": 94,
+      "existingCompletedStyles": 11,
+      "existingCompletedBvaIds": [
+        "BVA-0037",
+        "BVA-0038",
+        "BVA-0039",
+        "BVA-0040",
+        "BVA-0041",
+        "BVA-0042",
+        "BVA-0043",
+        "BVA-0044",
+        "BVA-0045",
+        "BVA-0046",
+        "BVA-0047"
+      ],
+      "newStylesToGenerate": [
+        {
+          "styleId": "C06",
+          "id": "BVA-0091",
+          "useCount": 2,
+          "status": "Briefed — not generated"
+        },
+        {
+          "styleId": "F03",
+          "id": "BVA-0092",
+          "useCount": 4,
+          "status": "Briefed — not generated"
+        }
+      ],
+      "neutralStyle": "U00",
+      "neutralCount": 19,
+      "registryOfRecord": "docs/visual-assets/visual-asset-registry.json",
+      "fullCrosswalk": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+      "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
+      "limitations": "BVA-0037..0047 Integrated/asset-delivered; do not mark independently scientifically accepted. Existing 94-item runtime crosswalk remains current and cannot automatically resolve 96 expanded organisms. Full mapping needs explicit code import; observed taxonomic families still require authenticated authority resolution. No personal abundance or taxonomy inference.",
+      "requiresCodex": [
+        "Import reviewed full 190-name visual mapping into existing resolver without breaking 94 source-scoped exact matches",
+        "Correct legacy visual assignments for 20 expanded names after scientific review",
+        "Produce C06 and F03 originals and 2 sizes; update hashes in canonical crosswalk; test no wrong F01/F02 for ordinary yeasts",
+        "Verify exact source/correction/reimport, UI and 2-account isolation, dark/light accessible fallback"
+      ]
+    }
   },
   "designerAudit20261122": {
     "date": "2026-11-22",
