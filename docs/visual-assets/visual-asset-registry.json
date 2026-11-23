@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "90 canonical BVA families; BVA-0090 Nutrition Coverage visual component kit registered as Briefed with Nutrition/Biology scientific interpretation APPROVED WITH CLARIFICATIONS and SCI-01..06 tests. This does not mean UI art or implementation approved. GI-01..GI-10 priority unchanged.",
+  "registryStatus": "90 canonical BVA assets/families. 0087–0089 symptom map source prototype ZIP received (23/26 provisional locations; only 21 exact overlaps with 47 canonical region IDs; semantics/geometry/accessibility not verified); 0090 source editable nutrition UI kit received with Biology scientific interpretation approved with clarifications, but no app implementation. GI baseline priority unchanged.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -7603,7 +7603,7 @@
       "textPlacement": "No baked-in text or numeric data. All explanatory copy belongs in accessible DOM components.",
       "priority": "P3-DEFERRED-DESIGN",
       "lifecycle": "Briefed",
-      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged. Verified anatomy review describes native 320x820 viewBox; exact registration on original files pending designer access.",
+      "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
         "state": "UNIMPLEMENTED_DESIGN_ONLY",
@@ -7618,7 +7618,7 @@
       },
       "statusEvidence": {
         "date": "2026-11-22",
-        "source": "Owner design discussion and canonical asset audit; pending Architect science/design review; not executable."
+        "source": "Architect source inspection of owner-uploaded ZIP and existing canonical GitHub documents; see docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
       },
       "license": {
         "status": "original-work-and-source-rights-review-pending"
@@ -7633,7 +7633,7 @@
         "svg",
         "source-editable-svg"
       ],
-      "assetStatus": "REQUIREMENT_ONLY_NO_ARTWORK",
+      "assetStatus": "DESIGN_SOURCE_RECEIVED_PROVISIONAL_NOT_IMPLEMENTED",
       "authority": "Canonical registry design requirement; first eligible implementation only under current AGENTS.md and NEXT_ACTIONS.md.",
       "fallback": "Accessible labeled list of symptom regions with text search and explicit laterality; works without SVG; no simulated health state.",
       "id": "BVA-0087",
@@ -7691,6 +7691,25 @@
         "frozenContours": "V10.1/V12.1-related muscle shapes remain untouched",
         "anchorRequirements": "Designer exports front/rear anchor coordinate manifest, explicit anatomical left/right, region IDs, hit paths, soft zones, and alignment screenshots at reference source viewBox",
         "rendering": "Separate active modality layers; inactive mode has no pointer/keyboard/ARIA events; avoid duplicate inline SVG gradient/clip IDs across instances"
+      },
+      "sourceIntake20261122": {
+        "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md",
+        "disposition": "ACCEPT_WITH_AMENDMENTS",
+        "originalZip": "Bloom_Unified_Symptom_Body_Map_BVA_0087_0089_Design_Handoff(2).zip",
+        "sha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "zipCrc": "PASS",
+        "memberCount": 14,
+        "actualSourceState": "SYNTHETIC_DEMO_PROVISIONAL_REGION_JSON_AND_REUSED_ORIGINAL_BODY_PNGS_RECEIVED",
+        "checkoutState": "ORIGINAL_BINARIES_NOT_VERIFIED_IN_GITHUB_OR_CODEX_CHECKOUT",
+        "appRuntimeState": "NOT_VERIFIED_NOT_INTEGRATED",
+        "scienceAccessAndRights": "NOT_FULLY_VERIFIED",
+        "currentExecution": "GI_BASELINE_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
+        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
+        "validatedAtHead": false
       }
     },
     {
@@ -7703,7 +7722,7 @@
       "textPlacement": "No baked-in text or numeric data. All explanatory copy belongs in accessible DOM components.",
       "priority": "P3-DEFERRED-DESIGN",
       "lifecycle": "Briefed",
-      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged. Verified anatomy review describes native 320x820 viewBox; exact registration on original files pending designer access.",
+      "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
         "state": "UNIMPLEMENTED_DESIGN_ONLY",
@@ -7718,7 +7737,7 @@
       },
       "statusEvidence": {
         "date": "2026-11-22",
-        "source": "Owner design discussion and canonical asset audit; pending Architect science/design review; not executable."
+        "source": "Architect source inspection of owner-uploaded ZIP and existing canonical GitHub documents; see docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
       },
       "license": {
         "status": "original-work-and-source-rights-review-pending"
@@ -7733,7 +7752,7 @@
         "svg",
         "source-editable-svg"
       ],
-      "assetStatus": "REQUIREMENT_ONLY_NO_ARTWORK",
+      "assetStatus": "DESIGN_SOURCE_RECEIVED_PROVISIONAL_NOT_IMPLEMENTED",
       "authority": "Canonical registry design requirement; first eligible implementation only under current AGENTS.md and NEXT_ACTIONS.md.",
       "fallback": "Accessible labeled list of symptom regions with text search and explicit laterality; works without SVG; no simulated health state.",
       "id": "BVA-0088",
@@ -7787,6 +7806,25 @@
         "frozenContours": "V10.1/V12.1-related muscle shapes remain untouched",
         "anchorRequirements": "Designer exports front/rear anchor coordinate manifest, explicit anatomical left/right, region IDs, hit paths, soft zones, and alignment screenshots at reference source viewBox",
         "rendering": "Separate active modality layers; inactive mode has no pointer/keyboard/ARIA events; avoid duplicate inline SVG gradient/clip IDs across instances"
+      },
+      "sourceIntake20261122": {
+        "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md",
+        "disposition": "ACCEPT_WITH_AMENDMENTS",
+        "originalZip": "Bloom_Unified_Symptom_Body_Map_BVA_0087_0089_Design_Handoff(2).zip",
+        "sha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "zipCrc": "PASS",
+        "memberCount": 14,
+        "actualSourceState": "SYNTHETIC_DEMO_PROVISIONAL_REGION_JSON_AND_REUSED_ORIGINAL_BODY_PNGS_RECEIVED",
+        "checkoutState": "ORIGINAL_BINARIES_NOT_VERIFIED_IN_GITHUB_OR_CODEX_CHECKOUT",
+        "appRuntimeState": "NOT_VERIFIED_NOT_INTEGRATED",
+        "scienceAccessAndRights": "NOT_FULLY_VERIFIED",
+        "currentExecution": "GI_BASELINE_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
+        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
+        "validatedAtHead": false
       }
     },
     {
@@ -7799,7 +7837,7 @@
       "textPlacement": "No baked-in text or numeric data. All explanatory copy belongs in accessible DOM components.",
       "priority": "P3-DEFERRED-DESIGN",
       "lifecycle": "Briefed",
-      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged.",
+      "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
         "state": "UNIMPLEMENTED_DESIGN_ONLY",
@@ -7814,7 +7852,7 @@
       },
       "statusEvidence": {
         "date": "2026-11-22",
-        "source": "Owner design discussion and canonical asset audit; pending Architect science/design review; not executable."
+        "source": "Architect source inspection of owner-uploaded ZIP and existing canonical GitHub documents; see docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
       },
       "license": {
         "status": "original-work-and-source-rights-review-pending"
@@ -7829,7 +7867,7 @@
         "svg",
         "source-editable-svg"
       ],
-      "assetStatus": "REQUIREMENT_ONLY_NO_ARTWORK",
+      "assetStatus": "DESIGN_SOURCE_RECEIVED_PROVISIONAL_NOT_IMPLEMENTED",
       "authority": "Canonical registry design requirement; first eligible implementation only under current AGENTS.md and NEXT_ACTIONS.md.",
       "fallback": "Accessible labeled list of symptom regions with text search and explicit laterality; works without SVG; no simulated health state.",
       "id": "BVA-0089",
@@ -7879,6 +7917,25 @@
       "geometryGate": {
         "coordinateSystem": "Marker glyph primitives are viewBox-local; composition host is 0 0 320 820 front/back",
         "requirement": "Symbols must support unique per-instance SVG defs IDs, static reduced-motion appearance, separate focus target geometry, and orthogonal frequency and severity indicators"
+      },
+      "sourceIntake20261122": {
+        "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md",
+        "disposition": "ACCEPT_WITH_AMENDMENTS",
+        "originalZip": "Bloom_Unified_Symptom_Body_Map_BVA_0087_0089_Design_Handoff(2).zip",
+        "sha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "zipCrc": "PASS",
+        "memberCount": 14,
+        "actualSourceState": "SYNTHETIC_DEMO_PROVISIONAL_REGION_JSON_AND_REUSED_ORIGINAL_BODY_PNGS_RECEIVED",
+        "checkoutState": "ORIGINAL_BINARIES_NOT_VERIFIED_IN_GITHUB_OR_CODEX_CHECKOUT",
+        "appRuntimeState": "NOT_VERIFIED_NOT_INTEGRATED",
+        "scienceAccessAndRights": "NOT_FULLY_VERIFIED",
+        "currentExecution": "GI_BASELINE_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
+        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
+        "validatedAtHead": false
       }
     },
     {
@@ -7937,7 +7994,7 @@
         "relatedDesignPacket": "docs/architecture/BLOOM_NUTRITION_COVERAGE_SYMPTOM_BODY_MAP_DESIGN_REVIEW_PACKET_20261122.md"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "Owner Science disposition APPROVED WITH CLARIFICATIONS 2026-11-22. This approval applies to interpretation requirements and acceptance tests, NOT generated assets, visual review, scientific runtime validation, integration or release. Registered design system brief only. Current GI-01–GI-10 queue unchanged.",
+      "productionStatus": "Owner-supplied static editable five-SVG nutrition coverage UI study verified. Source/documentation only; Science interpretation APPROVED_WITH_CLARIFICATIONS, visual/functional implementation/accessibility not verified.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED_DESIGN_REQUIREMENT",
@@ -7954,7 +8011,8 @@
       "statusEvidence": {
         "date": "2026-11-22",
         "evidence": "User's BVA-0090 Nutrition & Biology Review and previous scoped Nutrition Coverage design packet",
-        "commitStatus": "Registry-only documentation; no app changes"
+        "commitStatus": "Registry-only documentation; no app changes",
+        "source": "Architect source inspection of owner-uploaded ZIP and existing canonical GitHub documents; see docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
       },
       "accessibility": {
         "principles": [
@@ -8063,7 +8121,27 @@
         "deliverableNotes": "Editable Figma or comparable design source plus interaction/token annotations, responsive/mobile and desktop screenshots, 5 interpretation cases and all six BVA-0090-SCI acceptance scenarios. Mark specimen figures as synthetic example data. No new JavaScript framework or parallel nutrition service required.",
         "generationInstruction": "Design a compact premium Bloom Nutrition Coverage Map as a UI component system. Display nutrient amount, per-nutrient reported source availability and food diary reporting status as three independently labeled axes, qualified reference comparison separately. Include complete and incomplete days, food with unknown potassium, a source-qualified 1,500 mg known subtotal with additional unknown values, explicitly sourced zero, 7-/30-day partial days and original food receipts. Provide responsive accessible UI component states in dark/light modes. Do NOT create an illustrative anatomy asset, deficiency score, fake complete-day intake, fabricated missing nutrient zero, invented adequacy conclusion or glowing biological claim."
       },
-      "authority": "Single source of visual design requirements; science acceptance recorded in this same BVA ID. Implementation authority remains AGENTS.md and NEXT_ACTIONS.md; GI-01..GI-10 first."
+      "authority": "Single source of visual design requirements; science acceptance recorded in this same BVA ID. Implementation authority remains AGENTS.md and NEXT_ACTIONS.md; GI-01..GI-10 first.",
+      "sourceIntake20261122": {
+        "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md",
+        "disposition": "ACCEPT_WITH_AMENDMENTS",
+        "originalZip": "BVA-0090_Nutrition_Coverage_Editable_Kit(2).zip",
+        "sha256": "70a1067344353af386f8193783be0073b30a82b431345f338788c77ab53ef890",
+        "zipCrc": "PASS",
+        "memberCount": 7,
+        "actualSourceState": "FIVE_STATIC_EDITABLE_SVG_UI_STUDIES_AND_TOKENS_RECEIVED",
+        "checkoutState": "ORIGINAL_BINARIES_NOT_VERIFIED_IN_GITHUB_OR_CODEX_CHECKOUT",
+        "appRuntimeState": "NOT_VERIFIED_NOT_INTEGRATED",
+        "scienceAccessAndRights": "NOT_FULLY_VERIFIED",
+        "currentExecution": "GI_BASELINE_UNCHANGED"
+      },
+      "assetStatus": "EDITABLE_UI_DESIGN_SOURCE_RECEIVED_NOT_IMPLEMENTED",
+      "designerDisposition20261122": {
+        "status": "EDITABLE_UI_COMPONENT_SOURCE_RECEIVED_SCIENCE_APPROVED_WITH_CLARIFICATIONS",
+        "action": "Keep editable SVG studies as illustration of functional component states; no fabricated nutrient targets or duplicate engine. Reconcile diary reporting vs nutrient source availability vs reference target and qualifying days; verify SCI-01..06 and NCM-01..12 only when authorized.",
+        "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
+        "validatedAtHead": false
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
@@ -8370,6 +8448,21 @@
         "BVA-0090-SCI-06"
       ],
       "workGate": "No implementation or new queue; active GI-01–GI-10 stays first"
+    },
+    "latestPackageIntake": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md",
+    "additionalSymptomAndNutritionScope20261122": {
+      "ids": [
+        "BVA-0087",
+        "BVA-0088",
+        "BVA-0089",
+        "BVA-0090"
+      ],
+      "status": "SOURCE_VERIFIED_DESIGN_ONLY_ACCEPT_WITH_AMENDMENTS",
+      "archiveHashes": [
+        "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "70a1067344353af386f8193783be0073b30a82b431345f338788c77ab53ef890"
+      ],
+      "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
     }
   }
 }
