@@ -120,3 +120,42 @@ Required designer receipts: original and export editable SVG files, verified sou
 
 ## 6. Publication/execution disclaimer
 This is a design-review packet published for Architect/Designer accessibility. It does **not** alter the single canonical visual asset registry, source truth system, product roadmap or GI-01–GI-10 priority. Approved visual registry entries BVA-0087..0089 remain `Briefed`, not generated, reviewed, integrated or validated. A future Codex implementation handoff requires current HEAD inventory, rights/clinical evidence qualification, UX review and owner authorization under the active queue.
+
+## 7. Architect-facing BVA-0090 scientific review (owner-approved interpretation addendum, 2026-11-22)
+**Authoritative registry entry:** [BVA-0090 — Nutrition Coverage Map UI component kit](../visual-assets/visual-asset-registry.json), `assets[].id === "BVA-0090"`. Owner's Nutrition & Biology review disposition: **APPROVED WITH CLARIFICATIONS**. This applies to the *scientific interpretation rules*, not to runtime implementation, source data accuracy, visual design signoff, release certification or permission to reprioritize work. Asset lifecycle remains `Briefed`. **No separate BVA/feature** is authorized for these tests.
+
+### Authoritative distinction
+For every nutrient and diary window, keep these four concepts **independent**:
+1. **Consumption**: what actually occurred, which cannot be inferred fully from the diary.
+2. **Reporting completeness**: what the user explicitly recorded or validly affirmed they recorded, including partial/unknown/no entries. A declared complete diary does not prove all consumed food was entered.
+3. **Nutrient source availability**: which of the recorded foods/supplements have compatible source-qualified values for this nutrient, including null/not reported vs source-reported valid zero.
+4. **Quantified subtotal and reference applicability**: source-qualified compatible known sums; a subtotal isn't the actual day's total; target comparison is not an adequacy verdict.
+
+| Reporting state | Nutrient source state | Exact illustrative user-facing wording | Qualification |
+| --- | --- | --- | --- |
+| Incomplete day | Values available for some/all recorded foods | “Some intake may be missing.” | Fully characterized *logged* items cannot make the diary complete. |
+| Reported day | Nutrient partially quantified | “Potassium information is missing for some foods.” | Do not imply zero or a fully quantified day. |
+| Reported day | Nutrient fully quantified | “Estimated potassium from reported foods: 2,800 mg.” | Exact source/units/amounts/portion mapping must qualify the number; not a clinical adequacy conclusion. |
+| No entries recorded | No qualifying nutrient data | “No food intake recorded.” | No entries does not establish fasting or zero consumption. |
+| Explicit valid zero | Verified source zero/calculation | “0 mg recorded.” | Only where original compatible valid source facts establish zero; never from null. |
+
+**Conditional known subtotal example:** “At least 1,500 mg quantified from reported foods; additional potassium is unknown.” The lower-bound phrasing is appropriate **only** if source identity, unit, chemical form/basis, nonnegative contributions and portion arithmetic reliably support the subtotal. When not proven, label a narrower source-qualified subtotal or abstain from a numeric lower-bound inference. Neither form permits presenting it as actual total daily intake.
+
+**Adequacy gate:** Reporting complete + nutrient quantified does **not** imply optimality, deficiency, excess or medically appropriate intake. Any personalized usual-intake/adequacy assertion needs separately reviewed evidence for representative multi-day recording, measurement error, applicable life-stage/individual reference, chemical form/sources, clinical context, private-data permission and domain validation. UL remains an applicable safety boundary, never a progress goal.
+
+**Independent correction/invalidation:** Correcting a food's potassium data may improve nutrient availability while reported-day status is unchanged. Adding a previously unlogged meal may change diary reporting state but leave one or more nutrient values unknown. Source corrections, withdrawn items, deletions and consent changes must invalidate the affected derived amounts/source receipts without silently changing unrelated reporting facts. Original source revisions remain traceable; no cross-account spillover.
+
+### Six mandatory BVA-0090 scientific acceptance cases
+| ID | Design and scientific observable |
+| --- | --- |
+| `BVA-0090-SCI-01` | A reported day with missing potassium on some foods shows partial nutrient source coverage, **never** false potassium zero. |
+| `BVA-0090-SCI-02` | An incomplete eating day whose recorded foods all have qualified nutrient values stays an **incomplete day**, even if source completeness is full. |
+| `BVA-0090-SCI-03` | A source-qualified numeric subtotal isn't silently renamed whole-day intake; conditional lower-bound statement and unknown additional exposure remain visible. |
+| `BVA-0090-SCI-04` | Reporting completeness/qualified nutrient amounts alone never authorize individual adequacy, optimality, deficiency or toxicity claims. |
+| `BVA-0090-SCI-05` | Food edits, source revisions, source withdrawals, entry deletions and newly added meals update reporting and nutrient-availability projections **independently**; stale/cross-account derivatives fail. |
+| `BVA-0090-SCI-06` | `ReportingDayStrip` and `NutrientCoverageRow` use consistent, accessible labels for reported/partial/unknown/no-entry and source-value states across mobile and desktop. |
+
+### Architect requested review and concrete disposition
+Review **this handoff + JSON symptom manifest + canonical asset registry** together. For BVA-0090, check that the designer has a cohesive responsive component kit rather than fabricated illustration; distinguish a source-coverage indicator from the diary-reporting strip and target-reference comparator; confirm the six SCI fixtures are observable without inventing daily completeness or nutrient sources. For BVA-0087–0089, verify original `0 0 320 820` anatomy-source alignment, source rights, anatomical laterality, inert inactive Athlete/Symptom layers, bilateral counts and episode/report semantics. Identify any **existing** canonical paths and minimum reversible future integration seam; mark unimplemented/unverified states explicitly.
+
+**Review output requested:** `ACCEPT / ACCEPT_WITH_AMENDMENTS / BLOCKED` per visual, exact factual code/file references where inspected, asset brief issues (if any), science/rights/ARIA blockers, and a bounded post-GI design disposition. **Do not** create a second nutrition interpretation engine, symptom record store, acceptance framework, visual registry or active Codex ticket. Current live GI-01–GI-10 baseline remains the only selected work.
