@@ -1,6 +1,6 @@
 # Bloom — Designer production worklist, audit of canonical visual asset registry
 
-**Architect source-document review: 2026-11-22.** Canonical machine-readable source: [visual-asset-registry.json](visual-asset-registry.json). **86 permanent BVA IDs (some multi-image/design families), not 86 new images to generate.** All 77 previously registered items were reviewed at the level of registry metadata and linked handoff documents. BVA-0078..0086 were included for discoverability without implementing or generating any assets.
+**Architect source-document review: 2026-11-22.** Canonical machine-readable source: [visual-asset-registry.json](visual-asset-registry.json). **90 permanent BVA IDs (some multi-image/design families), not 90 new images to generate.** All 77 previously registered items were reviewed at the level of registry metadata and linked handoff documents. BVA-0078..0086 were included for discoverability without implementing or generating any assets.
 
 **Authority:** `AGENTS.md` and `NEXT_ACTIONS.md` remain sole task selectors. Current single Codex assignment is GI-01..GI-10 baseline; no asset design, implementation, external provider, paid source or deployment is authorized by this catalog alone. This document is a designer worklist for when asset work is eligible, **not a second execution queue**.
 
@@ -23,7 +23,8 @@
 | F. Previously integrated — reverify instead of producing again | 30 | Source, license, reuse, QA and deployment state checks; no automatic generation |
 | G. Conditional species portrait requests — science/taxonomy first | 25 | Not an automatic commission, taxonomic justification required |
 | H. Owner-approved anatomy visual source — integration gated | 2 | Exact 28-file hybrid raster+SVG design package verified, not imported or integrated; canonical mapping/scientific/a11y/rights gates pending |
-| **Total indexed** | **86** | **Not a count of missing images** |
+| I. Recently received symptom and nutrition design source kits | 4 | BVA-0087..0090 present as source prototypes, not integrated/production validated |
+| **Total indexed** | **90** | **Not a count of missing images** |
 
 ## Per-ID designer worklist
 
@@ -156,6 +157,17 @@ Each row is a permanent registry requirement; the canonical JSON contains the fu
 | BVA-0079 | Posterior anatomy overlay + raster body layer | **Owner-approved visual design** in 28-file staged ZIP; not GitHub checkout | Preserve exact `assets/bloom-neutral-back.svg` and `assets/body-back.png` with verified hashes. No redesign. Later canonical mapping, qualified anatomy, accessibility, rights, source transfer and app QA |
 
 [Detailed review with artifact checksums, owner-approved Stages 1–3 source receipt and remaining gates](../agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md). No source files are yet imported into Bloom GitHub, and the standalone React prototype is not validated application code.
+
+### I. Recently received symptom and nutrition design source kits — integration gated
+
+| ID | Asset / family | Current source status | Designer next action |
+| --- | --- | --- | --- |
+| BVA-0087 | Anterior symptom map overlay | Owner ZIP includes 23 provisional front locations, verified reused original front PNG, demo and source region JSON | Reconcile with canonical 47-region symptom design manifest; author reviewed view-specific SVG overlay with exact source-aligned anchors, anatomy laterality and accessible list/targets |
+| BVA-0088 | Posterior symptom map overlay | Owner ZIP includes 26 provisional rear locations, verified reused original back PNG, demo and source region JSON | Fix missing explicit posterior `side` metadata; crosswalk provisional IDs to canonical, validate geometry, keyboard/touch targets, overlapping regions and paired views |
+| BVA-0089 | Marker, halo, count and severity states | Same owner ZIP includes demo, marker behavior, QA description and seven previews; not an isolated production-ready kit | Preserve rated/unrated separation, noninferred counts and deterministic badge fallback; verify screen-reader readouts, severe+count independence, bounds/mobile collisions and focus |
+| BVA-0090 | Nutrition coverage functional UI kit | Owner ZIP includes five static editable SVG studies, theme tokens and design brief; scientific interpretation approved with clarifications in review packet | Reconcile source vs diary vs reference states, qualifying day denominators and null/zero/UL rules; produce real accessible component contract only when eligible, no invented food/target amounts |
+
+[Architect source verification and exact blockers](../agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md). Source files remain owner attachments and are **not confirmed in Codex checkout**. Receipt is not production design certification, implementation or an addition to the active GI queue.
 
 ## Additional approved sources and important gaps
 
