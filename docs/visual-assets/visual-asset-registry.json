@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "lastArchitectReview": "2026-11-22",
-  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged. Microbe morphology: 11 previously integrated visual styles preserved as completed; BVA-0091/C06 and BVA-0092/F03 newly briefed for 190-entry coverage; scientific review and runtime import pending. Updated morphology visual program: all 190 entries assigned; 11 existing Integrated styles retained, six additional briefs BVA-0091–0096. U00 remains technical fallback only; science/release QA pending.",
+  "lastArchitectReview": "2026-11-23",
+  "registryStatus": "101 canonical BVA families. 0091–0096 now owner-approved visual original+WebP sources received/verified in attachments, not integrated; 0097–0101 optional approved artwork new style codes C07–C11 are UNMAPPED in 190 seed catalog and source-only. All Bio/rights/app QA pending; current GI baseline STOP unchanged.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -8236,7 +8236,7 @@
         "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT_GENERATED — output must be produced and hash-verified by design/Codex after scientific review; source/runtime not yet available",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8244,10 +8244,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "morphology class concept accepted as provisional; independent image QA pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "Original first-party conceptual illustration consistent with 11 existing morphology artworks",
@@ -8259,7 +8259,42 @@
         "date": "2026-11-22",
         "source": "Full 190-organism scientific morphology audit; existing 11 archetypes already integrated, only two new style families identified"
       },
-      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization"
+      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "C06",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0092",
@@ -8306,7 +8341,7 @@
         "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT_GENERATED — output must be produced and hash-verified by design/Codex after scientific review; source/runtime not yet available",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8314,10 +8349,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "morphology class concept accepted as provisional; independent image QA pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "Original first-party conceptual illustration consistent with 11 existing morphology artworks",
@@ -8329,7 +8364,42 @@
         "date": "2026-11-22",
         "source": "Full 190-organism scientific morphology audit; existing 11 archetypes already integrated, only two new style families identified"
       },
-      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization"
+      "executionGate": "Existing autonomous build-first policy and NEXT_ACTIONS.md; this registry entry is not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "F03",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0093",
@@ -8374,7 +8444,7 @@
         "domain": "archaea"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8382,10 +8452,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "scientific category rationale documented; final illustration morphology pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "First-party original conceptual image with production source and rights record",
@@ -8397,7 +8467,42 @@
         "date": "2026-11-22",
         "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
       },
-      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "A01",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0094",
@@ -8442,7 +8547,7 @@
         "domain": "eukaryotic protists"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8450,10 +8555,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "scientific category rationale documented; final illustration morphology pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "First-party original conceptual image with production source and rights record",
@@ -8465,7 +8570,42 @@
         "date": "2026-11-22",
         "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
       },
-      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "P01",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0095",
@@ -8510,7 +8650,7 @@
         "domain": "eukaryotic protists"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8518,10 +8658,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "scientific category rationale documented; final illustration morphology pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "First-party original conceptual image with production source and rights record",
@@ -8533,7 +8673,42 @@
         "date": "2026-11-22",
         "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
       },
-      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "P02",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
     },
     {
       "id": "BVA-0096",
@@ -8578,7 +8753,7 @@
         "domain": "eukaryotic protists"
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NOT GENERATED; no real asset paths or image files exist yet.",
+      "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
       "filePaths": [],
       "integration": {
         "state": "NOT_IMPLEMENTED",
@@ -8586,10 +8761,10 @@
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "scientific category rationale documented; final illustration morphology pending",
-        "rights": "pending",
-        "rendered": "not tested"
+        "design": "Owner visually approved all source variants; independent actual-app design QA pending",
+        "scientific": "Independent Biology review of art-to-taxonomy/organism crosswalk required",
+        "rights": "generated source commercial rights/provenance and app use pending verification",
+        "rendered": "not tested in Bloom app"
       },
       "designerDeliverables": [
         "First-party original conceptual image with production source and rights record",
@@ -8601,7 +8776,442 @@
         "date": "2026-11-22",
         "source": "Complete 190-organism revision v2; all U00 assignments reassessed"
       },
-      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization"
+      "executionGate": "Authorized work only per NEXT_ACTIONS.md; registry brief not production release authorization",
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "visualApproval": "OWNER_APPROVED",
+        "sourceStatus": "ORIGINAL_BYTES_VERIFIED_IN_USER_UPLOAD_NOT_GITHUB",
+        "v1Archive": "Bloom_BVA_0091_0096_Approved_Morphology_Artwork_v1(1).zip",
+        "v1Sha256": "69cb7139550fbacb1bdb9129634549b64e2bfa9bb02a0e174ebd3957b833a5c0",
+        "v2Archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "v2Sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "style": "P03",
+        "originalsSize": [
+          1254,
+          1254
+        ],
+        "optimizedWebpSizes": [
+          [
+            1024,
+            1024
+          ],
+          [
+            256,
+            256
+          ]
+        ],
+        "verification": "v1 39/39 variant original+derivative file SHA/dimensions/sizes passed; ZIP CRC pass; primary source duplicates cross-checked with v2",
+        "scientificStatus": "NOT_VERIFIED",
+        "licenseStatus": "PENDING",
+        "runtimeStatus": "NOT_INTEGRATED",
+        "taskPriority": "GI_01_10_UNCHANGED"
+      },
+      "designerDisposition20261122": {
+        "status": "VISUAL_SOURCE_DELIVERED_APPROVED_NOT_INTEGRATED",
+        "action": "Preserve all owner-approved source originals and optimized exports, no regeneration. Biology validate each source/style identity and mapping, rights, visual runtime and U00 fallback before eligible import.",
+        "executionGate": "Documentation source intake only, GI baseline unaffected",
+        "validatedAtHead": false
+      }
+    },
+    {
+      "id": "BVA-0097",
+      "name": "Microbe morphology C07 — Helical and spiral bacteria",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "Additional optional, owner-approved broad bacterial morphology illustration family; no current taxon assigned in 190-entry crosswalk.",
+      "category": "scientific-illustration-family",
+      "subject": "Helical and spiral bacteria",
+      "composition": "Approved Bloom macro art: purple/lilac cell shapes, green substrate and bokeh. Preserve source original rather than regenerate.",
+      "scientificAccuracy": "Illustration only, not a biologically verified organism image or taxonomic family, cannot infer species, strain, motility, pathogenicity or measured user biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "original owner PNG",
+        "portrait and 256px thumbnail optimized exports only if eligible/reviewed"
+      ],
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "OPTIONAL_DESIGN_ONLY_UNMAPPED_190",
+      "artworkStyleId": "C07",
+      "mappedCatalogueEntries": 0,
+      "sourceRelation": {
+        "action": "OWNER_VISUAL_APPROVED_SOURCE_UNMAPPED",
+        "sourceManifestAlias": "BVA-C07",
+        "aliasNotRegistryId": true,
+        "filename": "assets/a_highly_detailed_cinematic_macro_3d_render_of.png",
+        "source": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "reuse": [
+          "existing morphology style resolver",
+          "neutral U00 fallback"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner visually approved as illustration",
+        "scientific": "No current organism mappings; specialist morphology/biological compatibility review pending",
+        "rights": "generated illustration provenance/commercial rights pending",
+        "rendered": "not tested"
+      },
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "sourceStatus": "OWNER_APPROVED_ORIGINAL_PNG_RECEIVED_NOT_IN_GITHUB",
+        "archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "originalMember": "assets/a_highly_detailed_cinematic_macro_3d_render_of.png",
+        "sourceAlias": "BVA-C07",
+        "originalSourceOnly": true,
+        "scientificStatus": "NOT_VERIFIED",
+        "runtimeStatus": "NOT_INTEGRATED"
+      },
+      "designerDisposition20261122": {
+        "status": "OPTIONAL_APPROVED_ART_UNMAPPED_NOT_INTEGRATED",
+        "action": "Keep verified illustration as optional family source, no generation/replacement, no taxon assignments without separate Science/Architect review; do not auto-enable runtime",
+        "executionGate": "GI baseline task first; not approved to activate",
+        "validatedAtHead": false
+      },
+      "statusEvidence": {
+        "date": "2026-11-23",
+        "source": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md"
+      }
+    },
+    {
+      "id": "BVA-0098",
+      "name": "Microbe morphology C08 — Thin flexible spirochetes",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "Additional optional, owner-approved broad bacterial morphology illustration family; no current taxon assigned in 190-entry crosswalk.",
+      "category": "scientific-illustration-family",
+      "subject": "Thin flexible spirochetes",
+      "composition": "Approved Bloom macro art: purple/lilac cell shapes, green substrate and bokeh. Preserve source original rather than regenerate.",
+      "scientificAccuracy": "Illustration only, not a biologically verified organism image or taxonomic family, cannot infer species, strain, motility, pathogenicity or measured user biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "original owner PNG",
+        "portrait and 256px thumbnail optimized exports only if eligible/reviewed"
+      ],
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "OPTIONAL_DESIGN_ONLY_UNMAPPED_190",
+      "artworkStyleId": "C08",
+      "mappedCatalogueEntries": 0,
+      "sourceRelation": {
+        "action": "OWNER_VISUAL_APPROVED_SOURCE_UNMAPPED",
+        "sourceManifestAlias": "BVA-C08",
+        "aliasNotRegistryId": true,
+        "filename": "assets/a_highly_detailed_cinematic_3d_microscopic_style.png",
+        "source": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "reuse": [
+          "existing morphology style resolver",
+          "neutral U00 fallback"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner visually approved as illustration",
+        "scientific": "No current organism mappings; specialist morphology/biological compatibility review pending",
+        "rights": "generated illustration provenance/commercial rights pending",
+        "rendered": "not tested"
+      },
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "sourceStatus": "OWNER_APPROVED_ORIGINAL_PNG_RECEIVED_NOT_IN_GITHUB",
+        "archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "originalMember": "assets/a_highly_detailed_cinematic_3d_microscopic_style.png",
+        "sourceAlias": "BVA-C08",
+        "originalSourceOnly": true,
+        "scientificStatus": "NOT_VERIFIED",
+        "runtimeStatus": "NOT_INTEGRATED"
+      },
+      "designerDisposition20261122": {
+        "status": "OPTIONAL_APPROVED_ART_UNMAPPED_NOT_INTEGRATED",
+        "action": "Keep verified illustration as optional family source, no generation/replacement, no taxon assignments without separate Science/Architect review; do not auto-enable runtime",
+        "executionGate": "GI baseline task first; not approved to activate",
+        "validatedAtHead": false
+      },
+      "statusEvidence": {
+        "date": "2026-11-23",
+        "source": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md"
+      }
+    },
+    {
+      "id": "BVA-0099",
+      "name": "Microbe morphology C09 — Segmented filamentous bacteria",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "Additional optional, owner-approved broad bacterial morphology illustration family; no current taxon assigned in 190-entry crosswalk.",
+      "category": "scientific-illustration-family",
+      "subject": "Segmented filamentous bacteria",
+      "composition": "Approved Bloom macro art: purple/lilac cell shapes, green substrate and bokeh. Preserve source original rather than regenerate.",
+      "scientificAccuracy": "Illustration only, not a biologically verified organism image or taxonomic family, cannot infer species, strain, motility, pathogenicity or measured user biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "original owner PNG",
+        "portrait and 256px thumbnail optimized exports only if eligible/reviewed"
+      ],
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "OPTIONAL_DESIGN_ONLY_UNMAPPED_190",
+      "artworkStyleId": "C09",
+      "mappedCatalogueEntries": 0,
+      "sourceRelation": {
+        "action": "OWNER_VISUAL_APPROVED_SOURCE_UNMAPPED",
+        "sourceManifestAlias": "BVA-C09",
+        "aliasNotRegistryId": true,
+        "filename": "assets/a_highly_detailed_close_up_3d_rendered_scientific.png",
+        "source": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "reuse": [
+          "existing morphology style resolver",
+          "neutral U00 fallback"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner visually approved as illustration",
+        "scientific": "No current organism mappings; specialist morphology/biological compatibility review pending",
+        "rights": "generated illustration provenance/commercial rights pending",
+        "rendered": "not tested"
+      },
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "sourceStatus": "OWNER_APPROVED_ORIGINAL_PNG_RECEIVED_NOT_IN_GITHUB",
+        "archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "originalMember": "assets/a_highly_detailed_close_up_3d_rendered_scientific.png",
+        "sourceAlias": "BVA-C09",
+        "originalSourceOnly": true,
+        "scientificStatus": "NOT_VERIFIED",
+        "runtimeStatus": "NOT_INTEGRATED"
+      },
+      "designerDisposition20261122": {
+        "status": "OPTIONAL_APPROVED_ART_UNMAPPED_NOT_INTEGRATED",
+        "action": "Keep verified illustration as optional family source, no generation/replacement, no taxon assignments without separate Science/Architect review; do not auto-enable runtime",
+        "executionGate": "GI baseline task first; not approved to activate",
+        "validatedAtHead": false
+      },
+      "statusEvidence": {
+        "date": "2026-11-23",
+        "source": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md"
+      }
+    },
+    {
+      "id": "BVA-0100",
+      "name": "Microbe morphology C10 — Pleomorphic bacteria",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "Additional optional, owner-approved broad bacterial morphology illustration family; no current taxon assigned in 190-entry crosswalk.",
+      "category": "scientific-illustration-family",
+      "subject": "Pleomorphic bacteria",
+      "composition": "Approved Bloom macro art: purple/lilac cell shapes, green substrate and bokeh. Preserve source original rather than regenerate.",
+      "scientificAccuracy": "Illustration only, not a biologically verified organism image or taxonomic family, cannot infer species, strain, motility, pathogenicity or measured user biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "original owner PNG",
+        "portrait and 256px thumbnail optimized exports only if eligible/reviewed"
+      ],
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "OPTIONAL_DESIGN_ONLY_UNMAPPED_190",
+      "artworkStyleId": "C10",
+      "mappedCatalogueEntries": 0,
+      "sourceRelation": {
+        "action": "OWNER_VISUAL_APPROVED_SOURCE_UNMAPPED",
+        "sourceManifestAlias": "BVA-C10",
+        "aliasNotRegistryId": true,
+        "filename": "assets/a_detailed_high_quality_3d_cgi_scientific_illustr.png",
+        "source": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "reuse": [
+          "existing morphology style resolver",
+          "neutral U00 fallback"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner visually approved as illustration",
+        "scientific": "No current organism mappings; specialist morphology/biological compatibility review pending",
+        "rights": "generated illustration provenance/commercial rights pending",
+        "rendered": "not tested"
+      },
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "sourceStatus": "OWNER_APPROVED_ORIGINAL_PNG_RECEIVED_NOT_IN_GITHUB",
+        "archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "originalMember": "assets/a_detailed_high_quality_3d_cgi_scientific_illustr.png",
+        "sourceAlias": "BVA-C10",
+        "originalSourceOnly": true,
+        "scientificStatus": "NOT_VERIFIED",
+        "runtimeStatus": "NOT_INTEGRATED"
+      },
+      "designerDisposition20261122": {
+        "status": "OPTIONAL_APPROVED_ART_UNMAPPED_NOT_INTEGRATED",
+        "action": "Keep verified illustration as optional family source, no generation/replacement, no taxon assignments without separate Science/Architect review; do not auto-enable runtime",
+        "executionGate": "GI baseline task first; not approved to activate",
+        "validatedAtHead": false
+      },
+      "statusEvidence": {
+        "date": "2026-11-23",
+        "source": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md"
+      }
+    },
+    {
+      "id": "BVA-0101",
+      "name": "Microbe morphology C11 — Fusiform or spindle-shaped bacteria",
+      "route": "/microbiome | /explore (existing organism surfaces)",
+      "component": "OrganismPortrait / shared morphology illustration resolver",
+      "purpose": "Additional optional, owner-approved broad bacterial morphology illustration family; no current taxon assigned in 190-entry crosswalk.",
+      "category": "scientific-illustration-family",
+      "subject": "Fusiform or spindle-shaped bacteria",
+      "composition": "Approved Bloom macro art: purple/lilac cell shapes, green substrate and bokeh. Preserve source original rather than regenerate.",
+      "scientificAccuracy": "Illustration only, not a biologically verified organism image or taxonomic family, cannot infer species, strain, motility, pathogenicity or measured user biology.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "External DOM text with organism identity and illustration disclosure",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "original owner PNG",
+        "portrait and 256px thumbnail optimized exports only if eligible/reviewed"
+      ],
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "OPTIONAL_DESIGN_ONLY_UNMAPPED_190",
+      "artworkStyleId": "C11",
+      "mappedCatalogueEntries": 0,
+      "sourceRelation": {
+        "action": "OWNER_VISUAL_APPROVED_SOURCE_UNMAPPED",
+        "sourceManifestAlias": "BVA-C11",
+        "aliasNotRegistryId": true,
+        "filename": "assets/a_highly_detailed_cinematic_microscopic_style_3d.png",
+        "source": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "reuse": [
+          "existing morphology style resolver",
+          "neutral U00 fallback"
+        ]
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner visually approved as illustration",
+        "scientific": "No current organism mappings; specialist morphology/biological compatibility review pending",
+        "rights": "generated illustration provenance/commercial rights pending",
+        "rendered": "not tested"
+      },
+      "sourceIntake20261123": {
+        "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+        "sourceStatus": "OWNER_APPROVED_ORIGINAL_PNG_RECEIVED_NOT_IN_GITHUB",
+        "archive": "Bloom_Bacterial_Morphology_Approved_Set_v2(1).zip",
+        "sha256": "55711772bc84f1692e333b8eab0437209521eea70562d546ce18b7415c7850cc",
+        "originalMember": "assets/a_highly_detailed_cinematic_microscopic_style_3d.png",
+        "sourceAlias": "BVA-C11",
+        "originalSourceOnly": true,
+        "scientificStatus": "NOT_VERIFIED",
+        "runtimeStatus": "NOT_INTEGRATED"
+      },
+      "designerDisposition20261122": {
+        "status": "OPTIONAL_APPROVED_ART_UNMAPPED_NOT_INTEGRATED",
+        "action": "Keep verified illustration as optional family source, no generation/replacement, no taxon assignments without separate Science/Architect review; do not auto-enable runtime",
+        "executionGate": "GI baseline task first; not approved to activate",
+        "validatedAtHead": false
+      },
+      "statusEvidence": {
+        "date": "2026-11-23",
+        "source": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md"
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
@@ -8892,6 +9502,29 @@
       "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
       "scientificCaveat": "Some entries are provisional genus-level illustrations; canonical identity/morphology require independent review. Shapes are not taxonomic families.",
       "implementationStatus": "Only first 11 assets are Integrated in original 94-report resolver; expanded catalogue map must be imported by Codex; six newly briefed assets not generated."
+    },
+    "latestAdditionalArtwork20261123": {
+      "review": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+      "sourceStatus": "VISUAL_ORIGINALS_APPROVED_AND_VERIFIED_NOT_GITHUB",
+      "completedSixNewStyleFamilies": [
+        "C06",
+        "F03",
+        "A01",
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "optionalUnmappedStyles": [
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "basis190Seed": "MAPPING_PROVISIONAL_NOT_SCIENTIFICALLY_VERIFIED",
+      "unmappedStyleCount": 5,
+      "preserveU00": true,
+      "doNotActivateRuntime": true
     }
   },
   "designerAudit20261122": {
@@ -8981,6 +9614,31 @@
       ],
       "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
     },
-    "latestReconciliationV1Review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md"
+    "latestReconciliationV1Review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md",
+    "latestMorphologyReview": "docs/agent-handoffs/BLOOM_MORPHOLOGY_APPROVED_ARTWORK_V2_AND_BVA_0091_0096_REVIEW_20261123.md",
+    "latestMorphologySourceState": {
+      "v1OwnerApprovedVariants": 13,
+      "v2ApprovedImages": 11,
+      "duplicatedAcrossArchives": 6,
+      "uniqueOriginalsAcrossArchives": 18,
+      "existingFamilyIds": [
+        "BVA-0091",
+        "BVA-0092",
+        "BVA-0093",
+        "BVA-0094",
+        "BVA-0095",
+        "BVA-0096"
+      ],
+      "additionalOptionalIds": [
+        "BVA-0097",
+        "BVA-0098",
+        "BVA-0099",
+        "BVA-0100",
+        "BVA-0101"
+      ],
+      "extra190Mappings": 0,
+      "scientificReview": "PENDING",
+      "runtime": "NOT_INTEGRATED"
+    }
   }
 }
