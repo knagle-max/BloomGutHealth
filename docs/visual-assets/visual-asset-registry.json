@@ -7603,7 +7603,7 @@
       "textPlacement": "No baked-in text or numeric data. All explanatory copy belongs in accessible DOM components.",
       "priority": "P3-DEFERRED-DESIGN",
       "lifecycle": "Briefed",
-      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged.",
+      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged. Verified anatomy review describes native 320x820 viewBox; exact registration on original files pending designer access.",
       "filePaths": [],
       "integration": {
         "state": "UNIMPLEMENTED_DESIGN_ONLY",
@@ -7645,10 +7645,10 @@
       "subject": "Front-facing neutral adult body silhouette coordinate overlay, precise semantic regional anchors for head/neck, shoulders, arms, chest, abdomen, hips, thighs, knees, shins and feet, independent left/right and midline; no dedicated muscle pads.",
       "composition": "Create a separate transparent, layered original SVG OVERLAY registered against the same front silhouette coordinate system as Athlete BVA-0078 (reusing approved source silhouette; do NOT duplicate silhouette image). Each anatomical zone must have stable machine-readable regionId, left/right from subject anatomical perspective and roomy non-overlapping screen-reader and pointer/keyboard hit geometry. Favor small soft unfilled locus halos and fine outlines, with physically neutral offset leadership where overlapping joints occur. Draw no solid muscle-belly fill, internal organs, lesions or injury heatmaps. Include anchors for bilateral and overlapping symptom regions without implying underlying physiology.",
       "scientificAccuracy": "External self-report location, not tissue/organ pathology, diagnosis, measured inflammation, severity inferencing or muscular activation. Back-view zones live in BVA-0088. No symptom visualization in absence of recorded user entries; empty is visibly empty.",
-      "aspectRatio": "3:5 coordinate-matched to currently approved front-body foundation",
+      "aspectRatio": "320:820 (exact native SVG viewBox 0 0 320 820)",
       "targetDimensions": {
-        "width": 600,
-        "height": 1000
+        "width": 320,
+        "height": 820
       },
       "sourceRelation": {
         "action": "reuse-shared-base-distinct-overlay",
@@ -7658,7 +7658,9 @@
         "baseSource": "Use verified original body silhouette where legitimately reusable; current Athlete SVG and PNG approval/integration must be verified at implementation.",
         "doNotReuse": [
           "muscle contour fill geometry as symptom zones"
-        ]
+        ],
+        "referenceViewBox": "0 0 320 820",
+        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring"
       },
       "accessibility": {
         "regionLabels": "Human names and left/right; stable keyboard order, focus rings, 44px-equivalent touch targets through DOM/transparent hit paths",
@@ -7674,11 +7676,21 @@
       "descriptiveBrief": {
         "sceneDescription": "A premium Bloom anterior symptom-location coordinate overlay rendered as quiet hollow rings and diffuse locus halos on a neutral base body silhouette, unlike Athlete-filled muscle regions. Keep left and right anatomically correct; core, shoulder, knee and abdomen zones should feel location-selectable, not diagnosed.",
         "opticsLightingMaterials": "Flat clean vector paths with translucent translucent-edge softness only at display time; premium dark matte/sage-neutral palette with a limited lilac locus accent. No photographic material, glowing organs or clinical scan textures.",
-        "framingAndUsage": "Transparent single-coordinate-system SVG path collection, aligned with source front silhouette from crown to toes. No explanatory copy baked into artwork; overlay on desktop two-column body + detail and mobile bottom sheet.",
+        "framingAndUsage": "Transparent single-coordinate-system SVG path collection, aligned with source front silhouette from crown to toes. No explanatory copy baked into artwork; overlay on desktop two-column body + detail and mobile bottom sheet. Match precise 320x820 source viewBox and preserveAspectRatio behavior; do not use the earlier conceptual 600x1000 drawing space.",
         "accuracyAndExclusions": "No anatomy invented, muscle fibers reused, red heatmap, skin lesions, numeric severity assigned to anatomy, diagnosis, pseudo-imaging, correlation or measured body signals.",
         "existingAssetAndApprovalHandling": "Audit actual BVA-0078 front-body SVG and its provenance/registration before drawing; don't regenerate base silhouette; if unavailable, fallback text list until source is approved.",
         "deliverableNotes": "SVG authoring layers: art/region-anchor, interactive-region-target, halo-decorative; stable region IDs in manifest; viewBox/safe margins; proper accessibility; preserve focus and hit targets independent of decorative opacity.",
-        "generationInstruction": "DRAW ONLY the anterior symptom region overlay aligned to the VERIFIED SAME BODY coordinate grid used by approved Bloom front anatomy. Draw subtle thin hollow localized markers and diffuse restrained halos for neck, bilateral shoulder, arms, chest, abdomen, hip, leg and joint region anchors with unique exportable ID paths. Avoid full muscle pads, colorful heatmap, organs, anatomical diagnoses, baked text or numeric labels. Supply fully editable vector original and region geometry manifest, light/dark tokens and responsive registration checks."
+        "generationInstruction": "DRAW ONLY the anterior symptom region overlay aligned to the VERIFIED SAME BODY coordinate grid used by approved Bloom front anatomy. Draw subtle thin hollow localized markers and diffuse restrained halos for neck, bilateral shoulder, arms, chest, abdomen, hip, leg and joint region anchors with unique exportable ID paths. Avoid full muscle pads, colorful heatmap, organs, anatomical diagnoses, baked text or numeric labels. Supply fully editable vector original and region geometry manifest, light/dark tokens and responsive registration checks. Exact exported root viewBox must be '0 0 320 820' and path coordinates must be measured from the original owner-approved PNG/SVG underlay, never estimated from an image or diagram."
+      },
+      "viewBox": "0 0 320 820",
+      "geometryGate": {
+        "reference": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md section 10",
+        "sourceStatus": "Owner-approved anatomy package inspected, original ZIP not transferred to checkout, browser integration unverified",
+        "coordinateSystem": "0 0 320 820",
+        "baseArtwork": "hybrid raster-body plus vector-overlay; reuse verified original body front/back PNG; no recreation from screenshots",
+        "frozenContours": "V10.1/V12.1-related muscle shapes remain untouched",
+        "anchorRequirements": "Designer exports front/rear anchor coordinate manifest, explicit anatomical left/right, region IDs, hit paths, soft zones, and alignment screenshots at reference source viewBox",
+        "rendering": "Separate active modality layers; inactive mode has no pointer/keyboard/ARIA events; avoid duplicate inline SVG gradient/clip IDs across instances"
       }
     },
     {
@@ -7691,7 +7703,7 @@
       "textPlacement": "No baked-in text or numeric data. All explanatory copy belongs in accessible DOM components.",
       "priority": "P3-DEFERRED-DESIGN",
       "lifecycle": "Briefed",
-      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged.",
+      "productionStatus": "Design brief only; no new asset generated or sourced; no runtime integration; current GI-01–GI-10 queue unchanged. Verified anatomy review describes native 320x820 viewBox; exact registration on original files pending designer access.",
       "filePaths": [],
       "integration": {
         "state": "UNIMPLEMENTED_DESIGN_ONLY",
@@ -7733,17 +7745,19 @@
       "subject": "Posterior body-region locus overlay, including neck, left/right shoulders and arms, upper/mid/lower back, bilateral glutes/hips, hamstrings, rear knees, calves and ankle/feet; midline and unspecified-laterality support outside glyph.",
       "composition": "Produce a posterior SVG matching BVA-0087 visual grammar, silhouette scale and regional IDs. Align anchors exactly with the same verified posterior body silhouette reference as Athlete BVA-0079. Use localized low-emphasis hollow halos/dots and perceptibly crisp hit regions, including proper alignment for lumbar versus glute, left and right from human anatomical perspective. No muscle contours, pathology overlays, red gradients, or body-as-diagnostic heatmap.",
       "scientificAccuracy": "Human self-reported anatomical locus only. Color and visible marker weight must be tied exclusively to expressly logged frequency, recency and separately labeled reported severity; no extrapolation to tissue injury or risk.",
-      "aspectRatio": "3:5 coordinate-matched to currently approved rear-body foundation",
+      "aspectRatio": "320:820 (exact native SVG viewBox 0 0 320 820)",
       "targetDimensions": {
-        "width": 600,
-        "height": 1000
+        "width": 320,
+        "height": 820
       },
       "sourceRelation": {
         "action": "reuse-shared-base-distinct-overlay",
         "existingAssets": [
           "BVA-0079"
         ],
-        "baseSource": "Verified posterior base silhouette if approved; do not trace muscle activation pads into symptom map."
+        "baseSource": "Verified posterior base silhouette if approved; do not trace muscle activation pads into symptom map.",
+        "referenceViewBox": "0 0 320 820",
+        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring"
       },
       "accessibility": {
         "regionLabels": "Independent rear region labels, left/right and midline, keyboard order and focus semantics consistent with BVA-0087",
@@ -7758,11 +7772,21 @@
       "descriptiveBrief": {
         "sceneDescription": "Quiet Bloom back-body symptom locator, showing hollow, muted lilac concentric loci over neutral torso/limb silhouette instead of Athlete's muscle exercise shapes; readable lumbar, upper back, glute, calf and shoulder selection.",
         "opticsLightingMaterials": "Original flat vector geometry with restrained luminance and alpha, no photo/light simulation; dark matte neutral/lilac, also supports light mode without color-only semantics.",
-        "framingAndUsage": "Transparent same full body viewBox, crown-to-heel, anatomically oriented posterior; paired front/back accessible toggle, responsive desktop sidebar and phone bottom sheet.",
+        "framingAndUsage": "Transparent same full body viewBox, crown-to-heel, anatomically oriented posterior; paired front/back accessible toggle, responsive desktop sidebar and phone bottom sheet. Match precise 320x820 source viewBox and preserveAspectRatio behavior; do not use the earlier conceptual 600x1000 drawing space.",
         "accuracyAndExclusions": "Do not claim tissue activation, injury, structural pathology, localized inflammation, organ site or measured pain. No anatomical text incorporated into image.",
         "existingAssetAndApprovalHandling": "Reuse existing verified approved posterior silhouette and matching scale; do not alter BVA-0079 muscle artwork. Confirm real source rights first.",
         "deliverableNotes": "Editable SVG plus region-ID mapping and front/back coordinate parity, target/focus strategy, empty/loading/selected examples and final responsive screenshot review.",
-        "generationInstruction": "CREATE a transparent editable posterior body-localization SVG OVERLAY matching the exact pose/viewBox of the verified approved Bloom posterior silhouette. Use soft separate hollow concentric locator rings anchored to posterior neck, shoulders, back regions, hips/glutes, thighs, knees, calves and feet. Keep left/right accurately defined and paths named. Do not depict muscle coverage, injuries, internal organ damage, numeric pain levels, red clinical heatmap or other diagnosis."
+        "generationInstruction": "CREATE a transparent editable posterior body-localization SVG OVERLAY matching the exact pose/viewBox of the verified approved Bloom posterior silhouette. Use soft separate hollow concentric locator rings anchored to posterior neck, shoulders, back regions, hips/glutes, thighs, knees, calves and feet. Keep left/right accurately defined and paths named. Do not depict muscle coverage, injuries, internal organ damage, numeric pain levels, red clinical heatmap or other diagnosis. Exact exported root viewBox must be '0 0 320 820' and path coordinates must be measured from the original owner-approved PNG/SVG underlay, never estimated from an image or diagram."
+      },
+      "viewBox": "0 0 320 820",
+      "geometryGate": {
+        "reference": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md section 10",
+        "sourceStatus": "Owner-approved anatomy package inspected, original ZIP not transferred to checkout, browser integration unverified",
+        "coordinateSystem": "0 0 320 820",
+        "baseArtwork": "hybrid raster-body plus vector-overlay; reuse verified original body front/back PNG; no recreation from screenshots",
+        "frozenContours": "V10.1/V12.1-related muscle shapes remain untouched",
+        "anchorRequirements": "Designer exports front/rear anchor coordinate manifest, explicit anatomical left/right, region IDs, hit paths, soft zones, and alignment screenshots at reference source viewBox",
+        "rendering": "Separate active modality layers; inactive mode has no pointer/keyboard/ARIA events; avoid duplicate inline SVG gradient/clip IDs across instances"
       }
     },
     {
@@ -7851,6 +7875,10 @@
         "existingAssetAndApprovalHandling": "Reuse Bloom typography, visual tokens and common icon library before creating unique symbols; keep new shapes limited to truly necessary symptom vs Athlete semantic distinction.",
         "deliverableNotes": "Token file and SVG source symbols; documented active/inactive/focus/hover/unknown and high-contrast samples; no numeric user values baked in.",
         "generationInstruction": "DESIGN a tight family of original 1:1 symptom locus glyphs: hollow spot, recorded dot, multi-entry count ring, distinct explicit severity rim, selected/focus and diffuse location icon. Use Bloom's restrained lilac on dark matte neutral and legible light-mode companion; render each isolated, editable SVG symbol. Do NOT draw pathology, hotspots suggesting inflammation, illness symbols, pulse implying live measurements, fake scores, or training muscle-pad visual vocabulary."
+      },
+      "geometryGate": {
+        "coordinateSystem": "Marker glyph primitives are viewBox-local; composition host is 0 0 320 820 front/back",
+        "requirement": "Symbols must support unique per-instance SVG defs IDs, static reduced-motion appearance, separate focus target geometry, and orthogonal frequency and severity indicators"
       }
     }
   ],
@@ -8142,7 +8170,8 @@
       ],
       "scope": "Nutrition Coverage Map visual is functional DOM/SVG chart components, no new external artwork; Symptom Body Map requires front/back location overlays plus glyph kit; all design-only and no current GI task change.",
       "status": "BRIEFED_NOT_PRODUCED",
-      "nextValidation": "Architect verifies source-body coordinate system and symptom data-contract/hierarchy before production; check actual images/source rights/accessibility."
+      "nextValidation": "Architect verifies source-body coordinate system and symptom data-contract/hierarchy before production; check actual images/source rights/accessibility.",
+      "geometryConfirmed": "Owner-approved source archive review verifies 0 0 320 820 for front/back hybrid raster SVG; exact source transfer/integration still pending. BVA-0087/88 now bound to source coordinate grid."
     }
   }
 }
