@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "86 canonical asset families. BVA-0078/79 v4 revised SVG design candidates received (supersede preferred v3 source, preserve v3 provenance); not verified in Bloom app. Canonical taxonomy, qualified anatomy, accessibility, rights and runtime QA remain pending.",
+  "registryStatus": "86 canonical BVA families; BVA-0078/0079 owner-approved hybrid SVG-overlay plus body PNG visual source verified in user ZIP (28/28 manifest); not yet transferred to checkout/integrated. Science/taxonomy, rights, accessibility and production gates remain pending.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -7054,14 +7054,14 @@
         "existingAssetAuditRequired": true
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NEW v4 refined original SVG source CANDIDATE supplied in owner ZIP; earlier v3 superseded as preferred source, retained for provenance. v4 paint/focus structural fixes verified; NOT imported to Github app, no qualified anatomy/rights/accessibility/browser or canonical-taxonomy approval.",
+      "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": "NOT_INTEGRATED",
       "review": {
-        "design": "V4 source/style refinement inspected; premium anatomy still requires further professional redraw/review",
-        "scientific": "Canonical exercise taxonomy mapping and independent qualified human anatomy review pending",
-        "rights": "first-party original source/license proof needed",
-        "rendered": "Contact sheets and source SVG only; app/browser QA not verified"
+        "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
+        "scientific": "Pending specialist anatomical boundary/accuracy and reviewed canonical exercise mapping",
+        "rights": "Original source provenance/commercial-use rights not independently verified",
+        "rendered": "Original attached demo + contact sheets inspected, QA reports 35/35; no independent app/hosted validation"
       },
       "statusEvidence": {
         "date": "2026-11-22",
@@ -7084,31 +7084,53 @@
         "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
       },
       "designerDisposition20261122": {
-        "status": "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS",
-        "action": "Use v4 delivered source as preferred candidate, not fresh generation; anatomy/geometry/premium editorial refinement; 15 visual→canonical crosswalk; scoped paint IDs, stable handlers, screen reader/mobile QA; defer app integration until eligible task and review.",
+        "status": "OWNER_DESIGN_APPROVED_SOURCE_NOT_INTEGRATED",
+        "action": "Do NOT redesign/regenerate. Preserve approved front/back SVG geometry masters plus accompanying body PNG raster layers from exact source package. After GI stop and owner authorization verify import hashes; reconcile 15 provisional visual selectors to reviewed canonical science and check app-specific accessibility, rights, anatomy, browser/hosted gates.",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
       },
       "sourceCandidate20261122": {
-        "status": "V4_REFINED_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
+        "status": "OWNER_APPROVED_VISUAL_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
         "archive": "bloom_anatomy_final_v3(1).zip",
         "archiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
         "sourceFormat": "4 editable source SVGs (male/female front/back) + static PNG previews",
         "reactExample": "BloomMuscleMap.jsx (reference only, not production code)",
         "interactiveDemo": "interactive-demo.html (same exact bytes as separate uploaded HTML)",
-        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#7-superseding-owner-submitted-v4-refinement-2026-11-22",
+        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#10-owner-approved-consolidated-anatomy-stages-13-visual-handoff-2026-11-22",
         "criticalBlockers": [
-          "V4 15 VISUAL categories not equivalent to reviewed 15 canonical muscle groups; no direct workout-data wiring",
-          "Repeated listeners in interactive-demo render and SVG repeated gradient IDs in multi-instance DOM",
-          "Qualified anatomical illustration refinement and rights, browser/screen-reader/physical-device QA not done",
-          "Original v4 binaries not yet uploaded into GitHub checkout"
+          "15 provisional visual keys not canonical exercise muscle taxonomy; source-specific mapping required",
+          "Qualified anatomy, independent physical device/assistive tech and rights review outstanding",
+          "Hybrid embedded raster + SVG overlay, not pure vector; preserve both and verify app CSP and rendition",
+          "No canonical activity-data integration and original ZIP not in GitHub or Codex checkout"
         ],
-        "preferredArchive": "bloom_anatomy_refined_v4(1).zip",
-        "preferredArchiveSha256": "768f09ff84e781595a291f53babec4d4205e10a7e4a5e55e543bb09c856ff615",
+        "preferredArchive": "Bloom_Approved_Anatomy_Design_Handoff(1).zip",
+        "preferredArchiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
         "interactiveDemoSha256": "c5dd067bd8b1eb87181eb940ea70d400691bddd1196c3d1158ae2f1121be1e92",
         "assetVariants": "4 SVG source (male/female front/back), 8 PNG static previews and 3 contact sheets",
         "validatedStructure": "Each SVG has two defined paint servers, 0 broken skin-ambient references, 32 anterior or 20 posterior region paths and one group tabstop per visual group per view (front 9 / back 10)",
-        "previousV3ArchiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb"
+        "previousV3ArchiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
+        "manifestEntriesVerified": "28/28 correct SHA256 and byte sizes; ZIP CRC passed",
+        "preferredOriginals": {
+          "frontSvg": {
+            "path": "assets/bloom-neutral-front.svg",
+            "sha256": "fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106"
+          },
+          "backSvg": {
+            "path": "assets/bloom-neutral-back.svg",
+            "sha256": "f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e"
+          },
+          "frontRaster": {
+            "path": "assets/body-front.png",
+            "sha256": "7199ba6bb11129b7cb9826f77c61a2fc24acb935f38b50063628b5cde42feec2"
+          },
+          "backRaster": {
+            "path": "assets/body-back.png",
+            "sha256": "ab5b12c40c4e6936c50e49675c7d78d1c9e2fdf16b61318a73fae0b8e9c11338"
+          }
+        },
+        "structuralVerification": "24 region paths, nine per-view focusable visual groups; one raster image in root SVG",
+        "reportedBrowserQA": "35/35 Chromium checks passed in attached QA record; not independently repeated",
+        "supersededCandidate": "V4 earlier preferred; retain full V3/V4/V10.1 provenance"
       }
     },
     {
@@ -7133,14 +7155,14 @@
         "existingAssetAuditRequired": true
       },
       "lifecycle": "Briefed",
-      "productionStatus": "NEW v4 refined original SVG source CANDIDATE supplied in owner ZIP; earlier v3 superseded as preferred source, retained for provenance. v4 paint/focus structural fixes verified; NOT imported to Github app, no qualified anatomy/rights/accessibility/browser or canonical-taxonomy approval.",
+      "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": "NOT_INTEGRATED",
       "review": {
-        "design": "V4 source/style refinement inspected; premium anatomy still requires further professional redraw/review",
-        "scientific": "Canonical exercise taxonomy mapping and independent qualified human anatomy review pending",
-        "rights": "first-party original source/license proof needed",
-        "rendered": "Contact sheets and source SVG only; app/browser QA not verified"
+        "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
+        "scientific": "Pending specialist anatomical boundary/accuracy and reviewed canonical exercise mapping",
+        "rights": "Original source provenance/commercial-use rights not independently verified",
+        "rendered": "Original attached demo + contact sheets inspected, QA reports 35/35; no independent app/hosted validation"
       },
       "statusEvidence": {
         "date": "2026-11-22",
@@ -7163,31 +7185,53 @@
         "conformance": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding"
       },
       "designerDisposition20261122": {
-        "status": "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS",
-        "action": "Use v4 delivered source as preferred candidate, not fresh generation; anatomy/geometry/premium editorial refinement; 15 visual→canonical crosswalk; scoped paint IDs, stable handlers, screen reader/mobile QA; defer app integration until eligible task and review.",
+        "status": "OWNER_DESIGN_APPROVED_SOURCE_NOT_INTEGRATED",
+        "action": "Do NOT redesign/regenerate. Preserve approved front/back SVG geometry masters plus accompanying body PNG raster layers from exact source package. After GI stop and owner authorization verify import hashes; reconcile 15 provisional visual selectors to reviewed canonical science and check app-specific accessibility, rights, anatomy, browser/hosted gates.",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
       },
       "sourceCandidate20261122": {
-        "status": "V4_REFINED_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
+        "status": "OWNER_APPROVED_VISUAL_SOURCE_VERIFIED_IN_CONVERSATION_NOT_IN_GITHUB",
         "archive": "bloom_anatomy_final_v3(1).zip",
         "archiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
         "sourceFormat": "4 editable source SVGs (male/female front/back) + static PNG previews",
         "reactExample": "BloomMuscleMap.jsx (reference only, not production code)",
         "interactiveDemo": "interactive-demo.html (same exact bytes as separate uploaded HTML)",
-        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#7-superseding-owner-submitted-v4-refinement-2026-11-22",
+        "review": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#10-owner-approved-consolidated-anatomy-stages-13-visual-handoff-2026-11-22",
         "criticalBlockers": [
-          "V4 15 VISUAL categories not equivalent to reviewed 15 canonical muscle groups; no direct workout-data wiring",
-          "Repeated listeners in interactive-demo render and SVG repeated gradient IDs in multi-instance DOM",
-          "Qualified anatomical illustration refinement and rights, browser/screen-reader/physical-device QA not done",
-          "Original v4 binaries not yet uploaded into GitHub checkout"
+          "15 provisional visual keys not canonical exercise muscle taxonomy; source-specific mapping required",
+          "Qualified anatomy, independent physical device/assistive tech and rights review outstanding",
+          "Hybrid embedded raster + SVG overlay, not pure vector; preserve both and verify app CSP and rendition",
+          "No canonical activity-data integration and original ZIP not in GitHub or Codex checkout"
         ],
-        "preferredArchive": "bloom_anatomy_refined_v4(1).zip",
-        "preferredArchiveSha256": "768f09ff84e781595a291f53babec4d4205e10a7e4a5e55e543bb09c856ff615",
+        "preferredArchive": "Bloom_Approved_Anatomy_Design_Handoff(1).zip",
+        "preferredArchiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
         "interactiveDemoSha256": "c5dd067bd8b1eb87181eb940ea70d400691bddd1196c3d1158ae2f1121be1e92",
         "assetVariants": "4 SVG source (male/female front/back), 8 PNG static previews and 3 contact sheets",
         "validatedStructure": "Each SVG has two defined paint servers, 0 broken skin-ambient references, 32 anterior or 20 posterior region paths and one group tabstop per visual group per view (front 9 / back 10)",
-        "previousV3ArchiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb"
+        "previousV3ArchiveSha256": "c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb",
+        "manifestEntriesVerified": "28/28 correct SHA256 and byte sizes; ZIP CRC passed",
+        "preferredOriginals": {
+          "frontSvg": {
+            "path": "assets/bloom-neutral-front.svg",
+            "sha256": "fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106"
+          },
+          "backSvg": {
+            "path": "assets/bloom-neutral-back.svg",
+            "sha256": "f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e"
+          },
+          "frontRaster": {
+            "path": "assets/body-front.png",
+            "sha256": "7199ba6bb11129b7cb9826f77c61a2fc24acb935f38b50063628b5cde42feec2"
+          },
+          "backRaster": {
+            "path": "assets/body-back.png",
+            "sha256": "ab5b12c40c4e6936c50e49675c7d78d1c9e2fdf16b61318a73fae0b8e9c11338"
+          }
+        },
+        "structuralVerification": "20 region paths, ten per-view focusable visual groups; one raster image in root SVG",
+        "reportedBrowserQA": "35/35 Chromium checks passed in attached QA record; not independently repeated",
+        "supersededCandidate": "V4 earlier preferred; retain full V3/V4/V10.1 provenance"
       }
     },
     {
@@ -7793,7 +7837,7 @@
       "EXISTING_INTEGRATION_REVERIFY_DO_NOT_REGENERATE": 30,
       "DESIGN_BRIEF_PENDING_OR_CANDIDATE_REVIEW": 11,
       "CONDITIONAL_TAXON_AND_MORPHOLOGY_REVIEW_NO_AUTO_COMMISSION": 25,
-      "SOURCE_CANDIDATE_DELIVERED_REVIEW_BLOCKERS": 2,
+      "OWNER_DESIGN_APPROVED_SOURCE_NOT_INTEGRATED": 2,
       "SOURCE_DELIVERED_CHECKOUT_AND_QA_PENDING": 2,
       "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION": 4
     },
@@ -7829,6 +7873,6 @@
       "release": "BVA-0082 mixed REL-A01–A06 statuses recorded separately; A05 4:5 still missing, A02–A04 approval conflict retained.",
       "verification": "No additional actual checkout, screen reader, source-rights or hosted rendering audit performed"
     },
-    "latestSourceReview": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#7-superseding-owner-submitted-v4-refinement-2026-11-22"
+    "latestSourceReview": "docs/agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md#10-owner-approved-consolidated-anatomy-stages-13-visual-handoff-2026-11-22"
   }
 }
