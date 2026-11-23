@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-22",
-  "registryStatus": "90 canonical BVA assets/families. 0087–0089 symptom map source prototype ZIP received (23/26 provisional locations; only 21 exact overlaps with 47 canonical region IDs; semantics/geometry/accessibility not verified); 0090 source editable nutrition UI kit received with Biology scientific interpretation approved with clarifications, but no app implementation. GI baseline priority unchanged.",
+  "registryStatus": "90 canonical assets/families. BVA-0087–0089 V1.0 6-file reconciliation ZIP verified in shared Library and reviewed with amendments: 49 proposed visual rows, 58 candidate edges, 10 unmatched canonical IDs, 10 pending decisions; mappings UNAPPROVED and 77 canonical geometry anchors unmeasured. BVA-0090 science-qualified editable source unchanged. GI queue unchanged.",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -7707,9 +7707,25 @@
       },
       "designerDisposition20261122": {
         "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
-        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "action": "Use latest V1 reconciliation hypotheses (49 rows/58 proposed edges) only for review; preserve 47-region canonical contract and 77 null anchors until anatomy/geometry verified; resolve six laterality conflicts and ten unmatched IDs; no automatic remapping. Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
         "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
         "validatedAtHead": false
+      },
+      "reconciliationV1Intake": {
+        "date": "2026-11-22",
+        "review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md",
+        "archive": "Bloom_BVA_0087_0089_Reconciliation_Architect_Codex_Handoff_v1.zip",
+        "sha256": "6d7416ec98f51f77a20fa86ba981e6c42df01d11ab897cad28ae4e52a7bf45fe",
+        "status": "SOURCE_VERIFIED_ARCHITECT_ACCEPT_WITH_AMENDMENTS_MAPPING_PENDING",
+        "sourceMemberCount": 6,
+        "pathRows": 49,
+        "candidateEdges": 58,
+        "uniqueProvisional": 41,
+        "canonicalReviewIds": 47,
+        "unmatchedCanonical": 10,
+        "pendingDecisions": 10,
+        "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
+        "implementation": "NOT_AUTHORIZED"
       }
     },
     {
@@ -7822,9 +7838,25 @@
       },
       "designerDisposition20261122": {
         "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
-        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "action": "Use latest V1 reconciliation hypotheses (49 rows/58 proposed edges) only for review; preserve 47-region canonical contract and 77 null anchors until anatomy/geometry verified; resolve six laterality conflicts and ten unmatched IDs; no automatic remapping. Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
         "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
         "validatedAtHead": false
+      },
+      "reconciliationV1Intake": {
+        "date": "2026-11-22",
+        "review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md",
+        "archive": "Bloom_BVA_0087_0089_Reconciliation_Architect_Codex_Handoff_v1.zip",
+        "sha256": "6d7416ec98f51f77a20fa86ba981e6c42df01d11ab897cad28ae4e52a7bf45fe",
+        "status": "SOURCE_VERIFIED_ARCHITECT_ACCEPT_WITH_AMENDMENTS_MAPPING_PENDING",
+        "sourceMemberCount": 6,
+        "pathRows": 49,
+        "candidateEdges": 58,
+        "uniqueProvisional": 41,
+        "canonicalReviewIds": 47,
+        "unmatchedCanonical": 10,
+        "pendingDecisions": 10,
+        "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
+        "implementation": "NOT_AUTHORIZED"
       }
     },
     {
@@ -7933,9 +7965,25 @@
       },
       "designerDisposition20261122": {
         "status": "DESIGN_PROTOTYPE_SOURCE_RECEIVED_CANONICAL_MAPPING_PENDING",
-        "action": "Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
+        "action": "Use latest V1 reconciliation hypotheses (49 rows/58 proposed edges) only for review; preserve 47-region canonical contract and 77 null anchors until anatomy/geometry verified; resolve six laterality conflicts and ten unmatched IDs; no automatic remapping. Reuse exact body PNG and preserve existing muscle overlay separately. Crosswalk front/back 23/26 provisional locations to 47 reviewed semantic IDs with source geometry/right-left verification, focus/badge/collision/a11y before any production claims.",
         "executionGate": "Source review/design receipt only; no work queue or implementation authorization",
         "validatedAtHead": false
+      },
+      "reconciliationV1Intake": {
+        "date": "2026-11-22",
+        "review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md",
+        "archive": "Bloom_BVA_0087_0089_Reconciliation_Architect_Codex_Handoff_v1.zip",
+        "sha256": "6d7416ec98f51f77a20fa86ba981e6c42df01d11ab897cad28ae4e52a7bf45fe",
+        "status": "SOURCE_VERIFIED_ARCHITECT_ACCEPT_WITH_AMENDMENTS_MAPPING_PENDING",
+        "sourceMemberCount": 6,
+        "pathRows": 49,
+        "candidateEdges": 58,
+        "uniqueProvisional": 41,
+        "canonicalReviewIds": 47,
+        "unmatchedCanonical": 10,
+        "pendingDecisions": 10,
+        "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
+        "implementation": "NOT_AUTHORIZED"
       }
     },
     {
@@ -8463,6 +8511,7 @@
         "70a1067344353af386f8193783be0073b30a82b431345f338788c77ab53ef890"
       ],
       "review": "docs/agent-handoffs/BLOOM_SYMPTOM_BODY_MAP_AND_NUTRITION_KITS_RECONCILIATION_20261122.md"
-    }
+    },
+    "latestReconciliationV1Review": "docs/agent-handoffs/BLOOM_BVA_0087_0089_RECONCILIATION_V1_ARCHITECT_REVIEW_20261122.md"
   }
 }
