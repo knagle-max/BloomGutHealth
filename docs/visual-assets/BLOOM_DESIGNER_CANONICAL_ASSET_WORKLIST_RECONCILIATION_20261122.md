@@ -22,7 +22,7 @@
 | E. Existing source slot requiring QA / rights | 5 | Source, license, reuse, QA and deployment state checks; no automatic generation |
 | F. Previously integrated — reverify instead of producing again | 30 | Source, license, reuse, QA and deployment state checks; no automatic generation |
 | G. Conditional species portrait requests — science/taxonomy first | 25 | Not an automatic commission, taxonomic justification required |
-| H. Muscle-map v3 received candidate — corrections/review pending | 2 | Refined v4 SVGs in owner ZIP preferred; anatomy/taxonomy/a11y/integration approval pending |
+| H. Owner-approved anatomy visual source — integration gated | 2 | Exact 28-file hybrid raster+SVG design package verified, not imported or integrated; canonical mapping/scientific/a11y/rights gates pending |
 | **Total indexed** | **86** | **Not a count of missing images** |
 
 ## Per-ID designer worklist
@@ -148,20 +148,20 @@ Each row is a permanent registry requirement; the canonical JSON contains the fu
 | BVA-0076 | Microorganism candidate — Gordonibacter pamelaeae | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
 | BVA-0077 | Microorganism candidate — Christensenella massiliensis | Briefed | First taxonomy/morphology/science applicability; use C01–U00 fallback unless a separate species image is justified |
 
-### H. Muscle-map v3 received candidate — corrections/review pending
+### H. Owner-approved anatomy visual source — integration gated
 
 | ID | Asset / family | Existing record | Next designer decision |
 | --- | --- | --- | --- |
-| BVA-0078 | Anterior interactive SVG | **V4 source candidate** in owner ZIP; not GitHub checkout | v4 fixes undefined paint and excess focus stops; refine anterior anatomy, verify 15 visual vs canonical groups, unique SVG gradient IDs, stable handlers and real mobile/accessibility QA |
-| BVA-0079 | Posterior interactive SVG | **V4 source candidate** in owner ZIP; not GitHub checkout | v4 fixes undefined paint and excess focus stops; improve posterior geometry and male/female differentiation, taxonomy/science/accessibility QA before integration |
+| BVA-0078 | Anterior anatomy overlay + raster body layer | **Owner-approved visual design** in 28-file staged ZIP; not GitHub checkout | Preserve exact `assets/bloom-neutral-front.svg` and `assets/body-front.png` with verified hashes. No redesign. Later canonical mapping, qualified anatomy, accessibility, rights, source transfer and app QA |
+| BVA-0079 | Posterior anatomy overlay + raster body layer | **Owner-approved visual design** in 28-file staged ZIP; not GitHub checkout | Preserve exact `assets/bloom-neutral-back.svg` and `assets/body-back.png` with verified hashes. No redesign. Later canonical mapping, qualified anatomy, accessibility, rights, source transfer and app QA |
 
-[Detailed review with artifact checksums, logic faults and acceptance blockers](../agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md). No source files are yet imported into Bloom GitHub, and the standalone React prototype is not validated application code.
+[Detailed review with artifact checksums, owner-approved Stages 1–3 source receipt and remaining gates](../agent-handoffs/BLOOM_ANATOMY_V3_AND_MUSCLE_MAP_PROTOTYPE_REVIEW_20261122.md). No source files are yet imported into Bloom GitHub, and the standalone React prototype is not validated application code.
 
 ## Additional approved sources and important gaps
 
 **Approved revisions already delivered, not yet proven installed:** BVA-0001..0005 hero replacements, BVA-0025 onboarding and BVA-0051 microbiome hero. These seven are source-transfer and responsive/integration tasks, **not generation tasks**. The approved six ONB-A01..A06 goal photographs are BVA-0080 (six separate images in one existing delivered source collection); the distinct six goal glyphs BVA-0081 remain an unfulfilled request pending audit of existing ONB-A09 icons. Do not mistake the earlier embedded demo photos for the newer approved files.
 
-**Muscle anatomy:** BVA-0078 and 0079 (front/back original editable, selectable SVGs) now have four refined source SVG candidates in the owner-supplied **v4** archive, superseding v3 as the preferred candidate while preserving original provenance. They remain `Briefed` in the canonical integration lifecycle, not imported, anatomically approved or integrated. They need stable path-to-group IDs, human anatomical verification, source/exercise-taxonomy review and accessible list fallback. Avoid fake muscle activation or recovery claims. Existing BVA-0005/0022/0023 cannot substitute for interactive anatomy. BVA-0022's earlier rejected image is **not** an approved exercise-technique photograph.
+**Muscle anatomy:** BVA-0078 and 0079 now have **owner-approved Stage 1–3 consolidated visual masters** in the supplied handoff ZIP, superseding V4 as preferred artwork while preserving V3/V4/V10.1 provenance. These are **two hybrid designs**—editable front/back SVG overlay masters plus corresponding raster body PNGs—not four independent pure-vector anatomy illustrations. They are design-approved only, not imported into the application, anatomically certified or consumer-integrated. The archive is SHA-256 `a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511`, with 28/28 manifest checks validated; its reported browser smoke tests passed 35/35 but were not independently rerun. They need stable path-to-group IDs, human anatomical verification, source/exercise-taxonomy review and accessible list fallback. Avoid fake muscle activation or recovery claims. Existing BVA-0005/0022/0023 cannot substitute for interactive anatomy. BVA-0022's earlier rejected image is **not** an approved exercise-technique photograph.
 
 **Release and scientific Easter eggs:** BVA-0082 covers REL-A01..06 sources; BVA-0083 EE-01 table prototype; BVA-0084 EE-03 delivered DNA concept; BVA-0085 EE-02 future preview; BVA-0086 EE-05 reuse of canonical Bloom logo. Some design bundles have contradictory approval metadata for REL-A02/03/04; resolve that before asserting approved production. REL-A05 future launch 4:5 rendition is missing, but future-only. Current Genesis is not released Hydrogen. **EE-04 / ASSET-EE-08/09 are expressly deferred indefinitely: no commissions, generated images, taxon research or delivery estimates.** BVA-0053..0077 are separate pre-existing conditional species-portrait requests; scientific/morphology review determines whether any should be commissioned, and they are not a back door to EE-04.
 
