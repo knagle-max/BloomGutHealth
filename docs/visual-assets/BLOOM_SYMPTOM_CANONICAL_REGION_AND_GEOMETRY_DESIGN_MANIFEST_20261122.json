@@ -1,0 +1,1536 @@
+{
+  "schema": "bloom-symptom-region-design-manifest-v1",
+  "status": "DESIGN_REVIEW_ONLY_NOT_RUNTIME_SCHEMA",
+  "date": "2026-11-22",
+  "authority": {
+    "repo": "knagle-max/BloomGutHealth",
+    "branch": "enhance/bloom-experience",
+    "assetRegistry": "docs/visual-assets/visual-asset-registry.json",
+    "bodyViewBox": "0 0 320 820",
+    "athlete": [
+      "BVA-0078",
+      "BVA-0079"
+    ],
+    "symptom": [
+      "BVA-0087",
+      "BVA-0088",
+      "BVA-0089"
+    ],
+    "sourceNote": "Anatomy source review verifies native viewBox and hybrid raster-body/vector overlay; approved source not installed in app at inspection. Coordinates must be measured from original verified files."
+  },
+  "semanticRules": {
+    "regionIdentity": "Stable canonical IDs independent of view geometry or symptom type",
+    "laterality": "Subject anatomical left/right, not screen coordinates",
+    "bilateral": "One observation references a pairing with left/right anchor highlights; not two observations",
+    "diffuse": "Standalone location selector, no body dot",
+    "episode": "Recorded observations and distinct identified episodes must not be conflated; unknown episode ID remains unknown",
+    "frontBack": "Same canonical region may appear in both; rendered once per active view",
+    "symptomTypes": "Not part of region identity; retain pain/stiffness/tingling/numbness/weakness/other separately",
+    "counts": "Counts of reported observations within chosen window, not absence of symptoms on unlogged days"
+  },
+  "regions": [
+    {
+      "regionId": "abdomen",
+      "label": "Abdomen",
+      "parentGroup": "core",
+      "laterality": "midline",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "ankle_left",
+      "label": "Left ankle",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "ankle",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "ankle_right",
+      "label": "Right ankle",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "ankle",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "calf_left",
+      "label": "Left calf",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "calf",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "calf_shin_left"
+    },
+    {
+      "regionId": "calf_right",
+      "label": "Right calf",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "calf",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "calf_shin_right"
+    },
+    {
+      "regionId": "calf_shin_left",
+      "label": "Left lower leg (shin/calf)",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "calf_shin",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "calf_shin_right",
+      "label": "Right lower leg (shin/calf)",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "calf_shin",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "chest",
+      "label": "Chest",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "chest_central",
+      "label": "Central chest",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "chest"
+    },
+    {
+      "regionId": "chest_left",
+      "label": "Left chest",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "chest",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "chest"
+    },
+    {
+      "regionId": "chest_right",
+      "label": "Right chest",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "chest",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "chest"
+    },
+    {
+      "regionId": "diffuse_non_anatomical",
+      "label": "Diffuse / non-anatomical",
+      "parentGroup": "non_anatomical",
+      "laterality": "not_applicable",
+      "availableViews": [],
+      "precisionLevel": "broad",
+      "isDiffuse": true
+    },
+    {
+      "regionId": "elbow_left",
+      "label": "Left elbow",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "elbow",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "elbow_right",
+      "label": "Right elbow",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "elbow",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "flank_left",
+      "label": "Left flank",
+      "parentGroup": "core",
+      "laterality": "left",
+      "bilateralPairId": "flank",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "flank_right",
+      "label": "Right flank",
+      "parentGroup": "core",
+      "laterality": "right",
+      "bilateralPairId": "flank",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "foot_left",
+      "label": "Left foot",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "foot",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "foot_right",
+      "label": "Right foot",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "foot",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "forearm_left",
+      "label": "Left forearm",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "forearm",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "forearm_right",
+      "label": "Right forearm",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "forearm",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "glute_left",
+      "label": "Left glute",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "glute",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "glute_right",
+      "label": "Right glute",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "glute",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "head",
+      "label": "Head",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "head_left",
+      "label": "Left head",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "head",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "head"
+    },
+    {
+      "regionId": "head_midline",
+      "label": "Midline head",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "head"
+    },
+    {
+      "regionId": "head_right",
+      "label": "Right head",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "head",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "head"
+    },
+    {
+      "regionId": "knee_left",
+      "label": "Left knee",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "knee",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "knee_right",
+      "label": "Right knee",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "knee",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "lower_back",
+      "label": "Lower back",
+      "parentGroup": "core",
+      "laterality": "midline",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "mid_back",
+      "label": "Mid back",
+      "parentGroup": "core",
+      "laterality": "midline",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "neck",
+      "label": "Neck",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "neck_lateral_left",
+      "label": "Left side of neck",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "neck_lateral",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "neck"
+    },
+    {
+      "regionId": "neck_lateral_right",
+      "label": "Right side of neck",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "neck_lateral",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "neck"
+    },
+    {
+      "regionId": "neck_posterior",
+      "label": "Back of neck",
+      "parentGroup": "upper_body",
+      "laterality": "midline",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "neck"
+    },
+    {
+      "regionId": "pelvis_hip_left",
+      "label": "Left hip and pelvis",
+      "parentGroup": "core",
+      "secondaryGroups": [
+        "lower_body"
+      ],
+      "laterality": "left",
+      "bilateralPairId": "pelvis_hip",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "pelvis_hip_right",
+      "label": "Right hip and pelvis",
+      "parentGroup": "core",
+      "secondaryGroups": [
+        "lower_body"
+      ],
+      "laterality": "right",
+      "bilateralPairId": "pelvis_hip",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "shin_left",
+      "label": "Left shin",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "shin",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "calf_shin_left"
+    },
+    {
+      "regionId": "shin_right",
+      "label": "Right shin",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "shin",
+      "availableViews": [
+        "front"
+      ],
+      "precisionLevel": "refined",
+      "parentRegionId": "calf_shin_right"
+    },
+    {
+      "regionId": "shoulder_left",
+      "label": "Left shoulder",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "shoulder",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "shoulder_right",
+      "label": "Right shoulder",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "shoulder",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "thigh_left",
+      "label": "Left thigh",
+      "parentGroup": "lower_body",
+      "laterality": "left",
+      "bilateralPairId": "thigh",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "thigh_right",
+      "label": "Right thigh",
+      "parentGroup": "lower_body",
+      "laterality": "right",
+      "bilateralPairId": "thigh",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "upper_arm_left",
+      "label": "Left upper arm",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "upper_arm",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "upper_arm_right",
+      "label": "Right upper arm",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "upper_arm",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "upper_back",
+      "label": "Upper back",
+      "parentGroup": "core",
+      "secondaryGroups": [
+        "upper_body"
+      ],
+      "laterality": "midline",
+      "availableViews": [
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "wrist_hand_left",
+      "label": "Left wrist and hand",
+      "parentGroup": "upper_body",
+      "laterality": "left",
+      "bilateralPairId": "wrist_hand",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    },
+    {
+      "regionId": "wrist_hand_right",
+      "label": "Right wrist and hand",
+      "parentGroup": "upper_body",
+      "laterality": "right",
+      "bilateralPairId": "wrist_hand",
+      "availableViews": [
+        "front",
+        "back"
+      ],
+      "precisionLevel": "broad"
+    }
+  ],
+  "geometryTemplate": {
+    "status": "ALL_ANCHORS_AND_PATHS_UNMEASURED",
+    "sourceViewBox": "0 0 320 820",
+    "frontAsset": "BVA-0087",
+    "backAsset": "BVA-0088",
+    "markerKit": "BVA-0089",
+    "bindings": [
+      {
+        "regionId": "abdomen",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-abdomen-front",
+        "hitPathId": "hit-abdomen-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "ankle_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-ankle-left-front",
+        "hitPathId": "hit-ankle-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "ankle_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-ankle-left-back",
+        "hitPathId": "hit-ankle-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "ankle_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-ankle-right-front",
+        "hitPathId": "hit-ankle-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "ankle_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-ankle-right-back",
+        "hitPathId": "hit-ankle-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-left-back",
+        "hitPathId": "hit-calf-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-right-back",
+        "hitPathId": "hit-calf-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_shin_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-shin-left-front",
+        "hitPathId": "hit-calf-shin-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_shin_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-shin-left-back",
+        "hitPathId": "hit-calf-shin-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_shin_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-shin-right-front",
+        "hitPathId": "hit-calf-shin-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "calf_shin_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-calf-shin-right-back",
+        "hitPathId": "hit-calf-shin-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "chest",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-chest-front",
+        "hitPathId": "hit-chest-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "chest_central",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-chest-central-front",
+        "hitPathId": "hit-chest-central-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "chest_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-chest-left-front",
+        "hitPathId": "hit-chest-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "chest_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-chest-right-front",
+        "hitPathId": "hit-chest-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "elbow_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-elbow-left-front",
+        "hitPathId": "hit-elbow-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "elbow_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-elbow-left-back",
+        "hitPathId": "hit-elbow-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "elbow_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-elbow-right-front",
+        "hitPathId": "hit-elbow-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "elbow_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-elbow-right-back",
+        "hitPathId": "hit-elbow-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "flank_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-flank-left-front",
+        "hitPathId": "hit-flank-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "flank_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-flank-left-back",
+        "hitPathId": "hit-flank-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "flank_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-flank-right-front",
+        "hitPathId": "hit-flank-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "flank_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-flank-right-back",
+        "hitPathId": "hit-flank-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "foot_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-foot-left-front",
+        "hitPathId": "hit-foot-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "foot_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-foot-left-back",
+        "hitPathId": "hit-foot-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "foot_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-foot-right-front",
+        "hitPathId": "hit-foot-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "foot_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-foot-right-back",
+        "hitPathId": "hit-foot-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "forearm_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-forearm-left-front",
+        "hitPathId": "hit-forearm-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "forearm_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-forearm-left-back",
+        "hitPathId": "hit-forearm-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "forearm_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-forearm-right-front",
+        "hitPathId": "hit-forearm-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "forearm_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-forearm-right-back",
+        "hitPathId": "hit-forearm-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "glute_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-glute-left-back",
+        "hitPathId": "hit-glute-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "glute_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-glute-right-back",
+        "hitPathId": "hit-glute-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-front",
+        "hitPathId": "hit-head-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-back",
+        "hitPathId": "hit-head-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-left-front",
+        "hitPathId": "hit-head-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-left-back",
+        "hitPathId": "hit-head-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_midline",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-midline-front",
+        "hitPathId": "hit-head-midline-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_midline",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-midline-back",
+        "hitPathId": "hit-head-midline-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-right-front",
+        "hitPathId": "hit-head-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "head_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-head-right-back",
+        "hitPathId": "hit-head-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "knee_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-knee-left-front",
+        "hitPathId": "hit-knee-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "knee_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-knee-left-back",
+        "hitPathId": "hit-knee-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "knee_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-knee-right-front",
+        "hitPathId": "hit-knee-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "knee_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-knee-right-back",
+        "hitPathId": "hit-knee-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "lower_back",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-lower-back-back",
+        "hitPathId": "hit-lower-back-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "mid_back",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-mid-back-back",
+        "hitPathId": "hit-mid-back-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-front",
+        "hitPathId": "hit-neck-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-back",
+        "hitPathId": "hit-neck-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck_lateral_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-lateral-left-front",
+        "hitPathId": "hit-neck-lateral-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck_lateral_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-lateral-left-back",
+        "hitPathId": "hit-neck-lateral-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck_lateral_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-lateral-right-front",
+        "hitPathId": "hit-neck-lateral-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck_lateral_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-lateral-right-back",
+        "hitPathId": "hit-neck-lateral-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "neck_posterior",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-neck-posterior-back",
+        "hitPathId": "hit-neck-posterior-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "pelvis_hip_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-pelvis-hip-left-front",
+        "hitPathId": "hit-pelvis-hip-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "pelvis_hip_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-pelvis-hip-left-back",
+        "hitPathId": "hit-pelvis-hip-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "pelvis_hip_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-pelvis-hip-right-front",
+        "hitPathId": "hit-pelvis-hip-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "pelvis_hip_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-pelvis-hip-right-back",
+        "hitPathId": "hit-pelvis-hip-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shin_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shin-left-front",
+        "hitPathId": "hit-shin-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shin_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shin-right-front",
+        "hitPathId": "hit-shin-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shoulder_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shoulder-left-front",
+        "hitPathId": "hit-shoulder-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shoulder_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shoulder-left-back",
+        "hitPathId": "hit-shoulder-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shoulder_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shoulder-right-front",
+        "hitPathId": "hit-shoulder-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "shoulder_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-shoulder-right-back",
+        "hitPathId": "hit-shoulder-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "thigh_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-thigh-left-front",
+        "hitPathId": "hit-thigh-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "thigh_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-thigh-left-back",
+        "hitPathId": "hit-thigh-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "thigh_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-thigh-right-front",
+        "hitPathId": "hit-thigh-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "thigh_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-thigh-right-back",
+        "hitPathId": "hit-thigh-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "upper_arm_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-upper-arm-left-front",
+        "hitPathId": "hit-upper-arm-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "upper_arm_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-upper-arm-left-back",
+        "hitPathId": "hit-upper-arm-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "upper_arm_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-upper-arm-right-front",
+        "hitPathId": "hit-upper-arm-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "upper_arm_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-upper-arm-right-back",
+        "hitPathId": "hit-upper-arm-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "upper_back",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-upper-back-back",
+        "hitPathId": "hit-upper-back-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "wrist_hand_left",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-wrist-hand-left-front",
+        "hitPathId": "hit-wrist-hand-left-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "wrist_hand_left",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-wrist-hand-left-back",
+        "hitPathId": "hit-wrist-hand-left-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "wrist_hand_right",
+        "view": "front",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-wrist-hand-right-front",
+        "hitPathId": "hit-wrist-hand-right-front",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      },
+      {
+        "regionId": "wrist_hand_right",
+        "view": "back",
+        "anchor": {
+          "x": null,
+          "y": null
+        },
+        "visualPathId": "symptom-wrist-hand-right-back",
+        "hitPathId": "hit-wrist-hand-right-back",
+        "sourceViewBox": "0 0 320 820",
+        "reviewStatus": "UNMEASURED_SOURCE_REQUIRED"
+      }
+    ]
+  },
+  "qualityGates": [
+    "Keep existing V10.1/V12.1-derived muscle paths unchanged",
+    "Physical underlay source geometry required before populating anchors",
+    "No overlapping touch targets with ambiguous activation; text list always functional",
+    "Inactive layer unmounted or inert and hidden from screen-reader/focus tree",
+    "Keyboard and pointer targets 44 CSS px equivalent via accessible DOM/wrapper",
+    "Bilateral record remains single observation",
+    "No unsupported severity/frequency inferred from presentation",
+    "Count frequency, severity, recency are independent, separately labeled",
+    "No forced body location for diffuse or non-anatomical observations",
+    "No new canonical symptom table created solely from design manifest"
+  ]
+}
