@@ -35,6 +35,11 @@ Use owner-provided screenshots/design examples as the principal target for compo
 
 Asset creation is **not** a license to replace existing art; optional new imagery can occupy previously unfilled placements such as explanatory thumbnails next to “What is it?” and “Why does it matter?” where meaningful.
 
+
+### November 23 enforcement: same-change asset debt tracking
+
+For any authorized feature/page change that leaves a deliberately temporary *new permanent-art slot*, the registration is a **same-change requirement**, not an optional post-implementation cleanup. Codex must first resolve whether the requested illustration is (a) an already delivered source needing import, (b) an existing BVA needing a new variant, (c) a genuinely new standalone BVA, or (d) only a generic transient UI primitive. Reuse (a)/(b) with existing ID and source blocker; only (c) receives the next unused sequential BVA ID. Keep a usable accessible text or neutral placeholder while visual work is pending. Set lifecycle `Identified` or `Briefed`, `assetStatus: PLACEHOLDER_ONLY_NOT_ARTWORK`, truthful `integration` and `filePaths`, and detailed science/rights/layout/variant briefs; no fake image file or approval. Record the code path where placeholder renders, exact asset ID, component/use and blocker in task receipt and **same canonical designer worklist**, and enforce an ID↔code reference check when feasible. When art arrives, validate source bytes and preview QA before independently advancing production/lifecycle status. This is not a task to rewrite all historical screens, not a developer-created second backlog and not a new pre-GI priority.
+
 ## 4. Charts and functional visualization
 
 Preserve current chart code, underlying source projection, reference/assay/units logic, axes, samples, tooltips, selections, keyboard access and correction/invalidations. Small non-destructive built-in presentation settings may be adjusted (e.g., stroke, spacing, straight/curved link option) where backed by existing chart technology and scientifically valid; **do not replace chart engines or chart assets** to match reference styling. Unknown/incompatible observations must not become connected trends because a smooth spline is visually appealing. Do not fabricate interpolation, causal meaning, risk categories or reference ranges.
