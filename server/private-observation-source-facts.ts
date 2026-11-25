@@ -1,4 +1,4 @@
-import {privateGiView,type InvestigationSharing} from '../shared/gi-source-context';
+import {privateGiView,type InvestigationSharing,type GiSourceContext} from '../shared/gi-source-context';
 import {createHash} from 'node:crypto';
 import {z} from 'zod';
 import {checkinSchema as precisionCheckinSchema,type PrecisionRecord} from '../shared/precision-nutrition';
@@ -9,6 +9,28 @@ const timestamp=z.iso.datetime({offset:true});
 function instant(value:unknown):string|null {
  if(value instanceof Date)return Number.isFinite(+value)?value.toISOString():null;
  return timestamp.safeParse(value).success?value as string:null;
+}
+type ExposureTime=NonNullable<GiSourceContext['exposures']>[number]['effective'];
+/** Source timing qualification only, not an inferred dose schedule or a
+ * biological/causal window. No midnight or source zone is manufactured. */
+function exposureTemporalContext(effective:ExposureTime,asOf:Date){
+ const base={referenceClock:'snapshot-as-of' as const,precision:effective?.precision??'not-recorded',timeZone:effective&&'timeZone'in effective?effective.timeZone??null:null};
+ if(!effective||effective.precision==='unknown')return {...base,relation:effective?'unknown-source-time':'source-time-not-recorded',future:null,comparisonBasis:'source-time-unknown'};
+ if(effective.precision==='timestamp'){
+  const value=Date.parse(effective.at);
+  if(!Number.isFinite(value))return {...base,relation:'unusable-source-time',future:null,comparisonBasis:'source-timestamp-unusable'};
+  const future=value>+asOf;return {...base,relation:future?'future-reported-time':'reported-time-not-future',future,comparisonBasis:'source-timestamp-with-offset'};
+ }
+ if(effective.timeZone){
+  const today=intakeCalendarDate(asOf.toISOString(),effective.timeZone);
+  if(!today)return {...base,relation:'unusable-source-time',future:null,comparisonBasis:'source-calendar-unusable'};
+  return {...base,relation:effective.date>today?'future-source-calendar-date':effective.date<today?'earlier-source-calendar-date':'same-source-date-clock-unknown',future:effective.date===today?null:effective.date>today,comparisonBasis:'recorded-source-zone-calendar'};
+ }
+ // A date beyond even the next UTC day is future regardless of source zone.
+ // Closer dates remain unresolved; snapshot display zone is not source evidence.
+ const upperDate=new Date(+asOf+24*60*60*1000).toISOString().slice(0,10);
+ if(effective.date>upperDate)return {...base,relation:'future-date-source-zone-unknown',future:true,comparisonBasis:'conservative-utc-date-envelope-not-a-source-zone'};
+ return {...base,relation:'date-only-source-zone-unknown',future:null,comparisonBasis:'source-zone-unknown'};
 }
 const kinds=['checkin','hydration','activity','session'] as const;
 export type ObservationFeedKind=typeof kinds[number];
@@ -63,8 +85,10 @@ export function privateObservationSourceFacts(input:{actor:string;precision:read
    // All chronology remains reported context, never measured metabolism,
    // a diagnosis, an inferred cycle phase or a causal relationship.
    const reported={...gi,...(gi.exposures?{exposures:gi.exposures.map(exposure=>{
-    if(exposure.useStatus==='reported-taken')return exposure;
-    const {dose,ingredientSource,...uncertain}=exposure;return uncertain;
+    const temporalContext=exposureTemporalContext(exposure.effective,input.asOf);
+    const timingNeedsReview=(exposure.useStatus==='reported-taken'&&temporalContext.future===true)||temporalContext.relation==='unusable-source-time';
+    if(exposure.useStatus==='reported-taken'&&!timingNeedsReview)return {...exposure,temporalContext,timingNeedsReview};
+    const {dose,ingredientSource,...uncertain}=exposure;return {...uncertain,temporalContext,timingNeedsReview};
    })}:{})};
    facts.push({...common,id:`observation:precision-checkin:${row.id}:gi-context`,metric:'reported-gi-context',amount:null,unit:null,sourceOriginal:null,context:{...reported,sourceLearnedAt:value.giSource?.learnedAt??null},clinicallyVerified:false});
   }
