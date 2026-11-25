@@ -1,3 +1,4 @@
+import {giSourceContextSchema,giSourceMetadataSchema,investigationSharingSchema} from './gi-source-context';
 import {additionalLabMarkers} from './additional-lab-markers';
 import {assessLabComparability,labComparabilityReasons} from './lab-comparability';
 import {supportsVitaminDStatus,vitaminDAssayIdentity,hasConfirmedLabIdentity} from "./lab-assay-identity";
@@ -764,6 +765,7 @@ export const metaboliteSchema = z
 export const contextSchema = z
   .object({
     geneticsSelection:geneticsSourceControlSchema.optional(),
+    investigationSharing:investigationSharingSchema.optional(),
     microbiomeFood:z.object({enabled:z.boolean(),reportId:z.string().min(1).max(100).nullable(),reportRevision:z.string().regex(/^[a-f0-9]{64}$/).nullable(),ignoredFoodIds:z.array(z.string().min(1).max(100)).max(200),nonce:z.string().uuid()}).strict().optional(),
     goals: z.array(z.string().trim().min(1).max(100)).max(20).default([]),
     medications: z.array(shortText).max(40).default([]),
@@ -788,6 +790,8 @@ export const checkinSchema = z
     planId: z.string().max(100).nullable(),
     notes: z.string().max(2000).default(""),
     entrySource:checkinEntrySourceSchema.optional(),
+    gi:giSourceContextSchema.optional(),
+    giSource:giSourceMetadataSchema.optional(),
   })
   .strict()
   .refine(
@@ -799,7 +803,7 @@ export const checkinSchema = z
         c.bloating,
         c.energy,
         c.adherencePercent,
-      ].some((v) => v !== null),
+      ].some((v) => v !== null)||c.gi!==undefined,
     "Record at least one observation",
   ).refine(c=>checkinEntrySourceMatches(c.entrySource,c),"Entered source values and units must match the canonical check-in observations");
 export const precisionEntrySchema = z.discriminatedUnion("kind", [
@@ -1295,7 +1299,7 @@ export function buildPrecisionReport(
   const checkins = entries
     .flatMap((e) =>
       e.parsed.success && e.parsed.data.kind === "checkin"
-        ? [{ id: e.record.id, ...e.parsed.data.payload }]
+        ? [{ id: e.record.id, ...(({gi:_privateGi,giSource:_privateSource,...legacy})=>legacy)(e.parsed.data.payload) }]
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));

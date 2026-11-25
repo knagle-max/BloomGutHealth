@@ -1,3 +1,4 @@
+import {investigationSharingSchema} from '../shared/gi-source-context';
 import {privateObservationSourceFacts} from './private-observation-source-facts';
 import {privateGeneticSourceFacts} from './private-genetic-source-facts';
 import {privateMicrobiomeSourceFacts} from './private-microbiome-source-facts';
@@ -42,8 +43,17 @@ export async function collectPrivateInvestigationSnapshot(input:{
   if(!user||user.id!==actor||records.length>1000||meals.length>2000||supplements.length>=2000||!await authorize(actor,'personal-wellness')) throw new InvestigationSnapshotUnavailable();
   const microbiome=samples?privateMicrobiomeSourceFacts(actor,samples,now):null;
   const genetics=geneticSelection?privateGeneticSourceFacts(actor,records,geneticSelection,now):null;
-  const observations=privateObservationSourceFacts({actor,precision:records,experience:{checkin:experienceCheckins,hydration,activity:activities,session:sessions},asOf:now,viewTimeZone:window.data.timeZone});
-  const wellness=buildWellnessContext(actor,context,user,now);
+  const sharingResult=investigationSharingSchema.safeParse(context&&typeof context==='object'&&'investigationSharing'in context?context.investigationSharing:undefined);
+  if(context&&typeof context==='object'&&'investigationSharing'in context&&!sharingResult.success)throw new InvestigationSnapshotUnavailable();
+  const sharing=sharingResult.success?sharingResult.data:{medicationChronology:false,menstrualPelvic:false};
+  let purposeContext=context;
+  if(context&&typeof context==='object'){
+    const {medications,currentSupplements,investigationSharing,...ordinary}=context as Record<string,unknown>;
+    purposeContext={...ordinary,...(sharing.medicationChronology?{...(medications!==undefined?{medications}:{}),...(currentSupplements!==undefined?{currentSupplements}:{})}:{})};
+    if(Array.isArray(ordinary.conditions)&&ordinary.conditions.length===0)delete (purposeContext as Record<string,unknown>).conditions;
+  }
+  const observations=privateObservationSourceFacts({actor,precision:records,experience:{checkin:experienceCheckins,hydration,activity:activities,session:sessions},asOf:now,viewTimeZone:window.data.timeZone,sharing});
+  const wellness=buildWellnessContext(actor,purposeContext,user,now);
   const intake=recordedIntakeSources({actor,...window.data,asOf:now.toISOString(),foods:meals.map(meal=>({id:meal.id,userId:meal.userId,name:meal.mealText.slice(0,160),loggedAt:meal.loggedAt,revision:mealRecordRevision(meal),analysis:meal.intelligence&&typeof meal.intelligence==='object'?meal.intelligence as any:null})),supplements:supplements.map(record=>({...record,userId:'userId'in record?record.userId:actor}))});
   const labRecords=records.filter(record=>record.kind==='lab');
   if(new Set(labRecords.map(record=>record.id)).size!==labRecords.length) throw new InvestigationSnapshotUnavailable();
@@ -74,7 +84,7 @@ export async function collectPrivateInvestigationSnapshot(input:{
   })));
   // Canonical source projection only; no private notes, genotype dumps, recipes,
   // causal windows, guessed doses or inferred unlogged intake are constructed.
-  const basis={version:'private-investigation-snapshot-v3',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,
+  const basis={version:'private-investigation-snapshot-v3',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,investigationSharing:sharingResult.success?sharingResult.data:{medicationChronology:false,menstrualPelvic:false,revision:null},
     facts:[...facts,...sourceFacts,...observations.facts,...(microbiome?.facts??[]),...(genetics?.facts??[])],geneticSource:genetics?{state:genetics.state,selectionRevision:genetics.selectionRevision,source:genetics.source}:null,microbiomeReports:microbiome?.reports.map(({facts,...report})=>report)??[],intakeEvents:intake.events.map(event=>({sourceId:event.recordId,revision:event.revision,kind:event.kind,occurredAt:event.occurredAt,dateBasis:event.kind==='food'?'food-record-time':'confirmed-taken-time',sourceStatus:event.sourceStatus,rowCount:event.rows.length})),observationSources:{feedRevisions:observations.feedRevisions,calendarFilteringBasis:observations.calendarFilteringBasis},wellness,
     missing:{unsupportedLabs,sourceOnlyLabs:allActive.length-active.length,futureLabs:active.length-facts.length,
       intakeCoverage:'partial-or-unknown' as const,intakeExcluded:{undated:intake.undatedEvents,future:intake.futureEvents,unsupported:intake.unsupportedEvents,conflicting:intake.conflictingEvents},

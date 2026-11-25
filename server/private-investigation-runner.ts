@@ -1,4 +1,4 @@
-import {groundInvestigationCandidate} from '../shared/biological-investigation';
+import {groundInvestigationCandidate,type BiologicalInvestigationCandidate} from '../shared/biological-investigation';
 import type {collectPrivateInvestigationSnapshot} from './biological-investigation-snapshot';
 import type {retrieveReviewedScientificEvidence} from './scientific-evidence-retrieval';
 
@@ -10,10 +10,11 @@ type Evidence=ReturnType<typeof retrieveReviewedScientificEvidence>;
  * this module does not provision one or authorize external health transfer. */
 export type PrivateInvestigationEngine={
  kind:'bloom-private-runtime';id:string;promptVersion:string;
- investigate:(input:{snapshot:Snapshot;evidence:Evidence;signal:AbortSignal})=>Promise<unknown>;
+ supportsCompetingHypothesisReview?:true;
+ investigate:(input:{snapshot:Snapshot;evidence:Evidence;signal:AbortSignal;pass?:'initial'|'challenge';previousCandidate?:BiologicalInvestigationCandidate;constraints?:readonly string[]})=>Promise<unknown>;
 };
-const fallback=(reason:string)=>({status:'abstain' as const,reason,keepExistingSourceReview:true as const,consumerInterpretation:null});
-/** First bounded one-pass orchestration, not a clinical verifier or public
+const fallback=(reason:string)=>({status:'abstain' as const,reason,keepExistingSourceReview:true as const,outcomeClassification:['D'] as const,consumerInterpretation:null});
+/** Bounded one- or two-pass orchestration, not a clinical verifier or public
  * recommendation path. Existing deterministic source review remains useful
  * when unavailable. Source/evidence/permission rechecks happen AFTER model work.
  * No private payload is forwarded through the public research adapter. */
@@ -23,8 +24,11 @@ export async function runPrivateInvestigation(input:{
  readSnapshot:()=>Promise<Snapshot>;
  retrieveEvidence:()=>Promise<Evidence>;
  timeoutMs?:number;
+ passes?:1|2;
 }){
  if(!input.actor||input.privateReasoningApproved!==true||!input.engine||input.engine.kind!=='bloom-private-runtime'||!input.engine.id||!input.engine.promptVersion)return fallback('private-engine-not-configured');
+ if(input.passes!==undefined&&input.passes!==1&&input.passes!==2)return fallback('invalid-pass-budget');
+ if(input.passes===2&&input.engine.supportsCompetingHypothesisReview!==true)return fallback('private-review-not-supported');
  const engine=input.engine,controller=new AbortController();
  if(input.timeoutMs!==undefined&&!Number.isFinite(input.timeoutMs))return fallback('invalid-budget');
  const timeout=Math.max(10,Math.min(input.timeoutMs??10_000,20_000));
@@ -39,7 +43,13 @@ export async function runPrivateInvestigation(input:{
   if(expired())return fallback('deadline');
   if(snapshot.accountScope!==input.actor||snapshot.purpose!=='personal-wellness'||snapshot.externalTransferPermitted!==false)return fallback('permission');
   if(!snapshot.facts.length||!evidence.cards.length)return fallback('insufficient-reviewed-context');
-  const untrusted=await engine.investigate({snapshot:structuredClone(snapshot),evidence:structuredClone(evidence),signal:controller.signal});
+  let previousCandidate:BiologicalInvestigationCandidate|undefined;
+  for(let pass=0;pass<(input.passes??1);pass++){
+  if(!await input.authorize()||expired())return fallback('permission');
+  const untrusted=await engine.investigate({snapshot:structuredClone(snapshot),evidence:structuredClone(evidence),signal:controller.signal,
+   pass:pass===0?'initial':'challenge',...(previousCandidate?{previousCandidate:structuredClone(previousCandidate)}:{}),
+   constraints:['Evaluate competing explanations and materially distinguishing unknowns.','Missing information is unknown, never normal or none.','Temporal proximity is not causal evidence.','Current medication names are not historical dose or adherence records.','Unreviewed taxa cannot diagnose SIBO or IMO.','No diagnosis, prescribing, treatment, personal risk score or shared knowledge promotion.'],
+  });
   // Timers cannot preempt a blocked event loop. Monotonic elapsed time still
   // refuses late output; actual private engines must separately bound compute.
   if(expired())return fallback('deadline');
@@ -53,7 +63,10 @@ export async function runPrivateInvestigation(input:{
    observationIds:current.facts.filter(fact=>!('computationEligible'in fact)||fact.computationEligible).map(fact=>fact.id),eligibleEvidenceIds:currentEvidence.cards.map(card=>card.review.id),
   });
   if(result.state==='abstain')return fallback(result.reason);
-  return {status:'research-only-unverified' as const,candidate:result.candidate,engineId:engine.id,promptVersion:engine.promptVersion,keepExistingSourceReview:true as const,consumerInterpretation:null};
+  if(pass===0&&input.passes===2&&!result.candidate.synthesis.abstention){previousCandidate=result.candidate;continue;}
+  return {status:'research-only-unverified' as const,candidate:result.candidate,engineId:engine.id,promptVersion:engine.promptVersion,keepExistingSourceReview:true as const,outcomeClassification:['D'] as const,consumerInterpretation:null};
+  }
+  return fallback('investigation-unavailable');
   };
   return await Promise.race([run(),expiry]);
  }catch{return fallback('investigation-unavailable');}

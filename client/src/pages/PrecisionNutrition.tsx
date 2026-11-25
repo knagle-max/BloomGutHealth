@@ -1,3 +1,6 @@
+import GiCheckinSource from '@/components/GiCheckinSource';
+import GiCheckinFields,{readGiCheckinFields} from '@/components/GiCheckinFields';
+import type {InvestigationSharing} from '@shared/gi-source-context';
 import BloodworkAtlas from "@/components/BloodworkAtlas";
 import LabSourceReviewDialog from '@/components/LabSourceReviewDialog';
 import EditorialMedia from "@/components/EditorialMedia";
@@ -215,7 +218,7 @@ export default function PrecisionNutrition() {
   const search=useSearch();
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
   const {user}=useAuth();
-  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
+  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null;sex?:"male"|"female"|null}>({queryKey:["/api/profile"],enabled:!!user});
   const [weightEntry,setWeightEntry]=useState<MassEntry>({unit:settings.displayUnits.bodyWeight,value:""});
   const [waistEntry,setWaistEntry]=useState<CircumferenceEntry>({unit:settings.displayUnits.circumference,value:""});
   const [draftError,setDraftError]=useState("");
@@ -258,17 +261,20 @@ export default function PrecisionNutrition() {
   const requestedEdit=new URLSearchParams(search).get("edit"),editGoals=requestedEdit==="goals"||requestedEdit==="health-context";
   useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLElement>(requestedEdit==='health-context'?'select[name="pregnancy"]':'input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,requestedEdit,result.data,result.fetchStatus,result.isError,context]);
 
+  const [giSharing,setGiSharing]=useState<InvestigationSharing|null>(null);
   const mutation = useMutation({
     mutationFn: async ({
       url,
       method = "POST",
       body,
+      headers,
     }: {
       url: string;
       method?: string;
       body?: unknown;
+      headers?:Record<string,string>;
     }) => {
-      const response = await apiRequest(method, url, body);
+      const response = await apiRequest(method, url, body, headers);
       return response.status === 204 ? null : response.json();
     },
     onSuccess: () => {
@@ -279,10 +285,10 @@ export default function PrecisionNutrition() {
       return invalidatePlanningInputs();
     },
   });
-  const send = (url: string, body: unknown, method = "POST") => {
+  const send = (url: string, body: unknown, method = "POST",headers?:Record<string,string>) => {
     setStatus("");
     setLocalError("");
-    mutation.mutate({ url, body, method });
+    mutation.mutate({ url, body, method,headers });
   };
   const [consent, setConsent] = useState(false),
     [geneticDate, setGeneticDate] = useState(localNow());
@@ -1175,9 +1181,12 @@ export default function PrecisionNutrition() {
                     try {
                       if(unfinished)throw Error("Finish or clear the weight and waist entries before saving.");
                       const d = new FormData(e.currentTarget);
+                      const gi=readGiCheckinFields(d);
+                      if(gi&&!giSharing)throw Error("Reload and review source privacy controls before saving GI context.");
                       send("/api/precision/records", {
                         kind: "checkin",
                         payload: {
+                          ...(gi?{gi}:{}),
                           measuredAt: date(d, "measuredAt"),
                           entrySource:captureCheckinEntrySource(weightEntry,waistEntry,{
                             bodyFatPercent:String(d.get("bodyFatPercent")??""),bloating:String(d.get("bloating")??""),
@@ -1192,13 +1201,14 @@ export default function PrecisionNutrition() {
                           planId: d.get("planId") || null,
                           notes: String(d.get("notes") || ""),
                         },
-                      });
+                      },"POST",gi?{"Idempotency-Key":crypto.randomUUID(),"X-Bloom-Source-Revision":giSharing!.revision}:undefined);
                     } catch (err) {
                       formError(err);
                     }
                   }}
                 >
                   <h2>Record your response</h2>
+                  {user&&<GiCheckinFields key={user.id} actor={user.id} female={currentProfile?.sex==='female'} onSharing={setGiSharing}/>}
                   <div className="space-y-2">
                     <p className="panel-note">You can optionally reuse the current weight from your saved Profile. Check that it matches your actual measurement for this date before saving; Bloom does not assume a Profile value was measured today.</p>
                     <Button type="button" variant="outline"
@@ -1337,6 +1347,7 @@ export default function PrecisionNutrition() {
                         </p>
                         <p>{c.notes}</p>
                         <CheckinEntrySource source={c.entrySource}/>
+                        {user&&<GiCheckinSource key={`${user.id}:${c.id}`} actor={user.id} id={c.id} onSaved={invalidatePlanningInputs}/>}
                       </div>
                       <Button
                         variant="outline"

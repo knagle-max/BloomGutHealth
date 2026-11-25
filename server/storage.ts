@@ -102,6 +102,11 @@ export interface IStorage extends ExperienceStore {
   updateReviewedMeal?(id:string,userId:string,revision:string,updates:MealUpdates,receipt:MealEditReceipt):Promise<Meal|undefined>;
   deleteMeal(id: string,userId:string): Promise<void>;
 
+  getInvestigationSharing?: PrecisionStorage["getInvestigationSharing"];
+  putInvestigationSharing?: PrecisionStorage["putInvestigationSharing"];
+  getCheckinSource?: PrecisionStorage["getCheckinSource"];
+  insertGiCheckin?: PrecisionStorage["insertGiCheckin"];
+  updateGiCheckin?: PrecisionStorage["updateGiCheckin"];
   getPrecisionContext(userId: string): Promise<unknown>;
   putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
   getPrecisionRecords(userId: string): Promise<PrecisionRecord[]>;
@@ -242,6 +247,11 @@ export class DatabaseStorage implements IStorage {
   deleteExperienceRecord: ExperienceStore["deleteExperienceRecord"] = (id,r) => this.experience.deleteExperienceRecord(id,r);
   clearExperienceData: ExperienceStore["clearExperienceData"] = (id) => this.experience.clearExperienceData(id);
   private readonly precision = new PrecisionStorage(db);
+  getInvestigationSharing: PrecisionStorage["getInvestigationSharing"] = (...args) => this.precision.getInvestigationSharing(...args);
+  putInvestigationSharing: PrecisionStorage["putInvestigationSharing"] = (...args) => this.precision.putInvestigationSharing(...args);
+  getCheckinSource: PrecisionStorage["getCheckinSource"] = (...args) => this.precision.getCheckinSource(...args);
+  insertGiCheckin: PrecisionStorage["insertGiCheckin"] = (...args) => this.precision.insertGiCheckin(...args);
+  updateGiCheckin: PrecisionStorage["updateGiCheckin"] = (...args) => this.precision.updateGiCheckin(...args);
   getPrecisionContext(userId: string) {
     return this.precision.getPrecisionContext(userId);
   }

@@ -1,3 +1,4 @@
+import {GiSourceError,giSourceContextSchema,investigationSharingCommandSchema} from '../shared/gi-source-context';
 import {labReferenceCorrectionCommandSchema} from '../shared/lab-reference-correction';
 import {labReportMetadataCommandSchema,LabReportMetadataError} from '../shared/lab-report-metadata';
 import {labSourceReviewSchema} from '../shared/lab-source-review';
@@ -49,6 +50,11 @@ type Store = Pick<
   | "getUser"
   | "getUserSamples"
   | "getPrecisionContext"
+  | "getInvestigationSharing"
+  | "putInvestigationSharing"
+  | "getCheckinSource"
+  | "insertGiCheckin"
+  | "updateGiCheckin"
   | "putPrecisionContext"
   | "getPrecisionRecords"
   | "insertPrecisionRecord"
@@ -531,8 +537,24 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
+  const giFailure=(res:any,error:unknown)=>error instanceof GiSourceError?res.status(error.status).json({error:error.message}):unavailable(res,error);
+  app.get('/api/precision/investigation-sharing',async(req,res)=>{
+    try{if(!store.getInvestigationSharing)return res.status(503).json({error:'Source privacy controls are unavailable.'});res.json(await store.getInvestigationSharing(req.session.userId!));}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/investigation-sharing',async(req,res)=>{
+    const input=investigationSharingCommandSchema.safeParse(req.body);if(!input.success)return res.status(400).json({error:'Review the current privacy choices.'});
+    try{if(!store.putInvestigationSharing)return res.status(503).json({error:'Source privacy controls are unavailable.'});res.json(await store.putInvestigationSharing(req.session.userId!,input.data));}catch(error){giFailure(res,error);}
+  });
+  app.get('/api/precision/checkins/:id/source',async(req,res)=>{
+    try{if(!store.getCheckinSource)return res.status(503).json({error:'Check-in sources are unavailable.'});const source=await store.getCheckinSource(req.session.userId!,req.params.id);if(!source)return res.status(404).json({error:'Check-in source is unavailable.'});res.json(source);}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/checkins/:id/context',async(req,res)=>{
+    const input=z.object({revision:z.string().regex(/^[a-f0-9]{64}$/),sharingRevision:z.string().uuid(),gi:giSourceContextSchema,confirmed:z.literal(true)}).strict().safeParse(req.body);
+    if(!input.success)return res.status(400).json({error:'Review the current check-in details.'});
+    try{if(!store.updateGiCheckin)return res.status(503).json({error:'Check-in correction is unavailable.'});res.json(await store.updateGiCheckin(req.session.userId!,req.params.id,input.data.revision,input.data.sharingRevision,input.data.gi));}catch(error){giFailure(res,error);}
+  });
   app.put("/api/precision/context", async (req, res) => {
-    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")))return res.status(400).json({error:"Manage dataset selection and report food preferences using their separate controls."});
+    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")||Object.hasOwn(req.body,"investigationSharing")))return res.status(400).json({error:"Manage dataset selection and report food preferences using their separate controls."});
     const p = contextSchema.safeParse(req.body);
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
@@ -567,7 +589,9 @@ export function registerPrecisionRoutes(
         .status(400)
         .json({ error: p.error.issues.map((i) => i.message).join("; ") });
     const saveKey=req.get("Idempotency-Key");
-    if(saveKey!==undefined&&(p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
+    const giCheckin=p.data.kind==="checkin"&&p.data.payload.gi!==undefined;
+    if(p.data.kind==="checkin"&&p.data.payload.giSource!==undefined)return res.status(400).json({error:"Source metadata is server managed."});
+    if(saveKey!==undefined&&(!giCheckin&&p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
     try {
       const userId = req.session.userId!;
       if (p.data.kind === "lab" && (p.data.payload.dateCorrection||p.data.payload.sourceCorrection))
@@ -584,6 +608,12 @@ export function registerPrecisionRoutes(
             .status(400)
             .json({ error: "Select one of your saved plans." });
       }
+      if(giCheckin){
+        const revision=req.get("X-Bloom-Source-Revision");
+        if(!store.insertGiCheckin)return res.status(503).json({error:"Check-in capture is unavailable."});
+        if(!z.string().uuid().safeParse(saveKey).success||!z.string().uuid().safeParse(revision).success)return res.status(400).json({error:"Review the current journal and save reference."});
+        return res.status(201).json(await store.insertGiCheckin(userId,p.data.payload,saveKey!,revision!));
+      }
       const record = await store.insertPrecisionRecord(
         userId,
         p.data.kind,
@@ -592,6 +622,7 @@ export function registerPrecisionRoutes(
       );
       res.status(201).json(record);
     } catch (e) {
+      if(e instanceof GiSourceError)return giFailure(res,e);
       if(e instanceof Error&&e.message==="PRECISION_SAVE_CONFLICT")return res.status(409).json({error:"This save reference belongs to different results. Retry the original result or start a separate reviewed entry."});
       unavailable(res, e);
     }

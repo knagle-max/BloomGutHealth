@@ -1,3 +1,4 @@
+import {investigationSharingSchema,investigationSharingCommandSchema,giSourceContextSchema,GiSourceError,type InvestigationSharing,type InvestigationSharingCommand} from '../shared/gi-source-context';
 import {geneticSourceRevision} from './genetic-source-version';
 import {referenceHash,referenceStreamId,referenceSourceRevision,referenceCorrectionView} from './lab-reference-corrections';
 import {labReferenceCorrectionCommandSchema,labReferenceCorrectionSchema,type LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
@@ -15,7 +16,7 @@ import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shar
 import { createHash,randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords,labReportMetadataVersions, users,microbiomeSamples } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, canonicalLab, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema,checkinSchema,precisionEntrySchema, activeLabObservations, activeLabRows, canonicalLab, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -26,6 +27,8 @@ import type {
   PrecisionRecord,
 } from "../shared/precision-nutrition";
 import type { db as appDatabase } from "./db";
+
+const zUuid=(value:string)=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 
 type PrecisionDatabase = Pick<
   typeof appDatabase,
@@ -62,6 +65,7 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
   return[{summary,members,valid,legacyId}];
  });
 }
+const isDeletedGi=(value:unknown)=>!!value&&typeof value==='object'&&'deletedGiSource'in value&&value.deletedGiSource===true;
 export class PrecisionStorage {
   constructor(private readonly db: PrecisionDatabase) {}
   async getPrecisionContext(userId: string): Promise<unknown> {
@@ -79,10 +83,10 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
-      if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined)throw new GeneticSourceError("read-only");
+      if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined||context.investigationSharing!==undefined)throw new GeneticSourceError("read-only");
       const[selectionProfile]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       const selectionContext=selectionProfile?contextSchema.parse(decryptPrecision(selectionProfile.encryptedContext,userId)):undefined;
-      let next:PrecisionContext={...context,...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{})};
+      let next:PrecisionContext={...context,...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{}),...(selectionContext?.investigationSharing?{investigationSharing:selectionContext.investigationSharing}:{})};
       if(context.intolerances===undefined){
         const [existing]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
         const previous=existing?decryptPrecision(existing.encryptedContext,userId):undefined;
@@ -98,6 +102,80 @@ export class PrecisionStorage {
         });
     });
   }
+  /** Same encrypted canonical context, same account lock. Initializing an opaque
+   * source-write revision grants no inference permission: both scopes start OFF. */
+  async getInvestigationSharing(userId:string):Promise<InvestigationSharing>{
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+      const[user]=await tx.select({id:users.id}).from(users).where(eq(users.id,userId)).for('key share');
+      if(!user)throw new GiSourceError(404,'Account source is unavailable.');
+      const[row]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      const raw=row?decryptPrecision(row.encryptedContext,userId):{};contextSchema.parse(raw);
+      const current=(raw as any).investigationSharing;if(current!==undefined)return investigationSharingSchema.parse(current);
+      const state:InvestigationSharing={version:1,revision:randomUUID(),changedAt:new Date().toISOString(),medicationChronology:false,menstrualPelvic:false};
+      const encryptedContext=encryptPrecision({...raw as object,investigationSharing:state},userId);
+      await tx.insert(precisionProfiles).values({userId,encryptedContext}).onConflictDoUpdate({target:precisionProfiles.userId,set:{encryptedContext,updatedAt:new Date()}});return state;
+    });
+  }
+  async putInvestigationSharing(userId:string,command:InvestigationSharingCommand):Promise<InvestigationSharing>{
+    const input=investigationSharingCommandSchema.parse(command);
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+      const[row]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      const raw=row?decryptPrecision(row.encryptedContext,userId):{},current=investigationSharingSchema.safeParse((raw as any).investigationSharing);
+      if(!current.success||current.data.revision!==input.revision)throw new GiSourceError(409,'Privacy choices changed. Refresh before saving.');
+      if(current.data.medicationChronology===input.medicationChronology&&current.data.menstrualPelvic===input.menstrualPelvic)return current.data;
+      const state:InvestigationSharing={version:1,revision:randomUUID(),changedAt:new Date().toISOString(),medicationChronology:input.medicationChronology,menstrualPelvic:input.menstrualPelvic};
+      await tx.update(precisionProfiles).set({encryptedContext:encryptPrecision({...raw as object,investigationSharing:state},userId),updatedAt:new Date()}).where(eq(precisionProfiles.userId,userId));return state;
+    });
+  }
+  private checkinSourceView(userId:string,row:{id:string;kind:string;encryptedPayload:unknown;createdAt:Date}){
+    const payload=checkinSchema.parse(decryptPrecision(row.encryptedPayload,userId));
+    const record={id:row.id,kind:row.kind,payload,createdAt:row.createdAt};
+    return {record,revision:createHash('sha256').update(JSON.stringify(['checkin-source-v1',userId,record])).digest('hex')};
+  }
+  async getCheckinSource(userId:string,id:string){
+    const[row]=await this.db.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id),eq(precisionRecords.kind,'checkin')));
+    return row&&!isDeletedGi(decryptPrecision(row.encryptedPayload,userId))?this.checkinSourceView(userId,row):null;
+  }
+  async insertGiCheckin(userId:string,payload:unknown,key:string,sharingRevision:string):Promise<PrecisionRecord>{
+    const input=checkinSchema.parse(payload);
+    if(!input.gi||input.giSource||!zUuid(key)||!zUuid(sharingRevision))throw new GiSourceError(400,'Review the check-in details and current source reference.');
+    const id=createHash('sha256').update(JSON.stringify(['gi-checkin-save-v1',userId,key])).digest('hex');
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+      const[profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      const raw=profile?decryptPrecision(profile.encryptedContext,userId):{},sharing=investigationSharingSchema.safeParse((raw as any).investigationSharing);
+      if(!sharing.success||sharing.data.revision!==sharingRevision)throw new GiSourceError(409,'Source privacy or account data changed. Review the current journal before starting a new entry.');
+      const[existing]=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if(existing){
+        if(existing.kind!=='checkin'||isDeletedGi(decryptPrecision(existing.encryptedPayload,userId)))throw new GiSourceError(409,'This entry was removed. Start a new entry if intended.');
+        const view=this.checkinSourceView(userId,existing),{giSource,...prior}=view.record.payload;
+        if(!isDeepStrictEqual(prior,input))throw new GiSourceError(409,'This save reference belongs to different source details.');
+        return view.record;
+      }
+      const data=checkinSchema.parse({...input,giSource:{version:1,revision:randomUUID(),learnedAt:new Date().toISOString(),previousSourceRevision:null}});
+      const[row]=await tx.insert(precisionRecords).values({id,userId,kind:'checkin',encryptedPayload:encryptPrecision(data,userId)}).returning();
+      return this.checkinSourceView(userId,row).record;
+    });
+  }
+  async updateGiCheckin(userId:string,id:string,sourceRevision:string,sharingRevision:string,gi:unknown){
+    const context=giSourceContextSchema.parse(gi);
+    if(!/^[a-f0-9]{64}$/.test(sourceRevision)||!zUuid(sharingRevision))throw new GiSourceError(400,'Review the current check-in source.');
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+      const[profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      const raw=profile?decryptPrecision(profile.encryptedContext,userId):{},sharing=investigationSharingSchema.safeParse((raw as any).investigationSharing);
+      if(!sharing.success||sharing.data.revision!==sharingRevision)throw new GiSourceError(409,'Source privacy or account data changed. Refresh before saving.');
+      const[row]=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id),eq(precisionRecords.kind,'checkin'))).for('update');
+      if(!row||isDeletedGi(decryptPrecision(row.encryptedPayload,userId)))throw new GiSourceError(404,'Check-in source is no longer available.');
+      const current=this.checkinSourceView(userId,row);if(current.revision!==sourceRevision)throw new GiSourceError(409,'This check-in changed. Review the latest source before saving.');
+      const payload=checkinSchema.parse({...current.record.payload,gi:context,giSource:{version:1,revision:randomUUID(),learnedAt:new Date().toISOString(),previousSourceRevision:sourceRevision}});
+      const encryptedPayload=encryptPrecision(payload,userId);
+      await tx.update(precisionRecords).set({encryptedPayload}).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      return this.checkinSourceView(userId,{...row,encryptedPayload});
+    });
+  }
   async getPrecisionRecords(userId: string): Promise<PrecisionRecord[]> {
     const rows = await this.db
       .select()
@@ -109,7 +187,7 @@ export class PrecisionStorage {
       kind: row.kind,
       payload: decryptPrecision(row.encryptedPayload, userId),
       createdAt: row.createdAt,
-    }));
+    })).filter(row=>!isDeletedGi(row.payload));
   }
   insertReviewedLab(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]){
     if(!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey))throw Error("LAB_SOURCE_CHANGED");
@@ -122,6 +200,7 @@ export class PrecisionStorage {
     saveKey?: string,
     reviewedLabMatches?:readonly string[],
   ): Promise<PrecisionRecord> {
+    if(kind==='checkin'&&payload&&typeof payload==='object'&&('gi'in payload||'giSource'in payload))throw new GiSourceError(400,'Use the source-reviewed GI check-in action.');
     if(kind===LAB_REPORT_METADATA_KIND)throw new LabReportMetadataError(400,'Use the source-reviewed report metadata action.');
     const encryptedPayload = encryptPrecision(payload, userId);
     return this.db.transaction(async (tx) => {
@@ -472,7 +551,12 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
-      const[target]=await tx.select({kind:precisionRecords.kind}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      const[target]=await tx.select({kind:precisionRecords.kind,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if(target?.kind==='checkin'&&isDeletedGi(decryptPrecision(target.encryptedPayload,userId)))return true;
+      if(target?.kind==='checkin'&&checkinSchema.parse(decryptPrecision(target.encryptedPayload,userId)).gi){
+        await tx.update(precisionRecords).set({encryptedPayload:encryptPrecision({deletedGiSource:true},userId)}).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+        await this.removeSourcePlans(tx,userId,new Set([id]));return true;
+      }
       if(target?.kind==="genetics")throw new GeneticSourceError("read-only");
       if(target?.kind===LAB_REPORT_METADATA_KIND)throw new LabReportMetadataError(400,'Report annotation history is removed with its laboratory source, not as an observation.');
       if(target?.kind==="lab"){

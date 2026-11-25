@@ -1,3 +1,4 @@
+import {privateGiView,type InvestigationSharing} from '../shared/gi-source-context';
 import {createHash} from 'node:crypto';
 import {z} from 'zod';
 import {checkinSchema as precisionCheckinSchema,type PrecisionRecord} from '../shared/precision-nutrition';
@@ -19,12 +20,12 @@ type SourceFact={
  timePrecision:'stored-timestamp-only'|'calendar-date-only'|'source-entered-timestamp'|'scheduled-field-not-confirmed-occurrence';
  timeZone:string|null;recordedAt:string;updatedAt:string|null;sourceOriginal:unknown;
  valueKind:'self-reported-observation'|'source-recorded-activity';scope:string;
- completion:'not-applicable'|'confirmed-performed'|'not-established';reportedActivity?:string;effort?:string|null;
+ context?:unknown;clinicallyVerified?:false;completion:'not-applicable'|'confirmed-performed'|'not-established';reportedActivity?:string;effort?:string|null;
 };
 /** Projection over existing owned readers, not a tracker, diagnosis, new store
  * or assertion of complete habitual intake/activity. Notes/capture prose are
  * excluded. A date-only record never acquires a fabricated midnight or zone. */
-export function privateObservationSourceFacts(input:{actor:string;precision:readonly PrecisionRecord[];experience:Record<ObservationFeedKind,readonly unknown[]>;asOf:Date;viewTimeZone:string}){
+export function privateObservationSourceFacts(input:{actor:string;precision:readonly PrecisionRecord[];experience:Record<ObservationFeedKind,readonly unknown[]>;asOf:Date;viewTimeZone:string;sharing?:Pick<InvestigationSharing,"medicationChronology"|"menstrualPelvic">}){
  if(!input.actor||!Number.isFinite(+input.asOf))throw Error('PRIVATE_OBSERVATION_SOURCE_UNAVAILABLE');
  const today=intakeCalendarDate(input.asOf.toISOString(),input.viewTimeZone);if(!today)throw Error('PRIVATE_OBSERVATION_SOURCE_UNAVAILABLE');
  const facts:SourceFact[]=[],stats:Record<string,FeedStats>={},feedRevisions:Record<string,string>={};
@@ -37,7 +38,7 @@ export function privateObservationSourceFacts(input:{actor:string;precision:read
   }}
   stats[kind]={records:rows.length,projected:0,unsupported:0,future:0,notPerformed:0};feedRevisions[kind]=hash(rows);
  };
- const precision=input.precision.filter(row=>row.kind==='checkin');initialize('precision-checkin',precision);
+ const precision=input.precision.filter(row=>row.kind==='checkin').map(row=>{const parsed=precisionCheckinSchema.safeParse(row.payload);if(!parsed.success)return row;const {gi,giSource,...legacy}=parsed.data;const view=gi?privateGiView(gi,input.sharing??{medicationChronology:false,menstrualPelvic:false}):null;return {...row,payload:{...legacy,...(view&&Object.keys(view).length>1?{gi:view,giSource}:{})}};});initialize('precision-checkin',precision);
  const header=(row:any,sourceKind:string)=>{
   const recordedAt=instant(row.createdAt),updatedAt=row.updatedAt===undefined?null:instant(row.updatedAt);
   if(typeof row.id!=='string'||!row.id||!recordedAt||(row.updatedAt!==undefined&&!updatedAt)){stats[sourceKind].unsupported++;return null;}
@@ -56,6 +57,16 @@ export function privateObservationSourceFacts(input:{actor:string;precision:read
   for(const [key,unit]of [['bloating','0-10'],['energy','0-10'],['weightKg','kg'],['waistCm','cm'],['bodyFatPercent','%'],['adherencePercent','%']]as const){
    const original=key==='weightKg'?value.entrySource?.fields.weight:key==='waistCm'?value.entrySource?.fields.waist:value.entrySource?.fields[key];
    append(common,key,value[key],unit,original??null);
+  }
+  if(value.gi){
+   const gi=privateGiView(value.gi,input.sharing??{medicationChronology:false,menstrualPelvic:false});
+   // All chronology remains reported context, never measured metabolism,
+   // a diagnosis, an inferred cycle phase or a causal relationship.
+   const reported={...gi,...(gi.exposures?{exposures:gi.exposures.map(exposure=>{
+    if(exposure.useStatus==='reported-taken')return exposure;
+    const {dose,ingredientSource,...uncertain}=exposure;return uncertain;
+   })}:{})};
+   facts.push({...common,id:`observation:precision-checkin:${row.id}:gi-context`,metric:'reported-gi-context',amount:null,unit:null,sourceOriginal:null,context:{...reported,sourceLearnedAt:value.giSource?.learnedAt??null},clinicallyVerified:false});
   }
   stats['precision-checkin'].projected++;
  }
