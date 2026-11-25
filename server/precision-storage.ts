@@ -552,8 +552,12 @@ export class PrecisionStorage {
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
       const[target]=await tx.select({kind:precisionRecords.kind,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
-      if(target?.kind==='checkin'&&isDeletedGi(decryptPrecision(target.encryptedPayload,userId)))return true;
-      if(target?.kind==='checkin'&&checkinSchema.parse(decryptPrecision(target.encryptedPayload,userId)).gi){
+      const checkinPayload=target?.kind==='checkin'?decryptPrecision(target.encryptedPayload,userId):undefined;
+      if(isDeletedGi(checkinPayload))return true;
+      // Deletion must also work for owned legacy observations that predate the
+      // current capture schema. Only explicit GI fields need replay protection;
+      // their presence also protects correction of a malformed old GI source.
+      if(checkinPayload&&typeof checkinPayload==='object'&&(Object.hasOwn(checkinPayload,'gi')||Object.hasOwn(checkinPayload,'giSource'))){
         await tx.update(precisionRecords).set({encryptedPayload:encryptPrecision({deletedGiSource:true},userId)}).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
         await this.removeSourcePlans(tx,userId,new Set([id]));return true;
       }

@@ -64,8 +64,7 @@
       "lifecycle": "Approved",
       "productionStatus": "Owner approved replacement Today botanical hero; final dark-left text-safe source PNG and desktop/mobile WebP exports delivered to Shared Library 2026-11-21. NOT committed to app, not visually verified, no rights/science/rendered acceptance claimed.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-today-meadow.webp",
-        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0001_Today_Approved_2026-11-21.zip"
+        "/images/editorial/heroes/bloom-today-meadow.webp"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -116,7 +115,10 @@
         "action": "Verify source package and handoff exact approved bytes; NO redesign",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0001_Today_Approved_2026-11-21.zip"
+      ]
     },
     {
       "id": "BVA-0002",
@@ -161,8 +163,7 @@
       "lifecycle": "Approved",
       "productionStatus": "Owner approved BVA-0002 Food still-life replacement, delivered original PNG + responsive desktop/mobile WebP in shared Library. Runtime mapping NOT changed and not visually verified.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
-        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0002_Food_Approved_2026-11-21(1).zip"
+        "/images/editorial/heroes/bloom-food-oatmeal-linen.webp"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -213,7 +214,10 @@
         "action": "Verify source package and handoff exact approved bytes; NO redesign",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0002_Food_Approved_2026-11-21(1).zip"
+      ]
     },
     {
       "id": "BVA-0003",
@@ -258,8 +262,7 @@
       "lifecycle": "Approved",
       "productionStatus": "Owner-approved refined Biology natural-history anatomical studio hero delivered to Shared Library with PNG desktop/mobile WebPs and SHA manifest. Illustrative anatomy and rights QA, app import and real-screen QA PENDING.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
-        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0003_Biology_Approved_2026-11-21.zip"
+        "/images/editorial/heroes/bloom-biology-abstract-cells.webp"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -309,7 +312,10 @@
         "action": "Verify source package and handoff exact approved bytes; NO redesign",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0003_Biology_Approved_2026-11-21.zip"
+      ]
     },
     {
       "id": "BVA-0004",
@@ -354,8 +360,7 @@
       "lifecycle": "Approved",
       "productionStatus": "Owner-approved Explore natural-history still-life replacement delivered to Shared Library with original PNG, desktop/mobile WebP and checksum manifest; NOT INTEGRATED OR VISUALLY VERIFIED.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
-        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0004_Explore_Approved_2026-11-21.zip"
+        "/images/editorial/heroes/bloom-explore-blueberry-macro.webp"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -406,7 +411,10 @@
         "action": "Verify source package and handoff exact approved bytes; NO redesign",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0004_Explore_Approved_2026-11-21.zip"
+      ]
     },
     {
       "id": "BVA-0005",
@@ -451,8 +459,7 @@
       "lifecycle": "Approved",
       "productionStatus": "Owner-approved Athlete trail-running mountain hero delivered as source PNG and desktop/mobile WebP in Shared Library; NOT integrated, rights/rendered review pending.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-athlete-mountains.webp",
-        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0005_Athlete_Approved_2026-11-21.zip"
+        "/images/editorial/heroes/bloom-athlete-mountains.webp"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -504,7 +511,10 @@
         "action": "Verify source package and handoff exact approved bytes; NO redesign",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0005_Athlete_Approved_2026-11-21.zip"
+      ]
     },
     {
       "id": "BVA-0006",
@@ -7051,12 +7061,17 @@
       "priority": "DEFERRED UNTIL EXERCISE SCOPE ELIGIBLE",
       "sourceRelation": {
         "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
-        "existingAssetAuditRequired": true
+        "existingAssetAuditRequired": true,
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
-      "integration": "NOT_INTEGRATED",
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false
+      },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
         "scientific": "Pending specialist anatomical boundary/accuracy and reviewed canonical exercise mapping",
@@ -7152,12 +7167,17 @@
       "priority": "DEFERRED UNTIL EXERCISE SCOPE ELIGIBLE",
       "sourceRelation": {
         "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
-        "existingAssetAuditRequired": true
+        "existingAssetAuditRequired": true,
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
-      "integration": "NOT_INTEGRATED",
+      "integration": {
+        "state": "NOT_INTEGRATED",
+        "verified": false
+      },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
         "scientific": "Pending specialist anatomical boundary/accuracy and reviewed canonical exercise mapping",
@@ -7259,12 +7279,17 @@
           "ONB-A01..A06",
           "Bloom_ONB_Six_Goals_Approved_2026-11-21.zip",
           "sha256:ca5c37ecb429f93c845d3ca23faf95c03ab392538ddf631d4b82b4c6a38f1ea3"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Approved",
       "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7306,12 +7331,17 @@
         "reference": [
           "ONB-A01..A06 goal icon request",
           "ONB-A09 four SVG icons are a separate existing delivered/design requirement; audit before production"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7354,12 +7384,17 @@
           "docs/visual-assets/BLOOM_REL_A01_A06_RELEASE_IDENTITY_ASSET_REVIEW_20261121.md",
           "REL-A01..A06",
           "REL-A05 future-only 4:5 requested not delivered"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "REL-A01..A06 design family source packages received; approval varies by sub-asset. A01 approved v3, A05 approved promotional templates (16:9,1:1,9:16 only), A06 approved direction; A02/A03/A04 contain conflicting inner review metadata despite approved outer bundle. No runtime import/actual-app verification or public release.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7413,12 +7448,17 @@
           "EE-01",
           "Bloom_Secret_Periodic_Table_Swipe_to_Unfold_Prototype(2).zip",
           "sha256:1c6c89825110b42375fa26e6a678f0164ad5cebce00626a81b9452a27cc7e4f9"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7461,15 +7501,17 @@
           "EE-03",
           "dna-helix-concept.svg",
           "sha256 ZIP:cebba941d4dd9795a4c6e496de245f2ff1366dca5e225558eaf3413fd54019b4"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Approved",
       "productionStatus": "EE-03 DNA Discovery owner-approved conceptual SVG and standalone design prototype, packaged in Shared Library and documented on GitHub; no runtime integration, scientific validation, actual-app accessibility QA or deployment.",
-      "filePaths": [
-        "/Bloom gut health/Agent Handoffs/Bloom_EE03_DNA_Discovery_Approved_2026-11-21.zip",
-        "docs/visual-assets/EE_03_DNA_DISCOVERY_OWNER_APPROVED_DELIVERY_20261121.md"
-      ],
-      "integration": "NOT_VERIFIED",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "OWNER_APPROVED: EE-03 illustration and interaction prototype (2026-11-21); implementation and real-app design QA pending",
         "scientific": "Conceptual DNA depiction not yet independently reviewed for accurate base-pair or bond geometry",
@@ -7495,7 +7537,11 @@
           "integration": "NOT_INTEGRATED",
           "scope": "Design approved only; source assets unchanged, runtime/science/accessibility/deployment pending"
         }
-      }
+      },
+      "sourceReferencePaths": [
+        "/Bloom gut health/Agent Handoffs/Bloom_EE03_DNA_Discovery_Approved_2026-11-21.zip",
+        "docs/visual-assets/EE_03_DNA_DISCOVERY_OWNER_APPROVED_DELIVERY_20261121.md"
+      ]
     },
     {
       "id": "BVA-0085",
@@ -7523,12 +7569,17 @@
           "REL-A04",
           "REL-A05",
           "Bloom_Easter_Eggs_EE02_EE05_Design_Review_2026-11-21(2).zip"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7570,12 +7621,17 @@
         "reference": [
           "EE-05",
           "Bloom_Easter_Eggs_EE02_EE05_Design_Review_2026-11-21(2).zip"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
       "filePaths": [],
-      "integration": "NOT_VERIFIED",
+      "integration": {
+        "state": "NOT_VERIFIED",
+        "verified": false
+      },
       "review": {
         "design": "per source handoff",
         "scientific": "as applicable, not presumed",
@@ -7660,7 +7716,9 @@
           "muscle contour fill geometry as symptom zones"
         ],
         "referenceViewBox": "0 0 320 820",
-        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring"
+        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "accessibility": {
         "regionLabels": "Human names and left/right; stable keyboard order, focus rings, 44px-equivalent touch targets through DOM/transparent hit paths",
@@ -7792,7 +7850,9 @@
         ],
         "baseSource": "Verified posterior base silhouette if approved; do not trace muscle activation pads into symptom map.",
         "referenceViewBox": "0 0 320 820",
-        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring"
+        "artworkMode": "overlay on existing hybrid PNG/vector base; original source bytes required for pixel-accurate authoring",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "accessibility": {
         "regionLabels": "Independent rear region labels, left/right and midline, keyboard order and focus semantics consistent with BVA-0087",
@@ -7924,7 +7984,9 @@
         ],
         "doNotReuse": [
           "training activation color scale as medical state"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "accessibility": {
         "states": "Shape plus label and focus treatment, not color alone; reduced-motion static styles, target>=44px via UI wrapper",
@@ -8039,7 +8101,8 @@
           "known recorded quantities",
           "applicable reference comparison"
         ],
-        "relatedDesignPacket": "docs/architecture/BLOOM_NUTRITION_COVERAGE_SYMPTOM_BODY_MAP_DESIGN_REVIEW_PACKET_20261122.md"
+        "relatedDesignPacket": "docs/architecture/BLOOM_NUTRITION_COVERAGE_SYMPTOM_BODY_MAP_DESIGN_REVIEW_PACKET_20261122.md",
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "Owner-supplied static editable five-SVG nutrition coverage UI study verified. Source/documentation only; Science interpretation APPROVED_WITH_CLARIFICATIONS, visual/functional implementation/accessibility not verified.",
@@ -8233,7 +8296,8 @@
         "baselineStyles": "BVA-0037 through BVA-0047",
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
         "otherSharedLibrary": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
-        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
+        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit",
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8338,7 +8402,8 @@
         "baselineStyles": "BVA-0037 through BVA-0047",
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
         "otherSharedLibrary": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Visual_Family_Crosswalk_2026-11-22.json",
-        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit"
+        "scope": "190 organisms: 94 original Tester1-related + 96 expanded catalogue; not a live Tester1 data audit",
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8441,7 +8506,9 @@
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "existingCompletedArt": "BVA-0037–0047",
-        "domain": "archaea"
+        "domain": "archaea",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8544,7 +8611,9 @@
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "existingCompletedArt": "BVA-0037–0047",
-        "domain": "eukaryotic protists"
+        "domain": "eukaryotic protists",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8647,7 +8716,9 @@
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "existingCompletedArt": "BVA-0037–0047",
-        "domain": "eukaryotic protists"
+        "domain": "eukaryotic protists",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8750,7 +8821,9 @@
         "fullCrosswalkLibrary": "/Bloom/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "mirror": "/Bloom gut health/Agent Handoffs/Bloom_Full_190_Microorganism_Morphology_Crosswalk_v2_2026-11-22.json",
         "existingCompletedArt": "BVA-0037–0047",
-        "domain": "eukaryotic protists"
+        "domain": "eukaryotic protists",
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER-APPROVED VISUAL PNG ORIGINALS AND OPTIMIZED WEBP PORTRAITS/THUMBNAILS DELIVERED IN UPLOADED V1 ZIP, verified source manifest; V2 selected primary byte-matches one original. NOT YET CHECKED INTO GITHUB/INTEGRATED; scientific taxonomy, art rights and app QA pending.",
@@ -8855,7 +8928,9 @@
         "reuse": [
           "existing morphology style resolver",
           "neutral U00 fallback"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
@@ -8935,7 +9010,9 @@
         "reuse": [
           "existing morphology style resolver",
           "neutral U00 fallback"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
@@ -9015,7 +9092,9 @@
         "reuse": [
           "existing morphology style resolver",
           "neutral U00 fallback"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
@@ -9095,7 +9174,9 @@
         "reuse": [
           "existing morphology style resolver",
           "neutral U00 fallback"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
@@ -9175,7 +9256,9 @@
         "reuse": [
           "existing morphology style resolver",
           "neutral U00 fallback"
-        ]
+        ],
+        "existingRegistry": null,
+        "existingSlot": null
       },
       "lifecycle": "Briefed",
       "productionStatus": "OWNER APPROVED SOURCE ORIGINAL PNG delivered in v2 ZIP, no optimized variants in this package; NO current 190 taxon mappings, NOT INTEGRATED, taxonomy/rights/app review pending.",
