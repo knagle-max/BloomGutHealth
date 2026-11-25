@@ -1,3 +1,4 @@
+import ConditionSelector from '@/components/ConditionSelector';
 import {ageInYear} from '@shared/profile-demographics';
 import { BLOOM_CURRENT_RELEASE } from "@shared/product-release";
 import EditorialMedia from "@/components/EditorialMedia";
@@ -295,6 +296,7 @@ export default function Profile({
       <section id="food-preferences" className="profile-preference-section"><DietaryPreferenceSummary /><MicrobiomeFoodPreferences key={user?.id}/></section>
             </div></details>
 
+      <details id="health-profile" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Health Profile</strong><span>Medical conditions & health concerns</span></summary><div className="pt-4">{user&&<ConditionSelector key={user.id} actor={user.id} onSaved={invalidatePlanningInputs}/>}</div></details>
       <details id="connections" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Connected data</strong><span>Device availability and stored source records</span></summary><div className="pt-4"><ConnectionsOverview/></div></details>
       <details className="profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & export</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
         <h2>Manage your account records</h2>

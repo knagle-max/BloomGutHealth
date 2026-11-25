@@ -102,6 +102,8 @@ export interface IStorage extends ExperienceStore {
   updateReviewedMeal?(id:string,userId:string,revision:string,updates:MealUpdates,receipt:MealEditReceipt):Promise<Meal|undefined>;
   deleteMeal(id: string,userId:string): Promise<void>;
 
+  getConditionContext?: PrecisionStorage["getConditionContext"];
+  putConditionContext?: PrecisionStorage["putConditionContext"];
   getInvestigationSharing?: PrecisionStorage["getInvestigationSharing"];
   putInvestigationSharing?: PrecisionStorage["putInvestigationSharing"];
   getCheckinSource?: PrecisionStorage["getCheckinSource"];
@@ -247,6 +249,8 @@ export class DatabaseStorage implements IStorage {
   deleteExperienceRecord: ExperienceStore["deleteExperienceRecord"] = (id,r) => this.experience.deleteExperienceRecord(id,r);
   clearExperienceData: ExperienceStore["clearExperienceData"] = (id) => this.experience.clearExperienceData(id);
   private readonly precision = new PrecisionStorage(db);
+  getConditionContext: PrecisionStorage["getConditionContext"] = (...args) => this.precision.getConditionContext(...args);
+  putConditionContext: PrecisionStorage["putConditionContext"] = (...args) => this.precision.putConditionContext(...args);
   getInvestigationSharing: PrecisionStorage["getInvestigationSharing"] = (...args) => this.precision.getInvestigationSharing(...args);
   putInvestigationSharing: PrecisionStorage["putInvestigationSharing"] = (...args) => this.precision.putInvestigationSharing(...args);
   getCheckinSource: PrecisionStorage["getCheckinSource"] = (...args) => this.precision.getCheckinSource(...args);

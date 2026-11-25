@@ -1,3 +1,4 @@
+import {conditionContextNeedsReview} from '../shared/condition-context';
 import {createHash} from "node:crypto";
 import {contextSchema} from "../shared/precision-nutrition";
 import {preferenceSchema} from "../shared/meal-intelligence";
@@ -24,7 +25,7 @@ export function buildWellnessContext(accountScope:string,rawContext:unknown,user
     ageGroup:resolved.context.ageGroup,pregnancy:context.pregnancy,safetyReviewed:resolved.context.safetyReviewed,
     allergies:has(rawContext,"allergies")?context.allergies:null,
     intolerances:has(rawContext,"intolerances")?context.intolerances??null:null,
-    conditions:has(rawContext,"conditions")?context.conditions:null,
+    conditions:conditionContextNeedsReview(context)?null:has(rawContext,"conditions")?context.conditions:null,
     medications:has(rawContext,"medications")?context.medications:null,
   };
   const preferenceView:WellnessContext["preferences"]={
@@ -41,7 +42,7 @@ export function buildWellnessContext(accountScope:string,rawContext:unknown,user
   if(!constraints.safetyReviewed)missing.push("safety-context-not-reviewed");
   const evidenceVersion=revision(["goal-evidence-v1",goalSources]);
   const inputSources:WellnessContext["inputSources"]=[];
-  if(recorded)inputSources.push({sourceId:"saved-health-context",revision:revision([accountScope,"health-context",context.goals,constraints]),observedAt:null,dateStatus:"not-recorded",valueKind:"self-reported",permissionScope:"own-account-app"});
+  if(recorded)inputSources.push({sourceId:"saved-health-context",revision:revision([accountScope,"health-context",context.goals,constraints,context.conditionSource??null]),observedAt:null,dateStatus:"not-recorded",valueKind:"self-reported",permissionScope:"own-account-app"});
   if(has(user,"age")||(user.dietaryPreferences!==undefined&&user.dietaryPreferences!==null&&preferences))inputSources.push({sourceId:"nutrition-profile",revision:revision([accountScope,"nutrition-profile",profileGoals,preferenceView,resolved.ageSources]),observedAt:null,dateStatus:"not-recorded",valueKind:"self-reported",permissionScope:"own-account-app"});
   const sources=goalSources.filter(source=>goals.some(goal=>goal.sourceIds.includes(source.id)));
   const basis={version:"wellness-context-2026-11-07.1" as const,accountScope,purpose:"personal-wellness" as const,evidenceVersion,goals,sources,constraints,preferences:preferenceView,inputSources,missing,conflicts:resolved.blocks};

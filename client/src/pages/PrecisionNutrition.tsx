@@ -1,3 +1,4 @@
+import ConditionSelector from '@/components/ConditionSelector';
 import GiCheckinSource from '@/components/GiCheckinSource';
 import GiCheckinFields,{readGiCheckinFields} from '@/components/GiCheckinFields';
 import type {InvestigationSharing} from '@shared/gi-source-context';
@@ -122,7 +123,7 @@ function ContextEditor({
             goals: list(data.get("goals")),
             medications: list(data.get("medications")),
             currentSupplements: list(data.get("currentSupplements")),
-            conditions: list(data.get("conditions")),
+            conditions: context.conditions,
             allergies: list(data.get("allergies")),
             intolerances: list(data.get("intolerances")),
             ageGroup: data.get("ageGroup"),
@@ -151,7 +152,6 @@ function ContextEditor({
         [
           ["medications", "Medications"],
           ["currentSupplements", "Current supplements, including doses"],
-          ["conditions", "Medical conditions"],
           ["allergies", "Food allergies / medical food restrictions"],
           ["intolerances", "Reported food intolerances"],
         ] as const
@@ -258,8 +258,8 @@ export default function PrecisionNutrition() {
   });
   const context=result.data?.context??contextSchema.parse({});
   const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
-  const requestedEdit=new URLSearchParams(search).get("edit"),editGoals=requestedEdit==="goals"||requestedEdit==="health-context";
-  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLElement>(requestedEdit==='health-context'?'select[name="pregnancy"]':'input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,requestedEdit,result.data,result.fetchStatus,result.isError,context]);
+  const requestedEdit=new URLSearchParams(search).get("edit"),editGoals=requestedEdit==="goals"||requestedEdit==="health-context"||requestedEdit==="medical-conditions";
+  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLElement>(requestedEdit==='medical-conditions'?'#medical-conditions-heading':requestedEdit==='health-context'?'select[name="pregnancy"]':'input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,requestedEdit,result.data,result.fetchStatus,result.isError,context]);
 
   const [giSharing,setGiSharing]=useState<InvestigationSharing|null>(null);
   const mutation = useMutation({
@@ -480,8 +480,9 @@ export default function PrecisionNutrition() {
                 <details ref={goalsDisclosure} className="workspace-disclosure biology-context">
                 <summary>Your goals & health context</summary>
                 {!context.safetyReviewed&&<p className="panel-note">Health context has not been reviewed. Personal guidance may be unavailable.</p>}
+                {user&&<ConditionSelector key={user.id} actor={user.id} onSaved={invalidatePlanningInputs}/>}
                 <ContextEditor
-                  key={JSON.stringify(r.context)}
+                  key={JSON.stringify({...r.context,conditions:undefined})}
                   context={context}
                   pending={mutation.isPending}
                   onSave={(data) => send("/api/precision/context", data, "PUT")}

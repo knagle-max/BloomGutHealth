@@ -1,3 +1,4 @@
+import {conditionContextCommandSchema,type ConditionContextCommand,type ConditionContextView} from '../shared/condition-context';
 import {investigationSharingSchema,investigationSharingCommandSchema,giSourceContextSchema,GiSourceError,type InvestigationSharing,type InvestigationSharingCommand} from '../shared/gi-source-context';
 import {geneticSourceRevision} from './genetic-source-version';
 import {referenceHash,referenceStreamId,referenceSourceRevision,referenceCorrectionView} from './lab-reference-corrections';
@@ -83,10 +84,11 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
-      if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined||context.investigationSharing!==undefined)throw new GeneticSourceError("read-only");
+      if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined||context.investigationSharing!==undefined||context.conditionSource!==undefined)throw new GeneticSourceError("read-only");
       const[selectionProfile]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       const selectionContext=selectionProfile?contextSchema.parse(decryptPrecision(selectionProfile.encryptedContext,userId)):undefined;
-      let next:PrecisionContext={...context,...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{}),...(selectionContext?.investigationSharing?{investigationSharing:selectionContext.investigationSharing}:{})};
+      if(selectionContext?.conditionSource&&!isDeepStrictEqual(context.conditions,selectionContext.conditions))throw new GiSourceError(409,'Condition selections changed. Refresh before saving other health context.');
+      let next:PrecisionContext={...context,...(selectionContext?.conditionSource?{conditions:selectionContext.conditions,conditionSource:selectionContext.conditionSource}:{}),...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{}),...(selectionContext?.investigationSharing?{investigationSharing:selectionContext.investigationSharing}:{})};
       if(context.intolerances===undefined){
         const [existing]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
         const previous=existing?decryptPrecision(existing.encryptedContext,userId):undefined;
@@ -100,6 +102,35 @@ export class PrecisionStorage {
           target: precisionProfiles.userId,
           set: { encryptedContext, updatedAt: new Date() },
         });
+    });
+  }
+  private conditionView(userId:string,raw:unknown):ConditionContextView{
+    const context=contextSchema.parse(raw);
+    if(context.conditionSource&&((context.conditionSource.assertion==='reported')!==(context.conditions.length>0)))throw new GiSourceError(503,'Condition source assertions are inconsistent.');
+    if(!context.investigationSharing)throw new GiSourceError(409,'Account sources changed. Reload condition selections.');
+    return {revision:createHash('sha256').update(JSON.stringify(['condition-context-v1',userId,context.investigationSharing.revision,context.conditionSource??null,context.conditions])).digest('hex'),conditions:context.conditions,assertion:context.conditionSource?.assertion??(context.conditions.length?'reported':'unknown'),source:context.conditionSource?'user-selected-unverified':'legacy-unverified'};
+  }
+  async getConditionContext(userId:string):Promise<ConditionContextView>{
+    await this.getInvestigationSharing(userId);
+    return this.conditionView(userId,await this.getPrecisionContext(userId));
+  }
+  async putConditionContext(userId:string,command:ConditionContextCommand):Promise<ConditionContextView>{
+    const input=conditionContextCommandSchema.parse(command);
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+      const[row]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      if(!row)throw new GiSourceError(409,'Account sources changed. Reload condition selections.');
+      const raw=decryptPrecision(row.encryptedContext,userId),view=this.conditionView(userId,raw);
+      const context=contextSchema.parse(raw);
+      if(view.revision!==input.revision){
+        if(context.conditionSource?.previousRevision===input.revision&&context.conditionSource.sharingRevision===context.investigationSharing?.revision&&view.assertion===input.assertion&&isDeepStrictEqual(view.conditions,input.conditions))return view;
+        throw new GiSourceError(409,'Condition selections or privacy choices changed. Reload before saving.');
+      }
+      if(context.conditionSource&&view.assertion===input.assertion&&isDeepStrictEqual(view.conditions,input.conditions))return view;
+      const next={...raw as object,conditions:input.conditions,conditionSource:{version:1 as const,revision:randomUUID(),previousRevision:input.revision,sharingRevision:context.investigationSharing!.revision,assertion:input.assertion,confirmedAt:new Date().toISOString()}};
+      contextSchema.parse(next);
+      await tx.update(precisionProfiles).set({encryptedContext:encryptPrecision(next,userId),updatedAt:new Date()}).where(eq(precisionProfiles.userId,userId));
+      return this.conditionView(userId,next);
     });
   }
   /** Same encrypted canonical context, same account lock. Initializing an opaque

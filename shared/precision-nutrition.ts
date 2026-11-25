@@ -1,3 +1,4 @@
+import {conditionSourceSchema,conditionContextNeedsReview} from './condition-context';
 import {giSourceContextSchema,giSourceMetadataSchema,investigationSharingSchema} from './gi-source-context';
 import {additionalLabMarkers} from './additional-lab-markers';
 import {assessLabComparability,labComparabilityReasons} from './lab-comparability';
@@ -766,6 +767,7 @@ export const contextSchema = z
   .object({
     geneticsSelection:geneticsSourceControlSchema.optional(),
     investigationSharing:investigationSharingSchema.optional(),
+    conditionSource:conditionSourceSchema.optional(),
     microbiomeFood:z.object({enabled:z.boolean(),reportId:z.string().min(1).max(100).nullable(),reportRevision:z.string().regex(/^[a-f0-9]{64}$/).nullable(),ignoredFoodIds:z.array(z.string().min(1).max(100)).max(200),nonce:z.string().uuid()}).strict().optional(),
     goals: z.array(z.string().trim().min(1).max(100)).max(20).default([]),
     medications: z.array(shortText).max(40).default([]),
@@ -918,6 +920,7 @@ export function buildPrecisionReport(
   report: TaxonReport | null,
   now = Date.now(),
 ) {
+  if(conditionContextNeedsReview(context))context={...context,safetyReviewed:false};
   const entries = records.map((r) => ({
     record: r,
     parsed: precisionEntrySchema.safeParse({

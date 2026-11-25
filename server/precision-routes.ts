@@ -1,3 +1,4 @@
+import {conditionContextCommandSchema} from '../shared/condition-context';
 import {GiSourceError,giSourceContextSchema,investigationSharingCommandSchema} from '../shared/gi-source-context';
 import {labReferenceCorrectionCommandSchema} from '../shared/lab-reference-correction';
 import {labReportMetadataCommandSchema,LabReportMetadataError} from '../shared/lab-report-metadata';
@@ -50,6 +51,8 @@ type Store = Pick<
   | "getUser"
   | "getUserSamples"
   | "getPrecisionContext"
+  | "getConditionContext"
+  | "putConditionContext"
   | "getInvestigationSharing"
   | "putInvestigationSharing"
   | "getCheckinSource"
@@ -538,6 +541,13 @@ export function registerPrecisionRoutes(
     }
   });
   const giFailure=(res:any,error:unknown)=>error instanceof GiSourceError?res.status(error.status).json({error:error.message}):unavailable(res,error);
+  app.get('/api/precision/conditions',async(req,res)=>{
+    try{if(!store.getConditionContext)return res.status(503).json({error:'Condition selection is unavailable.'});res.json(await store.getConditionContext(req.session.userId!));}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/conditions',async(req,res)=>{
+    const input=conditionContextCommandSchema.safeParse(req.body);if(!input.success)return res.status(400).json({error:'Review the condition selections and response state (maximum 30).'});
+    try{if(!store.putConditionContext)return res.status(503).json({error:'Condition selection is unavailable.'});res.json(await store.putConditionContext(req.session.userId!,input.data));}catch(error){giFailure(res,error);}
+  });
   app.get('/api/precision/investigation-sharing',async(req,res)=>{
     try{if(!store.getInvestigationSharing)return res.status(503).json({error:'Source privacy controls are unavailable.'});res.json(await store.getInvestigationSharing(req.session.userId!));}catch(error){giFailure(res,error);}
   });
@@ -554,7 +564,7 @@ export function registerPrecisionRoutes(
     try{if(!store.updateGiCheckin)return res.status(503).json({error:'Check-in correction is unavailable.'});res.json(await store.updateGiCheckin(req.session.userId!,req.params.id,input.data.revision,input.data.sharingRevision,input.data.gi));}catch(error){giFailure(res,error);}
   });
   app.put("/api/precision/context", async (req, res) => {
-    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")||Object.hasOwn(req.body,"investigationSharing")))return res.status(400).json({error:"Manage dataset selection and report food preferences using their separate controls."});
+    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")||Object.hasOwn(req.body,"investigationSharing")||Object.hasOwn(req.body,"conditionSource")))return res.status(400).json({error:"Manage dataset selection, condition selections and report food preferences using their separate controls."});
     const p = contextSchema.safeParse(req.body);
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
@@ -562,7 +572,7 @@ export function registerPrecisionRoutes(
       await store.putPrecisionContext(req.session.userId!, p.data);
       res.json(p.data);
     } catch (e) {
-      unavailable(res, e);
+      giFailure(res, e);
     }
   });
   app.post("/api/precision/labs/import", async(req,res)=>{

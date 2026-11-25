@@ -50,7 +50,7 @@ export async function collectPrivateInvestigationSnapshot(input:{
   if(context&&typeof context==='object'){
     const {medications,currentSupplements,investigationSharing,...ordinary}=context as Record<string,unknown>;
     purposeContext={...ordinary,...(sharing.medicationChronology?{...(medications!==undefined?{medications}:{}),...(currentSupplements!==undefined?{currentSupplements}:{})}:{})};
-    if(Array.isArray(ordinary.conditions)&&ordinary.conditions.length===0)delete (purposeContext as Record<string,unknown>).conditions;
+    if(Array.isArray(ordinary.conditions)&&ordinary.conditions.length===0&&!(ordinary.conditionSource&&typeof ordinary.conditionSource==='object'&&'assertion'in ordinary.conditionSource&&ordinary.conditionSource.assertion==='none-reported'))delete (purposeContext as Record<string,unknown>).conditions;
   }
   const observations=privateObservationSourceFacts({actor,precision:records,experience:{checkin:experienceCheckins,hydration,activity:activities,session:sessions},asOf:now,viewTimeZone:window.data.timeZone,sharing});
   const wellness=buildWellnessContext(actor,purposeContext,user,now);

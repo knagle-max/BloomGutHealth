@@ -1,3 +1,4 @@
+import {conditionContextNeedsReview} from '../shared/condition-context';
 import type {PrecisionContext} from '../shared/precision-nutrition';
 /** Reconcile self-reported sources conservatively; never verify age, grant a
  * capability, upgrade an unknown/under18 context, or overwrite stored inputs. */
@@ -14,5 +15,6 @@ export function resolvePlanningContext(recorded:PrecisionContext,profileAge:unkn
   context={...recorded,ageGroup:recorded.ageGroup==='under18'?'under18':'unknown',safetyReviewed:false};
   blocks.push('Your recorded Profile age needs review. Adult nutrition planning is unavailable while these inputs are inconsistent.');
  }
+ if(conditionContextNeedsReview(context)){context={...context,safetyReviewed:false};blocks.push('Condition context is unknown or inconsistent. Review it before personalized nutrition planning.');}
  return {context,blocks,ageSources:{nutritionProfile:profileGroup,precisionContext:recorded.ageGroup,effectivePlanningGroup:context.ageGroup}};
 }
