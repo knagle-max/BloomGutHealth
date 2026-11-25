@@ -1,0 +1,204 @@
+{
+  "date": "2026-11-25",
+  "task": "GI-01..GI-10 baseline only",
+  "inspectedSourceCommit": "84c2f1c66c1575e7e7196f1166f2d70a43a73772",
+  "runtimeCodeChanged": false,
+  "schemaChanged": false,
+  "providerOrNetworkActivated": false,
+  "personalDataUsed": false,
+  "summary": {
+    "cases": 10,
+    "subresults": 3,
+    "actualModelCalls": 0,
+    "scientificallyEvaluatedCases": 0,
+    "scientificPasses": 0,
+    "sourceProbes": 10,
+    "sharedScienceWrites": 0,
+    "notACompletedSecurityAudit": true
+  },
+  "currentHeadExistingControlTests": {
+    "passed": 78,
+    "failed": 0,
+    "skipped": 0,
+    "notScientificValidation": true
+  },
+  "caseReceipts": [
+    {
+      "testId": "GI-01",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-02",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-03",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-04",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-05",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-06",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-07",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-08",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE",
+        "SNAPSHOT_UNWIRED"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-09",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    },
+    {
+      "testId": "GI-10",
+      "caseInputStatus": "PARTIAL",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "EVIDENCE_BLOCKED",
+        "INPUT_UNAVAILABLE"
+      ],
+      "hardAssertionsPassed": false,
+      "materialHypothesesEvaluated": 0,
+      "consumerAuthorization": "NOT_AUTHORIZED"
+    }
+  ],
+  "subresults": [
+    {
+      "testId": "GI-10a",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "INPUT_UNAVAILABLE"
+      ],
+      "hardAssertionsPassed": false
+    },
+    {
+      "testId": "GI-10b",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "INPUT_UNAVAILABLE"
+      ],
+      "hardAssertionsPassed": false
+    },
+    {
+      "testId": "GI-10c",
+      "scientificReview": "NOT_TESTED",
+      "failureCategories": [
+        "HARNESS_LIMITATION",
+        "INPUT_UNAVAILABLE"
+      ],
+      "hardAssertionsPassed": false
+    }
+  ],
+  "localOnlyArtifacts": {
+    "path": "/workspace/artifacts/gi-baseline-20261125",
+    "receipt": "GI_BASELINE_RECEIPTS.json",
+    "receiptSha256": "ca4021e1d0db6364183c711f9f38c8a32865dd3f878f4a93ff02687228c2007a",
+    "driver": "run-baseline.mts",
+    "driverSha256": "9edf1e604fb7d7174948a50537acae06775a6ff60c846c1d3a46ebd160417e34",
+    "engineeringLogSha256": "8ada59d198c912e8208274e8a7e960432704c209ef83ba4e799b7149b96e9430"
+  },
+  "stopBoundary": "Await scoped baseline review before any correction or ordinary INV04/art implementation",
+  "independentHoldout": "Fresh unseen variants required; no answer keys generated or committed"
+}
