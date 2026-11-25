@@ -46,7 +46,14 @@ export async function runPrivateInvestigation(input:{
   let previousCandidate:BiologicalInvestigationCandidate|undefined;
   for(let pass=0;pass<(input.passes??1);pass++){
   if(!await input.authorize()||expired())return fallback('permission');
-  const untrusted=await engine.investigate({snapshot:structuredClone(snapshot),evidence:structuredClone(evidence),signal:controller.signal,
+  // Scope changes can occur during authorization between passes. Recollect
+  // before each invocation as well as after it; never reuse the first private
+  // snapshot merely because overall personal-wellness permission remains true.
+  const [beforePass,beforeEvidence]=await Promise.all([input.readSnapshot(),input.retrieveEvidence()]);
+  if(expired())return fallback('deadline');
+  if(beforePass.accountScope!==input.actor||beforePass.purpose!=='personal-wellness'||beforePass.externalTransferPermitted!==false)return fallback('permission');
+  if(beforePass.sourceEpoch!==snapshot.sourceEpoch||beforePass.snapshotId!==snapshot.snapshotId||beforeEvidence.evidenceVersion!==evidence.evidenceVersion)return fallback('sources-changed');
+  const untrusted=await engine.investigate({snapshot:structuredClone(beforePass),evidence:structuredClone(beforeEvidence),signal:controller.signal,
    pass:pass===0?'initial':'challenge',...(previousCandidate?{previousCandidate:structuredClone(previousCandidate)}:{}),
    constraints:['Evaluate competing explanations and materially distinguishing unknowns.','Missing information is unknown, never normal or none.','Temporal proximity is not causal evidence.','Current medication names are not historical dose or adherence records.','Unreviewed taxa cannot diagnose SIBO or IMO.','No diagnosis, prescribing, treatment, personal risk score or shared knowledge promotion.'],
   });
