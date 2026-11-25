@@ -1347,7 +1347,7 @@ export default function PrecisionNutrition() {
                         </p>
                         <p>{c.notes}</p>
                         <CheckinEntrySource source={c.entrySource}/>
-                        {user&&<GiCheckinSource key={`${user.id}:${c.id}`} actor={user.id} id={c.id} onSaved={invalidatePlanningInputs}/>}
+                        {user&&<GiCheckinSource key={`${user.id}:${c.id}`} actor={user.id} id={c.id} female={currentProfile?.sex==='female'} onSaved={invalidatePlanningInputs}/>}
                       </div>
                       <Button
                         variant="outline"
