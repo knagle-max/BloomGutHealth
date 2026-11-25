@@ -1,3 +1,4 @@
+import {privateObservationSourceFacts} from './private-observation-source-facts';
 import {privateGeneticSourceFacts} from './private-genetic-source-facts';
 import {privateMicrobiomeSourceFacts} from './private-microbiome-source-facts';
 import { createHash } from 'node:crypto';
@@ -33,13 +34,15 @@ export async function collectPrivateInvestigationSnapshot(input:{
   if(input.includeGenetics&&!store.getGeneticSources)throw new InvestigationSnapshotUnavailable();
   const load=()=>Promise.all([
     store.getUser(actor),store.getPrecisionContext(actor),store.getPrecisionRecords(actor),store.getMeals(actor),store.getExperienceRecords(actor,'supplement-intake'),input.includeMicrobiome?store.getUserSamples!(actor):undefined,input.includeGenetics?store.getGeneticSources!(actor):undefined,
+    store.getExperienceRecords(actor,'checkin'),store.getExperienceRecords(actor,'hydration'),store.getExperienceRecords(actor,'activity'),store.getExperienceRecords(actor,'session'),
   ]);
   const sources=await load();
-  const [user,context,records,meals,supplements,samples,geneticSelection]=sources;
+  const [user,context,records,meals,supplements,samples,geneticSelection,experienceCheckins,hydration,activities,sessions]=sources;
   const originalSourceDigest=digest(sources);
   if(!user||user.id!==actor||records.length>1000||meals.length>2000||supplements.length>=2000||!await authorize(actor,'personal-wellness')) throw new InvestigationSnapshotUnavailable();
   const microbiome=samples?privateMicrobiomeSourceFacts(actor,samples,now):null;
   const genetics=geneticSelection?privateGeneticSourceFacts(actor,records,geneticSelection,now):null;
+  const observations=privateObservationSourceFacts({actor,precision:records,experience:{checkin:experienceCheckins,hydration,activity:activities,session:sessions},asOf:now,viewTimeZone:window.data.timeZone});
   const wellness=buildWellnessContext(actor,context,user,now);
   const intake=recordedIntakeSources({actor,...window.data,asOf:now.toISOString(),foods:meals.map(meal=>({id:meal.id,userId:meal.userId,name:meal.mealText.slice(0,160),loggedAt:meal.loggedAt,revision:mealRecordRevision(meal),analysis:meal.intelligence&&typeof meal.intelligence==='object'?meal.intelligence as any:null})),supplements:supplements.map(record=>({...record,userId:'userId'in record?record.userId:actor}))});
   const labRecords=records.filter(record=>record.kind==='lab');
@@ -71,11 +74,11 @@ export async function collectPrivateInvestigationSnapshot(input:{
   })));
   // Canonical source projection only; no private notes, genotype dumps, recipes,
   // causal windows, guessed doses or inferred unlogged intake are constructed.
-  const basis={version:'private-investigation-snapshot-v2',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,
-    facts:[...facts,...sourceFacts,...(microbiome?.facts??[]),...(genetics?.facts??[])],geneticSource:genetics?{state:genetics.state,selectionRevision:genetics.selectionRevision,source:genetics.source}:null,microbiomeReports:microbiome?.reports.map(({facts,...report})=>report)??[],intakeEvents:intake.events.map(event=>({sourceId:event.recordId,revision:event.revision,kind:event.kind,occurredAt:event.occurredAt,dateBasis:event.kind==='food'?'food-record-time':'confirmed-taken-time',sourceStatus:event.sourceStatus,rowCount:event.rows.length})),wellness,
+  const basis={version:'private-investigation-snapshot-v3',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,
+    facts:[...facts,...sourceFacts,...observations.facts,...(microbiome?.facts??[]),...(genetics?.facts??[])],geneticSource:genetics?{state:genetics.state,selectionRevision:genetics.selectionRevision,source:genetics.source}:null,microbiomeReports:microbiome?.reports.map(({facts,...report})=>report)??[],intakeEvents:intake.events.map(event=>({sourceId:event.recordId,revision:event.revision,kind:event.kind,occurredAt:event.occurredAt,dateBasis:event.kind==='food'?'food-record-time':'confirmed-taken-time',sourceStatus:event.sourceStatus,rowCount:event.rows.length})),observationSources:{feedRevisions:observations.feedRevisions,calendarFilteringBasis:observations.calendarFilteringBasis},wellness,
     missing:{unsupportedLabs,sourceOnlyLabs:allActive.length-active.length,futureLabs:active.length-facts.length,
       intakeCoverage:'partial-or-unknown' as const,intakeExcluded:{undated:intake.undatedEvents,future:intake.futureEvents,unsupported:intake.unsupportedEvents,conflicting:intake.conflictingEvents},
-      microbiome:microbiome?(microbiome.reports.length?'source-reports-included' as const:'no-readable-source-reports' as const):'not-collected' as const,microbiomeUnavailable:microbiome?.unavailable??null,microbiomeFuture:microbiome?.future??null,genetics:genetics?genetics.state:'not-collected' as const,activity:'not-collected' as const},
+      microbiome:microbiome?(microbiome.reports.length?'source-reports-included' as const:'no-readable-source-reports' as const):'not-collected' as const,microbiomeUnavailable:microbiome?.unavailable??null,microbiomeFuture:microbiome?.future??null,genetics:genetics?genetics.state:'not-collected' as const,activity:observations.stats.activity.projected||observations.stats.session.projected?'source-records-included' as const:'no-readable-source-records' as const,observations:{coverage:observations.coverage,feeds:observations.stats} as const},
   };
   if(!intakeCalendarDate(now.toISOString(),window.data.timeZone)||Buffer.byteLength(JSON.stringify(basis),'utf8')>500_000)throw new InvestigationSnapshotUnavailable();
   // View timestamp is separate from source epoch so an unchanged recollection

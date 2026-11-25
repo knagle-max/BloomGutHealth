@@ -2006,7 +2006,7 @@
     "client/src/pages/NutritionHistory.tsx": "a48f0683b9e0a633e10941d8a84ce870775d2ca9618cfede3f528ee233c206f2",
     "client/src/pages/PlanDay.tsx": "8fdb764170a8b00c3af9cdadc6ec64d35cf94f4fab291f234f76f8d461daa474",
     "client/src/pages/PrecisionNutrition.tsx": "eb3eb5ab90e978e2b7f88d90edac567d449bb498cd7abddebb07ad59d492d79f",
-    "client/src/pages/Profile.tsx": "f66822bc361be5b60281010fe1931d3f9e8b3d0d90b72adc509904b7cea9f360",
+    "client/src/pages/Profile.tsx": "218b32002e9bf13ebd32483de7cebb1d675d0f82e029030f4debd119cf0e98cf",
     "client/src/pages/Progress.tsx": "41ca8552d40f1eb7550f95f741a863e67a3d6f7acde7215e7b83723da83e40f5",
     "client/src/pages/ReportManagement.tsx": "4bc41c20cf7bed768b591b9ce059ec3c4ce96f75e10be297b97ed35b0a88031c",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
