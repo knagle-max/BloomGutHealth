@@ -76,9 +76,19 @@ export class PrecisionStorage {
       .where(eq(precisionProfiles.userId, userId));
     return row ? decryptPrecision(row.encryptedContext, userId) : undefined;
   }
+  private contextSourceRevision(userId:string,raw:unknown){
+    if(raw===undefined||!contextSchema.parse(raw).investigationSharing)throw new GiSourceError(409,'Health context or account data changed. Reload before saving.');
+    return createHash('sha256').update(JSON.stringify(['precision-context-source-v1',userId,raw])).digest('hex');
+  }
+  async getPrecisionContextSource(userId:string){
+    await this.getInvestigationSharing(userId);
+    const context=await this.getPrecisionContext(userId);
+    return {context,revision:this.contextSourceRevision(userId,context)};
+  }
   async putPrecisionContext(
     userId: string,
     context: PrecisionContext,
+    expectedRevision?:string,
   ): Promise<void> {
     await this.db.transaction(async (tx) => {
       await tx.execute(
@@ -86,7 +96,9 @@ export class PrecisionStorage {
       );
       if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined||context.investigationSharing!==undefined||context.conditionSource!==undefined)throw new GeneticSourceError("read-only");
       const[selectionProfile]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
-      const selectionContext=selectionProfile?contextSchema.parse(decryptPrecision(selectionProfile.encryptedContext,userId)):undefined;
+      const raw=selectionProfile?decryptPrecision(selectionProfile.encryptedContext,userId):undefined;
+      if(expectedRevision!==undefined&&(!/^[a-f0-9]{64}$/.test(expectedRevision)||!selectionProfile||this.contextSourceRevision(userId,raw)!==expectedRevision))throw new GiSourceError(409,'Saved health context changed. Your draft was not applied. Reload the saved source before retrying.');
+      const selectionContext=raw===undefined?undefined:contextSchema.parse(raw);
       if(selectionContext?.conditionSource&&!isDeepStrictEqual(context.conditions,selectionContext.conditions))throw new GiSourceError(409,'Condition selections changed. Refresh before saving other health context.');
       let next:PrecisionContext={...context,...(selectionContext?.conditionSource?{conditions:selectionContext.conditions,conditionSource:selectionContext.conditionSource}:{}),...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{}),...(selectionContext?.investigationSharing?{investigationSharing:selectionContext.investigationSharing}:{})};
       if(context.intolerances===undefined){

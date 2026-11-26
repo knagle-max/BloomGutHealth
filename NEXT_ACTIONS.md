@@ -18,6 +18,9 @@
 
 ## 2. Latest verified technical checkpoint (historical SHA receipts, NOT present-HEAD revalidation)
 
+- **2026-11-26 health-context integrity:** Reproduced a stale full-context save overwriting a newer medication edit. The existing canonical encrypted writer now compares an account-bound raw-source revision under its existing lock; HTTP saves require that precondition. Goals/health-context UI keeps its loaded version and dirty draft, blocks background conflicts, and reloads only explicitly. Source revisions include the existing opaque sharing nonce, so clearing/recreating data cannot admit old writes. No new store, permissions, model authority or infrastructure. Synthetic isolated SQL/HTTP and browser checks recorded in the existing development log; full-suite historical receipts below remain tied to their original runtime SHA.
+
+
 - Published private-source/P2 provenance closure at `4ed8a45b` and `cbc90d13`, with **1,002 tests at that earlier checkpoint**; reviewed candidate migration `0019` unapplied. Isolated private read `c3533b36` and MICOM closed-energy control `46673361` engineering-tested only; neither enables privacy mode or biological prediction.
 - Deadline-test repair `4aaf2b1b`: 17 focused / 25 loaded tests passed. An earlier 1,009-test run had a scheduling failure; **never label it green**.
 - Security/Food/source/chart checkpoint `3bf012f0`: 32 combined browser states, 23 security/source tests, 5,431 FNDDS foods / 22,188 portions / 21 native fields / 33 adapters; **not** E2EE or independent scientific proof.

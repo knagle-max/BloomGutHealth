@@ -50,6 +50,7 @@ type Store = Pick<
   | "getMeals"
   | "getUser"
   | "getUserSamples"
+  | "getPrecisionContextSource"
   | "getPrecisionContext"
   | "getConditionContext"
   | "putConditionContext"
@@ -95,12 +96,13 @@ export function registerPrecisionRoutes(
     }catch(error){unavailable(res,error);}
   });
   async function reportFor(userId: string, sampleId?: string) {
-    const [rawContext, records, user, samples] = await Promise.all([
-      store.getPrecisionContext(userId),
+    const [contextSource, records, user, samples] = await Promise.all([
+      store.getPrecisionContextSource?store.getPrecisionContextSource(userId):store.getPrecisionContext(userId).then(context=>({context,revision:null})),
       store.getPrecisionRecords(userId),
       store.getUser(userId),
       store.getUserSamples(userId),
     ]);
+    const rawContext=contextSource.context;
     const context =
       rawContext === undefined
         ? contextSchema.parse({})
@@ -179,6 +181,7 @@ export function registerPrecisionRoutes(
     });
     return {
       ...result,
+      contextRevision:contextSource.revision,
       ageSources: resolved.ageSources,
       gutReportInventory:gutReportInventory(samples),
       availableReports: owned.map((s) => ({
@@ -569,7 +572,10 @@ export function registerPrecisionRoutes(
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
     try {
-      await store.putPrecisionContext(req.session.userId!, p.data);
+      const revision=req.get('X-Bloom-Context-Revision');
+      if(!revision||!/^[a-f0-9]{64}$/.test(revision))return res.status(428).json({error:'Reload the saved health context before submitting an edit.'});
+      if(!store.getPrecisionContextSource)return res.status(503).json({error:'Versioned health-context editing is unavailable. No unversioned save was attempted.'});
+      await store.putPrecisionContext(req.session.userId!, p.data,revision);
       res.json(p.data);
     } catch (e) {
       giFailure(res, e);

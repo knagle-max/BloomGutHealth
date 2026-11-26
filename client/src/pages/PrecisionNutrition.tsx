@@ -62,6 +62,7 @@ import {
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
 type Report = Omit<PrecisionReport,'foods'|'recommendations'> & {
+  contextRevision:string|null;
   foods:Array<PrecisionReport['foods'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
   recommendations:Array<PrecisionReport['recommendations'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
   gutReportInventory?:GutReportInventory;
@@ -103,22 +104,26 @@ const localNow = () => {
     .slice(0, 16);
 };
 const display = (value: number) => Number(value.toFixed(2)).toLocaleString();
-function ContextEditor({
-  context,
-  onSave,
-  pending,
+export function ContextEditor({
+  context:incomingContext, revision:incomingRevision, onSave, onReload, pending,
 }: {
-  context: PrecisionContext;
-  onSave: (data: PrecisionContext) => void;
-  pending: boolean;
+  context: PrecisionContext; revision:string|null;
+  onSave: (data:PrecisionContext,revision:string)=>Promise<unknown>;
+  onReload:()=>Promise<{context:PrecisionContext;revision:string|null}>;
+  pending:boolean;
 }) {
+  const [loaded,setLoaded]=useState({context:incomingContext,revision:incomingRevision}),[dirty,setDirty]=useState(false),[notice,setNotice]=useState(''),[reloading,setReloading]=useState(false);
+  const context=loaded.context,sourceChanged=loaded.revision!==incomingRevision;
+  useEffect(()=>{if(!dirty&&!pending&&loaded.revision!==incomingRevision)setLoaded({context:incomingContext,revision:incomingRevision});},[incomingContext,incomingRevision,dirty,pending,loaded.revision]);
+  async function reload(){setReloading(true);try{const source=await onReload();if(!source.revision)throw Error();setLoaded(source);setDirty(false);setNotice('Saved health context reloaded.');}catch{setNotice('Saved health context could not reload. Your draft is still shown.');}finally{setReloading(false);}}
   return (
-    <form
+    <form key={loaded.revision??'unavailable'} onChangeCapture={()=>{setDirty(true);setNotice('');}}
       className="bloom-panel space-y-4"
-      onSubmit={(e) => {
+      onSubmit={async(e) => {
         e.preventDefault();
+        if(!loaded.revision||sourceChanged){setNotice('Saved health context changed. Your draft remains; reload to review the current saved values.');return;}
         const data = new FormData(e.currentTarget);
-        onSave(
+        try{await onSave(
           contextSchema.parse({
             goals: list(data.get("goals")),
             medications: list(data.get("medications")),
@@ -129,10 +134,12 @@ function ContextEditor({
             ageGroup: data.get("ageGroup"),
             pregnancy: data.get("pregnancy"),
             safetyReviewed: data.get("safetyReviewed") === "on",
-          }),
-        );
+          }),loaded.revision,
+        );setDirty(false);setNotice('Health context saved.');}catch{setNotice('Save not confirmed. Your draft remains. Reload saved values before retrying a changed context.');}
       }}
     >
+      <fieldset className="space-y-4" disabled={pending||reloading}>
+      <legend className="sr-only">Editable saved health context</legend>
       <h2>Your goals & health context</h2>
       <p className="panel-note">
         Goals are open-ended. Unsupported goals stay visible without invented
@@ -208,9 +215,13 @@ function ContextEditor({
         allergen-safe. Use dietary category exclusions too, and verify
         ingredients and preparation.
       </p>
-      <Button type="submit" disabled={pending}>
+      {(sourceChanged||!loaded.revision)&&<p role="status">{sourceChanged?'Saved health context changed while you were editing. Your draft is still shown.':'Saved health context could not be verified. Reload before editing.'}</p>}
+      {notice&&<p role="status">{notice}</p>}
+      <Button type="button" variant="outline" onClick={()=>void reload()}>Reload saved health context (discard this draft)</Button>
+      <Button type="submit" disabled={pending||!loaded.revision||sourceChanged}>
         Save health context
       </Button>
+      </fieldset>
     </form>
   );
 }
@@ -482,10 +493,12 @@ export default function PrecisionNutrition() {
                 {!context.safetyReviewed&&<p className="panel-note">Health context has not been reviewed. Personal guidance may be unavailable.</p>}
                 {user&&<ConditionSelector key={user.id} actor={user.id} onSaved={invalidatePlanningInputs}/>}
                 <ContextEditor
-                  key={JSON.stringify({...r.context,conditions:undefined})}
+                  key={user?.id}
                   context={context}
+                  revision={r.contextRevision??null}
+                  onReload={async()=>{const refreshed=await result.refetch();if(refreshed.isError||!refreshed.data)throw Error();return{context:refreshed.data.context,revision:refreshed.data.contextRevision??null};}}
                   pending={mutation.isPending}
-                  onSave={(data) => send("/api/precision/context", data, "PUT")}
+                  onSave={(data,revision) => {setStatus('');setLocalError('');return mutation.mutateAsync({url:"/api/precision/context",body:data,method:"PUT",headers:{"X-Bloom-Context-Revision":revision}});}}
                 />
                 </details>
                 <section className="bloom-panel">

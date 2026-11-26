@@ -109,8 +109,9 @@ export interface IStorage extends ExperienceStore {
   getCheckinSource?: PrecisionStorage["getCheckinSource"];
   insertGiCheckin?: PrecisionStorage["insertGiCheckin"];
   updateGiCheckin?: PrecisionStorage["updateGiCheckin"];
+  getPrecisionContextSource?: PrecisionStorage["getPrecisionContextSource"];
   getPrecisionContext(userId: string): Promise<unknown>;
-  putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
+  putPrecisionContext(userId: string, context: PrecisionContext, expectedRevision?:string): Promise<void>;
   getPrecisionRecords(userId: string): Promise<PrecisionRecord[]>;
   insertPrecisionRecord(
     userId: string,
@@ -256,11 +257,12 @@ export class DatabaseStorage implements IStorage {
   getCheckinSource: PrecisionStorage["getCheckinSource"] = (...args) => this.precision.getCheckinSource(...args);
   insertGiCheckin: PrecisionStorage["insertGiCheckin"] = (...args) => this.precision.insertGiCheckin(...args);
   updateGiCheckin: PrecisionStorage["updateGiCheckin"] = (...args) => this.precision.updateGiCheckin(...args);
+  getPrecisionContextSource: PrecisionStorage["getPrecisionContextSource"] = (...args) => this.precision.getPrecisionContextSource(...args);
   getPrecisionContext(userId: string) {
     return this.precision.getPrecisionContext(userId);
   }
-  putPrecisionContext(userId: string, context: PrecisionContext) {
-    return this.precision.putPrecisionContext(userId, context);
+  putPrecisionContext(userId: string, context: PrecisionContext, expectedRevision?:string) {
+    return this.precision.putPrecisionContext(userId, context,expectedRevision);
   }
   private readonly privateProducts=new PrivateProductStorage(db);
   getNutritionProducts(userId:string){return this.privateProducts.getNutritionProducts(userId);}
