@@ -21,7 +21,7 @@ export function buildMuscleHistory(records:readonly ExperienceRecord[],options:M
    const canonical=set.catalogueRef?.confirmed?catalogueExercise(set.catalogueRef.id):null;
    const match=matchCuratedExercise(canonical?.name??set.exercise);if(!match){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
    if(candidates.length>=20000)throw Error('MUSCLE_HISTORY_WINDOW_TOO_LARGE');
-   const resolved=exerciseAssociations(match);
+   const resolved=exerciseAssociations(match,canonical?.id??null);
    const volume=set.reps!==null&&set.loadKg!==null?set.reps*set.loadKg:null;
    candidates.push({key:set.id?'set:'+set.id.toLowerCase():`legacy:${record.id}:${componentId??'parent'}:${index}`,sourceRecordId:record.id,sourceRecordKind:record.kind as 'activity'|'session',sourceUpdatedAt:record.updatedAt,linkedRecordIds:[record.id],setId:set.id??null,componentId,reportedExercise:set.exercise,catalogueExerciseId:set.catalogueRef?.id??null,catalogueReferenceVersion:set.catalogueRef?.version??null,exerciseId:match.id,catalogVersion:exerciseMuscleCatalogVersion,matchBasis:'exact-recorded-name',at,date,timestampBasis:day?'reported-day':'reported-start',side:set.side??'unspecified',reps:set.reps,loadKg:set.loadKg,externalVolumeKgReps:volume,associationStates:resolved.associations,primary:resolved.primary,secondary:resolved.secondary,stabilizers:resolved.stabilizers});
   }

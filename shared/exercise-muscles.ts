@@ -17,7 +17,7 @@ export const descriptiveMuscles={
 } as const;
 export type DescriptiveMuscleId=keyof typeof descriptiveMuscles;
 export type MuscleRole='primary'|'secondary'|'stabilizers';
-export type AssociationReview={role:MuscleRole;muscle:DescriptiveMuscleId;state:'reviewed'|'rejected';exerciseRevision:string;reviewId:string;sourceReferences:readonly string[]};
+export type AssociationReview={catalogueExerciseId?:string;role:MuscleRole;muscle:DescriptiveMuscleId;state:'reviewed'|'rejected';exerciseRevision:string;reviewId:string;sourceReferences:readonly string[]};
 export type CuratedExercise={revision?:string;associationReviews?:readonly AssociationReview[];id:string;label:string;aliases:readonly string[];primary:readonly DescriptiveMuscleId[];secondary:readonly DescriptiveMuscleId[];stabilizers:readonly DescriptiveMuscleId[];note:string};
 const entry=(id:string,label:string,aliases:string[],primary:DescriptiveMuscleId[],secondary:DescriptiveMuscleId[],note='Conventional version; grip, range, equipment and technique can change the association.',stabilizers:DescriptiveMuscleId[]=[]):CuratedExercise=>({id,label,aliases,primary,secondary,stabilizers,note});
 export const curatedExercises:readonly CuratedExercise[]=[
@@ -51,10 +51,10 @@ export function matchCuratedExercise(text:string):CuratedExercise|null{return al
 /** Amendment A: disposition belongs to each association, independently of its
  * visual anchor. Unreviewed plausible associations are preliminary, not absent.
  * A review of a previous revision cannot silently certify a corrected mapping. */
-export function exerciseAssociations(exercise:CuratedExercise){
+export function exerciseAssociations(exercise:CuratedExercise,catalogueExerciseId:string|null=null){
  const revision=exercise.revision??exerciseMuscleCatalogVersion;
  const associations=(['primary','secondary','stabilizers'] as const).flatMap(role=>exercise[role].map(muscle=>{
-  const review=exercise.associationReviews?.find(r=>r.role===role&&r.muscle===muscle&&r.exerciseRevision===revision);
+  const review=exercise.associationReviews?.find(r=>r.role===role&&r.muscle===muscle&&r.exerciseRevision===revision&&(r.catalogueExerciseId??null)===catalogueExerciseId);
   const valid=review&&review.reviewId.trim()&&review.sourceReferences.length>0&&review.sourceReferences.every(s=>s.trim());
   return{muscle,role,state:valid?review.state:'preliminary' as const,reviewId:valid?review.reviewId:null,exerciseRevision:revision,sourceReferences:valid?Array.from(review.sourceReferences):[descriptiveMuscles[muscle].reference]};
  }));

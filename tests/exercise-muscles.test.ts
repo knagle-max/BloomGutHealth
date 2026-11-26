@@ -17,3 +17,8 @@ test('Amendment A reviews apply per association and revision, independently of v
  assert.equal(changed.associations.find(a=>a.muscle==='pectoralis_major')?.state,'reviewed');assert.ok(changed.primary.includes('pectoralis_major'));assert.ok(!changed.secondary.includes('anterior_deltoid'));assert.ok(changed.secondary.includes('triceps_brachii'));assert.equal(changed.associations.find(a=>a.muscle==='triceps_brachii')?.state,'preliminary');
  const stale=exerciseAssociations({...bench,revision:'corrected-revision',associationReviews:[{role:'primary',muscle:'pectoralis_major',state:'reviewed',exerciseRevision:exerciseMuscleCatalogVersion,reviewId:'synthetic-old-review',sourceReferences:['synthetic-test-source']}]});assert.equal(stale.associations[0].state,'preliminary');
 });
+
+test('individual catalogue acceptance does not spill across variants sharing an authored anatomy family',async()=>{
+ const {exerciseAssociations,curatedExercises,exerciseMuscleCatalogVersion}=await import('../shared/exercise-muscles');const bench=curatedExercises.find(e=>e.id==='bench_press')!;const inspected={...bench,associationReviews:[{catalogueExerciseId:'exercise.synthetic-reviewed-bench',role:'primary' as const,muscle:'pectoralis_major' as const,state:'reviewed' as const,exerciseRevision:exerciseMuscleCatalogVersion,reviewId:'synthetic-individual-review',sourceReferences:['synthetic-reference']}]};
+ assert.equal(exerciseAssociations(inspected,'exercise.synthetic-reviewed-bench').associations[0].state,'reviewed');assert.equal(exerciseAssociations(inspected,'exercise.synthetic-other-variant').associations[0].state,'preliminary');assert.equal(exerciseAssociations(inspected).associations[0].state,'preliminary');
+});

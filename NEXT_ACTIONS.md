@@ -24,6 +24,8 @@
 
 **Amendment B + mode presentation:** Full553exercise selection in both modes is independent of role/SVG acceptance. Shared searchable generated identity index, aliases/category/equipment/preliminary muscle filters, account favourites/custom and completed-record recents; natural-language matching uses the same IDs with editable review. Persist identities so later mapping corrections reproject history. Everyday retains broad silhouette/pain and simpler history; child/detail map view is Athlete-only. This is current implementation, not a new catalogue approval gate. Continue tests/browser/identity/cross-workspace validation, then privacy-scanned source publication; no Render until December.
 
+**Latest integration checkpoint:** `6dbefd15` published the shared553catalogue and mode presentation. Real built-UI→experience HTTP→encrypted disposable SQL checks now pass for persistence/reload/correction/deletion, account switch, Activity/Progress/Biology/Athlete history parity and training overlays. Current narrow fix binds individual acceptance to canonical exercise ID (not an entire alias family) and clears stale Athlete set identity on exercise rename. Continue non-set performance and downstream planning/nutrition/intelligence using canonical mechanisms; no completed-artwork reruns, whole-catalogue gate or Render action.
+
 ## 1. Current hard constraints and precedence
 
 1. **P0:** Reproduced indispensable account/security/source/data-loss/medical-safety correctness defect.
