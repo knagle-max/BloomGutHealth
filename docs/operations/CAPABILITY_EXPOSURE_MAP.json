@@ -1918,7 +1918,7 @@
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "4e77899c809c47784ba116934b1d32e52954f824d4281cab964c3543745bd11c",
     "client/src/components/EditorialMedia.tsx": "b1ace8d432c311959f25be92b35805a2a6d931316e12c7bd8856c44787ff05b6",
-    "client/src/components/EverydayStart.tsx": "36427e2ab2fe8446e5f8f1722af1fb6243cdd706aada0546c460c68d1be6ac9a",
+    "client/src/components/EverydayStart.tsx": "ae6224271f02326bed84e964608d9d52535e4e0d6c4f572a4fa44720c013f2d7",
     "client/src/components/ExperimentObservations.tsx": "c84e9ee2c39fcfb407757dcc451a85b01f228859e6b3cf40558f9ba5a6f62101",
     "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
     "client/src/components/ExperimentalSettings.tsx": "b96f62113ca0cbec60f199c989bdd8476df90c754cc33b22a59e3637af799d51",

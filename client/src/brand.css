@@ -29,7 +29,10 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .demo-fixed-example { border:1px dashed hsl(var(--border)); border-radius:16px; padding:20px; margin-top:24px; background:hsl(var(--muted)); }
 .quick-start { border-top:4px solid hsl(var(--primary)) !important; }
 .quick-start-heading { display:flex; gap:16px; align-items:center; }
-.quick-start .bloom-input { display:block; width:100%; }
+.quick-start .bloom-input { display:block; width:100%; min-width:0; }
+.quick-start-heading {flex-wrap:wrap;}
+.quick-start-heading > div {min-width:0;flex:1 1 12rem;overflow-wrap:anywhere;}
+.quick-start-actions button {white-space:normal;height:auto;min-height:44px;max-width:100%;overflow-wrap:anywhere;}
 .evidence-state { display:inline-flex; width:fit-content; gap:6px; align-items:center; border:1px solid hsl(var(--border)); border-radius:8px; padding:5px 9px; font-size:14px; font-weight:600; background:hsl(var(--muted)); }
 .insight-value { font-size:28px !important; font-weight:650; letter-spacing:-.5px; }
 .evidence-insight { display:grid; gap:12px; }

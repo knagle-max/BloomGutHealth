@@ -10,7 +10,7 @@ Inspected branch `enhance/bloom-experience`, base `0dc2e9f9f7af86872a6a9a886b69f
 | BVA-0080 newest six onboarding goal photographs | BLOCKED_BINARY_TRANSFER | Latest approved six-goal archive unavailable. No earlier embedded prototype photographs substituted or new goal artwork invented. |
 | Project Genesis identity | ALREADY_CURRENT / LOCAL_RENDER_VERIFIED | Existing `shared/product-release.ts`, `tests/product-release.test.ts` and actual Profile/About footer show `Bloom 0.6.0 · Project Genesis` / `Pre-release development build`. No released element, fabricated history or public launch enabled. |
 | Profile heading at 320px / CSS 200% zoom | NARROW_FIX / LOCAL_RENDER_VERIFIED | Actual built Profile revealed an unbroken heading word causing horizontal overflow. Profile-only `overflow-wrap:anywhere` in `client/src/brand.css` repairs it without changing typography, artwork, navigation or stored data. |
-| EE-01 React integration | BLOCKED_BINARY_TRANSFER / NOT_IMPLEMENTED | Existing BVA-0083 prototype source is not in the checkout or attachment mounts. Exact 118-element JSON, CSS/JS and source manifest are missing; no replacement table, screenshot reconstruction, fictional release details or parallel application was created. |
+| EE-01 React integration | SOURCE_VERIFIED / IMPLEMENTATION_PENDING | Owner supplied the exact prototype and REL-A01 v3 archives after the initial inventory. Both archive hashes/CRC match; all 7 prototype and 4 tile manifest entries pass byte/SHA checks. Original JSON/CSS/JS and tile references are now available for adaptation; no fictional release data will enter the runtime. |
 
 ## Exact transfer dependencies
 
@@ -18,7 +18,7 @@ Inspected branch `enhance/bloom-experience`, base `0dc2e9f9f7af86872a6a9a886b69f
 - `Bloom_ONB_Six_Goals_Approved_2026-11-21.zip`: expected SHA-256 `ca5c37ecb429f93c845d3ca23faf95c03ab392538ddf631d4b82b4c6a38f1ea3`; bundled in the documented consolidated design transfer. Revised runner supersedes earlier artwork.
 - `Bloom_Secret_Periodic_Table_Swipe_to_Unfold_Prototype(2).zip`: expected **163,840 bytes**, SHA-256 `1c6c89825110b42375fa26e6a678f0164ad5cebce00626a81b9452a27cc7e4f9`.
 
-These are **expected source-contract hashes, not verification of inaccessible bytes**. One bounded workspace/attachment inventory and available Pages search/Space list returned no accessible exact source. This does not assert absence from the owner's Library. Do not repeat unchanged searches. When delivered, verify archive/per-file bytes before import; the BVA-0002 lowercase `manifest.json` supersedes its documented stale uppercase manifest.
+Hero/goal hashes remain **expected source-contract hashes, not verification of inaccessible bytes**. The initial bounded inventory found no accessible exact source. The owner subsequently uploaded EE-01 and REL-A01 v3; EE-01 matches the hash/163,840 bytes above. REL-A01 v3 matches `4b7cb1eae5bf455aaf9d106706e25e0401fc4535f57c23989eb4ee84244d9593`, 227,534 bytes. All 11 listed file hashes/lengths and both ZIP CRC checks pass. Hero/goal transfer remains blocked; do not repeat unchanged searches. The BVA-0002 lowercase `manifest.json` supersedes its documented stale uppercase manifest.
 
 ## Verification boundary
 
