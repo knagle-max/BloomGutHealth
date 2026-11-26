@@ -333,6 +333,8 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-category-icon img {display:block;width:36px;height:36px;}
 
 /* Native settings rows retain disclosure state and forms without repeated card introductions. */
+/* Preserve the Profile heading at narrow viewports and enlarged text. */
+.profile-workspace > .science-heading h1 {overflow-wrap:anywhere;}
 .profile-workspace .profile-settings-list {padding:0;overflow:hidden;}
 .profile-settings-list > details + details {border-top:1px solid hsl(var(--border));}
 .profile-settings-list > .profile-section > summary {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:16px 20px;min-height:80px;}
