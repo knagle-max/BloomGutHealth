@@ -41,6 +41,10 @@ export async function collectPrivateInvestigationSnapshot(input:{
   const [user,context,records,meals,supplements,samples,geneticSelection,experienceCheckins,hydration,activities,sessions]=sources;
   const originalSourceDigest=digest(sources);
   if(!user||user.id!==actor||records.length>1000||meals.length>2000||supplements.length>=2000||!await authorize(actor,'personal-wellness')) throw new InvestigationSnapshotUnavailable();
+  // Canonical precision readers already filter and decrypt for the actor, and
+  // omit a redundant owner field. Refuse any explicit conflicting ownership
+  // before projecting labs/genetics or other canonical records from an adapter.
+  if(records.some(record=>'userId'in record&&record.userId!==actor))throw new InvestigationSnapshotUnavailable();
   const microbiome=samples?privateMicrobiomeSourceFacts(actor,samples,now):null;
   const genetics=geneticSelection?privateGeneticSourceFacts(actor,records,geneticSelection,now):null;
   const sharingResult=investigationSharingSchema.safeParse(context&&typeof context==='object'&&'investigationSharing'in context?context.investigationSharing:undefined);
