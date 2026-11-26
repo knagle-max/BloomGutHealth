@@ -1,0 +1,146 @@
+{
+  "title": "Bloom Approved Anatomy Stages 1-3 Design Handoff",
+  "approval": "visual design approved, integration gated",
+  "files": [
+    {
+      "path": "APPROVED_HANDOFF_README.md",
+      "bytes": 3295,
+      "sha256": "76d1eda51bcca7cea98b192d2dce733792a5166f79493c1e5db96978701b8133"
+    },
+    {
+      "path": "Bloom_Anatomy_Before_After.png",
+      "bytes": 394713,
+      "sha256": "09c6917045612a250734e6fbcd2d631fc521336cf9d8f70c5b36da2cd9fedbb7"
+    },
+    {
+      "path": "QA_HANDOFF.md",
+      "bytes": 3245,
+      "sha256": "a6b75c05d904eb02452a5ca0a05c818914ed6bb6fef29c58f31ebfbe41e03b51"
+    },
+    {
+      "path": "assets/bloom-neutral-back.svg",
+      "bytes": 267265,
+      "sha256": "f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e"
+    },
+    {
+      "path": "assets/bloom-neutral-front.svg",
+      "bytes": 267919,
+      "sha256": "fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106"
+    },
+    {
+      "path": "assets/body-back.png",
+      "bytes": 193987,
+      "sha256": "ab5b12c40c4e6936c50e49675c7d78d1c9e2fdf16b61318a73fae0b8e9c11338"
+    },
+    {
+      "path": "assets/body-front.png",
+      "bytes": 193644,
+      "sha256": "7199ba6bb11129b7cb9826f77c61a2fc24acb935f38b50063628b5cde42feec2"
+    },
+    {
+      "path": "browser-contact-athlete.png",
+      "bytes": 415896,
+      "sha256": "3258197d60d7bceec2992d1c0aad85cfc68ade144a7cf49ae6d8522405357784"
+    },
+    {
+      "path": "browser-contact-everyday.png",
+      "bytes": 419088,
+      "sha256": "198f3e25c9347bc164366954d7deec4d9942e01d011aca3c7d5b5a98bbf57eea"
+    },
+    {
+      "path": "browser-qa.json",
+      "bytes": 3251,
+      "sha256": "7ebcfbf2b1434f42e4c32f4c9809911907badf0e0c22a6bd90ceda133db8e33d"
+    },
+    {
+      "path": "interactive-demo.html",
+      "bytes": 548190,
+      "sha256": "610099acccca17c03bdfc7f19c4c230df8a0bf071a0d8319b923ce1a4ce08314"
+    },
+    {
+      "path": "original-v1-four-view-reference.png",
+      "bytes": 144597,
+      "sha256": "0d979cebd29fac26ef01d68a93799a6eec77e5dd52627974dda9d0225621905b"
+    },
+    {
+      "path": "qa-desktop-athlete-push.png",
+      "bytes": 219650,
+      "sha256": "de1380075770445522b681f110ff7d20ae80ba498fe9684e97823f69acfdded0"
+    },
+    {
+      "path": "qa-desktop-everyday-push.png",
+      "bytes": 218687,
+      "sha256": "53c86b94a80a25bca3407ea450ba157b09786fa4ed0f8a8fba67aabc6689fa22"
+    },
+    {
+      "path": "qa-mobile-athlete-push.png",
+      "bytes": 147975,
+      "sha256": "b0cba41ae618ef893e693ba5947a0280741578c53ba35a44a4a8e120228ab6de"
+    },
+    {
+      "path": "qa-mobile-everyday-push.png",
+      "bytes": 146598,
+      "sha256": "5586511116672cb53b74e4d0a5cb96cdbfcc82016e9c6021cf19b7b346beb20c"
+    },
+    {
+      "path": "structure-audit.json",
+      "bytes": 3628,
+      "sha256": "7b93d0144fced4747c9bada3658a7316fd9aa53f318077d6426c6e820b1eed67"
+    },
+    {
+      "path": "ui-athlete-all.png",
+      "bytes": 178329,
+      "sha256": "5f4a4dab542243280aa5e6d35d88bb2c9233866b15e1d098351efa7d5cd0ee7e"
+    },
+    {
+      "path": "ui-athlete-clear.png",
+      "bytes": 144918,
+      "sha256": "ea7006a2f4c7e7e1b7673cd20e97a7b1c73cd16604d31e0d4068a041677018be"
+    },
+    {
+      "path": "ui-athlete-legs.png",
+      "bytes": 152979,
+      "sha256": "eac4eb1b4f7b84074178634e16ae4b7451f9c3895dfb0e596b6a7fe557ab3929"
+    },
+    {
+      "path": "ui-athlete-pull.png",
+      "bytes": 150935,
+      "sha256": "2112b9783182848323a82d2b02c092ef173c5adf61b6d116e3f059ce9733d71c"
+    },
+    {
+      "path": "ui-athlete-push.png",
+      "bytes": 148765,
+      "sha256": "dd4fbaa355b6124f2941d102dae569c84e36a9c78add239617d7b67f1d72a7bd"
+    },
+    {
+      "path": "ui-everyday-all.png",
+      "bytes": 177896,
+      "sha256": "b654deb908e8108d07c68f2199ffe1121da5f75af298ce8e9523554d9787dabc"
+    },
+    {
+      "path": "ui-everyday-clear.png",
+      "bytes": 145269,
+      "sha256": "61e9d6fbd12950645fb8a0bd38ccaca125cb085b4f110b03452f1e427d64d5d9"
+    },
+    {
+      "path": "ui-everyday-legs.png",
+      "bytes": 153299,
+      "sha256": "e5f8b87b07a49c36309e72f157674e4bc52fe1516865966928ee6b86cf40b781"
+    },
+    {
+      "path": "ui-everyday-pull.png",
+      "bytes": 151161,
+      "sha256": "b1457aa7b82b6e0152833ecea4f3aee11c1594f04c8a2c53367346a43d28f815"
+    },
+    {
+      "path": "ui-everyday-push.png",
+      "bytes": 148968,
+      "sha256": "bc6d869083ead858fd4c2f9953ea402134020944ffdc142bf18945d90e0e1ed7"
+    },
+    {
+      "path": "visual-groups-provisional.json",
+      "bytes": 366,
+      "sha256": "f4d559a5e77c54a4866974fd90e906b2165f031ebc49f375f4c1e73bf6b0a143"
+    }
+  ]
+}

@@ -7069,8 +7069,9 @@
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": {
-        "state": "NOT_INTEGRATED",
-        "verified": false
+        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "verified": false,
+        "component": "client/src/components/AnatomyRegionSelector.tsx"
       },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
@@ -7146,6 +7147,18 @@
         "structuralVerification": "24 region paths, nine per-view focusable visual groups; one raster image in root SVG",
         "reportedBrowserQA": "35/35 Chromium checks passed in attached QA record; not independently repeated",
         "supersededCandidate": "V4 earlier preferred; retain full V3/V4/V10.1 provenance"
+      },
+      "sourceReferencePaths": [
+        "design/bloom/anatomy/stages-1-3/assets/bloom-neutral-front.svg",
+        "design/bloom/anatomy/stages-1-3/assets/body-front.png",
+        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json"
+      ],
+      "sourceTransfer20261126": {
+        "archiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
+        "bytes": 4776270,
+        "manifestEntriesVerified": 28,
+        "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
+        "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
       }
     },
     {
@@ -7175,8 +7188,9 @@
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": {
-        "state": "NOT_INTEGRATED",
-        "verified": false
+        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "verified": false,
+        "component": "client/src/components/AnatomyRegionSelector.tsx"
       },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
@@ -7252,6 +7266,18 @@
         "structuralVerification": "20 region paths, ten per-view focusable visual groups; one raster image in root SVG",
         "reportedBrowserQA": "35/35 Chromium checks passed in attached QA record; not independently repeated",
         "supersededCandidate": "V4 earlier preferred; retain full V3/V4/V10.1 provenance"
+      },
+      "sourceReferencePaths": [
+        "design/bloom/anatomy/stages-1-3/assets/bloom-neutral-back.svg",
+        "design/bloom/anatomy/stages-1-3/assets/body-back.png",
+        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json"
+      ],
+      "sourceTransfer20261126": {
+        "archiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
+        "bytes": 4776270,
+        "manifestEntriesVerified": 28,
+        "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
+        "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
       }
     },
     {
@@ -7474,7 +7500,7 @@
         "/brand/bloom-icon-athlete.svg"
       ],
       "integration": {
-        "state": "LOCAL_APP_RENDER_TESTED_HOST_PENDING",
+        "state": "LOCAL_APP_RENDER_TESTED_HOST_BUILD_BLOCKED_PIPELINE_MINUTES",
         "verified": false,
         "componentPath": "client/src/components/ReleaseElements.tsx",
         "runtimeCatalogPath": "design/bloom/release/ee-01/v1/periodic-elements.json",
@@ -7693,9 +7719,10 @@
       "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
-        "state": "UNIMPLEMENTED_DESIGN_ONLY",
+        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": false,
+        "component": "client/src/components/AnatomyRegionSelector.tsx"
       },
       "review": {
         "design": "pending source-based UI review",
@@ -7815,6 +7842,20 @@
         "pendingDecisions": 10,
         "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
         "implementation": "NOT_AUTHORIZED"
+      },
+      "sourceReferencePaths": [
+        "design/bloom/anatomy/unified-symptom/v1/README.md",
+        "design/bloom/anatomy/unified-symptom/v1/QA_MANIFEST.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/front-regions-provisional.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json"
+      ],
+      "sourceTransfer20261126": {
+        "archiveSha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "bytes": 2762664,
+        "crc": "PASS",
+        "manifest": "QA_MANIFEST has no per-member hashes; exact member equality to uploaded archive checked locally",
+        "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
+        "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
       }
     },
     {
@@ -7830,9 +7871,10 @@
       "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
-        "state": "UNIMPLEMENTED_DESIGN_ONLY",
+        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": false,
+        "component": "client/src/components/AnatomyRegionSelector.tsx"
       },
       "review": {
         "design": "pending source-based UI review",
@@ -7948,6 +7990,20 @@
         "pendingDecisions": 10,
         "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
         "implementation": "NOT_AUTHORIZED"
+      },
+      "sourceReferencePaths": [
+        "design/bloom/anatomy/unified-symptom/v1/README.md",
+        "design/bloom/anatomy/unified-symptom/v1/QA_MANIFEST.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/front-regions-provisional.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json"
+      ],
+      "sourceTransfer20261126": {
+        "archiveSha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "bytes": 2762664,
+        "crc": "PASS",
+        "manifest": "QA_MANIFEST has no per-member hashes; exact member equality to uploaded archive checked locally",
+        "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
+        "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
       }
     },
     {
@@ -8077,6 +8133,20 @@
         "pendingDecisions": 10,
         "geometry": "77 original canonical manifest anchors null; no measured geometry approved",
         "implementation": "NOT_AUTHORIZED"
+      },
+      "sourceReferencePaths": [
+        "design/bloom/anatomy/unified-symptom/v1/README.md",
+        "design/bloom/anatomy/unified-symptom/v1/QA_MANIFEST.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/front-regions-provisional.json",
+        "design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json"
+      ],
+      "sourceTransfer20261126": {
+        "archiveSha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
+        "bytes": 2762664,
+        "crc": "PASS",
+        "manifest": "QA_MANIFEST has no per-member hashes; exact member equality to uploaded archive checked locally",
+        "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
+        "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
       }
     },
     {

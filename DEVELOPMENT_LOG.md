@@ -2160,3 +2160,12 @@ Biology landing translates source-only to without an explanation and pending uni
 **Changed + proof:** `ReleaseElements`, scoped CSS, Profile integration, optional existing-dialog portal and canonical static-loading identity. 10 source/release/registry tests, 16 responsive mode/theme states, four touch and four script-fallback cases pass; TypeScript/build pass. Exact source hashes, scope and NOT_TESTED boundaries in the existing artwork/Genesis checkpoint. No account writes or actual private data; all detailed synthetic artifacts outside Git.
 
 **Open + next:** Perform owner-authorized scoped staging deploy; no paid quota/config changes. Then original-source muscle/pain silhouette integration, separately deployable. Other Render/Mac/network/main holds and unchanged GI/source blockers remain.
+
+
+## 2026-11-26 — scoped Render result and original anatomy source selector
+
+**Track + maturity:** EE-01 pushed at `f4dbf98a`; authorized deploy failed on current `pipeline_minutes_exhausted`. Owner subsequently holds retries until December and cancels muscle deployment on completion. No billing/config/network changes. Muscle/pain source-backed selector is locally tested but unmounted, not full consumer integration.
+
+**Changed + proof:** Imported exact original Stage1–3/Unified symptom sources; 28/28 anatomy manifest, uploaded member equality, PNG parity and pinned44-path extraction pass. New source tests plus release/registry10/10; isolated component16 responsive mode/theme cases, keyboard/equivalent44px list, layer/view isolation and CSS200 pass. Types/build pass. Detailed local synthetic logs remain outside Git; see existing artwork/Genesis checkpoint for source hashes and test limits.
+
+**Open + next:** Approved canonical exercise/region crosswalk, localized symptom-source semantics, anatomy/rights qualifications remain real dependencies. No fabricated workout or pain observations and no consumer mounting. BVA IDs preserved; no marker/physiology/clinical completion claims. Source transfer is resolved for these two anatomy packages; do not repeat the old binary searches. Other hero/goal transfers and GI qualification remain parked.

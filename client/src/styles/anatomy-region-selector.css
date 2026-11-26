@@ -1,0 +1,14 @@
+/* Exact source paths; only the active interpretation layer is mounted. */
+.anatomy-region-selector{min-width:0}
+.anatomy-region-selector button{min-height:44px;min-width:44px;padding:.6rem .8rem;border:1px solid hsl(var(--border));border-radius:.6rem;text-align:left;overflow-wrap:anywhere;max-width:100%;color:hsl(var(--foreground));background:hsl(var(--card))}
+.anatomy-region-selector button[aria-pressed=true]{border:2px solid hsl(var(--primary));background:hsl(var(--accent))}
+.anatomy-region-selector button:focus-visible{outline:3px solid hsl(var(--ring));outline-offset:3px}
+.anatomy-region-selector button:disabled{opacity:.6}
+.anatomy-selector-layout{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:1.5rem;align-items:start}
+.anatomy-selector-figure{min-width:0;max-width:320px;width:100%;margin:auto}
+.anatomy-selector-svg{display:block;width:100%;height:auto;aspect-ratio:320/820}
+.anatomy-selector-path{fill:transparent;stroke:none;cursor:pointer;pointer-events:all;touch-action:manipulation}
+.anatomy-selector-path[data-selected=true]{fill:hsl(var(--primary)/.4);stroke:hsl(var(--primary));stroke-width:2;vector-effect:non-scaling-stroke}
+.anatomy-selector-regions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));gap:.5rem;margin:1rem 0}
+@media(max-width:560px){.anatomy-selector-layout{grid-template-columns:minmax(0,1fr)}}
+@media(forced-colors:active){.anatomy-selector-path[data-selected=true]{fill:Highlight;stroke:CanvasText}.anatomy-region-selector button[aria-pressed=true]{border-color:Highlight}}

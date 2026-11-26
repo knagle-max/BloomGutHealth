@@ -1,0 +1,152 @@
+{
+  "browser": "Chromium",
+  "tests": {
+    "desktop two figures": {
+      "passed": true,
+      "details": null
+    },
+    "desktop 15 unique groups": {
+      "passed": true,
+      "details": null
+    },
+    "desktop summary no hidden SVG tab stops": {
+      "passed": true,
+      "details": null
+    },
+    "desktop push primary chest": {
+      "passed": true,
+      "details": null
+    },
+    "desktop push secondary triceps": {
+      "passed": true,
+      "details": null
+    },
+    "desktop pull lats primary": {
+      "passed": true,
+      "details": null
+    },
+    "desktop legs quad primary": {
+      "passed": true,
+      "details": null
+    },
+    "desktop none no targets": {
+      "passed": true,
+      "details": null
+    },
+    "desktop none empty label": {
+      "passed": true,
+      "details": null
+    },
+    "desktop all lit 15": {
+      "passed": true,
+      "details": null
+    },
+    "desktop all qa disclaimer": {
+      "passed": true,
+      "details": null
+    },
+    "desktop theme switch": {
+      "passed": true,
+      "details": null
+    },
+    "desktop explore SVG focus stops": {
+      "passed": true,
+      "details": null
+    },
+    "desktop explore controls": {
+      "passed": true,
+      "details": null
+    },
+    "desktop explore selects": {
+      "passed": true,
+      "details": null
+    },
+    "keyboard Enter selected chest": {
+      "passed": true,
+      "details": null
+    },
+    "keyboard Enter focus retained": {
+      "passed": true,
+      "details": null
+    },
+    "keyboard Space toggles chest": {
+      "passed": true,
+      "details": null
+    },
+    "mobile two figures": {
+      "passed": true,
+      "details": null
+    },
+    "mobile 15 unique groups": {
+      "passed": true,
+      "details": null
+    },
+    "mobile summary no hidden SVG tab stops": {
+      "passed": true,
+      "details": null
+    },
+    "mobile push primary chest": {
+      "passed": true,
+      "details": null
+    },
+    "mobile push secondary triceps": {
+      "passed": true,
+      "details": null
+    },
+    "mobile pull lats primary": {
+      "passed": true,
+      "details": null
+    },
+    "mobile legs quad primary": {
+      "passed": true,
+      "details": null
+    },
+    "mobile none no targets": {
+      "passed": true,
+      "details": null
+    },
+    "mobile none empty label": {
+      "passed": true,
+      "details": null
+    },
+    "mobile all lit 15": {
+      "passed": true,
+      "details": null
+    },
+    "mobile all qa disclaimer": {
+      "passed": true,
+      "details": null
+    },
+    "mobile theme switch": {
+      "passed": true,
+      "details": null
+    },
+    "mobile explore SVG focus stops": {
+      "passed": true,
+      "details": null
+    },
+    "mobile explore controls": {
+      "passed": true,
+      "details": null
+    },
+    "mobile explore selects": {
+      "passed": true,
+      "details": null
+    },
+    "mobile no horizontal overflow": {
+      "passed": true,
+      "details": null
+    },
+    "mobile exercise selector min 44px": {
+      "passed": true,
+      "details": null
+    }
+  },
+  "console_errors": [],
+  "screenshots": [
+    "qa-desktop-athlete-push.png",
+    "qa-desktop-everyday-push.png",
+    "qa-mobile-athlete-push.png",
+    "qa-mobile-everyday-push.png"
+  ]
+}
