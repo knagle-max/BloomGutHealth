@@ -18,6 +18,9 @@
 
 ## 2. Latest verified technical checkpoint (historical SHA receipts, NOT present-HEAD revalidation)
 
+- **2026-11-26 integrated source/editor/evidence checkpoint:** Frozen runtime `2de22f3e` full tracked TS run: **1,030/1,031 passed; one stale unversioned-save API assertion failed**. Existing API test aligned with required report revision/428 behavior; corrected file plus isolated real-storage source-conflict checks **13/13 PASS**, TypeScript PASS, runtime unchanged. Prior 29 hydration-focused tests and full build/media/crosswalk PASS at that runtime. Do not call the failed full run green or infer independent scientific/hosted/final RC acceptance. Details in the existing development log; fixtures/receipts remain outside Git.
+
+
 - **2026-11-26 health-context integrity:** Reproduced a stale full-context save overwriting a newer medication edit. The existing canonical encrypted writer now compares an account-bound raw-source revision under its existing lock; HTTP saves require that precondition. Goals/health-context UI keeps its loaded version and dirty draft, blocks background conflicts, and reloads only explicitly. Source revisions include the existing opaque sharing nonce, so clearing/recreating data cannot admit old writes. No new store, permissions, model authority or infrastructure. Synthetic isolated SQL/HTTP and browser checks recorded in the existing development log; full-suite historical receipts below remain tied to their original runtime SHA.
 
 
