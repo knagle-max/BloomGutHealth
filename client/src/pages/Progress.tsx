@@ -1,3 +1,4 @@
+import MuscleHistoryPanel from '@/components/MuscleHistoryPanel';
 import RecordedIntakeSources from '@/components/RecordedIntakeSources';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
@@ -65,6 +66,7 @@ export default function Progress() {
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
+       <MuscleHistoryPanel/>
        {currentRoutines&&<ActivityWeekSummary records={currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[])}/>}
        {routines.isError?<p role="alert">Activity history could not load.</p>:checkingRoutines?<p role="status">Checking recorded activity…</p>:<>{currentRoutines?.some(row=>row.kind==="activity")?<ul className="space-y-3">{currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3>{row.payload.components&&row.payload.components.items.length>1&&<p>{row.payload.components.items.map(part=>part.title).join(" + ")}</p>}<p>{activityTimeText(row.payload)} · {activityAmountText(row.payload)}{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
        {canRetryRoutines&&<button type="button" className="text-link min-h-11" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry activity and training history</button>}

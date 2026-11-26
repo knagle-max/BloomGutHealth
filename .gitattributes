@@ -13,3 +13,7 @@ design/visual-system/scientific-charts/v1/CHART-*/** -text -whitespace
 design/bloom/anatomy/presentation-20261126/*.svg -text
 design/bloom/anatomy/interaction-v433/*.svg -text
 design/bloom/anatomy/interaction-v433/*.csv -text whitespace=cr-at-eol
+# Exact owner canonical-domain/staging package (JSON/CSV/Markdown original bytes).
+design/bloom/anatomy/canonical-baseline44-20261126/* -text whitespace=cr-at-eol
+# Original handoff Markdown intentionally uses two-space line breaks.
+design/bloom/anatomy/canonical-baseline44-20261126/*.md -text -whitespace

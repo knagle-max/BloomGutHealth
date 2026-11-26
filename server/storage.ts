@@ -228,6 +228,7 @@ export class DatabaseStorage implements IStorage {
   deleteMeal(id:string,userId:string) { return deleteOwnedMeal(db,id,userId); }
 
   private readonly experience = new ExperienceStorage(db);
+  ensureExperienceLifecycle = (id:string) => this.experience.ensureExperienceLifecycle(id);
   getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
   putExperienceSettings: ExperienceStore["putExperienceSettings"] = (id,p) => this.experience.putExperienceSettings(id,p);
   putExperienceSettingsIfCurrent = (id:string,p:Parameters<ExperienceStore["putExperienceSettings"]>[1],revision:string) => this.experience.putExperienceSettingsIfCurrent(id,p,revision);

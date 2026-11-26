@@ -1,3 +1,4 @@
+import MuscleHistoryPanel from '@/components/MuscleHistoryPanel';
 import AnatomyRegionSelector from '@/components/AnatomyRegionSelector';
 import ActivityRoutines from '@/components/ActivityRoutines';
 import {activityTimeText} from '@shared/activity';
@@ -56,6 +57,7 @@ function ActivityWorkspace(){
  function edit(row:Row){setEditing(row);setDraft({when:localStamp(new Date(row.payload.startedAt)),effort:row.payload.effort||'',notes:row.payload.notes});review(activityParts(row.payload),row.payload.capture||{version:1,method:'select',description:row.payload.title,activityId:'other',interpretation:'user-selected'});}
  async function remove(id:string){if(busy.current)return;busy.current=true;setPending(true);setError('');try{await apiRequest('DELETE',`/api/experience/records/${id}`);if(!active.current)return;setRemoveId(null);if(editing?.id===id){setEditing(null);reset();}setMessage('Activity deleted.');refreshExperience();}catch(e){if(active.current)setError((e as Error).message);}finally{busy.current=false;if(active.current){setPending(false);refreshExperience();}}}
  return <main className="science-page activity-workspace space-y-5"><div className="science-heading"><p className="eyebrow">MOVE AT YOUR PACE</p><h1 id="activity-review-heading" tabIndex={-1}>{capture?"Review your activity":"Activity log"}</h1><p>{capture?(parts.length?capture.method==="describe"&&parts.every(part=>part.match!=="unclassified")?`Basic matching · ${parts.length} ${parts.length===1?"activity":"activities"} to review`:`${parts.length} activity row(s) to review`:"No activities in this draft. Add another activity to continue."):"Describe, select or repeat. Review once, then save."}</p></div>
+  <MuscleHistoryPanel/>
   <details className="bloom-panel workspace-disclosure"><summary>Explore illustrative body regions</summary><AnatomyRegionSelector mode={settings.mode}/></details>
   <ActivityRoutines allowSetup source={routineSetup} onSourceConsumed={()=>setRoutineSetup(undefined)}/>
   <details hidden={!composerOpen&&!!capture} open={composerOpen} onToggle={e=>{if(e.target===e.currentTarget)setComposerOpen(e.currentTarget.open);}} className="bloom-panel space-y-4 workspace-disclosure" aria-label="Choose activity entry"><summary>Add activity — describe, select or repeat</summary>

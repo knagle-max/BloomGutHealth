@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0-baseline44-validation",
+  "date": "2026-11-26",
+  "source_path_count": 44,
+  "source_anterior": 24,
+  "source_posterior": 20,
+  "canonical_active_selectable_regions": 44,
+  "unique_svg_binds": 44,
+  "virtual_non_selectable_groups": 19,
+  "muscle_descriptors_total": 53,
+  "muscle_descriptor_mapping_status": {
+    "canonical_baseline": 37,
+    "deferred_unmapped": 16
+  },
+  "unmapped_descriptors": [
+    "Adductor longus",
+    "Adductor magnus",
+    "Anconeus",
+    "Ankle stabilizers",
+    "Gluteus minimus",
+    "Gracilis",
+    "Hip adductors",
+    "Hip external rotators",
+    "Lower trapezius",
+    "Pectineus",
+    "Rotator cuff",
+    "Serratus anterior",
+    "Shoulder stabilizers",
+    "Supraspinatus",
+    "Transversus abdominis",
+    "Trunk stabilizers"
+  ],
+  "exercise_count": 553,
+  "exercise_review_status": {
+    "unreviewed": 553
+  },
+  "original_muscle_role_links": 3102,
+  "expanded_anatomy_role_projections": {
+    "canonical_baseline": 8312,
+    "deferred_unmapped": 629
+  },
+  "new_files": [
+    "canonical_anatomy_registry.json",
+    "canonical_to_svg_crosswalk.json",
+    "bloom_exercise_db_staging_canonical_mapped.json",
+    "bloom_exercise_db_staging_canonical_mapped.csv",
+    "anatomy_muscle_53_resolution.csv"
+  ],
+  "checks": {
+    "44_original_paths_preserved": true,
+    "44_domain_ids_unique": true,
+    "side_inferred_from_exact_source_pair_orientation": true,
+    "all_53_descriptors_classified": true,
+    "553_records_preserved": true,
+    "553_records_unreviewed": true,
+    "all_mapping_ids_refer_to_new_registry": true,
+    "unknown_deep_structures_not_forced": true,
+    "v433_unverified_ids_never_invented": true,
+    "nonadditive_policy_specified": true,
+    "no_app_or_svg_modified": true
+  },
+  "limitations": [
+    "Canonical anatomy surface identities newly minted under owner directive, not independently signed by Architect or validated in live render.",
+    "Anatomical mapping is coarse, and source SVG geometry lacks dedicated minor/deep muscles.",
+    "Exercise biomechanical classifications from 553 staging dataset are not individually scientifically certified.",
+    "Dataset does not prove symptom-region mapping equivalence.",
+    "No app deployment or runtime code changes performed."
+  ]
+}

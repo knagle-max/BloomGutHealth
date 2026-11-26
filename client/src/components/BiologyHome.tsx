@@ -1,3 +1,4 @@
+import MuscleHistoryPanel from './MuscleHistoryPanel';
 import { Link } from 'wouter';
 import {ChevronRight} from 'lucide-react';
 import EditorialMedia from './EditorialMedia';
@@ -17,6 +18,7 @@ export default function BiologyHome({ report,gutReports, onOpen }: { report: Pre
     { label: 'Measurements', note: report.checkins.length?`${report.checkins.length} dated check-ins`:'Add your first measurement', tab: 'progress', art:'biology-measurements' },
   ] satisfies Array<{label:string;note:string;tab?:string;href?:string;art:EditorialMediaSlot}>;
   return <section aria-label="Your health information" className="biology-home">
+    <MuscleHistoryPanel/>
     <h2 className="mb-2">Your health information</h2>
     <p className="panel-note mb-3">Artwork is illustrative; summaries reflect your saved records.</p>
     <div className="biology-home-sources">{rows.map(({ label, note, tab, href, art }) => {

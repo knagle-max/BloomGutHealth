@@ -65,7 +65,7 @@ export class ExperienceStorage {
  async getExperienceRecords(userId:string, kind?:ExperienceEntry["kind"]) {
   // These source events are read explicitly, never as activities, check-ins,
   // quality reviews or inferred consumed meals by an older generic consumer.
-  const query=this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intake','supplement-intent'])));
+  const query=this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intake','supplement-intent','localized-symptom-receipt'])));
   const rows=kind==="wellness-choice"?await query.orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2000):await query.orderBy(desc(experienceRecords.updatedAt)).limit(2000);
   return rows.map(r=>decode(r,userId));
  }
@@ -121,7 +121,7 @@ export class ExperienceStorage {
    const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.id,id),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity-routine')));
    if(existing){const row=decode(existing,userId);if(row.kind!=='activity-routine'||JSON.stringify(row.payload.plan)!==JSON.stringify(plan)||row.payload.sourceActivityId!==sourceActivityId)throw new ActivityRoutineConflict(409,'This routine save already has different details. Review the saved routine.');return row;}
    if(sourceActivityId){const [source]=await tx.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.id,sourceActivityId),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity')));if(!source)throw new ActivityRoutineConflict(404,'Source activity not found in your account.');}
-   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent'])));if(count.count>=2000)throw Error('EXPERIENCE_LIMIT');
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent','localized-symptom-receipt'])));if(count.count>=2000)throw Error('EXPERIENCE_LIMIT');
    const payload=activityRoutineSchema.parse({plan,sourceActivityId,acknowledgedOccurrences:{}});
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind:'activity-routine',encryptedPayload:encryptPrecision(payload,userId)}).returning();return decode(row,userId);
   });
@@ -176,7 +176,7 @@ export class ExperienceStorage {
     if(!routineSourceMatches(payload as Activity,saved.plan,new Date(),saved.occurrenceOverrides))throw new ActivityRoutineConflict(409,'Review the current routine, local date and explicit completion before saving.');
     routine={id:source.id,payload:saved};
    }
-   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent'])));
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent','localized-symptom-receipt'])));
    if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind,encryptedPayload:encryptPrecision(payload,userId)}).returning();
    if(routine&&routineSource){const next=activityRoutineSchema.parse({...routine.payload,acknowledgedOccurrences:{...routine.payload.acknowledgedOccurrences,[routineSource.scheduledDate]:{activityId:id,revision:routineSource.revision,receiptHash:createHash('sha256').update(JSON.stringify([id,payload])).digest('hex')}}});await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,routine.id),eq(experienceRecords.kind,'activity-routine')));}
@@ -192,7 +192,18 @@ export class ExperienceStorage {
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
-   const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent']))).orderBy(desc(experienceRecords.createdAt));
+   const rows=await tx.select({id:experienceRecords.id,userId:experienceRecords.userId,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt,updatedAt:experienceRecords.updatedAt}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent','localized-symptom-receipt']))).orderBy(desc(experienceRecords.createdAt));
+   if(entry.kind==='localized-symptom'){
+    if(entry.payload.previousRevision!==null)throw Error('LOCALIZED_SYMPTOM_CREATE_REVISION');
+    const[settings]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
+    if(!settings||experienceSettingsSchema.parse(decryptPrecision(settings.encryptedPayload,userId)).lifecycleId!==entry.payload.lifecycleId)throw Error('LOCALIZED_SYMPTOM_SCOPE');
+    const receiptId='localized-receipt_'+createHash('sha256').update(JSON.stringify([userId,entry.payload.lifecycleId,entry.payload.revision])).digest('hex');
+    const[receipt]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,receiptId),eq(experienceRecords.kind,'localized-symptom-receipt')));
+    if(receipt){const metadata=decryptPrecision(receipt.encryptedPayload,userId)as {recordId:string};const prior=rows.find(row=>row.id===metadata.recordId);if(!prior)throw Error('LOCALIZED_SYMPTOM_CONFLICT');const current=decode(prior,userId);if(current.kind!=='localized-symptom'||JSON.stringify(current.payload)!==JSON.stringify(entry.payload))throw Error('LOCALIZED_SYMPTOM_CONFLICT');return current;}
+
+    const existing=rows.find(r=>r.kind==='localized-symptom'&&(decryptPrecision(r.encryptedPayload,userId) as any).revision===entry.payload.revision);
+    if(existing){const record=decode(existing,userId);if(record.kind!=='localized-symptom'||JSON.stringify(record.payload)!==JSON.stringify(entry.payload))throw Error('LOCALIZED_SYMPTOM_CONFLICT');return record;}
+   }
    // Exact-description memories are one record per key, scoped to the owner.
    if(entry.kind==="food-memory" || entry.kind==="checkin") {
     const found=rows.find(r=>{
@@ -208,6 +219,10 @@ export class ExperienceStorage {
    }
    if(rows.length>=2000) throw Error("EXPERIENCE_LIMIT");
    const [r]=await tx.insert(experienceRecords).values({userId,kind:entry.kind,encryptedPayload:encryptPrecision(entry.payload,userId)}).returning();
+   if(entry.kind==='localized-symptom'){
+    const receiptId='localized-receipt_'+createHash('sha256').update(JSON.stringify([userId,entry.payload.lifecycleId,entry.payload.revision])).digest('hex');
+    await tx.insert(experienceRecords).values({id:receiptId,userId,kind:'localized-symptom-receipt',encryptedPayload:encryptPrecision({recordId:r.id,revision:entry.payload.revision},userId)});
+   }
    return decode(r,userId);
   });
  }
@@ -222,6 +237,14 @@ export class ExperienceStorage {
    const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).for("update");
    if(!existing)return null;
    const previous=decryptPrecision(existing.encryptedPayload,userId);
+   if(entry.kind==='localized-symptom'){
+    const[settings]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
+    if(!settings||experienceSettingsSchema.parse(decryptPrecision(settings.encryptedPayload,userId)).lifecycleId!==entry.payload.lifecycleId)throw Error('LOCALIZED_SYMPTOM_SCOPE');
+    const current=experienceEntrySchema.parse({kind:'localized-symptom',payload:previous});
+    if(current.kind!=='localized-symptom')throw Error('LOCALIZED_SYMPTOM_CONFLICT');
+    if(entry.payload.revision===current.payload.revision){if(JSON.stringify(entry.payload)!==JSON.stringify(current.payload))throw Error('LOCALIZED_SYMPTOM_CONFLICT');return decode(existing,userId);}
+    if(entry.payload.previousRevision!==current.payload.revision)throw Error('LOCALIZED_SYMPTOM_CONFLICT');
+   }
    // Older session editors must not erase newer manual set observations.
    let payload=preserveFocusFeedback(entry,previous);
    if(entry.kind==="activity"){
@@ -268,6 +291,7 @@ export class ExperienceStorage {
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
    const [row]=await tx.select({kind:experienceRecords.kind}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id)));
+   if(row?.kind==='localized-symptom-receipt')throw Error('LOCALIZED_SYMPTOM_ACTION_REQUIRED');
    if(row?.kind==="wellness-choice")throw new WellnessChoiceConflict("dedicated-action");
    if(row?.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
     if(row?.kind==='supplement-intake'||row?.kind==='supplement-intent')throw Error('SUPPLEMENT_INTAKE_ACTION_REQUIRED');
@@ -283,6 +307,7 @@ export class ExperienceStorage {
  }
 }
 export interface ExperienceStore {
+ ensureExperienceLifecycle?(userId:string):Promise<string>;
  getCheckinRecord?(userId:string,id:string):Promise<CheckinRecordSource|null>;
  getWellnessActionView?(userId:string,day:WellnessDay):Promise<import("../shared/wellness-actions").WellnessActionView>;
  createWellnessChoice?(userId:string,command:WellnessChoiceCommand):Promise<ExperienceRecord>;
