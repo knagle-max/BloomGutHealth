@@ -42,3 +42,8 @@ Six new local timing cases plus existing snapshot/private-runner/encrypted-pipel
 ### Scoped evidence-coverage invalidation (2026-11-26)
 
 A local synthetic regression reproduced unchanged retrieval fingerprints after adding or changing withheld relationships under the same registry version label, even though reviewed cards stayed identical. Retrieval v4 now binds the scoped relationships (including withheld entries), referenced entities/source metadata, query identities and withheld count in addition to the existing admitted cards and withdrawal sets. Collection ordering is normalized. The existing runner's before/after evidence-version checks therefore invalidate in-flight work on these changes; no new runner, scientific source, review authority or consumer action is introduced. The new fingerprint version intentionally invalidates previous runtime evidence bindings; it does not rewrite immutable scientific release bytes or qualify their content. Fixtures and detailed before/after results remain outside Git. This is evidence/source-integrity verification, not independent scientific acceptance.
+
+
+### Hydration legacy-value missingness (2026-11-26)
+
+Private hydration projection retains positive canonical legacy urine volumes even when original-entry metadata is absent. Previously the zero-default safeguard also omitted positive values. A missing or legacy-default zero still cannot establish an explicitly reported zero; a matching original-entry source can establish zero. Positive legacy values retain canonical mL, source identity/revision and unknown original-entry metadata, without inventing the original entry text, ingestion, fluid balance or a physiological conclusion. Source stores, permissions and consumer advice are unchanged.

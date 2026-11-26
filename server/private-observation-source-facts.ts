@@ -112,8 +112,9 @@ export function privateObservationSourceFacts(input:{actor:string;precision:read
      const values=hydrationSchema.parse(value);
      for(const [key,unit]of [['drankMl','mL'],['preKg','kg'],['postKg','kg']]as const)append(common,key,values[key],unit,values.entrySource?.fields[key]??null);
      append(common,'sessionMinutes',values.minutes,'min');
-     // Legacy parser defaults do not establish an explicitly reported zero.
-     if(values.entrySource?.fields.urineMl)append(common,'urineMl',values.urineMl,'mL',values.entrySource.fields.urineMl);
+     // Positive legacy values are recorded data; only the default zero needs
+     // original-entry confirmation before it can be treated as reported.
+     if(values.urineMl>0||values.entrySource?.fields.urineMl)append(common,'urineMl',values.urineMl,'mL',values.entrySource?.fields.urineMl);
     }
    }else if(kind==='activity'){
     const parsed=activitySchema.safeParse(row.payload);if(!parsed.success){stats[kind].unsupported++;continue;}
