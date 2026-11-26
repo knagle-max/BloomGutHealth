@@ -8039,7 +8039,9 @@
         "verified": false,
         "componentAssetIdReferenced": false,
         "component": "client/src/components/AnatomyMarkers.tsx",
-        "limits": "Supplied display summaries only, no aggregation or canonical record mapping. Fixed pills omit long/colliding counts; complete values remain accessible in list. No consumer route mounted."
+        "limits": "Supplied display summaries only, no aggregation or canonical record mapping. Fixed pills omit long/colliding counts; complete values remain accessible in list. No consumer route mounted.",
+        "zeroSeverityPresentation": "Explicit compatible0/10 rating uses numeric text-only label at existing anchor; no severity ring, unrated circle or inferred absence. Local engineering-tested, not independent artwork approval.",
+        "forcedColours": "Preserve approved marker paint against the unchanged photographic base; equivalent native list controls keep system colours."
       },
       "review": {
         "design": "pending source-based UI review",

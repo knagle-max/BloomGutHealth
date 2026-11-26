@@ -25,5 +25,10 @@
 .anatomy-marker-badge rect{fill:#2c363a;stroke:#89988f;stroke-width:.8}
 .anatomy-marker-badge text{fill:#f4f5f0;font:700 10px ui-sans-serif,system-ui}
 .anatomy-region-state{display:block;font-size:.8em;margin-top:.25rem}
-@media(forced-colors:active){.anatomy-marker-tier,.anatomy-marker-selected,.anatomy-marker-focused,.anatomy-marker-unrated{stroke:CanvasText}.anatomy-marker-dot{fill:CanvasText}.anatomy-marker-badge rect{fill:Canvas;stroke:CanvasText}.anatomy-marker-badge text{fill:CanvasText}}
+/* The photographic base keeps its colours in forced-colour modes. Preserve
+   its contrasting marker paint too; native equivalent list controls retain
+   system colours and keyboard focus indicators. */
+.anatomy-marker-layer{forced-color-adjust:none}
 .anatomy-selector-source{overflow-wrap:anywhere}
+
+.anatomy-marker-zero{fill:#f4f5f0;stroke:#15191d;stroke-width:1;paint-order:stroke fill;font:700 12px ui-sans-serif,system-ui}

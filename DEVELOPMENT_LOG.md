@@ -2187,3 +2187,12 @@ Biology landing translates source-only to without an explanation and pending uni
 **Changed + proof:** Existing Activity Log disclosure, exact source geometry and nonpersistent source-label exploration; versioned44/49-path adapter,16 completed descriptive muscle label associations and explicit broad-area/anatomical context for the remaining28 paths. No exercised-muscle or localized pain attribution.19 focused tests,16 actual built-App responsive/theme states and four native Chromium touch/context/fallback cases pass, alongside types/build/media/crosswalk. Synthetic account swap clears selection and old account history; inspector performs no API writes. Detailed fixtures/logs remain local. Existing BVA-0078/0079 now link the owner-requested additional-overlay designer brief; original assets unchanged.
 
 **Open + next:** Designer can supply the specifically missing/separate overlays listed in the existing-BVA brief. Preserve V1 machine-readable source transfer and actual canonical health-record/exercise-participation dependencies without blocking the mounted descriptive inspector. No Render retry before December, Mac/Tailscale/network/config, live-health query, paid activation or main merge. Final assembled RC/independent/clinical status is not inferred from this engineering slice.
+
+
+## 2026-11-26 — preserve explicit zero in supplied marker display
+
+**Track + maturity:** Scoped muscle/pain display integrity correction under existing rated/unrated/zero requirement, not a new subsystem. The mounted descriptive inspector still supplies no personal observations.
+
+**Changed + proof:** RED regression reproduced0/10 rejection. Compatible zero now keeps its exact count and rating, with numeric-only `0/10` at the source anchor and complete native text. Unknown and absent stay distinct; approved positive-ring geometry/art unchanged.20 focused tests, eight isolated responsive/theme render cases, types/build/media and crosswalk pass. Marker paint remains visible against unchanged raster in forced colours; equivalent native controls preserve system styling. Local artifacts only, no PHI/source aggregation or actual account queries.
+
+**Open + next:** Preserve completed mounted inspector and designer overlay brief. Actual-record/participation and original V1 candidate-transfer dependencies remain narrower follow-ups; do not block the descriptive UI or repeat unchanged searches. No Render retry before December or other environment/main changes.

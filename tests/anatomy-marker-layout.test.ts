@@ -9,8 +9,8 @@ test('reported severity boundaries preserve approved rings; unknown is hollow an
  for(const severity of [1,3,4,6,7,10,null]){const out=layoutAnatomyMarkers(regions,[report(0,severity)]);assert.ok(out.ok);assert.deepEqual(out.markers[0].radii,severity===null?[]:severity<=3?[14]:severity<=6?[10,17]:[8,15,22]);assert.equal(out.badges.length,0);}
  const out=layoutAnatomyMarkers(regions,[]);assert.ok(out.ok);assert.equal(out.markers.length,0);assert.match(markerCountLabel(undefined),/symptoms are unknown/);
 });
-test('duplicate/unknown keys, unsupported zero/out-of-range ratings, and noninteger or unsafe counts fail explicitly',()=>{
- for(const reports of [[report(0),report(0)],[{...report(0),visualKey:'unknown-visual-key'}],[report(0,0)],[report(0,11)],[report(0,NaN)],[report(0,1,-1)],[report(0,1,1.5)],[report(0,1,Number.MAX_SAFE_INTEGER+1)],[report(0,1,0)]])assert.deepEqual(layoutAnatomyMarkers(regions,reports),{ok:false,reason:'invalid-reports'});
+test('duplicate/unknown keys, out-of-range ratings, and noninteger or unsafe counts fail explicitly',()=>{
+ for(const reports of [[report(0),report(0)],[{...report(0),visualKey:'unknown-visual-key'}],[report(0,-1)],[report(0,11)],[report(0,NaN)],[report(0,1,-1)],[report(0,1,1.5)],[report(0,1,Number.MAX_SAFE_INTEGER+1)],[report(0,1,0)]])assert.deepEqual(layoutAnatomyMarkers(regions,reports),{ok:false,reason:'invalid-reports'});
  const out=layoutAnatomyMarkers(regions,[report(0,null,0)]);assert.ok(out.ok);assert.equal(out.markers.length,0);
 });
 test('invalid anchor geometry never invents placement',()=>{
@@ -37,4 +37,8 @@ test('collision or long exact count hides only a pill, preserving full accessibl
 });
 test('source corrections and removal recompute immediately without a cached health projection',()=>{
  const before=layoutAnatomyMarkers(regions,[report(0,10,3)]),after=layoutAnatomyMarkers(regions,[report(0,null,1)]),removed=layoutAnatomyMarkers(regions,[]);assert.ok(before.ok&&after.ok&&removed.ok);assert.equal(before.badges.length,1);assert.equal(after.badges.length,0);assert.deepEqual(after.markers[0].radii,[]);assert.equal(removed.markers.length,0);
+});
+test('explicit zero severity remains a rated observation, distinct from unrated and absent',()=>{
+ const zero=layoutAnatomyMarkers(regions,[report(0,0,2)]),unrated=layoutAnatomyMarkers(regions,[report(0,null,2)]),absent=layoutAnatomyMarkers(regions,[]);
+ assert.ok(zero.ok&&unrated.ok&&absent.ok);assert.equal(zero.markers[0].severity,0);assert.equal(zero.markers[0].count,2);assert.deepEqual(zero.markers[0].radii,[]);assert.match(markerCountLabel(zero.markers[0]),/reported severity 0 of 10/);assert.match(markerCountLabel(unrated.markers[0]),/severity not supplied/);assert.equal(absent.markers.length,0);
 });
