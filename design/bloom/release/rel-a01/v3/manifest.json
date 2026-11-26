@@ -1,0 +1,26 @@
+{
+  "bundle": "Bloom_REL_A01_Periodic_Tile_Approved_v3_2026-11-21.zip",
+  "design_status": "A01_OWNER_APPROVED",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "13a9917f546f4e123271347e35f19fa306822715291ac4710eefaf91e86dabf9",
+      "size_bytes": 1593
+    },
+    {
+      "path": "assets/REL-A01-approved-representative-v3.jpg",
+      "sha256": "303838b3e5e9ab0039cc9db720a013cf84b87b91e749ef0a105027d97b1e315b",
+      "size_bytes": 229472
+    },
+    {
+      "path": "assets/REL-A01-hydrogen-approved-editable.svg",
+      "sha256": "8d6cfb980774e7603b93dd5618ab43a466d02c317fc49fec2dbb7878749cb2bd",
+      "size_bytes": 798
+    },
+    {
+      "path": "assets/REL-A01-tile-component.js",
+      "sha256": "b3f5d4dda9ce8e517c303c094afdf604a37ae4fd083d5385e3c6fe2d5c02f810",
+      "size_bytes": 1856
+    }
+  ]
+}

@@ -2,10 +2,17 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+import {BLOOM_CURRENT_RELEASE} from "./shared/product-release";
+const htmlText=(text:string)=>text.replace(/[&<>"']/g,character=>(({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"} as Record<string,string>)[character]));
 
 export default defineConfig({
   plugins: [
     react(),
+    {
+      name:"bloom-static-release-identity",
+      transformIndexHtml:html=>html.replace('<div id="root"></div>',
+        `<div id="root"><main class="bloom-static-identity" aria-label="Bloom app loading"><h1>${htmlText(BLOOM_CURRENT_RELEASE.label)}</h1><p>${htmlText(BLOOM_CURRENT_RELEASE.descriptor)}</p><p>Enable JavaScript to explore Bloom if this message remains.</p></main></div>`),
+    },
     runtimeErrorOverlay(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined

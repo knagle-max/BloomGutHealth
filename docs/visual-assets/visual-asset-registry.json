@@ -7421,13 +7421,28 @@
           "REL-A06": "Owner-approved four-theme design direction and optional 180ms reveal; app/device/accessibility QA pending",
           "naming": "Canonical named-release-line sequencing across minor and major boundaries; do not impose major-only visual mapping"
         }
+      },
+      "sourceReferencePaths": [
+        "design/bloom/release/rel-a01/v3/README.md",
+        "design/bloom/release/rel-a01/v3/assets/REL-A01-approved-representative-v3.jpg",
+        "design/bloom/release/rel-a01/v3/assets/REL-A01-hydrogen-approved-editable.svg",
+        "design/bloom/release/rel-a01/v3/assets/REL-A01-tile-component.js",
+        "design/bloom/release/rel-a01/v3/manifest.json"
+      ],
+      "receivedSource20261126": {
+        "scope": "REL-A01 v3 only; no new approval of other REL-A02..06 sources",
+        "archiveSha256": "4b7cb1eae5bf455aaf9d106706e25e0401fc4535f57c23989eb4ee84244d9593",
+        "archiveBytes": 227534,
+        "manifestEntriesVerified": 4,
+        "currentDisplay": "Not displayed as current release; Project Genesis uses existing botanical mark",
+        "template": "Data-bound React SVG geometry adapted from original component; no fictional publication data"
       }
     },
     {
       "id": "BVA-0083",
       "name": "EE-01 interactive 118-element periodic table visual adaptation",
-      "route": "/profile | /about",
-      "component": "Existing release identity interaction",
+      "route": "/profile",
+      "component": "ReleaseElements",
       "purpose": "Adapt source prototype and canonical release tile; accessible swipe/drag/keyboard/fallback; future-only table muted with no false releases.",
       "category": "interactive-art-family",
       "subject": "EE-01 interactive 118-element periodic table visual adaptation",
@@ -7441,40 +7456,56 @@
       ],
       "textPlacement": "App-rendered accessible text only",
       "aspectRatio": "As specified in named source; responsive versions required where applicable",
-      "priority": "Deferred by NEXT_ACTIONS.md unless explicitly selected",
+      "priority": "Owner-selected bounded checkpoint in NEXT_ACTIONS.md",
       "sourceRelation": {
-        "action": "REUSE_PROTOTYPE_AND_APPROVED_TILE",
+        "action": "REUSE_VERIFIED_PROTOTYPE_AND_REL_A01_V3",
         "reference": [
           "EE-01",
           "Bloom_Secret_Periodic_Table_Swipe_to_Unfold_Prototype(2).zip",
           "sha256:1c6c89825110b42375fa26e6a678f0164ad5cebce00626a81b9452a27cc7e4f9"
         ],
-        "existingRegistry": null,
-        "existingSlot": null
+        "existingRegistry": "client/src/components/BloomBrand.tsx",
+        "existingSlot": "Canonical mode-specific botanical brand icon for Project Genesis"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Source/brief documented. No actual new checkout file, rendered QA or release evidence claimed by this intake.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Original prototype and approved REL-A01 v3 source bytes verified; React integration implemented with final local verification in progress. No published milestone or fictional demo enabled; hosted status not yet verified.",
+      "filePaths": [
+        "/brand/bloom-icon-everyday.svg",
+        "/brand/bloom-icon-athlete.svg"
+      ],
       "integration": {
-        "state": "NOT_VERIFIED",
-        "verified": false
+        "state": "LOCAL_APP_RENDER_TESTED_HOST_PENDING",
+        "verified": false,
+        "componentPath": "client/src/components/ReleaseElements.tsx",
+        "runtimeCatalogPath": "design/bloom/release/ee-01/v1/periodic-elements.json",
+        "publishedMilestones": 0
       },
       "review": {
-        "design": "per source handoff",
-        "scientific": "as applicable, not presumed",
+        "design": "Delivered prototype and owner-approved REL-A01 v3 adapted; independent final visual approval not claimed",
+        "scientific": "Catalog integrity and explicit f-block convention checked; independent scientific review not claimed",
         "rights": "verify exact asset rights",
-        "rendered": "not verified"
+        "rendered": "Final local verification in progress; no hosted or physical assistive-technology claim"
       },
       "statusEvidence": {
-        "date": "2026-11-22",
-        "basis": "architect source documentation review, not deployed app inspection"
+        "date": "2026-11-26",
+        "basis": "Exact owner-upload archive SHA/CRC and all7prototype manifest entries verified; current Genesis remains botanical; final local app checks in progress, not independent approval."
       },
       "designerDisposition20261122": {
         "status": "EXISTING_ART_OR_PROTOTYPE_REVIEW_NO_NEW_GENERATION",
         "action": "Reconcile design/approval and reuse real source bytes; preserve existing brand identity and UI",
         "executionGate": "DESIGN_PLANNING_ONLY — never overrides NEXT_ACTIONS.md, asset rights/review, current GI baseline or owner infrastructure pause",
         "validatedAtHead": false
-      }
+      },
+      "sourceReferencePaths": [
+        "design/bloom/release/ee-01/v1/QA_RESULTS.md",
+        "design/bloom/release/ee-01/v1/README.md",
+        "design/bloom/release/ee-01/v1/app.js",
+        "design/bloom/release/ee-01/v1/desktop_demo_preview.png",
+        "design/bloom/release/ee-01/v1/index.html",
+        "design/bloom/release/ee-01/v1/manifest.json",
+        "design/bloom/release/ee-01/v1/periodic-elements.json",
+        "design/bloom/release/ee-01/v1/styles.css"
+      ]
     },
     {
       "id": "BVA-0084",

@@ -2151,3 +2151,12 @@ Biology landing translates source-only to without an explanation and pending uni
 **Changed + proof:** Added neutral `Save & continue` to existing Home, while retaining explicit `Save & log my first meal` and Skip. Save errors retain the draft and do not navigate or mark setup complete. The quick-start card's title and long action labels now wrap at narrow enlarged zoom. 32 actual-component/provider browser cases pass across 320/390/768/1440, light/dark, two destinations, preference conflict and settings conflict; tests include the parent unmounting on completed status, original logo bytes, keyboard activation and CSS200 reflow. Existing preference/settings revision-contract tests pass4/4; TypeScript, full build/current media parity and crosswalk pass. No live backend, real account or external transfer. Detailed fixtures/results stay outside Git. Native zoom/VoiceOver/hosted not claimed.
 
 **Open + next:** Owner has supplied exact EE-01 prototype and approved REL-A01 v3; verified2 archive hashes/CRC and7+4 manifest entries. Resume the selected accessible React adaptation from those original sources. Hero/onboarding-photo transfers remain specifically blocked; GI qualification/network/deployment/main holds remain unchanged.
+
+
+## 2026-11-26 — EE-01 approved-source React integration
+
+**Track + maturity:** Owner-prioritized periodic table; implemented and locally engineering-tested, hosted pending. Original EE-01/REL-A01 v3 sources preserved byte-for-byte; canonical Genesis identity retained.
+
+**Changed + proof:** `ReleaseElements`, scoped CSS, Profile integration, optional existing-dialog portal and canonical static-loading identity. 10 source/release/registry tests, 16 responsive mode/theme states, four touch and four script-fallback cases pass; TypeScript/build pass. Exact source hashes, scope and NOT_TESTED boundaries in the existing artwork/Genesis checkpoint. No account writes or actual private data; all detailed synthetic artifacts outside Git.
+
+**Open + next:** Perform owner-authorized scoped staging deploy; no paid quota/config changes. Then original-source muscle/pain silhouette integration, separately deployable. Other Render/Mac/network/main holds and unchanged GI/source blockers remain.
