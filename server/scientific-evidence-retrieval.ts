@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { biologicalRegistrySchema, type BiologicalRegistry, type KnowledgeRelationship } from '../shared/biological-model';
 
-export const SCIENTIFIC_RETRIEVAL_VERSION='reviewed-science-retrieval-v3' as const;
+export const SCIENTIFIC_RETRIEVAL_VERSION='reviewed-science-retrieval-v4' as const;
 const id=z.string().min(1).max(128),sha=z.string().regex(/^[a-f0-9]{64}$/);
 /** Additive review overlay on the existing registry. Metadata/DOI presence and
  * model agreement do not create this record. Source acquisition and independent
@@ -91,11 +91,22 @@ export function retrieveReviewedScientificEvidence(input:{
   }
   const publicationGroups=Array.from(publications.values()).sort((a,b)=>a.doi<b.doi?-1:a.doi>b.doi?1:0);
   const studyFamilyIds=Array.from(new Set(publicationGroups.map(row=>row.studyFamilyId))).sort();
+  // Bind the scoped retrieval universe, including withheld context. A stable
+  // registry label and unchanged admitted cards do not prove that missing or
+  // unreviewed contrary context stayed unchanged during private reasoning.
+  // Sorting avoids invalidation caused only by record collection order.
+  const byId=<T extends {id:string}>(rows:T[])=>rows.sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+  const coverageRelationships=byId(eligible.map(row=>({...row,sourceIds:[...row.sourceIds].sort()})));
+  const coverageEntityIds=new Set([...Array.from(requested),...eligible.flatMap(row=>[row.from,row.to])]);
+  const coverageSourceIds=new Set(eligible.flatMap(row=>row.sourceIds));
+  const coverage={queryEntityIds:Array.from(requested).sort(),relationships:coverageRelationships,
+    entities:byId(registry.entities.filter(row=>coverageEntityIds.has(row.id))),
+    sources:byId(registry.sources.filter(row=>coverageSourceIds.has(row.id))),withheld};
   return {version:SCIENTIFIC_RETRIEVAL_VERSION,registryVersion:registry.version,cards:structuredClone(cards),withheld,
     publicationGroups,studyFamilyIds,unidentifiedPublications:unidentified,
     studyFamilyCount:!cards.length||unidentified||withheld?null:studyFamilyIds.length,
     independence:'not-established-by-publication-count' as const,
     opposingEvidenceStatus:cards.some(card=>['contrary','null','harm'].includes(card.review.findingDirection))?'included' as const:'not-established' as const,
     clinicalReleasePermitted:false as const,modelTrainingPermitted:false as const,
-    evidenceVersion:digest([SCIENTIFIC_RETRIEVAL_VERSION,registry.version,cards,Array.from(input.withdrawals.relationshipIds).sort(),Array.from(input.withdrawals.sourceIds).sort(),Array.from(input.withdrawals.reviewIds).sort(),Array.from(input.withdrawals.rightsIds).sort()])};
+    evidenceVersion:digest([SCIENTIFIC_RETRIEVAL_VERSION,registry.version,coverage,cards,Array.from(input.withdrawals.relationshipIds).sort(),Array.from(input.withdrawals.sourceIds).sort(),Array.from(input.withdrawals.reviewIds).sort(),Array.from(input.withdrawals.rightsIds).sort()])};
 }
