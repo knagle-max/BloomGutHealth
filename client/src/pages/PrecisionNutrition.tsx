@@ -112,12 +112,12 @@ export function ContextEditor({
   onReload:()=>Promise<{context:PrecisionContext;revision:string|null}>;
   pending:boolean;
 }) {
-  const [loaded,setLoaded]=useState({context:incomingContext,revision:incomingRevision}),[dirty,setDirty]=useState(false),[notice,setNotice]=useState(''),[reloading,setReloading]=useState(false);
+  const [loaded,setLoaded]=useState({context:incomingContext,revision:incomingRevision}),[dirty,setDirty]=useState(false),[notice,setNotice]=useState(''),[reloading,setReloading]=useState(false),[reloadSequence,setReloadSequence]=useState(0);
   const context=loaded.context,sourceChanged=loaded.revision!==incomingRevision;
   useEffect(()=>{if(!dirty&&!pending&&loaded.revision!==incomingRevision)setLoaded({context:incomingContext,revision:incomingRevision});},[incomingContext,incomingRevision,dirty,pending,loaded.revision]);
-  async function reload(){setReloading(true);try{const source=await onReload();if(!source.revision)throw Error();setLoaded(source);setDirty(false);setNotice('Saved health context reloaded.');}catch{setNotice('Saved health context could not reload. Your draft is still shown.');}finally{setReloading(false);}}
+  async function reload(){setReloading(true);try{const source=await onReload();if(!source.revision)throw Error();setLoaded(source);setReloadSequence(sequence=>sequence+1);setDirty(false);setNotice('Saved health context reloaded.');}catch{setNotice('Saved health context could not reload. Your draft is still shown.');}finally{setReloading(false);}}
   return (
-    <form key={loaded.revision??'unavailable'} onChangeCapture={()=>{setDirty(true);setNotice('');}}
+    <form key={`${loaded.revision??'unavailable'}:${reloadSequence}`} onChangeCapture={()=>{setDirty(true);setNotice('');}}
       className="bloom-panel space-y-4"
       onSubmit={async(e) => {
         e.preventDefault();

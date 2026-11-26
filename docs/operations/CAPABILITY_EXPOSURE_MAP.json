@@ -2005,7 +2005,7 @@
     "client/src/pages/Microbiome.tsx": "844e4531078200a1725c55ee9ed55958f2946a1aadafa65889802faa6da0518a",
     "client/src/pages/NutritionHistory.tsx": "a48f0683b9e0a633e10941d8a84ce870775d2ca9618cfede3f528ee233c206f2",
     "client/src/pages/PlanDay.tsx": "8fdb764170a8b00c3af9cdadc6ec64d35cf94f4fab291f234f76f8d461daa474",
-    "client/src/pages/PrecisionNutrition.tsx": "a65f5c90aac5f98306e83261d585fec153bee81180dd61939cc2fa5b3570b3a8",
+    "client/src/pages/PrecisionNutrition.tsx": "9d18276cc3ebbbda78050e69c1ce6cea1bc6b560c7c4efb0ec824c272f0725ca",
     "client/src/pages/Profile.tsx": "a4b6eba9569fbbb8c7ea692abb9855e2375de7bc7f93e4c5413f4e2e56132254",
     "client/src/pages/Progress.tsx": "41ca8552d40f1eb7550f95f741a863e67a3d6f7acde7215e7b83723da83e40f5",
     "client/src/pages/ReportManagement.tsx": "4bc41c20cf7bed768b591b9ce059ec3c4ce96f75e10be297b97ed35b0a88031c",
