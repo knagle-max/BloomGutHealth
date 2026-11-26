@@ -7069,9 +7069,10 @@
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": {
-        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "state": "DESCRIPTIVE_INSPECTION_MOUNTED_LOCAL_TESTED_ANALYTICS_NOT_ENABLED",
         "verified": false,
-        "component": "client/src/components/AnatomyRegionSelector.tsx"
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "route": "/activity"
       },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
@@ -7159,6 +7160,12 @@
         "manifestEntriesVerified": 28,
         "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
         "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
+      },
+      "ownerRequestedCoverageAudit20261126": {
+        "status": "BRIEFED_ADDITIONAL_OVERLAYS_NOT_GENERATED",
+        "brief": "docs/visual-assets/BLOOM_MUSCLE_MAP_ADDITIONAL_OVERLAY_BRIEF_20261126.md",
+        "sourceGeometryPreserved": true,
+        "sourceArt": "Exact Stage1–3 source remains installed; additions are separate future designer revisions, not missing original binaries."
       }
     },
     {
@@ -7188,9 +7195,10 @@
       "productionStatus": "OWNER-APPROVED VISUAL DESIGN Stages 1–3; verified owner-uploaded 28/28 ZIP member SHA-256; source is HYBRID raster figure PNG + SVG overlay. NOT imported into GitHub or integrated; canonical science/anatomy/accessibility/rights/hosted release gates open.",
       "filePaths": [],
       "integration": {
-        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "state": "DESCRIPTIVE_INSPECTION_MOUNTED_LOCAL_TESTED_ANALYTICS_NOT_ENABLED",
         "verified": false,
-        "component": "client/src/components/AnatomyRegionSelector.tsx"
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "route": "/activity"
       },
       "review": {
         "design": "OWNER APPROVED visual Stages 1-3 consolidated artwork per package-level owner handoff; no production authorization",
@@ -7278,6 +7286,12 @@
         "manifestEntriesVerified": 28,
         "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
         "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
+      },
+      "ownerRequestedCoverageAudit20261126": {
+        "status": "BRIEFED_ADDITIONAL_OVERLAYS_NOT_GENERATED",
+        "brief": "docs/visual-assets/BLOOM_MUSCLE_MAP_ADDITIONAL_OVERLAY_BRIEF_20261126.md",
+        "sourceGeometryPreserved": true,
+        "sourceArt": "Exact Stage1–3 source remains installed; additions are separate future designer revisions, not missing original binaries."
       }
     },
     {
@@ -7719,10 +7733,11 @@
       "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
-        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "state": "DESCRIPTIVE_GEOGRAPHY_MOUNTED_LOCAL_TESTED_LOCALIZED_RECORDING_NOT_ENABLED",
         "verified": false,
         "componentAssetIdReferenced": false,
-        "component": "client/src/components/AnatomyRegionSelector.tsx"
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "route": "/activity"
       },
       "review": {
         "design": "pending source-based UI review",
@@ -7871,10 +7886,11 @@
       "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
-        "state": "UNMOUNTED_SOURCE_SELECTOR_LOCAL_TESTED_CANONICAL_MAPPING_BLOCKED",
+        "state": "DESCRIPTIVE_GEOGRAPHY_MOUNTED_LOCAL_TESTED_LOCALIZED_RECORDING_NOT_ENABLED",
         "verified": false,
         "componentAssetIdReferenced": false,
-        "component": "client/src/components/AnatomyRegionSelector.tsx"
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "route": "/activity"
       },
       "review": {
         "design": "pending source-based UI review",

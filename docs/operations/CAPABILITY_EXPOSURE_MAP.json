@@ -1994,7 +1994,7 @@
     "client/src/lib/viome-pdf-reader.ts": "8a780c44790652e05c307ea931d127b09671eed34dd67972c0472faa7e7cceb7",
     "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
     "client/src/main.tsx": "6c8b2b61f503b292f5f887becfcb2b779d06c32f35fecc9ef494ba82e7688416",
-    "client/src/pages/ActivityLog.tsx": "a68dd03cf49e45f2ed6bc3b678383756cb1743e89592b1f7c8da08dc0d39ae64",
+    "client/src/pages/ActivityLog.tsx": "99e38289aaf8d13d043b84bd8b4b7c7b382a10be722bade4bc32e96e52d6700a",
     "client/src/pages/AthleteWorkspace.tsx": "c5cc1db33556dc9023d36a794f1fa28109fd80bb3817de294b7d0f9e44bea1c4",
     "client/src/pages/Dashboard.tsx": "b14959d6fe944757b603f878da568ed15a5f0370bc522477d403f7031e0e9b49",
     "client/src/pages/Explore.tsx": "af05d9be8e44fe09e17dfb829c676ebdea3b011c91e55bc27caf89547d286dda",

@@ -26,3 +26,4 @@
 .anatomy-marker-badge text{fill:#f4f5f0;font:700 10px ui-sans-serif,system-ui}
 .anatomy-region-state{display:block;font-size:.8em;margin-top:.25rem}
 @media(forced-colors:active){.anatomy-marker-tier,.anatomy-marker-selected,.anatomy-marker-focused,.anatomy-marker-unrated{stroke:CanvasText}.anatomy-marker-dot{fill:CanvasText}.anatomy-marker-badge rect{fill:Canvas;stroke:CanvasText}.anatomy-marker-badge text{fill:CanvasText}}
+.anatomy-selector-source{overflow-wrap:anywhere}
