@@ -66,7 +66,10 @@ export const displayUnitsSchema = z.object({
 }).strict();
 export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
 
+export const exerciseCataloguePreferencesSchema=z.object({favourites:z.array(z.string().min(1).max(100)).max(1000).default([]),custom:z.array(z.object({id:z.string().uuid(),name:z.string().trim().min(1).max(120),aliases:z.array(z.string().trim().min(1).max(120)).max(20).default([]),category:z.string().trim().min(1).max(100),equipment:z.array(z.string().trim().min(1).max(100)).max(20).default([])}).strict()).max(500).default([])}).strict();
+export const exerciseCatalogueReferenceSchema=z.object({id:z.string().regex(/^(exercise\.[a-f0-9]{24}|custom\.[a-f0-9-]{36})$/),version:z.string().min(1).max(100),match:z.enum(['selected','description-suggestion']),confirmed:z.boolean()}).strict();
 export const experienceSettingsSchema = z.object({
+  exerciseCatalogue:exerciseCataloguePreferencesSchema.prefault({}),
   lifecycleId:z.string().uuid().optional(), // Server-owned generation; never an entitlement.
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
   onboarding: onboardingSchema.prefault({}),
@@ -75,6 +78,7 @@ export const experienceSettingsSchema = z.object({
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({
+  exerciseCatalogue:exerciseCataloguePreferencesSchema.optional(),
   athleteReviewFor:z.object({base:z.string().max(1024).optional(),targets:z.string().max(1024).optional(),health:z.string().max(1024).optional()}).strict().optional(),
   onboarding: onboardingSchema.optional(),
   displayUnits: displayUnitsSchema.optional(),
@@ -85,6 +89,7 @@ export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
 export const actualSetsSchema = z.object({
   version: z.literal(1),
   sets: z.array(z.object({
+    catalogueRef:exerciseCatalogueReferenceSchema.optional(),
     exercise: z.string().trim().min(1).max(120),
     reps: z.number().int().min(0).max(1000).nullable(),
     loadKg: z.number().finite().min(0).max(2000).nullable(),
@@ -97,6 +102,7 @@ export type ActualSets = z.infer<typeof actualSetsSchema>;
 const actualStepsFields={steps:z.number().int().nonnegative().safe().nullable().optional(),stepScope:z.enum(['session','whole-day']).nullable().optional()};
 const validStepsScope=(value:{steps?:number|null;stepScope?:'session'|'whole-day'|null})=>value.steps==null||value.stepScope!=null;
 export const activityComponentSchema=z.object({
+ catalogueRef:exerciseCatalogueReferenceSchema.optional(),
  ...actualStepsFields,
  id:z.string().uuid(),title:z.string().trim().min(1).max(120),
  activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),

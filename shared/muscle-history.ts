@@ -1,10 +1,11 @@
+import {catalogueExercise} from './exercise-catalogue';
 import type {ExperienceRecord,ActualSets} from './experience';
 import {descriptiveMuscles,exerciseMuscleCatalogVersion,exerciseMuscleAcceptance,matchCuratedExercise,exerciseAssociations,type DescriptiveMuscleId} from './exercise-muscles';
 import type {LocalizedSymptom} from './localized-symptoms';
 export type MuscleHistoryOptions={asOf:string;timeZone:string;days:7|14|30};
 export function muscleCalendarDate(at:string,timeZone:string){const parts=new Intl.DateTimeFormat('en',{timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(at));const get=(key:string)=>parts.find(p=>p.type===key)!.value;return`${get('year')}-${get('month')}-${get('day')}`;}
 const addDays=(date:string,n:number)=>new Date(Date.parse(date+'T12:00:00Z')+n*86400000).toISOString().slice(0,10);
-export type MuscleContribution={key:string;sourceRecordId:string;sourceRecordKind:'activity'|'session';sourceUpdatedAt:string;linkedRecordIds:string[];setId:string|null;componentId:string|null;reportedExercise:string;exerciseId:string;catalogVersion:string;matchBasis:'exact-recorded-name';associationStates:ReturnType<typeof exerciseAssociations>['associations'];at:string;date:string;timestampBasis:'reported-start'|'reported-day';side:'left'|'right'|'both'|'unspecified';reps:number|null;loadKg:number|null;externalVolumeKgReps:number|null;primary:readonly DescriptiveMuscleId[];secondary:readonly DescriptiveMuscleId[];stabilizers:readonly DescriptiveMuscleId[]};
+export type MuscleContribution={key:string;sourceRecordId:string;sourceRecordKind:'activity'|'session';sourceUpdatedAt:string;linkedRecordIds:string[];setId:string|null;componentId:string|null;reportedExercise:string;catalogueExerciseId:string|null;catalogueReferenceVersion:string|null;exerciseId:string;catalogVersion:string;matchBasis:'exact-recorded-name';associationStates:ReturnType<typeof exerciseAssociations>['associations'];at:string;date:string;timestampBasis:'reported-start'|'reported-day';side:'left'|'right'|'both'|'unspecified';reps:number|null;loadKg:number|null;externalVolumeKgReps:number|null;primary:readonly DescriptiveMuscleId[];secondary:readonly DescriptiveMuscleId[];stabilizers:readonly DescriptiveMuscleId[]};
 /** Account ownership is enforced by the canonical collector/API. Pure, uncached
  * projection never mutates source records, matches approximate exercise names,
  * converts missing load into zero or interprets symptoms as clinical outcomes. */
@@ -17,11 +18,12 @@ export function buildMuscleHistory(records:readonly ExperienceRecord[],options:M
   const date=day??muscleCalendarDate(at,timeZone);if(Date.parse(at)>now||!eligibleDate(date)){excluded.push({recordId:record.id,reason:Date.parse(at)>now?'future':'outside-window',sets:items.length});return;}
   for(const[index,set]of Array.from(items.entries())){
    if(!set.completed||set.state==='planned'||set.state==='cancelled'){excluded.push({recordId:record.id,reason:'completion-not-confirmed',sets:1});continue;}
-   const match=matchCuratedExercise(set.exercise);if(!match){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
+   const canonical=set.catalogueRef?.confirmed?catalogueExercise(set.catalogueRef.id):null;
+   const match=matchCuratedExercise(canonical?.name??set.exercise);if(!match){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
    if(candidates.length>=20000)throw Error('MUSCLE_HISTORY_WINDOW_TOO_LARGE');
    const resolved=exerciseAssociations(match);
    const volume=set.reps!==null&&set.loadKg!==null?set.reps*set.loadKg:null;
-   candidates.push({key:set.id?'set:'+set.id.toLowerCase():`legacy:${record.id}:${componentId??'parent'}:${index}`,sourceRecordId:record.id,sourceRecordKind:record.kind as 'activity'|'session',sourceUpdatedAt:record.updatedAt,linkedRecordIds:[record.id],setId:set.id??null,componentId,reportedExercise:set.exercise,exerciseId:match.id,catalogVersion:exerciseMuscleCatalogVersion,matchBasis:'exact-recorded-name',at,date,timestampBasis:day?'reported-day':'reported-start',side:set.side??'unspecified',reps:set.reps,loadKg:set.loadKg,externalVolumeKgReps:volume,associationStates:resolved.associations,primary:resolved.primary,secondary:resolved.secondary,stabilizers:resolved.stabilizers});
+   candidates.push({key:set.id?'set:'+set.id.toLowerCase():`legacy:${record.id}:${componentId??'parent'}:${index}`,sourceRecordId:record.id,sourceRecordKind:record.kind as 'activity'|'session',sourceUpdatedAt:record.updatedAt,linkedRecordIds:[record.id],setId:set.id??null,componentId,reportedExercise:set.exercise,catalogueExerciseId:set.catalogueRef?.id??null,catalogueReferenceVersion:set.catalogueRef?.version??null,exerciseId:match.id,catalogVersion:exerciseMuscleCatalogVersion,matchBasis:'exact-recorded-name',at,date,timestampBasis:day?'reported-day':'reported-start',side:set.side??'unspecified',reps:set.reps,loadKg:set.loadKg,externalVolumeKgReps:volume,associationStates:resolved.associations,primary:resolved.primary,secondary:resolved.secondary,stabilizers:resolved.stabilizers});
   }
  }
  for(const record of Array.from(byId.values())){

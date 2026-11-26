@@ -1,3 +1,4 @@
+import {matchCatalogueExercises,exerciseCatalogueVersion,type CatalogueExercise} from './exercise-catalogue';
 import type {Activity,ActualSets,ActivityComponent} from './experience';
 import {kgToDisplay,displayToKg} from './display-units';
 
@@ -19,7 +20,7 @@ export function defaultActivityLoadUnits(items:ActivityDraftComponent[],unit:'kg
 /** Remove browser-only source quantities only after their unit is resolved/defaulted. */
 export function canonicalActivityParts(items:readonly ActivityDraftComponent[]):ActivityComponent[] {
  if(unresolvedActivityLoads(items))throw Error('Resolve reported load units before saving.');
- return items.map(item=>({...item,...(item.actualSets?{actualSets:{version:1 as const,sets:item.actualSets.sets.map(set=>{const {unconfirmedLoad,defaultedLoadUnit,...canonical}=set;return {...canonical,...(unconfirmedLoad!==undefined?{loadKg:displayToKg(unconfirmedLoad,canonical.loadUnit!)}:{})};})}}:{})}));
+ return items.map(item=>({...item,...(item.catalogueRef?{catalogueRef:{...item.catalogueRef,confirmed:true}}:{}),...(item.actualSets?{actualSets:{version:1 as const,sets:item.actualSets.sets.map(set=>{const {unconfirmedLoad,defaultedLoadUnit,...canonical}=set;return {...canonical,...(canonical.catalogueRef?{catalogueRef:{...canonical.catalogueRef,confirmed:true}}:{}),...(unconfirmedLoad!==undefined?{loadKg:displayToKg(unconfirmedLoad,canonical.loadUnit!)}:{})};})}}:{})}));
 }
 
 /** App-authored menu labels, not a licensed MET or physiological taxonomy. */
@@ -140,9 +141,9 @@ function activitySyntax(source:string){
  return{text,reportedBout,bodyweight,state};
 }
 
-export function describeActivityParts(description:string,id=()=>crypto.randomUUID()):ActivityDraftComponent[]{
- return activityDescriptionSpans(description).map(span=>{const parsed=describeActivity(span.text),sets=parsed.actualSets;
-  return {id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.reportedLabel?'reported':parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,sourceSpan:{start:span.start,end:span.end},...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,id:id(),...(set.loadUnit?{loadUnit:set.loadUnit}:{})}))}}:{})};
+export function describeActivityParts(description:string,id=()=>crypto.randomUUID(),custom:readonly CatalogueExercise[]=[]):ActivityDraftComponent[]{
+ return activityDescriptionSpans(description).map(span=>{const parsed=describeActivity(span.text),sets=parsed.actualSets,candidates=matchCatalogueExercises(span.text,custom),catalogueRef=candidates.length===1?{id:candidates[0].id,version:candidates[0].id.startsWith('custom.')?'account-custom-v1':exerciseCatalogueVersion,match:'description-suggestion' as const,confirmed:false}:undefined;
+  return {...(catalogueRef?{catalogueRef}:{}),id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.reportedLabel?'reported':parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,sourceSpan:{start:span.start,end:span.end},...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,...(catalogueRef?{catalogueRef}:{}),id:id(),...(set.loadUnit?{loadUnit:set.loadUnit}:{})}))}}:{})};
  });
 }
 /** Compatibility projections; the child observations remain the source of truth. */

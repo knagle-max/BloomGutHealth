@@ -8,7 +8,7 @@ import AnatomyRegionSelector from './AnatomyRegionSelector';
 const localTime=(d=new Date())=>new Date(+d-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
 /** Parent is keyed by actor. The held command survives uncertain HTTP responses,
  * so Retry sends the same revision rather than creating another observation. */
-export default function LocalizedSymptomEditor({actor}:{actor:string}){
+export default function LocalizedSymptomEditor({actor,mode}:{actor:string;mode:'everyday'|'athlete'}){
  const records=useExperienceRecords('localized-symptom'),context=useQuery<{lifecycleId:string}>({queryKey:['/api/experience/localized-symptom-context',actor],queryFn:async()=>(await apiRequest('GET','/api/experience/localized-symptom-context')).json()});
  const [editing,setEditing]=useState<Extract<ExperienceRecord,{kind:'localized-symptom'}>|null>(null),[draft,setDraft]=useState(()=>blank()),[pending,setPending]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState('');
  const attempt=useRef<{id?:string;payload:LocalizedSymptom}|null>(null);
@@ -30,25 +30,25 @@ export default function LocalizedSymptomEditor({actor}:{actor:string}){
  function report(view:'front'|'back',id:string){const rows=(saved??[]).flatMap(row=>row.kind==='localized-symptom'&&row.payload.location.view===view&&row.payload.location.regionId===id&&Date.parse(row.payload.observedAt)<=Date.now()?[row]:[]).sort((a,b)=>b.payload.observedAt.localeCompare(a.payload.observedAt));return rows.length?[{visualKey:id,count:rows.length,severity:rows[0].payload.severity}]:[];}
  return <details><summary>Record or correct a localized symptom</summary><div className="space-y-3 pt-3">
   <p>Self-reported observations, not a diagnosis. Blank severity and duration remain unknown. Laterality describes your body and is always chosen explicitly.</p>
-  <details><summary>Choose a location on the body</summary><p>Markers count saved observations at the selected source location. The displayed rating is the latest observation, not an average or an injury measure.</p><AnatomyRegionSelector reports={saved?reports:undefined} onSelect={selection=>{if(selection?.layer==='locations'&&selection.source==='unified-symptom-v1'&&selection.view&&symptomRegionChoices[selection.view].some(r=>r.id===selection.sourceTargetId))change({view:selection.view,regionId:selection.sourceTargetId!});}}/></details>
+  <details><summary>Choose a location on the body</summary><p>Markers count saved observations at the selected source location. The displayed rating is the latest observation, not an average or an injury measure.</p><AnatomyRegionSelector mode={mode} reports={saved?reports:undefined} onSelect={selection=>{if(selection?.layer==='locations'&&selection.source==='unified-symptom-v1'&&selection.view&&symptomRegionChoices[selection.view].some(r=>r.id===selection.sourceTargetId))change({view:selection.view,regionId:selection.sourceTargetId!});}}/></details>
   <form onSubmit={e=>{e.preventDefault();void save();}} className="grid gap-3">
    <fieldset disabled={pending} className="grid gap-3"><legend>{editing?'Correct observation':'New observation'}</legend>
-    <label>Symptom <select value={draft.type} onChange={e=>change({type:e.target.value as typeof draft.type})}>{localizedSymptomKinds.map(t=><option key={t}>{t}</option>)}</select></label>
-    <label>View <select value={draft.view} onChange={e=>{const view=e.target.value as 'front'|'back';change({view,regionId:symptomRegionChoices[view][0].id});}}><option value="front">Front</option><option value="back">Back</option></select></label>
-    <label>Location <select value={draft.regionId} onChange={e=>change({regionId:e.target.value})}>{symptomRegionChoices[draft.view].map(r=><option key={r.id} value={r.id}>{r.label}</option>)}</select></label>
-    <label>Your body side <select value={draft.laterality} onChange={e=>change({laterality:e.target.value as typeof draft.laterality})}>{localizedSymptomSides.map(s=><option key={s} value={s}>{s}</option>)}</select></label>
-    <label>Observed at (local time) <input required type="datetime-local" value={draft.when} onChange={e=>change({when:e.target.value})}/></label>
-    <label>Onset (optional local time) <input type="datetime-local" value={draft.onset} onChange={e=>change({onset:e.target.value})}/></label>
-    <label>Severity (optional, 0–10) <input type="number" min="0" max="10" step="1" value={draft.severity} onChange={e=>change({severity:e.target.value})}/></label>
-    <label>Duration in minutes (optional) <input type="number" min="0" max="5256000" step="any" value={draft.duration} onChange={e=>change({duration:e.target.value})}/></label>
-    <label>Ongoing? <select value={draft.ongoing} onChange={e=>change({ongoing:e.target.value})}><option value="unknown">Not specified</option><option value="true">Yes</option><option value="false">No</option></select></label>
-    <label>Notes (optional) <textarea maxLength={2000} value={draft.notes} onChange={e=>change({notes:e.target.value})}/></label>
+    <label>Symptom <select className="bloom-input w-full" value={draft.type} onChange={e=>change({type:e.target.value as typeof draft.type})}>{localizedSymptomKinds.map(t=><option key={t}>{t}</option>)}</select></label>
+    <label>View <select className="bloom-input w-full" value={draft.view} onChange={e=>{const view=e.target.value as 'front'|'back';change({view,regionId:symptomRegionChoices[view][0].id});}}><option value="front">Front</option><option value="back">Back</option></select></label>
+    <label>Location <select className="bloom-input w-full" value={draft.regionId} onChange={e=>change({regionId:e.target.value})}>{symptomRegionChoices[draft.view].map(r=><option key={r.id} value={r.id}>{r.label}</option>)}</select></label>
+    <label>Your body side <select className="bloom-input w-full" value={draft.laterality} onChange={e=>change({laterality:e.target.value as typeof draft.laterality})}>{localizedSymptomSides.map(s=><option key={s} value={s}>{s}</option>)}</select></label>
+    <label>Observed at (local time) <input className="bloom-input w-full" required type="datetime-local" value={draft.when} onChange={e=>change({when:e.target.value})}/></label>
+    <label>Onset (optional local time) <input className="bloom-input w-full" type="datetime-local" value={draft.onset} onChange={e=>change({onset:e.target.value})}/></label>
+    <label>Severity (optional, 0–10) <input className="bloom-input w-full" type="number" min="0" max="10" step="1" value={draft.severity} onChange={e=>change({severity:e.target.value})}/></label>
+    <label>Duration in minutes (optional) <input className="bloom-input w-full" type="number" min="0" max="5256000" step="any" value={draft.duration} onChange={e=>change({duration:e.target.value})}/></label>
+    <label>Ongoing? <select className="bloom-input w-full" value={draft.ongoing} onChange={e=>change({ongoing:e.target.value})}><option value="unknown">Not specified</option><option value="true">Yes</option><option value="false">No</option></select></label>
+    <label>Notes (optional) <textarea className="bloom-input w-full" maxLength={2000} value={draft.notes} onChange={e=>change({notes:e.target.value})}/></label>
    </fieldset>
-   <button type="submit" disabled={pending||!context.data}>{pending?'Saving…':editing?'Save correction':'Save observation'}</button>
-   {editing&&<button type="button" disabled={pending} onClick={()=>{setEditing(null);attempt.current=null;setDraft(blank());setError('');}}>Cancel correction</button>}
+   <button className="min-h-11 px-3" type="submit" disabled={pending||!context.data}>{pending?'Saving…':editing?'Save correction':'Save observation'}</button>
+   {editing&&<button className="min-h-11 px-3" type="button" disabled={pending} onClick={()=>{setEditing(null);attempt.current=null;setDraft(blank());setError('');}}>Cancel correction</button>}
   </form>
   {error&&<p role="alert">{error}</p>}<p role="status">{message}</p>
-  <button type="button" disabled={pending} onClick={()=>{void records.refetch();void context.refetch();}}>Refresh saved observations</button>
-  {!saved?<p role="status">Checking saved observations…</p>:<ul>{saved.flatMap(row=>row.kind==='localized-symptom'?[<li key={row.id}>{row.payload.observedAt} · {row.payload.type} · {symptomRegionChoices[row.payload.location.view].find(r=>r.id===row.payload.location.regionId)?.label} · {row.payload.location.laterality} <button type="button" disabled={pending} onClick={()=>edit(row)}>Edit observation</button> <button type="button" disabled={pending} onClick={()=>void remove(row.id)}>Delete observation</button></li>]:[])}</ul>}
+  <button className="min-h-11 px-3" type="button" disabled={pending} onClick={()=>{void records.refetch();void context.refetch();}}>Refresh saved observations</button>
+  {!saved?<p role="status">Checking saved observations…</p>:<ul>{saved.flatMap(row=>row.kind==='localized-symptom'?[<li key={row.id}>{row.payload.observedAt} · {row.payload.type} · {symptomRegionChoices[row.payload.location.view].find(r=>r.id===row.payload.location.regionId)?.label} · {row.payload.location.laterality} <button className="min-h-11 px-3" type="button" disabled={pending} onClick={()=>edit(row)}>Edit observation</button> <button className="min-h-11 px-3" type="button" disabled={pending} onClick={()=>void remove(row.id)}>Delete observation</button></li>]:[])}</ul>}
  </div></details>;
 }
