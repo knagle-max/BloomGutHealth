@@ -7152,7 +7152,10 @@
       "sourceReferencePaths": [
         "design/bloom/anatomy/stages-1-3/assets/bloom-neutral-front.svg",
         "design/bloom/anatomy/stages-1-3/assets/body-front.png",
-        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json"
+        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json",
+        "design/bloom/anatomy/presentation-20261126/front-everyday.svg",
+        "design/bloom/anatomy/presentation-20261126/front-athlete.svg",
+        "design/bloom/anatomy/presentation-20261126/SOURCE_MANIFEST.json"
       ],
       "sourceTransfer20261126": {
         "archiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
@@ -7166,6 +7169,19 @@
         "brief": "docs/visual-assets/BLOOM_MUSCLE_MAP_ADDITIONAL_OVERLAY_BRIEF_20261126.md",
         "sourceGeometryPreserved": true,
         "sourceArt": "Exact Stage1–3 source remains installed; additions are separate future designer revisions, not missing original binaries."
+      },
+      "localReviewedPresentation20261126": {
+        "status": "ENGINEERING_TESTED_LOCAL_DESCRIPTIVE",
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "sourceManifest": "design/bloom/anatomy/presentation-20261126/SOURCE_MANIFEST.json",
+        "defaultOriginalTargets": 24,
+        "detailedProvisionalHitTargets": 34,
+        "listOnlyResiduals": 2,
+        "sourceVisuals": "Owner-reviewed front placements; exact restored V434 back yellow over full unchanged original blue parents",
+        "canonicalAndClinicalQualification": "NOT_GRANTED",
+        "render": "HELD_UNTIL_DECEMBER_NO_ATTEMPT",
+        "receipt": "docs/verification/ANATOMY_REVIEWED_PRESENTATION_INTEGRATION_20261126.md",
+        "browserEvidence": "16responsive states+4touch emulation/actual Chromium AX; physicalAT not tested"
       }
     },
     {
@@ -7278,7 +7294,10 @@
       "sourceReferencePaths": [
         "design/bloom/anatomy/stages-1-3/assets/bloom-neutral-back.svg",
         "design/bloom/anatomy/stages-1-3/assets/body-back.png",
-        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json"
+        "design/bloom/anatomy/stages-1-3/PACKAGE_MANIFEST.json",
+        "design/bloom/anatomy/presentation-20261126/back-everyday.svg",
+        "design/bloom/anatomy/presentation-20261126/back-athlete.svg",
+        "design/bloom/anatomy/presentation-20261126/SOURCE_MANIFEST.json"
       ],
       "sourceTransfer20261126": {
         "archiveSha256": "a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511",
@@ -7292,6 +7311,19 @@
         "brief": "docs/visual-assets/BLOOM_MUSCLE_MAP_ADDITIONAL_OVERLAY_BRIEF_20261126.md",
         "sourceGeometryPreserved": true,
         "sourceArt": "Exact Stage1–3 source remains installed; additions are separate future designer revisions, not missing original binaries."
+      },
+      "localReviewedPresentation20261126": {
+        "status": "ENGINEERING_TESTED_LOCAL_DESCRIPTIVE",
+        "component": "client/src/components/AnatomyRegionSelector.tsx",
+        "sourceManifest": "design/bloom/anatomy/presentation-20261126/SOURCE_MANIFEST.json",
+        "defaultOriginalTargets": 20,
+        "detailedProvisionalHitTargets": 28,
+        "listOnlyResiduals": 4,
+        "sourceVisuals": "Owner-reviewed front placements; exact restored V434 back yellow over full unchanged original blue parents",
+        "canonicalAndClinicalQualification": "NOT_GRANTED",
+        "render": "HELD_UNTIL_DECEMBER_NO_ATTEMPT",
+        "receipt": "docs/verification/ANATOMY_REVIEWED_PRESENTATION_INTEGRATION_20261126.md",
+        "browserEvidence": "16responsive states+4touch emulation/actual Chromium AX; physicalAT not tested"
       }
     },
     {

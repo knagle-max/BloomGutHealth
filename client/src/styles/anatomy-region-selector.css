@@ -32,3 +32,6 @@
 .anatomy-selector-source{overflow-wrap:anywhere}
 
 .anatomy-marker-zero{fill:#f4f5f0;stroke:#15191d;stroke-width:1;paint-order:stroke fill;font:700 12px ui-sans-serif,system-ui}
+
+.anatomy-muscle-paint{pointer-events:none;vector-effect:non-scaling-stroke}
+.anatomy-muscle-hit{pointer-events:fill;cursor:pointer;touch-action:manipulation}
