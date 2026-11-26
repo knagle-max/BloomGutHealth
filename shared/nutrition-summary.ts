@@ -49,7 +49,9 @@ export function mealNutritionSummary(meals: Array<any>) {
         complete = false;
       if (macros[key] && known(meal[macros[key]])) {
         amount = meal[macros[key]];
-        complete = true;
+        // Retain the stored amount, but an explicitly partial/unknown
+        // source detail cannot become complete because a macro total exists.
+        complete = detail ? known(detail.amount) && detail.coverage === 1 : true;
       } else if (known(detail?.amount) && detail.coverage > 0) {
         amount = detail.amount;
         complete = detail.coverage === 1;

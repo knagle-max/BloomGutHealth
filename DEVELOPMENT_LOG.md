@@ -2196,3 +2196,11 @@ Biology landing translates source-only to without an explanation and pending uni
 **Changed + proof:** RED regression reproduced0/10 rejection. Compatible zero now keeps its exact count and rating, with numeric-only `0/10` at the source anchor and complete native text. Unknown and absent stay distinct; approved positive-ring geometry/art unchanged.20 focused tests, eight isolated responsive/theme render cases, types/build/media and crosswalk pass. Marker paint remains visible against unchanged raster in forced colours; equivalent native controls preserve system styling. Local artifacts only, no PHI/source aggregation or actual account queries.
 
 **Open + next:** Preserve completed mounted inspector and designer overlay brief. Actual-record/participation and original V1 candidate-transfer dependencies remain narrower follow-ups; do not block the descriptive UI or repeat unchanged searches. No Render retry before December or other environment/main changes.
+
+## 2026-11-26 — nutrition source-coverage integrity
+
+**Track + maturity:** Authorized independent consumer slice; narrow existing read-model/UI correction, not a new nutrient or diary engine.
+
+**Changed + proof:** Stored macro totals retain explicit partial source metadata rather than certifying completeness; empty journal days show unknown diary completeness instead of zero-intake progress. Known-zero recorded meals and stored amounts remain unchanged.19 focused tests, eight isolated built-App browser cases, types/build/media/crosswalk pass; detailed synthetic artifacts stay outside Git. See `docs/verification/NUTRITION_SOURCE_COVERAGE_INTEGRITY_20261126.md`.
+
+**Open + next:** Newly published V4.2 local implementation/default-independent-region directives supersede the read-only-only execution hold. Preserve the completed independent read-only findings and original source bytes; resume the selected existing anatomy inspector with explicit presentation-level geometry/interaction safeguards. No Render before December or other infrastructure/main changes.

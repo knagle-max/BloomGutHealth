@@ -452,6 +452,12 @@ export default function NutritionHistory() {
             {dailyChecking?<p role="status">Checking current recorded totals…</p>:<p role="alert">Today's totals could not load. Your saved journal remains available.</p>}
             <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
           </CardContent>
+        ) : Array.isArray(dailyData.meals) && dailyData.meals.length === 0 ? (
+          <CardContent className="space-y-3">
+            <p>No food intake recorded for today.</p>
+            <p className="panel-note">Diary completeness is unknown. No entries do not establish zero intake or a complete day.</p>
+            <Button onClick={() => navigate("/log-meal")}>Log a meal</Button>
+          </CardContent>
         ) : targetsError || !targets ? (
           <CardContent className="space-y-3">
           {targetsChecking?<p role="status">Checking current planning targets. Recorded totals are shown without target comparisons.</p>:<p role="alert">Planning targets could not load. Recorded totals are shown without target comparisons.</p>}

@@ -79,3 +79,9 @@ test("a private label's small known amount survives the merged meal estimate and
 test("food mass presentation retains known tiny positives while true zero and unknown remain distinct",()=>{
  for(const unit of["g","oz"]as const){for(const grams of[1e-12,0.00003,0.004])assert.ok(Number(foodMass(grams,unit).split(" ")[0])>0);assert.equal(foodMass(0,unit),`0 ${unit}`);assert.equal(foodMass(null,unit),"Amount unknown");}
 });
+
+test('saved macro amounts retain explicit partial source coverage without becoming complete',()=>{
+ const meal={totalCalories:100,totalProtein:0,totalCarbs:12,totalFat:4,intelligence:{nutrients:[{key:'calories',amount:100,coverage:0.5},{key:'protein_g',amount:0,coverage:0.5},{key:'carbohydrates_total_g',amount:12,coverage:1},{key:'fat_total_g',amount:null,coverage:0}]}};
+ const before=structuredClone(meal),summary=mealNutritionSummary([meal]);
+ assert.equal(summary.totals.calories,100);assert.equal(summary.totals.protein,0);assert.equal(summary.coverage.calories.completeMeals,0);assert.equal(summary.coverage.protein.partial,true);assert.equal(summary.coverage.carbs.completeMeals,1);assert.equal(summary.coverage.fat.partial,true);assert.deepEqual(meal,before);
+});
