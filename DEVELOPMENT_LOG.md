@@ -2169,3 +2169,12 @@ Biology landing translates source-only to without an explanation and pending uni
 **Changed + proof:** Imported exact original Stage1–3/Unified symptom sources; 28/28 anatomy manifest, uploaded member equality, PNG parity and pinned44-path extraction pass. New source tests plus release/registry10/10; isolated component16 responsive mode/theme cases, keyboard/equivalent44px list, layer/view isolation and CSS200 pass. Types/build pass. Detailed local synthetic logs remain outside Git; see existing artwork/Genesis checkpoint for source hashes and test limits.
 
 **Open + next:** Approved canonical exercise/region crosswalk, localized symptom-source semantics, anatomy/rights qualifications remain real dependencies. No fabricated workout or pain observations and no consumer mounting. BVA IDs preserved; no marker/physiology/clinical completion claims. Source transfer is resolved for these two anatomy packages; do not repeat the old binary searches. Other hero/goal transfers and GI qualification remain parked.
+
+
+## 2026-11-26 — BVA-0089 source-qualified marker display
+
+**Track + maturity:** Next bounded eligible muscle/pain slice: unmounted display component, no canonical record or clinical activation. Reuse exact unified body/region source and original V3 marker specification. No unchanged blocker searches or network changes.
+
+**Changed + proof:** Deterministic severity/count markers, collision-safe fixed pills, full accessible text when pills are omitted, explicit invalid-input/unknown states and stale-selection callback repair.14 layout/source/registry tests and16 local responsive/theme component states pass; types/build/source checks pass. Original V3 review document/hash and current evidence boundaries are recorded in the existing artwork/Genesis checkpoint. No individual health data, source aggregation, duplicate store or generated artwork.
+
+**Open + next:** Canonical exercise/region mapping, localized source semantics and anatomy/rights qualification remain required for consumer wiring. Preserve those blockers and continue independently eligible source-safe functionality. No Render retry before December, muscle deployment, Mac/Tailscale, live data, paid config or main merge.

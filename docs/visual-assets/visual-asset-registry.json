@@ -8019,9 +8019,11 @@
       "productionStatus": "Owner-supplied design-only prototype source verified (symptom overlay JSON + HTML + preview PNG; original approved body PNG reused). NOT canonical region mapped or production overlay SVG/integrated; 47 canonical design IDs vs 41 provisional distinct IDs need crosswalk.",
       "filePaths": [],
       "integration": {
-        "state": "UNIMPLEMENTED_DESIGN_ONLY",
+        "state": "UNMOUNTED_DISPLAY_MARKERS_LOCAL_TESTED_CANONICAL_RECORD_WIRING_BLOCKED",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": false,
+        "component": "client/src/components/AnatomyMarkers.tsx",
+        "limits": "Supplied display summaries only, no aggregation or canonical record mapping. Fixed pills omit long/colliding counts; complete values remain accessible in list. No consumer route mounted."
       },
       "review": {
         "design": "pending source-based UI review",
@@ -8138,7 +8140,8 @@
         "design/bloom/anatomy/unified-symptom/v1/README.md",
         "design/bloom/anatomy/unified-symptom/v1/QA_MANIFEST.json",
         "design/bloom/anatomy/unified-symptom/v1/assets/front-regions-provisional.json",
-        "design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json"
+        "design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json",
+        "design/bloom/anatomy/unified-symptom/v1/marker-v3/DESIGN_REVIEW.md"
       ],
       "sourceTransfer20261126": {
         "archiveSha256": "14ebcff60ef3900c94f12f7f0121030fa5c21b30dd869b964655f7d3feb901fa",
@@ -8147,6 +8150,14 @@
         "manifest": "QA_MANIFEST has no per-member hashes; exact member equality to uploaded archive checked locally",
         "state": "EXACT_ORIGINAL_BYTES_IN_REPOSITORY",
         "rightsAndScientificReview": "NOT_GRANTED_BY_TRANSFER"
+      },
+      "markerV3Source20261126": {
+        "archiveSha256": "8f0c811e1ef91a647db9377c42e24a59e59b0cb47dfaec9a257b4cc63eb5f964",
+        "archiveBytes": 1645105,
+        "crc": "PASS",
+        "reviewDocumentSha256": "1997d9015fe2e3a0834c49371a312683c022c7e19ae95f68b1835bfb6e343c63",
+        "frontPng": "EXACT_APPROVED_STAGE123_PNG",
+        "review": "Design only; no scientific, independent accessibility or runtime approval inferred"
       }
     },
     {
