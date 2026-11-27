@@ -8,6 +8,10 @@ The successor Architect must read this document when taking over Bloom, retain i
 
 **Binding architecture context:** [application-wide visual DNA](../architecture/BLOOM_APPLICATION_WIDE_VISUAL_DNA_AND_SELECTIVE_PRESERVATION_20261117.md); existing responsive/consumer feature contracts, relevant task-specific original UX and Brand specialist outputs. Read **actual current specialist specs** rather than assuming a mockup's existence proves implementation. If a conflict exists, report the exact conflict and apply latest specific owner direction without silently rewriting science/security/source ownership.
 
+### Published Brand/UI token specification for all successor agents
+
+**Mandatory cross-agent handoff:** [Standing Brand/UI Visual Hierarchy & Design Tokens — Shared Agent Handoff](BLOOM_STANDING_BRAND_UI_VISUAL_HIERARCHY_AND_TOKENS_20261126.md) links to the authoritative [full Visual/Design Token Specification](../../design/visual-system/STANDING_UI_VISUAL_HIERARCHY_AND_TOKENS_20261126.md). For eligible UI builds, the Architect must request an explicit, filled token/hierarchy/state specification alongside the original UX structure and pass it to Codex. This is a visual implementation standard only; it does not alter the active task selector, protected deployment holds, anatomy geometry, existing asset approvals or source truth.
+
 ## 2. UI execution mandate: User UX and Brand specs first
 
 For every **selected UI screen build or significant refactor**:
