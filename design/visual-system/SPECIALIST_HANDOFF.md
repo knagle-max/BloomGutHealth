@@ -7,6 +7,19 @@
 **Status:** PROPOSED SPECIALIST GUIDANCE — assets/specification only; no product implementation or visual QA claimed
 **Decision authority:** Chief Architect & Integration Lead approves / reconciles; Developer owns implementation, regression testing and final branch integration; Biology validates scientific expression; Security validates sensitive-data flows; existing Marketing & Design owner resolves brand conflicts.
 
+## November 26 standing order — visual hierarchy and design tokens (MANDATORY FOR ALL SUCCESSORS)
+
+**Owner-mandated, ongoing visual specification:** Read [Standing UI Visual Hierarchy & Design Tokens, 2026-11-26](./STANDING_UI_VISUAL_HIERARCHY_AND_TOKENS_20261126.md) **before preparing any screen, component, asset placement or UI redesign handoff**. Every such handoff must include a filled **UI Visual & Design Token Specification** that engineers can implement on the first pass, rather than relying on vague aesthetic adjectives.
+
+Non-negotiable content:
+1. **Surface elevation and contrast:** exact Everyday/Athlete Light/Dark tokens for canvas, elevated card, sheet/drawer, borders, scrim, primary/secondary/muted text, CTA and active/selected/focus roles. Avoid muddy low-contrast layering.
+2. **Typography, space and shape:** exact font-family/size/weight/line-height/letter-spacing; title/body/label/microcopy roles; component padding and gaps; radius and depth conventions; 44px+ actionable touch areas.
+3. **Control states:** default, hover, focus-visible, pressed, selected/active, disabled, loading/error; distinct toggle/chip/sheet/button treatments and non-color-only semantics.
+4. **Minimal editorial hierarchy:** reject unstyled stacked forms, repetitive full-width bordered clutter and low-contrast prose walls. Use approved brand assets and preserve source, scientific, vector geometry and map path IDs.
+5. **Acceptance:** 320/390/768/1440 widths, four mode/theme combinations, 200% text, contrast, keyboard/touch, actual same-build browser screenshots and source-functional checks. Never call an asset design or screenshot production acceptance.
+
+**Source and authority boundaries:** Use current app tokens and code as the baseline, not a second independent styling system. The visual designer owns paint/style, **not UX flow, IA, CTA placement or sensitive-data semantics**; respect `VISUAL_LANE_AMENDMENT_01.md`, `AGENTS.md` and `NEXT_ACTIONS.md`. Proposed numbers in the standing contract require reconciliation against the approved existing tokens and may not be indiscriminately applied globally. No code rollout or visual QA is implied by this documentation update.
+
 ## November 21 editorial hero production addendum — mandatory for successor designers
 
 **Shared reproducible design process:** [Bloom Editorial Hero Design Playbook — November 21](./EDITORIAL_HERO_DESIGN_PLAYBOOK_20261121.md). This is the up-to-date owner-approved record of visual themes, approved BVA-0001–0005 scenes, palette, physical-material/lighting/photographic style, prompt template and anti-CGI guardrails, image-by-image review, desktop/mobile export dimensions, SHA/manifest/ZIP packaging, Shared Library publication, canonical registry updates, and science/rights/runtime acceptance gates. **All incoming Visual Designer agents must read this before generating, replacing, approving or integrating an editorial hero.** Chief Architect and Codex should use the exact package paths and source-code handoffs linked therein. Next requested art is `BVA-0051` Microbiome, with a strict new 2:1 conceptual ecology brief and no existing-image reuse.
