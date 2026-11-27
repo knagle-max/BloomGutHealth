@@ -7,6 +7,10 @@
 **Status:** PROPOSED SPECIALIST GUIDANCE — assets/specification only; no product implementation or visual QA claimed
 **Decision authority:** Chief Architect & Integration Lead approves / reconciles; Developer owns implementation, regression testing and final branch integration; Biology validates scientific expression; Security validates sensitive-data flows; existing Marketing & Design owner resolves brand conflicts.
 
+## November 26 — Exercise, Muscle View & Pain brand overlay (successor reference)
+
+The shared [Exercise, Muscle View & Pain Brand/UI & Design Token Layer](../../docs/agent-handoffs/BLOOM_EXERCISE_MUSCLE_PAIN_BRAND_UI_TOKEN_LAYER_20261126.md) reviews exact source UX handoff `UX-EMP-20261126-R1` and inspected app code. It specifies four-theme elevation, typography, spacing, controls, map/sheet styles, nine reusable UI design deliverables, source/registry reuse and acceptance. **Do not regenerate the reviewed anatomical body geometry**; existing BVA-0078/0079 presentation has a tested local integration receipt. Pain sources BVA-0087/0088/0089 and severity mapping remain gated. The structural UX proposals are not automatically current app features. Read the new overlay alongside the [standing visual hierarchy/token mandate](./STANDING_UI_VISUAL_HIERARCHY_AND_TOKENS_20261126.md) whenever working on activity discovery, workout logging, muscle history or pain reporting.
+
 ## November 26 standing order — visual hierarchy and design tokens (MANDATORY FOR ALL SUCCESSORS)
 
 **Owner-mandated, ongoing visual specification:** Read [Standing UI Visual Hierarchy & Design Tokens, 2026-11-26](./STANDING_UI_VISUAL_HIERARCHY_AND_TOKENS_20261126.md) **before preparing any screen, component, asset placement or UI redesign handoff**. Every such handoff must include a filled **UI Visual & Design Token Specification** that engineers can implement on the first pass, rather than relying on vague aesthetic adjectives.
