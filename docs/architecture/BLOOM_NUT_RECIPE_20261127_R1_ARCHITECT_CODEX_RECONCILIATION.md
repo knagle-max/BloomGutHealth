@@ -74,3 +74,55 @@ The owner provided the full **BLOOM-NUT-RECIPE-20261127-R1** original text in co
 ### Implementation priority and compatibility
 
 **First useful vertical slice after current selected queue permits:** reuse existing structured week/planner and dietary preferences; add a durable or appropriately versioned confirmed schedule state supporting **move, swap, skip and locked regeneration**, with **deterministically derived editable grocery needs** and one-action recipe-to-journal handoff. Layer in *optional* on-hand items and pantry-aware suggestions; do not make fully automated inventory tracking a prerequisite for practical planning. Add optional AI proposals through existing metered opt-in service, not a paid provider dependency. Preserve account isolation, source revision, no plan-to-consumption implication, no unreviewed clinical claims and nonshipping Render hold. UX first fold: **This week** overview with simple meal slots and actions, grocery list tab/drawer, optional pantry, and clear “Cook / Log what I ate”; avoid full ingredient audit on calendar cells. A date/meal move must have keyboard and accessible menu alternative to drag/drop.
+
+## 6. NRE-A01 culinary diversity and practical cooking amendment — 2026-11-27
+
+**Owner's binding product amendment, `NRE-A01 — Culinary Diversity and Practical Recipe Intelligence`.** This is a *named amendment* to the whole `BLOOM-NUT-RECIPE-20261127-R1` product contract, **not** the already-defined acceptance scenario `NRE-A01` (deterministic USDA source import) in the parent handoff. For unambiguous implementation verification, identify new culinary tests as **`NRE-CUL-01..08`** while retaining the owner's amendment title exactly.
+
+**Culinary-first rule:** Bloom must be a **genuinely useful cookbook and flexible family meal planner**, not 2,000 reclassified variations of chicken/rice/vegetables, a set of mathematical meal combinations, or nutrition optimization at the expense of flavour. A recipe is valuable if people can actually cook and enjoy it, with normal seasonings, fats, aromatics, sauces, garnishes, good instructions and realistic household quantities. A variation or personal substitution must preserve its relationship to the parent recipe and must **not count** as a new genuinely distinct catalogue recipe merely to inflate counts. Nutrition science enriches the actual meal; it must not replace culinary quality.
+
+### A. Multi-dimensional recipe identity, filtering and coverage
+
+Extend the **existing** recipe schema/catalogue/search and `shared/weekly-planner.ts` rather than separate appliance, cooking or category engines. Classifications are **independent many-to-many facets** and should be combinable:
+- **Meal occasion:** breakfast, brunch, lunch, dinner, snack, dessert, side, appetizer.
+- **Dish form:** soup, stew, salad, sandwich, wrap, pasta, noodles, grain bowl, casserole, curry, stir-fry, pizza, flatbread, burger, smoothie, baking, sauce, marinade, dressing, dip, spread.
+- **Supported appliances and methods:** **Instant Pot (explicit visible first-class search/filter label)**, electric pressure cooker, traditional pressure cooker, slow cooker, air fryer, oven conventional/convection, stovetop, BBQ/grill, sheet pan, one pot, microwave, steam, no-cook. An Instant Pot may belong to the electric-pressure-cooker family, but **must not be hidden exclusively under that generic family**; a recipe may have multiple independently valid method profiles.
+- **Practicality:** under 15/30/60 minutes **based on realistic total elapsed cook-to-table time**, family/kid friendly, budget, few ingredients, meal prep, batch, freezer-friendly, leftovers, entertaining/special occasion.
+- **Cuisine, region and flavour:** genuine different culinary traditions, spices, aromatics, ingredient combinations, technique and optional user-set spice/heat level.
+- **Supported nutrition/biology:** existing nutrient, dietary preference, training and scientifically accepted microbiome/biological relationship filters; no unjustified nutrient/clinical claims.
+
+**Do not treat tags as complete proof:** A “30 minutes” recipe must fit the stated **total realistic elapsed time**, including passive pressure preheat/release, handling and finishing, not only pressure programme minutes. Some appliances are optional alternatives, not identical cooking scripts.
+
+### B. Method-specific, safe preparation data
+
+Provide a **method-specific preparation profile** for each actually supported appliance, with preparation duration, appliance settings, cooking steps, actual finishing and total elapsed time where qualified:
+- **Instant Pot/electric pressure:** ingredient prep, pressure-build interval, pressure programme duration, **natural versus quick release and expected release time**, optional sauté/finishing, overall estimate; distinguish capacity and liquid/recipe-specific practical limitations.
+- **Slow cooker:** high and low cook times and relevant food-prep requirements, actual end-to-end elapsed duration.
+- **Air fryer:** temperature, duration, capacity/batch size, turning/preheating where needed, realistic handling.
+- **Other methods:** conventional oven/convection, stovetop, grill, microwave, steam etc. with distinct validated steps when truly supported, not mechanically relabelled copies.
+- Maintain food-safety guidance, source-specific raw/cooked edible weights, absorption/drainage, **method-appropriate yield/retention only when qualified** and no double-retention factors. “Recipe can be cooked in appliance X” is a reviewable claim, not a generated tag inferred from similar ingredients.
+
+**Quality baseline for every curated entry:** culinary-distinct identity and version, realistic ingredient amounts, flavours/seasonings/fats, plausible preparation sequence, proper applicable equipment and timings, actual servings and yield assumptions, source-backed calculated nutrients with **missing values labelled**, safety guidance where needed, and legal/attribution status. If an amount is “to taste” or unmeasured, keep it editable/unknown rather than inventing precise nutritional quantities.
+
+### C. Personalization and weekly integration
+
+Reuse canonical user/household preferences for **available appliances, preparation time, servings, cuisine/flavour/spice, budget/leftovers and dietary constraints**. Apply these to **every** deterministic recipe search, Today/weekly suggestion, AI proposal, regenerated unlocked slot and ingredient substitution, with allergies and medically relevant exclusions enforced independently of soft tastes. Explicit “Instant Pot” search/filter and combined `dinner + Instant Pot + ≤30 minutes + family friendly + dietary restriction + supported nutrient criterion` must return only actually eligible recipes, or an honest no-match state.
+
+Grocery lists, pantry-compatible quantity subtraction, leftovers, skip/move/lock and one-action **confirmed whole-recipe ingredient/nutrient journal save** must remain consistent with the selected recipe revision and cooking profile. A cooking-method change must re-evaluate any supported calculated yield/nutrient interpretation, ingredient changes and total time. Optional AI may suggest creative original recipes or variations, **but** proposed titles/tags/cook times/nutrients are not accepted until structured recipe, culinary viability, qualified composition, allergy and practical method validation; core diverse cookbook, search and planning work with AI off.
+
+### D. Catalogue quality and diversity acceptance
+
+Catalogue objectives of ~100, ~500 and eventually ~1,000–2,000 are **conditional quality goals**, not record-count release gates. Measure genuine recipe diversity across occasion, dish form, technique/appliance, regional flavour, time, ingredient families, household needs and seasonality. Keep `recipe_id`, `parent_recipe_id` and variant lineage distinct as supported by current schema/migrations; do not force new persistence fields before inspecting actual database. Candidate de-duplication should examine substantive technique, ingredient ratios, preparation and finished dish identity, not just titles/IDs. Include human culinary usability assessment on a representative selection; automated coverage cannot alone verify that a meal tastes good.
+
+| ID | Culinary-specific verification requirement |
+|---|---|
+| **NRE-CUL-01** | Representative catalogue audit shows genuinely distinct meals across the requested dish, cuisine, meal and appliance facets; substitutions and minor seasoning edits don't inflate unique recipe count. |
+| **NRE-CUL-02** | Explicit **Instant Pot** search/filter locates only genuinely method-supported recipes, including honest pressure-build, active cook, release, finishing and total time. |
+| **NRE-CUL-03** | Distinct slow-cooker high/low and air-fryer settings/capacity and other supported method-specific instructions are verifiable rather than copy/paste. |
+| **NRE-CUL-04** | Combined meal occasion + dish type + appliance + realistic time + dietary preference/allergy + qualified nutrient filters work without contradictory results; no-match states are honest. |
+| **NRE-CUL-05** | Curation review checks quantities, flavour/aromatics, fats and seasonings, steps, yield/household portions, culinary practicality and applicable food safety; unspecified additions stay unknown in nutrition. |
+| **NRE-CUL-06** | Cooking-method/ingredient changes correctly revalidate source composition, safe handling, yield and any qualified retention without duplication of nutrient totals. |
+| **NRE-CUL-07** | Family scaling, optional leftovers, plan swaps/skips, pantry and grocery demand reference the correct recipe revision and actual configured equipment. |
+| **NRE-CUL-08** | Existing canonical log records the eaten fraction of **all included ingredients and supported nutrients** exactly once; AI-disabled recipe discovery/cooking and logging remain functional, with accountable human-recipe usefulness review. |
+
+**Codex execution amendment:** When an NRE/recipe slice is next eligible in `NEXT_ACTIONS.md`, first inspect existing `meal-intelligence`, `weekly-planner`, `recipe-preparation`, `food-preference-policy`, current recipe search/persistence/AI and real catalogue diversity before adding tags or data. Choose the smallest working vertical improvement such as an **explicit Instant Pot category with complete method-specific timings** for a verified real recipe, plus multi-facet search and tested dietary filtering, **or** a representative diverse curated batch that passes recipe-to-journal equivalence. Implement and test actual usable code, not another indefinite source review. Do not spawn a second data model, independent appliance engine or duplicated nutrient paths. Scientific and nonshipping holds remain active; UX/Brand progress disclosure and real responsive screenshot proof apply to significant consumer changes.
