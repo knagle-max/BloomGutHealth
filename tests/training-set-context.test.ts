@@ -1,8 +1,10 @@
+import {repeatActivityParts} from '../shared/activity-capture';
+import {routinePlannedParts} from '../shared/activity-routines';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {z} from 'zod';
-import {actualSetsSchema} from '../shared/experience';
-import {mergeSetLoadContexts,legacySetContextView,setLoadContextSchema} from '../shared/training-set-context';
+import {activitySchema,activityRoutinePlanSchema,actualSetsSchema} from '../shared/experience';
+import {mergeSetLoadContexts,legacySetContextView,setLoadContextSchema,freshSetLoadContext} from '../shared/training-set-context';
 const id='10000000-0000-4000-8000-000000000001';
 const context={version:1 as const,convention:'per-dumbbell' as const,equipmentKey:'synthetic-home-dumbbells'};
 const row={id,exercise:'Press',loadKg:15,loadUnit:'kg' as const,reps:10,completed:true};
@@ -31,4 +33,20 @@ test('legacy views strip only added set context in records/plans/nested response
  const legacy=z.object({version:z.literal(1),sets:z.array(z.object({id:z.string(),exercise:z.string(),reps:z.number().nullable(),loadKg:z.number().nullable(),loadUnit:z.enum(['kg','lb']),completed:z.boolean()}).strict())}).strict();
  assert.equal(legacy.safeParse(actualSets).success,false);assert.equal(legacy.safeParse(old.records[0].payload.actualSets).success,true);
  const exported={format:'bloom-experience-v1',...payload};assert.equal(legacySetContextView(exported),exported);assert.equal(JSON.stringify(exported).includes('equipmentKey'),true);
+});
+test('role and per-set effort remain optional source facts and survive older context-aware writers',()=>{
+ const modern=sets({...row,loadContext:{...context,setRole:'working',effortRpe:7}});
+ assert.deepEqual(mergeSetLoadContexts(modern,sets({...row,loadContext:context}))?.sets[0].loadContext,modern.sets[0].loadContext);
+ assert.equal(mergeSetLoadContexts(modern,sets({...row,loadContext:{...context,setRole:null,effortRpe:null}}))?.sets[0].loadContext?.effortRpe,null);
+ assert.equal(mergeSetLoadContexts(modern,sets({...row,loadContext:{...context,equipmentKey:'Synthetic other pair'}}))?.sets[0].loadContext?.effortRpe,undefined);
+ for(const patch of [{setRole:'guessed'},{effortRpe:0},{effortRpe:11},{effortRpe:NaN}])assert.equal(setLoadContextSchema.safeParse({...context,...patch}).success,false);
+});
+
+test('new occurrences never inherit reported effort from performed sets',()=>{const old={...context,setRole:'working' as const,effortRpe:9};assert.equal(freshSetLoadContext(old)?.effortRpe,null);assert.equal(freshSetLoadContext(old)?.setRole,'working');assert.equal(old.effortRpe,9);});
+
+test('repeat and routine templates retain equipment/role but never copy completed effort into a new occurrence',()=>{
+ const original=activitySchema.parse({title:'Synthetic press',startedAt:'2026-11-20T12:00:00Z',minutes:null,actualSets:sets({...row,loadContext:{...context,setRole:'working',effortRpe:9}})});
+ const repeated=repeatActivityParts(original);assert.equal(repeated[0].actualSets?.sets[0].loadContext?.effortRpe,null);assert.equal(repeated[0].actualSets?.sets[0].completed,false);assert.notEqual(repeated[0].actualSets?.sets[0].id,row.id);
+ const planned=routinePlannedParts(repeated);assert.equal(planned[0].actualSets?.sets[0].loadContext?.setRole,'working');assert.equal(planned[0].actualSets?.sets[0].loadContext?.effortRpe,null);assert.equal(original.actualSets!.sets[0].loadContext?.effortRpe,9);
+ const plan={version:1,revision:crypto.randomUUID(),name:'Synthetic routine',components:{version:1,items:planned},weekdays:[1],timeZone:'UTC',effectiveFrom:'2026-11-01',effectiveTo:null,preferredTime:null,paused:false,stepTarget:null};assert.equal(activityRoutinePlanSchema.safeParse(plan).success,true);planned[0].actualSets!.sets[0].loadContext!.effortRpe=9;assert.equal(activityRoutinePlanSchema.safeParse(plan).success,false);
 });

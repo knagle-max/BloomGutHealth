@@ -1,3 +1,4 @@
+import {freshSetLoadContext} from './training-set-context';
 import {activityComponentSchema,dateKey,type ActivityRoutinePlan,type ActivityComponent,type Activity,type RoutineOccurrenceOverride,type ActivityRoutine} from './experience';
 
 /** Calendar-day identity in the saved routine zone; never a UTC weekday. */
@@ -11,7 +12,7 @@ export function routineDue(plan:ActivityRoutinePlan,date:string){
 }
 /** Clear actual quantities. Planned source loads/reps remain editable references. */
 export function routinePlannedParts(items:readonly ActivityComponent[],id=()=>crypto.randomUUID()){
- return items.map(part=>{const {sourceSpan,...source}=part;return activityComponentSchema.parse({...source,id:id(),steps:null,...(part.actualSets?{actualSets:{version:1,sets:part.actualSets.sets.map(set=>({...set,id:id(),completed:false,state:'planned'}))}}:{})});});
+ return items.map(part=>{const {sourceSpan,...source}=part;return activityComponentSchema.parse({...source,id:id(),steps:null,...(part.actualSets?{actualSets:{version:1,sets:part.actualSets.sets.map(set=>({...set,loadContext:freshSetLoadContext(set.loadContext),id:id(),completed:false,state:'planned'}))}}:{})});});
 }
 /** UUIDv5 ties each original planned child to one versioned calendar occurrence.
  * Identity only: authorization remains the owned record and transaction guard. */

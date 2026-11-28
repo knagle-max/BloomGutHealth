@@ -130,7 +130,7 @@ export const activityRoutinePlanSchema=z.object({
 }).strict().superRefine((plan,ctx)=>{
  if(plan.effectiveTo&&plan.effectiveTo<plan.effectiveFrom)ctx.addIssue({code:'custom',path:['effectiveTo'],message:'End date precedes the start date'});
  if(plan.stepTarget?.min!=null&&plan.stepTarget.max!=null&&plan.stepTarget.max<plan.stepTarget.min)ctx.addIssue({code:'custom',path:['stepTarget'],message:'Check target minimum and maximum'});
- for(const part of plan.components.items)if(part.steps!=null||part.actualSets?.sets.some(set=>set.completed||set.state!=='planned'))ctx.addIssue({code:'custom',path:['components'],message:'Routine templates hold plans, never actual counts or performed sets'});
+ for(const part of plan.components.items)if(part.steps!=null||part.actualSets?.sets.some(set=>set.completed||set.state!=='planned'||set.loadContext?.effortRpe!=null))ctx.addIssue({code:'custom',path:['components'],message:'Routine templates hold plans, never actual counts or performed sets'});
 });
 export type ActivityRoutinePlan=z.infer<typeof activityRoutinePlanSchema>;
 export const routineOccurrenceOverrideSchema=z.object({revision:z.string().uuid(),state:z.enum(['skipped','rescheduled']),toDate:dateKey.nullable()}).strict().refine(value=>value.state==='rescheduled'?value.toDate!==null:value.toDate===null);

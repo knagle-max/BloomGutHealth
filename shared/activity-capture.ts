@@ -1,3 +1,4 @@
+import {freshSetLoadContext} from './training-set-context';
 import {matchCatalogueExercises,exerciseCatalogueVersion,type CatalogueExercise} from './exercise-catalogue';
 import type {Activity,ActualSets,ActivityComponent} from './experience';
 import {kgToDisplay,displayToKg} from './display-units';
@@ -184,5 +185,5 @@ export function activityCompletionSummary(sets:readonly ActivityDraftSet[]) {
 
 /** Repeat is a fresh observation, never a copy of a prior actual count. */
 export function repeatActivityParts(activity:Activity,id=()=>crypto.randomUUID()):ActivityComponent[]{
- return activityParts(activity,id).map(part=>({...part,id:id(),...(part.steps!==undefined?{steps:null}:{}),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,id:id(),completed:false,state:'described' as const}))}}:{})}));
+ return activityParts(activity,id).map(part=>({...part,id:id(),...(part.steps!==undefined?{steps:null}:{}),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,loadContext:freshSetLoadContext(set.loadContext),id:id(),completed:false,state:'described' as const}))}}:{})}));
 }

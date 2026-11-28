@@ -44,3 +44,29 @@ test('the pure target helper cannot mutate actual completion, source rows or cur
  const other={...current,loadContext:{...current.loadContext,equipmentKey:'Different rack'}};assert.equal(exerciseProgression(other,h).target,null);
  assert.equal(exerciseProgression({...current,side:'left'},h).target,null);
 });
+test('cross-workout working sets support only the actual small equipment step, excluding same-name incompatible equipment',()=>{
+ const context={...current.loadContext,setRole:'working',effortRpe:7};
+ const h=history([row('older','session',12,{loadContext:context}),row('latest','activity',12,{loadContext:context}),row('wrong','activity',12,{loadContext:{...context,convention:'per-dumbbell'},loadKg:displayToKg(300,'lb')})]);
+ const draft={...current,loadContext:context};
+ const result=exerciseProgression(draft,h,0,{nextAvailableLoadKg:displayToKg(140,'lb')});assert.equal(result.comparable.length,2);assert.equal(result.decision,'INCREASE_LOAD');assert.equal(result.target?.loadKg,displayToKg(140,'lb'));assert.equal(result.target?.reps,8);
+});
+test('unknown effort requires three distinct complete top-range exposures; session RPE never fills it',()=>{
+ const context={...current.loadContext,setRole:'working'};const draft={...current,loadContext:context};
+ const earlier=row('older','session',12,{loadContext:context}),latest=row('latest','activity',12,{loadContext:context});
+ const options={nextAvailableLoadKg:displayToKg(140,'lb')};
+ assert.equal(exerciseProgression(draft,history([earlier,latest]),0,options).decision,'HOLD_LOAD');
+ const third=row('third','session',12,{loadContext:context});third.createdAt=third.updatedAt='2026-11-19T12:00:00Z';if(third.kind==='session'){third.payload.startsAt=third.updatedAt;third.payload.rpe=7;}
+ const result=exerciseProgression(draft,history([third,earlier,latest]),0,options);assert.equal(result.decision,'INCREASE_LOAD');assert.equal(result.previous?.setEffort,null);assert.match(result.reason,/effort remains unknown/);
+ const duplicateTime={...latest,id:'different-record-same-time'};assert.equal(exerciseProgression(draft,history([earlier,latest,duplicateTime]),0,options).decision,'HOLD_LOAD');
+});
+test('all working sets, completion and effort constrain equipment progression; warm-ups are separate',()=>{
+ const context={...current.loadContext,setRole:'working',effortRpe:7},draft={...current,loadContext:context},options={nextAvailableLoadKg:displayToKg(140,'lb')};
+ const older=row('older','session',12,{loadContext:context}),latest=row('latest','activity',12,{loadContext:context});
+ const set=latest.payload.actualSets!.sets[0];latest.payload.actualSets!.sets.push({...set,id:crypto.randomUUID(),reps:11});
+ assert.equal(exerciseProgression(draft,history([older,latest]),0,options).decision,'HOLD_LOAD');
+ latest.payload.actualSets!.sets[1].reps=12;latest.payload.actualSets!.sets[1].completed=false;assert.equal(exerciseProgression(draft,history([older,latest]),0,options).decision,'HOLD_LOAD');
+ latest.payload.actualSets!.sets[1].completed=true;assert.equal(exerciseProgression(draft,history([older,latest]),0,options).decision,'INCREASE_LOAD');
+ latest.payload.actualSets!.sets.unshift({...set,id:crypto.randomUUID(),loadContext:{...context,setRole:'warm-up'},reps:5});assert.equal(exerciseProgression(draft,history([older,latest]),0,options).decision,'INCREASE_LOAD');
+ latest.payload.actualSets!.sets[1].loadContext!.effortRpe=9;assert.equal(exerciseProgression(draft,history([older,latest]),0,options).decision,'HOLD_LOAD');
+ for(const nextAvailableLoadKg of [NaN,Infinity,-1,0,2001,displayToKg(130,'lb'),displayToKg(150,'lb')])assert.notEqual(exerciseProgression(draft,history([older,latest]),0,{nextAvailableLoadKg}).decision,'INCREASE_LOAD');
+});

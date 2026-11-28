@@ -1,14 +1,19 @@
 import {z} from 'zod';
 import type {ActualSets} from './experience';
 export const setContextHeader='X-Bloom-Set-Fields';
-export const setContextVersion='load-context-v1';
+export const setContextVersion='load-context-v2';
 /** User-reported measurement semantics, not measured activation or an equipment inventory. */
 export const setLoadContextSchema=z.object({
  version:z.literal(1),
+ setRole:z.enum(['working','warm-up']).nullable().optional(),
+ effortRpe:z.number().min(1).max(10).nullable().optional(),
  convention:z.enum(['barbell-total','per-dumbbell','combined-dumbbell','single-limb','machine-stack','assistance','bodyweight','external-total']),
  equipmentKey:z.string().trim().min(1).max(120).refine(v=>!/[\u0000-\u001f\u007f]/.test(v),'Use a plain equipment label'),
 }).strict();
 export type SetLoadContext=z.infer<typeof setLoadContextSchema>;
+/** A new occurrence may reuse equipment/role, never the previous occurrence's effort. */
+export function freshSetLoadContext(context:SetLoadContext|null|undefined){return context?{...context,effortRpe:null}:context;}
+
 
 /** Preserve omitted metadata only through a unique stable identity. Null clears;
  * an empty set list deletes; a new exercise never inherits the previous context. */
@@ -20,7 +25,10 @@ export function mergeSetLoadContexts(previous:ActualSets|undefined,next:ActualSe
  return{...next,sets:next.sets.map(set=>{
   const old=set.id?prior.get(set.id.toLowerCase()):null;
   const same=old&&old.exercise===set.exercise&&!(old.catalogueRef&&set.catalogueRef&&old.catalogueRef.id!==set.catalogueRef.id);
-  const context=set.loadContext===undefined&&same?old.loadContext:set.loadContext;
+  let context=set.loadContext===undefined&&same?old.loadContext:set.loadContext;
+  if(context&&same&&old.loadContext?.convention===context.convention&&old.loadContext.equipmentKey===context.equipmentKey){
+   context={...context,...(context.setRole===undefined&&old.loadContext.setRole!==undefined?{setRole:old.loadContext.setRole}:{}),...(context.effortRpe===undefined&&old.loadContext.effortRpe!==undefined?{effortRpe:old.loadContext.effortRpe}:{})};
+  }
   return{...set,...(context!==undefined?{loadContext:context?{...context}:null}:{})};
  })};
 }

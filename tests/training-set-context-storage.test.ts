@@ -21,7 +21,7 @@ test('encrypted set context survives old-client edits; negotiated HTTP reads, ex
   await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");
   await pg.exec(readFileSync(new URL('../migrations/0004_experience.sql',import.meta.url),'utf8'));
   const store=new ExperienceStorage(drizzle(pg)as any);
-  const context={version:1 as const,convention:'per-dumbbell' as const,equipmentKey:'Synthetic adjustable pair'};
+  const context={version:1 as const,convention:'per-dumbbell' as const,equipmentKey:'Synthetic adjustable pair',setRole:'working' as const,effortRpe:7};
   const set={id:randomUUID(),exercise:'Bench press',reps:8,loadKg:20,completed:true,loadContext:context};
   const base={title:'Synthetic strength session',startsAt:'2026-10-27T12:00:00Z',minutes:30,intensity:'moderate',discipline:'strength-power'};
   const saved=await store.createSession('a',trainingSessionSchema.parse({...base,actualSets:{version:1,sets:[set]}}),randomUUID());
@@ -33,6 +33,7 @@ test('encrypted set context survives old-client edits; negotiated HTTP reads, ex
    return{status:response.status,vary:response.headers.get('vary'),body:await response.json()as any};
   };
   const legacy=await request('/records?kind=session');assert.equal(legacy.status,200);assert.match(legacy.vary!,/X-Bloom-Set-Fields/i);assert.equal(legacy.body[0].payload.actualSets.sets[0].loadContext,undefined);
+  const v1=await fetch(origin+'/records?kind=session',{headers:{'x-user':'a',[setContextHeader]:'load-context-v1'}});assert.equal((await v1.json()as any)[0].payload.actualSets.sets[0].loadContext,undefined,'Older strict load-context clients receive a compatible projection');
   const aware=await request('/records?kind=session','GET',undefined,'a',true);assert.deepEqual(aware.body[0].payload.actualSets.sets[0].loadContext,context);
   const edit={kind:'session',payload:{...legacy.body[0].payload,minutes:35,actualSets:{version:1,sets:[{...legacy.body[0].payload.actualSets.sets[0],reps:9}]}}};
   const updated=await request('/records/'+saved.id,'PUT',edit);assert.equal(updated.status,200);assert.equal(updated.body.payload.actualSets.sets[0].loadContext,undefined);
@@ -59,12 +60,12 @@ test('encrypted set context survives old-client edits; negotiated HTTP reads, ex
   const explicitClear={...oldActivity.payload,components:{...components,items:components.items.map((part:any)=>({...part,actualSets:{...part.actualSets,sets:part.actualSets.sets.map((row:any)=>({...row,loadContext:null}))}}))}};
   assert.equal((await request('/records/'+activity.id,'PUT',{kind:'activity',payload:explicitClear},'a',true)).status,200);
   assert.equal((await store.getExperienceRecords('a','activity'))[0].payload.actualSets?.sets[0].loadContext,null);
-  const plan=activityRoutinePlanSchema.parse({version:1,revision:randomUUID(),name:'Synthetic routine',components:{version:1,items:parts.map(part=>({...part,actualSets:{version:1,sets:[{...set,completed:false,state:'planned'}]}}))},weekdays:[1],timeZone:'UTC',effectiveFrom:'2026-10-01',effectiveTo:null,preferredTime:null,paused:false,stepTarget:null});
+  const plan=activityRoutinePlanSchema.parse({version:1,revision:randomUUID(),name:'Synthetic routine',components:{version:1,items:parts.map(part=>({...part,actualSets:{version:1,sets:[{...set,loadContext:{...context,effortRpe:null},completed:false,state:'planned'}]}}))},weekdays:[1],timeZone:'UTC',effectiveFrom:'2026-10-01',effectiveTo:null,preferredTime:null,paused:false,stepTarget:null});
   const routineActual=activitySchema.parse({...activityProjection(parts),components:{version:1,items:parts},startedAt:base.startsAt,routineSource:{routineId:'synthetic-routine',revision:plan.revision,localDate:'2026-10-27',scheduledDate:'2026-10-27',occurrenceRevision:null,timeZone:'UTC',confirmedPerformed:true,timestampBasis:'log-time',planSnapshot:plan}});
   await drizzle(pg).insert(experienceRecords).values({id:'synthetic-routine-actual',userId:'a',kind:'activity',encryptedPayload:encryptPrecision(routineActual,'a')});
   const oldRoutine=(await request('/records?kind=activity')).body.find((record:any)=>record.id==='synthetic-routine-actual');
   const routineEdit=await request('/records/synthetic-routine-actual','PUT',{kind:'activity',payload:{...oldRoutine.payload,notes:'Synthetic old-reader routine edit'}});assert.equal(routineEdit.status,200,'Unaware plan snapshots preserve immutable source context without false conflict');
-  const retained=(await store.getExperienceRecords('a','activity')).find(record=>record.id==='synthetic-routine-actual');assert.deepEqual(retained?.payload.routineSource?.planSnapshot.components.items[0].actualSets?.sets[0].loadContext,context);
+  const retained=(await store.getExperienceRecords('a','activity')).find(record=>record.id==='synthetic-routine-actual');assert.deepEqual(retained?.payload.routineSource?.planSnapshot.components.items[0].actualSets?.sets[0].loadContext,{...context,effortRpe:null});
   const empty=await request('/records/'+saved.id,'PUT',{kind:'session',payload:{...base,actualSets:{version:1,sets:[]}}},'a',true);assert.equal(empty.status,200);assert.deepEqual((await source())[0].payload.actualSets?.sets,[]);
  }finally{if(server){server.closeAllConnections();await new Promise<void>(resolve=>server!.close(()=>resolve()));}await pg.close();if(oldKey===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=oldKey;}
 });
