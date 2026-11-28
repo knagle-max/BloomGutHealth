@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+<title id="title">Hydrogen periodic element tile</title><desc id="desc">Atomic number 1, chemical symbol H, name Hydrogen.</desc>
+<rect x="2.5" y="2.5" width="315" height="315" rx="29" fill="#052F21" stroke="#A7BE94" stroke-width="5"/>
+<text x="27" y="69" fill="#FAF3E5" font-family="'Newsreader',Georgia,serif" font-size="51" font-weight="400">1</text>
+<text x="160" y="216" fill="#FAF3E5" font-family="'Newsreader',Georgia,serif" font-size="213" font-weight="400" text-anchor="middle">H</text>
+<text x="160" y="277" fill="#FAF3E5" font-family="'Plus Jakarta Sans',Inter,system-ui,sans-serif" font-size="29" font-weight="500" text-anchor="middle">Hydrogen</text>
+</svg>

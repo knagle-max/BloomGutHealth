@@ -1,0 +1,19 @@
+# Immutable supplied artwork and delivery manifests retain original bytes.
+client/public/images/editorial/**/BVA-*.webp -text
+client/public/images/editorial/explore/pathway-kit/*.svg -text
+design/visual-system/ready-20261115/**/DELIVERY_MANIFEST.json -text
+design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json -text
+design/visual-system/biology-text-safe/README.md -text
+client/public/science/morphology-v1/**/*.webp -text
+design/visual-system/morphology-v1/*.json -text
+# Supplied chart sources include intentional Markdown hard breaks.
+design/visual-system/scientific-charts/v1/CHART-*/** -text -whitespace
+
+# Reviewed anatomy sources retain exact delivered SVG and CRLF crosswalk bytes.
+design/bloom/anatomy/presentation-20261126/*.svg -text
+design/bloom/anatomy/interaction-v433/*.svg -text
+design/bloom/anatomy/interaction-v433/*.csv -text whitespace=cr-at-eol
+# Exact owner canonical-domain/staging package (JSON/CSV/Markdown original bytes).
+design/bloom/anatomy/canonical-baseline44-20261126/* -text whitespace=cr-at-eol
+# Original handoff Markdown intentionally uses two-space line breaks.
+design/bloom/anatomy/canonical-baseline44-20261126/*.md -text -whitespace

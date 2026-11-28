@@ -38,3 +38,10 @@ test('historical daily averages retain tiny measured contributions and decimal t
  const period=recordedNutritionPeriod([{loggedAt:'2026-10-01T12:00:00Z',totalCalories:.285,totalProtein:0,intelligence:{nutrients:[{key:'vitamin_b12_ug',amount:.00015,coverage:1}]}},{loggedAt:'2026-10-02T12:00:00Z',totalCalories:.285,totalProtein:0}]);
  assert.equal(period.dailyAverages.calories,.29);assert.equal(period.dailyAverages.protein,0);assert.equal(period.dailyAverages.vitamin_b12_ug,.000075);assert.equal(period.dailyAverages.sodium,null);
 });
+
+test('history retains a stored macro subtotal without upgrading partial source metadata',()=>{
+ const meal={loggedAt:'2026-11-26T12:00:00Z',totalCalories:100,totalProtein:0,intelligence:{nutrients:[{key:'calories',amount:100,coverage:0.5},{key:'protein_g',amount:0,coverage:0.5}]}};
+ const initial=recordedNutritionPeriod([meal]);assert.equal(initial.totals.calories,100);assert.equal(initial.totals.protein,0);assert.deepEqual(initial.nutritionCoverage.calories,{knownMeals:1,completeMeals:0,totalMeals:1,partial:true});
+ const corrected=structuredClone(meal);for(const nutrient of corrected.intelligence.nutrients)nutrient.coverage=1;
+ assert.equal(recordedNutritionPeriod([corrected]).nutritionCoverage.calories.completeMeals,1);assert.equal(recordedNutritionPeriod([]).daysWithMeals,0);
+});

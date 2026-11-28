@@ -1,3 +1,9 @@
+import ConditionSelector from '@/components/ConditionSelector';
+import GiCheckinSource from '@/components/GiCheckinSource';
+import GiCheckinFields,{readGiCheckinFields} from '@/components/GiCheckinFields';
+import type {InvestigationSharing} from '@shared/gi-source-context';
+import BloodworkAtlas from "@/components/BloodworkAtlas";
+import LabSourceReviewDialog from '@/components/LabSourceReviewDialog';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import{MicrobiomeFoodReason}from'@/components/MicrobiomeFoodPreferences';
@@ -56,6 +62,7 @@ import {
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
 type Report = Omit<PrecisionReport,'foods'|'recommendations'> & {
+  contextRevision:string|null;
   foods:Array<PrecisionReport['foods'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
   recommendations:Array<PrecisionReport['recommendations'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
   gutReportInventory?:GutReportInventory;
@@ -97,36 +104,42 @@ const localNow = () => {
     .slice(0, 16);
 };
 const display = (value: number) => Number(value.toFixed(2)).toLocaleString();
-function ContextEditor({
-  context,
-  onSave,
-  pending,
+export function ContextEditor({
+  context:incomingContext, revision:incomingRevision, onSave, onReload, pending,
 }: {
-  context: PrecisionContext;
-  onSave: (data: PrecisionContext) => void;
-  pending: boolean;
+  context: PrecisionContext; revision:string|null;
+  onSave: (data:PrecisionContext,revision:string)=>Promise<unknown>;
+  onReload:()=>Promise<{context:PrecisionContext;revision:string|null}>;
+  pending:boolean;
 }) {
+  const [loaded,setLoaded]=useState({context:incomingContext,revision:incomingRevision}),[dirty,setDirty]=useState(false),[notice,setNotice]=useState(''),[reloading,setReloading]=useState(false),[reloadSequence,setReloadSequence]=useState(0);
+  const context=loaded.context,sourceChanged=loaded.revision!==incomingRevision;
+  useEffect(()=>{if(!dirty&&!pending&&loaded.revision!==incomingRevision)setLoaded({context:incomingContext,revision:incomingRevision});},[incomingContext,incomingRevision,dirty,pending,loaded.revision]);
+  async function reload(){setReloading(true);try{const source=await onReload();if(!source.revision)throw Error();setLoaded(source);setReloadSequence(sequence=>sequence+1);setDirty(false);setNotice('Saved health context reloaded.');}catch{setNotice('Saved health context could not reload. Your draft is still shown.');}finally{setReloading(false);}}
   return (
-    <form
+    <form key={`${loaded.revision??'unavailable'}:${reloadSequence}`} onChangeCapture={()=>{setDirty(true);setNotice('');}}
       className="bloom-panel space-y-4"
-      onSubmit={(e) => {
+      onSubmit={async(e) => {
         e.preventDefault();
+        if(!loaded.revision||sourceChanged){setNotice('Saved health context changed. Your draft remains; reload to review the current saved values.');return;}
         const data = new FormData(e.currentTarget);
-        onSave(
+        try{await onSave(
           contextSchema.parse({
             goals: list(data.get("goals")),
             medications: list(data.get("medications")),
             currentSupplements: list(data.get("currentSupplements")),
-            conditions: list(data.get("conditions")),
+            conditions: context.conditions,
             allergies: list(data.get("allergies")),
             intolerances: list(data.get("intolerances")),
             ageGroup: data.get("ageGroup"),
             pregnancy: data.get("pregnancy"),
             safetyReviewed: data.get("safetyReviewed") === "on",
-          }),
-        );
+          }),loaded.revision,
+        );setDirty(false);setNotice('Health context saved.');}catch{setNotice('Save not confirmed. Your draft remains. Reload saved values before retrying a changed context.');}
       }}
     >
+      <fieldset className="space-y-4" disabled={pending||reloading}>
+      <legend className="sr-only">Editable saved health context</legend>
       <h2>Your goals & health context</h2>
       <p className="panel-note">
         Goals are open-ended. Unsupported goals stay visible without invented
@@ -146,7 +159,6 @@ function ContextEditor({
         [
           ["medications", "Medications"],
           ["currentSupplements", "Current supplements, including doses"],
-          ["conditions", "Medical conditions"],
           ["allergies", "Food allergies / medical food restrictions"],
           ["intolerances", "Reported food intolerances"],
         ] as const
@@ -203,9 +215,13 @@ function ContextEditor({
         allergen-safe. Use dietary category exclusions too, and verify
         ingredients and preparation.
       </p>
-      <Button type="submit" disabled={pending}>
+      {(sourceChanged||!loaded.revision)&&<p role="status">{sourceChanged?'Saved health context changed while you were editing. Your draft is still shown.':'Saved health context could not be verified. Reload before editing.'}</p>}
+      {notice&&<p role="status">{notice}</p>}
+      <Button type="button" variant="outline" onClick={()=>void reload()}>Reload saved health context (discard this draft)</Button>
+      <Button type="submit" disabled={pending||!loaded.revision||sourceChanged}>
         Save health context
       </Button>
+      </fieldset>
     </form>
   );
 }
@@ -213,7 +229,7 @@ export default function PrecisionNutrition() {
   const search=useSearch();
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
   const {user}=useAuth();
-  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
+  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null;sex?:"male"|"female"|null}>({queryKey:["/api/profile"],enabled:!!user});
   const [weightEntry,setWeightEntry]=useState<MassEntry>({unit:settings.displayUnits.bodyWeight,value:""});
   const [waistEntry,setWaistEntry]=useState<CircumferenceEntry>({unit:settings.displayUnits.circumference,value:""});
   const [draftError,setDraftError]=useState("");
@@ -251,24 +267,25 @@ export default function PrecisionNutrition() {
         )
       ).json(),
   });
-  const [context, setContext] = useState(contextSchema.parse({}));
+  const context=result.data?.context??contextSchema.parse({});
   const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
-  const editGoals=new URLSearchParams(search).get("edit")==="goals";
-  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,result.fetchStatus,result.isError,context]);
-  useEffect(() => {
-    if (result.data) setContext(result.data.context);
-  }, [result.data]);
+  const requestedEdit=new URLSearchParams(search).get("edit"),editGoals=requestedEdit==="goals"||requestedEdit==="health-context"||requestedEdit==="medical-conditions";
+  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLElement>(requestedEdit==='medical-conditions'?'#medical-conditions-heading':requestedEdit==='health-context'?'select[name="pregnancy"]':'input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,requestedEdit,result.data,result.fetchStatus,result.isError,context]);
+
+  const [giSharing,setGiSharing]=useState<InvestigationSharing|null>(null);
   const mutation = useMutation({
     mutationFn: async ({
       url,
       method = "POST",
       body,
+      headers,
     }: {
       url: string;
       method?: string;
       body?: unknown;
+      headers?:Record<string,string>;
     }) => {
-      const response = await apiRequest(method, url, body);
+      const response = await apiRequest(method, url, body, headers);
       return response.status === 204 ? null : response.json();
     },
     onSuccess: () => {
@@ -279,10 +296,10 @@ export default function PrecisionNutrition() {
       return invalidatePlanningInputs();
     },
   });
-  const send = (url: string, body: unknown, method = "POST") => {
+  const send = (url: string, body: unknown, method = "POST",headers?:Record<string,string>) => {
     setStatus("");
     setLocalError("");
-    mutation.mutate({ url, body, method });
+    mutation.mutate({ url, body, method,headers });
   };
   const [consent, setConsent] = useState(false),
     [geneticDate, setGeneticDate] = useState(localNow());
@@ -315,6 +332,7 @@ export default function PrecisionNutrition() {
       );
     },
   });
+  const [labToReview,setLabToReview]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
   const [labToCorrect,setLabToCorrect]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
   const [labToDelete, setLabToDelete] = useState<string | null>(null);
   const deleteLab = useMutation({
@@ -377,9 +395,9 @@ export default function PrecisionNutrition() {
   const requestedObservation=new URLSearchParams(search).get("observation"),focusedObservation=useRef("");
   useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
   const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
-  useEffect(()=>{const key=`${user?.id}:${requestedLabResult}`;if(tab!=="labs"||!requestedLabResult||!currentResult||focusedLabResult.current===key||![...(r?.labHistory||[]),...(r?.pendingLabs||[]),...(r?.sourceOnlyLabs||[])].some(row=>row.id===requestedLabResult))return;focusedLabResult.current=key;setLabSourceToOpen({rowId:requestedLabResult,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
+  useEffect(()=>{if(tab!=="labs"||!requestedLabResult||!currentResult||!r)return;const rows=[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])],resolved=rows.find(row=>row.id===requestedLabResult)||rows.find(row=>row.sourceCorrection?.supersedes===requestedLabResult)||rows.find(row=>r.trends.some(trend=>trend.points.some(point=>point.id===row.id&&point.supersededIds?.includes(requestedLabResult))));if(!resolved)return;const key=`${user?.id}:${requestedLabResult}:${resolved.id}`;if(focusedLabResult.current===key)return;focusedLabResult.current=key;setLabSourceToOpen({rowId:resolved.id,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
-  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#add-labs-title"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?"#bloodwork-atlas-title":'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
       <div
         className="precision-tabs"
@@ -406,12 +424,13 @@ export default function PrecisionNutrition() {
   );
   return (
     <main className="science-page precision-page">
+      {labToReview&&labToReview.actor===user?.id&&<LabSourceReviewDialog key={labToReview.actor+":"+labToReview.source.id} source={labToReview.source} onClose={()=>setLabToReview(null)}/>}
       {labToCorrect&&labToCorrect.actor===user?.id&&<LabDateCorrectionDialog key={labToCorrect.actor+":"+labToCorrect.source.id} source={labToCorrect.source} onClose={()=>setLabToCorrect(null)}/>}
       <AlertDialog open={labToDelete !== null} onOpenChange={open => { if (!open && !deleteLab.isPending) setLabToDelete(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this laboratory result?</AlertDialogTitle>
-            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans using clinical inputs will be cleared. This cannot be undone.</AlertDialogDescription>
+            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans linked to this result will be cleared. This cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           {deleteLab.isError && <p role="alert">{deleteLab.error.message} If the response was lost, retrying this same deletion is safe. If sources changed, cancel and review the reloaded result.</p>}
           <AlertDialogFooter>
@@ -420,10 +439,11 @@ export default function PrecisionNutrition() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      {tab==="labs" ? <BloodworkAtlas report={currentResult?r:undefined}/> : (
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
-          <h1>{bloomCopy.biology.h1}</h1>
+          <h1>{tab==="overview"?"My Biology":bloomCopy.biology.h1}</h1>
           <p className="science-intro">
             {tab==="overview"?bloomCopy.biology.takeaway:"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
           </p>
@@ -431,7 +451,8 @@ export default function PrecisionNutrition() {
         {(tab!=="overview"||!currentResult)&&<Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>}
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
-      {tab==="overview"&&<EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />}
+      )}
+      {tab==="overview"&&<div className="biology-overview-scene"><EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" showCaption={false}/></div>}
       {tab!=="overview"&&tabNavigation}
       <div aria-live="polite">
         {status && (
@@ -445,8 +466,7 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
-      {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
-      {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
+      {tab==="progress"&&requestedObservation&&currentResult&&r&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="status" className="panel-note">The requested dated observation is not available in your current records.</p>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
       {(result.isError||result.fetchStatus==="paused")&&(
         <section className="bloom-panel">
@@ -456,6 +476,8 @@ export default function PrecisionNutrition() {
           {sampleId&&<Button onClick={()=>setSampleId("")}>Use latest report</Button>}
         </section>
       )}
+      {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
+      {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {r&&(
         <div hidden={!currentResult}>
           <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">
@@ -469,11 +491,14 @@ export default function PrecisionNutrition() {
                 <details ref={goalsDisclosure} className="workspace-disclosure biology-context">
                 <summary>Your goals & health context</summary>
                 {!context.safetyReviewed&&<p className="panel-note">Health context has not been reviewed. Personal guidance may be unavailable.</p>}
+                {user&&<ConditionSelector key={user.id} actor={user.id} onSaved={invalidatePlanningInputs}/>}
                 <ContextEditor
-                  key={JSON.stringify(r.context)}
+                  key={user?.id}
                   context={context}
+                  revision={r.contextRevision??null}
+                  onReload={async()=>{const refreshed=await result.refetch();if(refreshed.isError||!refreshed.data)throw Error();return{context:refreshed.data.context,revision:refreshed.data.contextRevision??null};}}
                   pending={mutation.isPending}
-                  onSave={(data) => send("/api/precision/context", data, "PUT")}
+                  onSave={(data,revision) => {setStatus('');setLocalError('');return mutation.mutateAsync({url:"/api/precision/context",body:data,method:"PUT",headers:{"X-Bloom-Context-Revision":revision}});}}
                 />
                 </details>
                 <section className="bloom-panel">
@@ -667,12 +692,12 @@ export default function PrecisionNutrition() {
               <>
                 {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
                 <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={(rowId,target)=>{if(target==='row')labMarkerTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setLabSourceToOpen({rowId,target});}}/>
-                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-source-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-atlas-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onReview={source=>user&&setLabToReview({actor:user.id,source})} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
                   <h2 id="biology-bloodwork-results">Latest results</h2>
-                  <Link className="text-link" href="/progress?view=biology">Review dated biology trends</Link>
+                  <Link className="text-link" href="/precision?tab=labs">Review dated biology trends</Link>
                   {r.labs.length ? (
                     r.labs.map((l) => (
                       <article className="precision-observation" key={l.id}>
@@ -695,7 +720,7 @@ export default function PrecisionNutrition() {
                           </p>
                           <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport} correction={l.dateCorrection}/></details>
                         </div>
-                        <Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
+                        <Button className="min-w-0 max-w-full whitespace-normal min-h-11" variant="outline" onClick={()=>user&&setLabToReview({actor:user.id,source:l})}>Review marker & range</Button><Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
                         <Button
                           variant="outline"
                           onClick={() =>
@@ -1170,9 +1195,12 @@ export default function PrecisionNutrition() {
                     try {
                       if(unfinished)throw Error("Finish or clear the weight and waist entries before saving.");
                       const d = new FormData(e.currentTarget);
+                      const gi=readGiCheckinFields(d);
+                      if(gi&&!giSharing)throw Error("Reload and review source privacy controls before saving GI context.");
                       send("/api/precision/records", {
                         kind: "checkin",
                         payload: {
+                          ...(gi?{gi}:{}),
                           measuredAt: date(d, "measuredAt"),
                           entrySource:captureCheckinEntrySource(weightEntry,waistEntry,{
                             bodyFatPercent:String(d.get("bodyFatPercent")??""),bloating:String(d.get("bloating")??""),
@@ -1187,13 +1215,14 @@ export default function PrecisionNutrition() {
                           planId: d.get("planId") || null,
                           notes: String(d.get("notes") || ""),
                         },
-                      });
+                      },"POST",gi?{"Idempotency-Key":crypto.randomUUID(),"X-Bloom-Source-Revision":giSharing!.revision}:undefined);
                     } catch (err) {
                       formError(err);
                     }
                   }}
                 >
                   <h2>Record your response</h2>
+                  {user&&<GiCheckinFields key={user.id} actor={user.id} female={currentProfile?.sex==='female'} onSharing={setGiSharing}/>}
                   <div className="space-y-2">
                     <p className="panel-note">You can optionally reuse the current weight from your saved Profile. Check that it matches your actual measurement for this date before saving; Bloom does not assume a Profile value was measured today.</p>
                     <Button type="button" variant="outline"
@@ -1280,8 +1309,8 @@ export default function PrecisionNutrition() {
                 <section className="bloom-panel">
                   <h2>Bloodwork trends</h2>
                   <p>Review dated results and their original sources in the single Biology explorer in Progress.</p>
-                  <Link className="text-link inline-flex min-h-11 items-center" href="/progress?view=biology">Open bloodwork trends</Link>
-                  {r.trends.length>0&&<details><summary>Choose a recorded marker · {r.trends.length}</summary><ul>{r.trends.map(t=><li key={t.marker}><Link className="text-link inline-flex min-h-11 items-center" href={`/progress?view=biology&marker=${encodeURIComponent(t.marker)}`}>{t.name}</Link></li>)}</ul></details>}
+                  <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Open bloodwork trends</Link>
+                  {r.trends.length>0&&<details><summary>Choose a recorded marker · {r.trends.length}</summary><ul>{r.trends.map(t=><li key={t.marker}><Link className="text-link inline-flex min-h-11 items-center" href={`/precision?tab=labs&marker=${encodeURIComponent(t.marker)}`}>{t.name}</Link></li>)}</ul></details>}
                 </section>
                 <section className="bloom-panel">
                   <h2>Saved plans & observations</h2>
@@ -1332,6 +1361,7 @@ export default function PrecisionNutrition() {
                         </p>
                         <p>{c.notes}</p>
                         <CheckinEntrySource source={c.entrySource}/>
+                        {user&&<GiCheckinSource key={`${user.id}:${c.id}`} actor={user.id} id={c.id} female={currentProfile?.sex==='female'} onSaved={invalidatePlanningInputs}/>}
                       </div>
                       <Button
                         variant="outline"

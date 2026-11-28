@@ -1,0 +1,50 @@
+{
+  "design_only": true,
+  "browser": "Chromium headless, HTML with locally embedded body PNGs",
+  "views": {
+    "front": 23,
+    "back": 26
+  },
+  "scenarios": {
+    "single": {
+      "front_markers": 1,
+      "back_markers": 1,
+      "front_badges": 1,
+      "back_badges": 1
+    },
+    "multi": {
+      "front_markers": 6,
+      "back_markers": 6,
+      "front_badges": 6,
+      "back_badges": 6
+    },
+    "dense": {
+      "front_markers": 10,
+      "back_markers": 10,
+      "front_badges": 10,
+      "back_badges": 9,
+      "back_hidden": 1
+    },
+    "clear": {
+      "front_markers": 0,
+      "back_markers": 0
+    }
+  },
+  "checks": [
+    "No JavaScript runtime errors in browser",
+    "All demo marker counts match example observations",
+    "All visible badges remain within SVG canvas",
+    "Keyboard Enter selects anterior location",
+    "Unique SVG hit IDs across front/back",
+    "Both modes rendered at desktop/mobile"
+  ],
+  "not_tested": [
+    "VoiceOver",
+    "TalkBack",
+    "Real-device gestures",
+    "Production data",
+    "Authoritative anatomical region nomenclature",
+    "Clinical validation",
+    "GI-01\u2013GI-10 integration gates"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "task": "V06-M2-B6-overlap-reference-admission",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED",
+  "outcome": "An actual confirmed distinct-label B6 overlap automatically joins the existing owned published-reference matching response. If the known supplemental portion alone reaches the matched total-intake UL, explain the duplicate-use issue and provide proportionate label/clinician/pharmacist discussion without asserting toxicity, prescribing or complete exposure.",
+  "integration": "One shared account-guarded reference query extracted from existing disclosure. Existing source view/coverage/Profile/context/query invalidation/source links reused; no new store/API/engine/questionnaire.",
+  "admission": {
+    "reference": "Current matching canonical Health Canada adult UL100mg/day with exact source/version/revision and valid account/date/zone. EFSA12mg is separately explained, never silently substituted.",
+    "release": "Feature-eligible contextual information inside current Nutrition source review; no personal clinical release, diagnosis, urgency, dose change or Today priority asserted.",
+    "goals": "No goal or action ID invented; existing contributing-label disclosure remains the inspection/edit path.",
+    "unknowns": "Incomplete food/unrecorded intake, usual exposure, prescribed use and individual harm remain unknown. No below-limit clearance."
+  },
+  "verification": [
+    "19 focused source/reference/schema/API/ownership/epoch tests PASS including exact100 reaches vs125 exceeds, unknown portions, below-limit abstention, wrong account/date/zone/version/missing UL/12mg substitution/clinical and missing profile controls",
+    "Actual App\u2192HTTP\u2192encrypted SQL B6 flow PASS:175\u2192125 bound comparisons;75 removes comparison while retaining overlap/subtotal; a single remaining label retracts overlap; no food intake or duplicate saves",
+    "Missing Profile birth year and reference503 remove only comparison while preserving175mg source facts; restoring inputs recovers comparison. Source503 retracts source findings/retry restores; account switch withdraws all owned facts",
+    "Matched comparison is present during8 source-overlap320/390/768/1440 light/dark200% layout checks; existing32 B6 source context states and keyboard/reload remain PASS",
+    "Unchanged full general reference browser regression after query extraction PASS, including current/historical, sex/age/life-stage correction, source outages, account isolation and generic32+B6-specific8 layouts",
+    "Typecheck and production build PASS"
+  ],
+  "limits": [
+    "Full v0.6 RC, broader Response/BIO-VALUE coverage, independent science/design/physical-device acceptance are unfinished",
+    "No generic food B6 amounts or source composition backfill; label-only native nutrient mass remains scoped",
+    "Exact source publication/hosted qualification pending; parent50c32 is independently qualified with885/885 and all hosted/Neon gates"
+  ]
+}

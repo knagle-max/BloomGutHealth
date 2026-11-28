@@ -1,0 +1,21 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "baseline": "e5fa15d595ea2e0702e4a44494ee4621b37c461e",
+  "scope": "read existing immutable saved product label inside nutrient disclosure",
+  "persistentFormatChanges": false,
+  "externalLookup": false,
+  "focusedTests": 8,
+  "types": "PASS",
+  "productionBuild": "PASS",
+  "actualBrowser": "PASS: manual source/review/save/SQL/reload/library deletion/keyboard/owner",
+  "labelResponsiveStates": 48,
+  "genericResponsiveStates": 48,
+  "limits": [
+    "M1 physical-form completeness remains open",
+    "no chemical equivalent or elemental dose conversion",
+    "no intake/adequacy calculation or supplement ingestion confirmation",
+    "no Canadian DRI dataset added",
+    "exact publication CI pending",
+    "physical VoiceOver and independent scientific review not performed"
+  ]
+}

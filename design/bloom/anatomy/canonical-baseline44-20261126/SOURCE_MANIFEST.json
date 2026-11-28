@@ -1,0 +1,42 @@
+{
+  "sourceArchive": "Bloom_Canonical_Anatomy_553_Exercises_Completed_Package_2026-11-26.zip",
+  "archiveSha256": "980f4cbf74688f0e2e70efd0e4f9a5d259a51e4db1cef45186653f3f9d416d4f",
+  "status": "EXACT_OWNER_SOURCE_STAGING_NOT_EXERCISE_REVIEW",
+  "files": [
+    {
+      "path": "Bloom_Completed_Canonical_Anatomy_553_Exercises_Handoff_2026-11-26.md",
+      "sha256": "4f729632a8ddb251658fc228e547ba1602f9d52c9f2ab6eb43db29cdb53d53b5",
+      "bytes": 5226
+    },
+    {
+      "path": "anatomy_muscle_53_resolution.csv",
+      "sha256": "992df3d5695f1900774ff86459dcb7c4ffa7a81553595a8a3cf4f818f0001cd8",
+      "bytes": 15435
+    },
+    {
+      "path": "bloom_exercise_db_staging_canonical_mapped.csv",
+      "sha256": "aa3e775f38d1b8dd87ca407a993cb7abbf24d53380b7712f6de2a36c69ed111c",
+      "bytes": 2923451
+    },
+    {
+      "path": "bloom_exercise_db_staging_canonical_mapped.json",
+      "sha256": "57e92e8a545812eaece6bc5154fd77624ed013864020c1d61136314b86805969",
+      "bytes": 3788106
+    },
+    {
+      "path": "canonical_anatomy_registry.json",
+      "sha256": "da799264ced1f170adeacebd0f6251b6dfdc5dc801ab14ac7c98a673be9122bc",
+      "bytes": 45267
+    },
+    {
+      "path": "canonical_anatomy_validation_report.json",
+      "sha256": "6707c4b62c077cdb0b6dce859bbf224437bea4985ffd9fc5cd376f48fa5ed49f",
+      "bytes": 2279
+    },
+    {
+      "path": "canonical_to_svg_crosswalk.json",
+      "sha256": "60518457b3590699a4998da87f99d7d4d4e8c5137cc14e95fc62fceb8cb1785d",
+      "bytes": 75889
+    }
+  ]
+}

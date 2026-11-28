@@ -1,0 +1,34 @@
+{
+  "task": "T1e-source-scoped-morphology-artwork",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "sourceVerification": {
+    "optimizedArchiveSha256": "d0e24fd0e26ca61b135056d651ba65aaa45861bcc3e8c834d57edec21f7b8d6b",
+    "originalArchiveSha256": "aa6b3024c428d420cb26bf647e074ac7be8db9aa0ce416f72ff0cd9933dcca00",
+    "manifestSha256": "f33739f2bf0bf7562ec482d20b6e2933ef6c1d23a6e20366ea8f32d05a36fbd6",
+    "mappingSha256": "15494dcb3f4d5a555aec6813ccd66d7ed6cc04c2efd6823cc7ec09d3587e5dbe",
+    "imagesVerifiedBytesAndDecodedDimensions": 44,
+    "optimizedFilesImported": 22,
+    "importedBytes": 1262602,
+    "originalPngAndUnusedFullVariants": "Retained in source Library; not copied to public app"
+  },
+  "implementation": [
+    "Existing shared resolver and portrait component extended, same source mapping for both sizes",
+    "Exact unique current observation/report/ordinal/name required; unknown, duplicate, rank/strain/case/group mismatch uses U00",
+    "U00 public output BVA0047 names preserve original U00-U00 source bytes",
+    "Original20 SVG pairs retained for scoped image failure rollback, then neutral SVG/inline fallback",
+    "Organisms navigation accurately includes viruses and eukaryotes; tab/deep links unchanged",
+    "No report values, source IDs, role/consent or clinical/model execution modified"
+  ],
+  "tests": [
+    "13 focused mapping/integrity/public HTTP/legacy/registry tests PASS",
+    "Actual App94 observations/11 classes,256px+1024px images,22 public hash/MIME responses,36px+180px frames PASS",
+    "16 mode/theme/320/390/768/1440 states,200% text,source0/unknown,keyboard/focus,fallback/offline,other-owner withdrawal,no referrer,no writes PASS",
+    "Existing20 quantified+20 canonical-parser profile regression with source/focus/paused-source/5width/zoom PASS",
+    "TypeScript and production build PASS; all original asset verifiers retained, new22 source/built parity PASS",
+    "CI43809007666 duplicate original-source-row text selector scoped to chart detail; actual encrypted source HTTP/SQL edit/retry/reload/ownership and48 display states locally PASS"
+  ],
+  "actualTester1ReportCoverage": "NOT_TESTED: source package proves the94-entry fixture, not currently authenticated private report identity",
+  "deployment": "Pending publication/exact CI/Render qualification",
+  "independentReview": "Final integrated RC and physical screen-reader/device acceptance not claimed",
+  "screenshots": "/tmp/bloom-morphology-artwork/"
+}

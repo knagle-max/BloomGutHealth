@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-19",
+  "baseCommit": "c3533b36bf8f8a114a687eb0697b18c4fff6a90e",
+  "status": "LOCAL_MECHANICAL_CONTROL_IMPLEMENTED_AND_TESTED",
+  "checks": {
+    "pythonScientificServiceAndPilot": 74,
+    "nodeIncludingASGIAndMICOM": 20,
+    "failures": 0,
+    "skips": 0,
+    "pinnedReferenceClosedEnergyControl": "PASS",
+    "syntheticPositiveCycleDetected": true,
+    "syntheticNegativeControl": "PASS",
+    "nonfiniteAndNonsteadyOptimalSolutions": "REJECTED",
+    "originalModelUnchanged": "VERIFIED"
+  },
+  "experiment": {
+    "mapping": "Fixed source ATPM hydrolysis only",
+    "boundaryConstraint": "All structural boundary fluxes fixed zero",
+    "solver": "glpk",
+    "solverVersion": "5.0",
+    "bindingVersion": "5.0.13",
+    "feasibilityTolerance": 1e-09,
+    "numericalDetectionTolerance": 1e-08,
+    "solverTimeoutSeconds": 5,
+    "existingGrowthReproducibilityTolerance": 1e-05
+  },
+  "artifacts": [
+    {
+      "path": "ml_service/research/reference_model_audit.py",
+      "sha256": "61bb07aad4a78060ccb4b2566c74d1107646da57cdfc8f910e6bf50ca90423ee"
+    },
+    {
+      "path": "ml_service/research/micom_reference.py",
+      "sha256": "a6cfaef5b2e8f767ba1613af7945cdb34826e253d36e63a1f48b50db10fb166d"
+    },
+    {
+      "path": "tests/test_reference_model_audit.py",
+      "sha256": "bf295601f91a32b656254ba3b038e96c7ba3b38cd1e866ce4b4403454804e80a"
+    },
+    {
+      "path": "tests/test_micom_reference.py",
+      "sha256": "2d440b22e204e918e69c55e1035a8d31e35a70a342eee34b152014344daa3fbf"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_ACCEPTANCE.md",
+      "sha256": "2d8d0117e10cb13aa03c7d4d0424bc09bfc0c760562dba697823c4f000aa9c67"
+    },
+    {
+      "path": "docs/scientific-models/MICOM_CLOSED_ENERGY_CONTROL_20261119.md",
+      "sha256": "66b00e301ca0dcadd26fe2e8d6ab5d3e95c22f13b6a07c5f74bc8db7f8bff9c8"
+    }
+  ],
+  "limits": {
+    "actualUpdatedMacRun": "NOT_RUN",
+    "fullThermodynamicValidation": false,
+    "biologicalValidation": false,
+    "predictiveValidation": false,
+    "clinicalValidation": false,
+    "commercialModelRights": "NOT_CLEARED",
+    "modelBytesOrIndividualOutputsCommitted": false
+  },
+  "activation": {
+    "newDependencies": false,
+    "newAPIOrArbitraryObjectives": false,
+    "personalDataUsed": false,
+    "networkOrRenderChanged": false,
+    "deployed": false
+  }
+}

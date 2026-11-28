@@ -1,0 +1,18 @@
+/* Preserve the existing media slot after both original source variants fail.
+   Decorative only: no fabricated anatomy, user data, new image or animation. */
+.app-shell[data-bloom-visual="premium"] .bv-media-placeholder {
+  display:block;
+  inline-size:100%;
+  block-size:var(--bv-media-size,120px);
+  border-radius:inherit;
+  background:
+    radial-gradient(ellipse at 78% 20%,color-mix(in srgb,var(--bv-brand) 18%,transparent),transparent 68%),
+    linear-gradient(135deg,var(--bv-paper),var(--bv-porcelain));
+}
+@media (forced-colors:active) {
+  .app-shell[data-bloom-visual="premium"] .bv-media-placeholder { background:Canvas; }
+}
+.app-shell[data-bloom-visual="premium"] .bv-media[data-media-art-directed="true"] {--bv-active-directed-ratio:var(--bv-directed-ratio);block-size:auto;}
+.app-shell[data-bloom-visual="premium"] .bv-media[data-media-art-directed="true"] :is(picture,.bv-media-placeholder) {display:block;position:relative;inset:auto;width:100%;block-size:auto;aspect-ratio:var(--bv-active-directed-ratio);}
+.app-shell[data-bloom-visual="premium"] .bv-media[data-media-art-directed="true"] img {width:100%;height:100%;block-size:100%;}
+@media(max-width:767px){.app-shell[data-bloom-visual="premium"] .bv-media[data-media-art-directed="true"] {--bv-active-directed-ratio:var(--bv-directed-mobile-ratio);}}

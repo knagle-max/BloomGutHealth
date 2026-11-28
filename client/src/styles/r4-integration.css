@@ -137,3 +137,16 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
 /* Anonymous flex text otherwise keeps the longest word as a minimum width. */
 .app-shell[data-bloom-visual="premium"] .workspace-disclosure > summary { display:grid;grid-template-columns:minmax(0,1fr) auto;min-width:0;overflow-wrap:anywhere; }
 .app-shell[data-bloom-visual="premium"] .progress-workspace { overflow-wrap:anywhere; }
+
+.app-shell[data-bloom-visual="premium"] .lab-reference-key { display:inline-block;width:24px;height:12px;margin-inline-end:8px;border-block:1px dashed currentColor;background:hsl(var(--primary)/.1);vertical-align:middle; }
+.app-shell[data-bloom-visual="premium"] .lab-reference-summary { overflow-wrap:anywhere; }
+/* Laboratory/source actions must reflow with enlarged text, including the
+   background page while a source-review dialog is open. */
+.precision-page button { min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere; }
+.precision-page .science-heading { min-width:0;max-width:100%;overflow-wrap:anywhere; }
+.lab-reference-boundary-label { position:absolute;pointer-events:none;transform:translateY(-50%);font-size:.6875rem;line-height:1.2;background:hsl(var(--background)/.9);color:hsl(var(--foreground));max-width:100%;overflow-wrap:anywhere; }
+.lab-range-selector { overflow-wrap:anywhere; }
+.lab-range-selector :is(input,select) { min-width:0;max-width:100%; }
+.athlete-workspace .athlete-session-status { max-width:100%;white-space:normal;overflow-wrap:anywhere; }
+.athlete-home-links .workspace-shortcut > span { min-width:0;flex:1;overflow-wrap:anywhere; }
+@media (max-width:600px) { .athlete-home-links .workspace-shortcut { flex-wrap:wrap; } .athlete-home-links .workspace-shortcut > svg:last-child { display:none; } }

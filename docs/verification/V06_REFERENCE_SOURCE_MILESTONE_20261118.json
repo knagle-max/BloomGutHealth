@@ -1,0 +1,79 @@
+{
+  "task": "V06-REFERENCE-SOURCE-MILESTONE",
+  "status": "ALREADY_VERIFIED",
+  "commit": "683b8bc67f7777ab9d1a6d6ef04248982fdc45aa",
+  "qualification": {
+    "commit": "683b8bc67f7777ab9d1a6d6ef04248982fdc45aa",
+    "workflow": 44341737935,
+    "job": 134933271155,
+    "conclusion": "success",
+    "unit": "881/881PASS0failed/skipped",
+    "hosted": "All exact binding/privacy/recovery/navigation/media gates PASS",
+    "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
+    "render": "dep-dbusm5m0tbcc73ddt530",
+    "liveAt": "2026-11-18T15:59:50.83237Z"
+  },
+  "includedSlices": [
+    "064df517 calcium and manual-label focus/zero repair",
+    "95da7364 potassiumAI/noUL",
+    "a94a8656 goals-only sourced Food acceptance",
+    "140e10b3 LDL activity context",
+    "c6e1ed0d dietaryD source units",
+    "897802b0 preformedA UL scope",
+    "90641664 folateDFE/synthetic-folic-acid and vitaminE source scopes",
+    "13690ce8 iron source menstrual assumptions and USDA B6 metadata witness",
+    "49b4e704 B12 requirements/noUL",
+    "d3243edd recorded weight/lipid context",
+    "683b8bc6 zinc/vitaminK/sodium source scopes and iron dietary assumptions"
+  ],
+  "limits": [
+    "Does not qualify later local general pregnancy/lactation views or protocol2 reader/next HbA1c producer.",
+    "Older064 exact hosted mismatch is preserved historical evidence; source binding was never relaxed.",
+    "Full M2/C2/Core/RC remains unfinished; no independent final review claim."
+  ],
+  "previousQualification": {
+    "commit": "906416646518377e3d1db6a263308b50a478bfc7",
+    "workflow": 44335001853,
+    "job": 134909272392,
+    "conclusion": "success",
+    "unit": "871/871PASS0failed/skipped",
+    "hosted": "Exact binding/privacy/recovery and navigation/media PASS",
+    "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
+    "render": "dep-dbus5ke1egvs73b95vi0",
+    "liveAt": "2026-11-18T15:24:39.246874Z"
+  },
+  "latestCompatibleReaderQualification": {
+    "commit": "50c32e4699b2febc29532685d9d3580f3b9c3ccd",
+    "workflowRun": 44382591347,
+    "job": 135078578651,
+    "conclusion": "SUCCESS",
+    "tests": 885,
+    "pass": 885,
+    "fail": 0,
+    "skipped": 0,
+    "hosted": "All required exact binding/recovery/navigation/media/source-byte checks PASS",
+    "isolatedNeon": "All required persistence/account/atomicity/control gates PASS",
+    "render": {
+      "id": "dep-dbuvrg142hec73apgob0",
+      "status": "LIVE",
+      "finishedAt": "2026-11-18T19:36:04.960792Z"
+    },
+    "scope": "Compatible glycemic protocol2 reader, general life-stage reference views and case-sensitive copy repair; no HbA1c producer activation yet"
+  },
+  "latestM2ConsumerQualification": {
+    "commit": "fd70aa87b7ab9ebb015adbc9053ee047e4eb0af8",
+    "workflowRun": 44389390514,
+    "job": 135102576614,
+    "conclusion": "SUCCESS",
+    "tests": 895,
+    "pass": 895,
+    "fail": 0,
+    "skipped": 0,
+    "hosted": "All required exact hosted recovery/navigation/media bytes and isolated Neon persistence/control gates PASS",
+    "render": {
+      "id": "dep-dbv0femi0phs73c2i68g",
+      "finishedAt": "2026-11-18T20:18:44.895461Z",
+      "observation": "Was LIVE; now deactivated by newer docs-only descendants. Latest docs590fee84 queued at observation; no manual deployment."
+    }
+  }
+}

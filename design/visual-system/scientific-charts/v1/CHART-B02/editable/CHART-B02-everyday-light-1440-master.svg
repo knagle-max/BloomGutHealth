@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="600" viewBox="0 0 1440 600" role="img" aria-labelledby="b02title b02desc">
+<title id="b02title">CHART-B02 laboratory biomarker: Different laboratory method; everyday-light 1440px design specimen</title>
+<desc id="b02desc">Fictional measurements and intervals for visual design only. Chart uses the Bloom scientific color system; real charts must dynamically render source-verified values and provide an exact-value table.</desc>
+<defs><pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="9" stroke="#70548E" stroke-opacity=".45" stroke-width="2"/></pattern><pattern id="cross" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 0L9 9M9 0L0 9" stroke="#52685C" stroke-opacity=".35" stroke-width="1"/></pattern></defs>
+<rect x="0" y="0" width="1440" height="600" rx="0" fill="#F8F9F3" />
+<rect x="62" y="26" width="1316" height="552" rx="23" fill="#FFFEFA" stroke="#D9E7D5" stroke-width="1" />
+<text x="82" y="58" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#52685C" letter-spacing="1.2">BLOODWORK  /  LABORATORY BIOMARKER</text>
+<text x="82" y="94" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="600" fill="#173E32" >Result history</text>
+<text x="82" y="120" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#52685C" >Illustrative scientific chart • fictional example</text>
+<rect x="1177" y="55" width="177" height="32" rx="16" fill="#F5F3EB" stroke="#D9E7D5" stroke-width="1" />
+<text x="1266" y="76" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#173E32" text-anchor="middle" >4 observations</text>
+<line x1="124" y1="392.72727272727275" x2="1098" y2="392.72727272727275" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<text x="115" y="396.72727272727275" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" text-anchor="end" >3.5</text>
+<line x1="124" y1="354.5454545454545" x2="1098" y2="354.5454545454545" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<line x1="124" y1="316.3636363636364" x2="1098" y2="316.3636363636364" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<text x="115" y="320.3636363636364" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" text-anchor="end" >4.5</text>
+<line x1="124" y1="278.18181818181813" x2="1098" y2="278.18181818181813" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<line x1="124" y1="240.0" x2="1098" y2="240.0" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<text x="115" y="244.0" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" text-anchor="end" >5.5</text>
+<line x1="124" y1="201.81818181818178" x2="1098" y2="201.81818181818178" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<line x1="124" y1="163.6363636363636" x2="1098" y2="163.6363636363636" stroke="#C5D5C6" stroke-width="0.8" stroke-dasharray="2 5" />
+<text x="115" y="167.6363636363636" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" text-anchor="end" >6.5</text>
+<text x="122" y="136" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" >example units</text>
+<line x1="124" y1="408" x2="1098" y2="408" stroke="#52685C" stroke-width="1" />
+<rect x="124" y="217.09090909090907" width="342.12345679012344" height="125.99999999999994" rx="2" fill="#D9E7D5" opacity=".50"/>
+<line x1="124" y1="217.09090909090907" x2="466.12345679012344" y2="217.09090909090907" stroke="#246B50" stroke-width="1.4" />
+<line x1="124" y1="343.090909090909" x2="466.12345679012344" y2="343.090909090909" stroke="#246B50" stroke-width="1.4" />
+<rect x="486.12345679012344" y="198.0" width="611.8765432098766" height="122.18181818181813" rx="2" fill="url(#hatch)" />
+<line x1="486.12345679012344" y1="198.0" x2="1098" y2="198.0" stroke="#70548E" stroke-width="1.4" stroke-dasharray="5 3" />
+<line x1="486.12345679012344" y1="320.18181818181813" x2="1098" y2="320.18181818181813" stroke="#70548E" stroke-width="1.4" stroke-dasharray="5 3" />
+<line x1="476.12345679012344" y1="156" x2="476.12345679012344" y2="408" stroke="#52685C" stroke-width="1.4" stroke-dasharray="3 5" />
+<polyline points="136.00,285.82 311.93,247.64" fill="none" stroke="#246B50" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="640.32,324.00 1086.00,270.55" fill="none" stroke="#246B50" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="136.0" cy="285.81818181818176" r="5.6" fill="#FFFEFA" stroke="#246B50" stroke-width="2.7" />
+<text x="136.0" y="431" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#52685C" text-anchor="middle" >Feb</text>
+<circle cx="311.9259259259259" cy="247.63636363636357" r="5.6" fill="#FFFEFA" stroke="#246B50" stroke-width="2.7" />
+<text x="311.9259259259259" y="431" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#52685C" text-anchor="middle" >Mar</text>
+<circle cx="640.320987654321" cy="324.0" r="5.6" fill="#FFFEFA" stroke="#246B50" stroke-width="2.7" />
+<text x="640.320987654321" y="431" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#52685C" text-anchor="middle" >Jun</text>
+<line x1="1086.0" y1="156" x2="1086.0" y2="408" stroke="#14543B" stroke-width="1.25" stroke-dasharray="3 5" />
+<circle cx="1086.0" cy="270.54545454545456" r="12" fill="#EDF3EC" stroke="#14543B" stroke-width="1.2" />
+<circle cx="1086.0" cy="270.54545454545456" r="5.6" fill="#FFFEFA" stroke="#246B50" stroke-width="2.7" />
+<text x="1086.0" y="431" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#52685C" text-anchor="middle" >Oct</text>
+<line x1="84" y1="441" x2="105" y2="441" stroke="#246B50" stroke-width="2.8" />
+<text x="112" y="445" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#173E32" >Observed</text>
+<rect x="222" y="433" width="20" height="13" rx="2" fill="#D9E7D5" opacity=".62"/>
+<text x="249" y="445" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="500" fill="#173E32" >Different intervals</text>
+<rect x="1133" y="154" width="222" height="276" rx="16" fill="#F5F3EB" stroke="#D9E7D5" stroke-width="1" />
+<text x="1149" y="184" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#52685C" letter-spacing="1">SELECTED RECORD</text>
+<text x="1149" y="232" font-family="Arial,Helvetica,sans-serif" font-size="36" font-weight="600" fill="#173E32" >5.1</text>
+<text x="1149" y="256" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="400" fill="#52685C" >example units</text>
+<line x1="1149" y1="272" x2="1339" y2="272" stroke="#D9E7D5" stroke-width="1" />
+<text x="1149" y="296" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" >Date</text>
+<text x="1342" y="296" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#173E32" text-anchor="end" >Oct 03, 2026</text>
+<text x="1149" y="327" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" >Reported by</text>
+<text x="1342" y="327" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#173E32" text-anchor="end" >Lab B</text>
+<text x="1149" y="358" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" >Method</text>
+<text x="1342" y="358" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#173E32" text-anchor="end" >Assay B</text>
+<text x="1149" y="389" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="400" fill="#52685C" >Reference</text>
+<text x="1342" y="389" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#173E32" text-anchor="end" >Record-specific</text>
+<text x="1149" y="423" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#246B50" >Open original source</text>
+<text x="87" y="494" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="600" fill="#173E32" >Different laboratory method</text>
+<text x="87" y="519" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#52685C" >Method A and method B have different reference contexts; not a single universal band.</text>
+<text x="82" y="566" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="600" fill="#52685C" >DESIGN SPECIMEN • FICTIONAL DATA • NOT A PATIENT RESULT</text>
+</svg>

@@ -1,0 +1,288 @@
+[
+  {
+    "id": "posterior_head",
+    "label": "Back of head",
+    "category": "head",
+    "anchor": {
+      "x": 165,
+      "y": 70
+    },
+    "d": "M 134 70 a 31 44 0 1 0 62 0 a 31 44 0 1 0 -62 0 Z",
+    "hitPathId": "hit-posterior_head"
+  },
+  {
+    "id": "posterior_neck",
+    "label": "Back of neck",
+    "category": "neck",
+    "anchor": {
+      "x": 165,
+      "y": 129
+    },
+    "d": "M 143 129 a 22 21 0 1 0 44 0 a 22 21 0 1 0 -44 0 Z",
+    "hitPathId": "hit-posterior_neck"
+  },
+  {
+    "id": "upper_back_left",
+    "label": "Upper back \u00b7 anatomical left",
+    "category": "upper_back",
+    "anchor": {
+      "x": 127,
+      "y": 208
+    },
+    "d": "M 96 208 a 31 47 0 1 0 62 0 a 31 47 0 1 0 -62 0 Z",
+    "hitPathId": "hit-upper_back_left"
+  },
+  {
+    "id": "upper_back_right",
+    "label": "Upper back \u00b7 anatomical right",
+    "category": "upper_back",
+    "anchor": {
+      "x": 209,
+      "y": 208
+    },
+    "d": "M 178 208 a 31 47 0 1 0 62 0 a 31 47 0 1 0 -62 0 Z",
+    "hitPathId": "hit-upper_back_right"
+  },
+  {
+    "id": "mid_back",
+    "label": "Mid back \u00b7 spine area",
+    "category": "mid_back",
+    "anchor": {
+      "x": 167,
+      "y": 270
+    },
+    "d": "M 148 270 a 19 32 0 1 0 38 0 a 19 32 0 1 0 -38 0 Z",
+    "hitPathId": "hit-mid_back"
+  },
+  {
+    "id": "lower_back_left",
+    "label": "Lower back \u00b7 anatomical left",
+    "category": "lower_back",
+    "anchor": {
+      "x": 135,
+      "y": 343
+    },
+    "d": "M 109 343 a 26 44 0 1 0 52 0 a 26 44 0 1 0 -52 0 Z",
+    "hitPathId": "hit-lower_back_left"
+  },
+  {
+    "id": "lower_back_right",
+    "label": "Lower back \u00b7 anatomical right",
+    "category": "lower_back",
+    "anchor": {
+      "x": 201,
+      "y": 343
+    },
+    "d": "M 175 343 a 26 44 0 1 0 52 0 a 26 44 0 1 0 -52 0 Z",
+    "hitPathId": "hit-lower_back_right"
+  },
+  {
+    "id": "sacrum",
+    "label": "Sacral / tailbone area",
+    "category": "sacrum",
+    "anchor": {
+      "x": 169,
+      "y": 401
+    },
+    "d": "M 145 401 a 24 20 0 1 0 48 0 a 24 20 0 1 0 -48 0 Z",
+    "hitPathId": "hit-sacrum"
+  },
+  {
+    "id": "shoulder_left",
+    "label": "Rear shoulder \u00b7 anatomical left",
+    "category": "shoulder",
+    "anchor": {
+      "x": 82,
+      "y": 188
+    },
+    "d": "M 59 188 a 23 30 0 1 0 46 0 a 23 30 0 1 0 -46 0 Z",
+    "hitPathId": "hit-shoulder_left"
+  },
+  {
+    "id": "shoulder_right",
+    "label": "Rear shoulder \u00b7 anatomical right",
+    "category": "shoulder",
+    "anchor": {
+      "x": 255,
+      "y": 188
+    },
+    "d": "M 232 188 a 23 30 0 1 0 46 0 a 23 30 0 1 0 -46 0 Z",
+    "hitPathId": "hit-shoulder_right"
+  },
+  {
+    "id": "upper_arm_left",
+    "label": "Back of upper arm \u00b7 anatomical left",
+    "category": "upper_arm",
+    "anchor": {
+      "x": 75,
+      "y": 264
+    },
+    "d": "M 55 264 a 20 43 0 1 0 40 0 a 20 43 0 1 0 -40 0 Z",
+    "hitPathId": "hit-upper_arm_left"
+  },
+  {
+    "id": "upper_arm_right",
+    "label": "Back of upper arm \u00b7 anatomical right",
+    "category": "upper_arm",
+    "anchor": {
+      "x": 270,
+      "y": 264
+    },
+    "d": "M 251 264 a 19 43 0 1 0 38 0 a 19 43 0 1 0 -38 0 Z",
+    "hitPathId": "hit-upper_arm_right"
+  },
+  {
+    "id": "forearm_left",
+    "label": "Back of forearm \u00b7 anatomical left",
+    "category": "forearm",
+    "anchor": {
+      "x": 49,
+      "y": 365
+    },
+    "d": "M 31 365 a 18 52 0 1 0 36 0 a 18 52 0 1 0 -36 0 Z",
+    "hitPathId": "hit-forearm_left"
+  },
+  {
+    "id": "forearm_right",
+    "label": "Back of forearm \u00b7 anatomical right",
+    "category": "forearm",
+    "anchor": {
+      "x": 296,
+      "y": 365
+    },
+    "d": "M 278 365 a 18 52 0 1 0 36 0 a 18 52 0 1 0 -36 0 Z",
+    "hitPathId": "hit-forearm_right"
+  },
+  {
+    "id": "hand_left",
+    "label": "Back of hand \u00b7 anatomical left",
+    "category": "hand",
+    "anchor": {
+      "x": 36,
+      "y": 451
+    },
+    "d": "M 17 451 a 19 29 0 1 0 38 0 a 19 29 0 1 0 -38 0 Z",
+    "hitPathId": "hit-hand_left"
+  },
+  {
+    "id": "hand_right",
+    "label": "Back of hand \u00b7 anatomical right",
+    "category": "hand",
+    "anchor": {
+      "x": 300,
+      "y": 451
+    },
+    "d": "M 281 451 a 19 29 0 1 0 38 0 a 19 29 0 1 0 -38 0 Z",
+    "hitPathId": "hit-hand_right"
+  },
+  {
+    "id": "glute_left",
+    "label": "Buttock \u00b7 anatomical left",
+    "category": "glute",
+    "anchor": {
+      "x": 136,
+      "y": 453
+    },
+    "d": "M 106 453 a 30 36 0 1 0 60 0 a 30 36 0 1 0 -60 0 Z",
+    "hitPathId": "hit-glute_left"
+  },
+  {
+    "id": "glute_right",
+    "label": "Buttock \u00b7 anatomical right",
+    "category": "glute",
+    "anchor": {
+      "x": 205,
+      "y": 453
+    },
+    "d": "M 175 453 a 30 36 0 1 0 60 0 a 30 36 0 1 0 -60 0 Z",
+    "hitPathId": "hit-glute_right"
+  },
+  {
+    "id": "posterior_thigh_left",
+    "label": "Back of thigh \u00b7 anatomical left",
+    "category": "thigh",
+    "anchor": {
+      "x": 131,
+      "y": 533
+    },
+    "d": "M 101 533 a 30 63 0 1 0 60 0 a 30 63 0 1 0 -60 0 Z",
+    "hitPathId": "hit-posterior_thigh_left"
+  },
+  {
+    "id": "posterior_thigh_right",
+    "label": "Back of thigh \u00b7 anatomical right",
+    "category": "thigh",
+    "anchor": {
+      "x": 211,
+      "y": 533
+    },
+    "d": "M 181 533 a 30 63 0 1 0 60 0 a 30 63 0 1 0 -60 0 Z",
+    "hitPathId": "hit-posterior_thigh_right"
+  },
+  {
+    "id": "posterior_knee_left",
+    "label": "Back of knee \u00b7 anatomical left",
+    "category": "knee",
+    "anchor": {
+      "x": 133,
+      "y": 611
+    },
+    "d": "M 113 611 a 20 22 0 1 0 40 0 a 20 22 0 1 0 -40 0 Z",
+    "hitPathId": "hit-posterior_knee_left"
+  },
+  {
+    "id": "posterior_knee_right",
+    "label": "Back of knee \u00b7 anatomical right",
+    "category": "knee",
+    "anchor": {
+      "x": 208,
+      "y": 611
+    },
+    "d": "M 188 611 a 20 22 0 1 0 40 0 a 20 22 0 1 0 -40 0 Z",
+    "hitPathId": "hit-posterior_knee_right"
+  },
+  {
+    "id": "calf_left",
+    "label": "Calf \u00b7 anatomical left",
+    "category": "calf",
+    "anchor": {
+      "x": 133,
+      "y": 684
+    },
+    "d": "M 109 684 a 24 50 0 1 0 48 0 a 24 50 0 1 0 -48 0 Z",
+    "hitPathId": "hit-calf_left"
+  },
+  {
+    "id": "calf_right",
+    "label": "Calf \u00b7 anatomical right",
+    "category": "calf",
+    "anchor": {
+      "x": 209,
+      "y": 684
+    },
+    "d": "M 185 684 a 24 50 0 1 0 48 0 a 24 50 0 1 0 -48 0 Z",
+    "hitPathId": "hit-calf_right"
+  },
+  {
+    "id": "heel_foot_left",
+    "label": "Heel / foot \u00b7 anatomical left",
+    "category": "foot",
+    "anchor": {
+      "x": 132,
+      "y": 790
+    },
+    "d": "M 112 790 a 20 24 0 1 0 40 0 a 20 24 0 1 0 -40 0 Z",
+    "hitPathId": "hit-heel_foot_left"
+  },
+  {
+    "id": "heel_foot_right",
+    "label": "Heel / foot \u00b7 anatomical right",
+    "category": "foot",
+    "anchor": {
+      "x": 216,
+      "y": 790
+    },
+    "d": "M 196 790 a 20 24 0 1 0 40 0 a 20 24 0 1 0 -40 0 Z",
+    "hitPathId": "hit-heel_foot_right"
+  }
+]

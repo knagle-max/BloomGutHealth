@@ -1,0 +1,54 @@
+{
+  "task": "V06-P1-CANADIAN-REFERENCE-SELECTION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_FOR_IMPLEMENTED_SCOPE",
+  "baseCommit": "50b83ceaab683f97b0c5b2bff68f10905c464013",
+  "scope": "Same owner chart-first P1, existing catalogue/matcher/controller/SVG only; no new numeric dataset or network service",
+  "implementation": [
+    "Deterministic verified exact performing laboratory \u2192 verified CSCC national \u2192 labelled provincial provisional suggestion; multi-candidate ambiguity abstains without measuring normality",
+    "Explicit display-rights source proof required for automatic verified matching; missing age stays unknown unless source explicitly asserts all-age applicability; assay/specimen/era/units/source review remain required",
+    "37 existing owner-supplied LifeLabs BC/ON provisional rows remain available unchanged; single publication gets an explicit preview action, multiple categories remain distinct; unknown lab/province never inferred from Profile or geography",
+    "Canonical provider controls retain same-source reviewed collection context when switching to Original/None; other provider choices still clear confirmation; automatic fallback toggle can turn off and restore",
+    "National comparison scope has a distinct Canada choice only when a national provider entry actually exists; no national performing-laboratory identity is invented",
+    "Original/corrected source interval and saved None retain priority; separate decision/risk limits never become normal intervals or treatment targets",
+    "Current report browser regression now asserts explicit inclusive ferritin/glucose operators instead of obsolete dash-only wording; original scientific/privacy/ownership assertions preserved"
+  ],
+  "validation": [
+    "22 focused Canadian/provider/source-correction/reference tests PASS; value0/40/55/100/1e6 with upper45/60 always ambiguous, reversed catalogue identical; wrong source/province/context/era/units/rights, demographics and limits covered",
+    "Actual App\u2192owned HTTP\u2192encrypted SQL PASS: single provisional suggestion/explicit preview, multiple ALT categories, source-original priority, no Profile age, saved None, unchanged source ciphertext and account withdrawal;48 mobile/desktop/mode/theme/200% zoom+text states and keyboard",
+    "Separate Vite-only synthetic exact-lab and CSCC source/rights/all-age fixtures prove automatic selected-result overlay, correct source class, off and restore. These rows are never installed or written to real catalogue",
+    "Entire original actual34-result report import/None-no-flash/verified fixture/original priority/source deletion/mode/account regression PASS after correcting two formatter expectations",
+    "Final TypeScript, exact API/capability/Biology audits, production build and original source/built media verification PASS"
+  ],
+  "pending": [
+    "Real verified exact-lab/CSCC numeric coverage remains source-curation work: current37 rows are provisional/pending and no scientific applicability or commercial rights evidence is invented. Original/corrected display and explicit provisional comparisons remain usable."
+  ],
+  "evidence": [
+    "/tmp/bloom-canadian-reference-focused.log",
+    "/tmp/bloom-canadian-reference-browser-final.log",
+    "/tmp/bloom-canadian-reference-report-regression.log",
+    "/tmp/bloom-canadian-reference-types.log",
+    "/tmp/bloom-canadian-reference-build.log"
+  ],
+  "privacy": "Synthetic owned local data only, no actual private health-record query, clinical write, main merge or manual deployment; no physical VoiceOver or full RC claim",
+  "publication": {
+    "commit": "341ada7a32dca4773f7d2410d59bd368716183b2",
+    "workflowRun": 43966986850,
+    "workflowJob": 133648897037,
+    "status": "in_progress",
+    "pinnedHostedPersistence": "success",
+    "lastObservedStep": "Verify deployed navigation, media recovery and responsive layout"
+  },
+  "qualification": {
+    "commit": "341ada7a32dca4773f7d2410d59bd368716183b2",
+    "workflowRun": 43966986850,
+    "workflowJob": 133648897037,
+    "conclusion": "success",
+    "tests": 783,
+    "passed": 783,
+    "failed": 0,
+    "renderDeploy": "dep-dbtntcbrjlhs73art040",
+    "renderFinishedAt": "2026-11-16T22:09:25.601241Z",
+    "runtime": "Exact hosted persistence matched341ada7a during qualification; subsequently superseded by live descendant cacf81c3, CI43970831399 SUCCESS784/784.",
+    "currentDescendant": "cacf81c30242f159453cb23be1df8a36b8d4075a"
+  }
+}

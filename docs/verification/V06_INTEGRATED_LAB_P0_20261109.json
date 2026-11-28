@@ -1,0 +1,122 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "version": "v0.6",
+  "baseline": "6b00bd64cb8ea74ee7481939e92aa61b301ba0ea",
+  "issues": [
+    5,
+    8,
+    9,
+    10
+  ],
+  "sourceAuthority": [
+    "docs/architecture/V06_P0_REPORT_LEVEL_LAB_RANGE_OVERLAYS_20261109.md",
+    "docs/architecture/V06_P0_LAB_IMPORT_DATE_AND_DIAGNOSTICS_20261109.md"
+  ],
+  "implemented": [
+    "source-only default preservation with explicit exclusion",
+    "per-row duplicate skip/separate plus reversible bulk skip and exact retry",
+    "typed Zod paths; shared date errors shown once instead of per-row unit misdiagnosis",
+    "49 canonical marker representations; explicit immature granulocytes absolute/transferrin saturation/total PSA/total cholesterol",
+    "negative total/free PSA/testosterone identity and source-native abstention",
+    "one report/provider/province preference keyed by import plus original report/specimen identity",
+    "existing SVG original/reference/one-sided/selected-result overlays; no provider writes",
+    "source-version-bound collection context; owner-change withdrawal and deleted-source invalidation"
+  ],
+  "preferenceLifetime": "Signed-in session memory only, across navigation/mode changes. Reload returns Original report and requires context recheck; no new persistent source/preferences format.",
+  "providerCuration": {
+    "originalCandidates": 24,
+    "architectAdultTableSpotChecks": 6,
+    "pendingPageReview": 18,
+    "completeRuntimeApproval": 0,
+    "runtimePublishedRanges": 0,
+    "reason": "Specimen/assay/method applicability and full era/demographic/fasting/rights review remain incomplete; no SK source or ON normal band invented"
+  },
+  "datedOwnerReproduction": {
+    "authenticFullAugMayPanel": "NOT_AVAILABLE_IN_REPOSITORY_HANDOFF",
+    "fixture": "tests/fixtures/lab-date-diagnostic-panel.json; explicitly synthetic, five supplied values plus illustrative rows",
+    "observed": "Both May1 and Aug9 diagnostic panels pass identical values and units, source dates and no-time persistence",
+    "conditionalFailureProven": "A clock earlier than collection triggers measuredAt future guard; now reported once with typed path. This does not prove the owner exact runtime root cause."
+  },
+  "evidence": {
+    "actualDatedPanelBrowser": "PASS:34-row source/save/encrypted SQL/reload;48 mode/theme/width/text/page-zoom states; lost reply/exact retry",
+    "actualDuplicateBrowser": "PASS:31 rows/7candidate matches\u2192skip7/save24; all-match/reverse-one-separate; fresh post-preview source409\u2192row skip/retry; two accounts",
+    "actualReferenceBrowser": "PASS:34-row import; verified synthetic10\u201335 U/L SVG/bounds; original<45priority; unknown/SK/ON abstention; same-date import isolation; mode/navigation/None/deletion/account/reload;48 states",
+    "standardExplorer": "PASS:49 definitions, original/varying/one-sided/source/operator/alias/timeline/revision/browser scope",
+    "fullLocalInitial": {
+      "tests": 716,
+      "passed": 714,
+      "failed": 2,
+      "findings": [
+        "new immature-granulocyte editorial was99 words; corrected with precise measurement-method wording",
+        "lab educational registry test pinned prior v1; advanced to actual v2 expansion"
+      ]
+    },
+    "finalFocusedAfterFix": {
+      "passed": 29,
+      "failed": 0
+    },
+    "typecheck": "PASS",
+    "productionBuild": "PASS: final types, production build and original asset byte checks",
+    "exactPublicationCI": {
+      "commit": "c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6",
+      "run": 42694146238,
+      "conclusion": "SUCCESS",
+      "tests": 719,
+      "failed": 0,
+      "gates": [
+        "all added lab/source/date/duplicate/report and source-context browser journeys",
+        "Chrome156 enlarged header/source deletion regression",
+        "types/API/capability/biology source audits",
+        "exact isolated hosted production build, two-account persistence/export/erasure and media",
+        "full unit/embedded SQL suite and final production build"
+      ]
+    },
+    "geneticsModalRegression": {
+      "priorCI": "6b00bd6 failed Chrome156 1280px at page zoom 200% delete dialog overflow",
+      "fix": "Bound dialog grid min-content, descendant widths and wrapping; retain all assertions and add responsive diagnostics",
+      "localBrowser": "PASS actual App/HTTP/encrypted SQL source lifecycle; 320/390 dark and 1280 at 200% zoom",
+      "focusedTests": {
+        "passed": 7,
+        "failed": 0
+      },
+      "exactChrome156CI": "PASS at c71cad590",
+      "diagnosticCorrection": "9e9c591 CI proved the dialog fits510px. Actual remaining overflow is header-actions/profile-link at1280/pageZoom2 (right1291.6 on1280 viewport). Header now wraps within available width; no assertion removed."
+    },
+    "firstPublicationCI": {
+      "commit": "1825d05707b53417ac6a3508b5c27bcc478f570f",
+      "run": 42690665938,
+      "status": "FAILED_STALE_SOURCE_ONLY_TEXT_ASSERTION",
+      "passed": [
+        "Vitamin D/chart browser",
+        "owned source correction browser 48 states"
+      ],
+      "failure": "Reimport review now includes original report/specimen labels; old test expected shorter exact string",
+      "fix": "Assert current full label including explicit not supplied identifiers; actual source-only HTTP/encrypted SQL browser rerun PASS"
+    },
+    "sourceOnlyFinalBrowser": "PASS full current default source-only/save/retry/duplicate/date-correction/deletion journey",
+    "secondPublicationCI": {
+      "commit": "9e9c5913644da77d3a9fe7288a0e38f9764d8ac0",
+      "run": 42691501147,
+      "status": "FAILED_HEADER_OVERFLOW",
+      "passed": [
+        "chart browser",
+        "source correction 48 states",
+        "source-only lifecycle",
+        "dated panel and per-row duplicates",
+        "report-scoped synthetic verified overlays 48 states",
+        "generic and label nutrients",
+        "owned action/checkin/source histories",
+        "experiment history"
+      ],
+      "fix": "Header reflow; local actual source lifecycle PASS, exact Chrome156 check pending"
+    }
+  },
+  "limits": [
+    "No claim of full v0.6 RC readiness",
+    "No real LifeLabs runtime comparison activated",
+    "Actual owner dated-import root is unproven without authentic full input/runtime clock",
+    "Physical VoiceOver/device and independent design/science acceptance not performed",
+    "Session view preferences are not cross-device settings",
+    "Original assets and source records remain authoritative; no main merge"
+  ]
+}

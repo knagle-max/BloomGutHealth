@@ -19,6 +19,8 @@ test("barcode strings preserve leading zeros, validate GS1 check digits and expa
   );
   assert.equal(expandUPCE("04252614"), "042100005264");
   assert.equal(productSearchText("0012345678905"), "0012345678905");
+  assert.equal(productSearchText("0 23249 09002 1"),"0 23249 09002 1");
+  assert.equal(productSearchText("023249090020"),"023249090020","Invalid numeric input stays available for correction instead of becoming a name query");
   assert.equal(
     productSearchText("1 heaping tablespoon of fiber powder"),
     "fiber powder",

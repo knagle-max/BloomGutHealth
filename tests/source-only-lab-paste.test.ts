@@ -3,8 +3,8 @@ const date='2026-10-15T12:00:00Z';
 test('unsupported explicit source columns offer exact source-only facts without changing default errors or interpreting thresholds',()=>{
  const text=' [ Unknown source group ] \nNovel assay, <0.50, arbitrary unit, < 2.0\nQualitative assay, Negative\nLDL, 3.20, mmol/L';const result=parseLabPaste(text,date);assert.equal(result.valid.length,1);assert.equal(result.valid[0].payload.value,3.2);assert.equal(result.errors.length,2);assert.equal(result.sourceOnly.length,2);const first=result.sourceOnly[0].payload;assert.equal(first.reportedAnalyte,'Novel assay');assert.equal(first.reportedValue,'<0.50');assert.equal(first.reportedUnit,'arbitrary unit');assert.equal(first.reportedReferenceInterval,'< 2.0');assert.equal(first.sourceInput.text,text.split('\n')[1]);assert.equal(first.sourceInput.reportedSection,' [ Unknown source group ] ');assert.equal(first.sourceInput.rowOrder,1);assert.deepEqual(sourceOnlyLabSchema.parse(first),first);assert.equal(result.sourceOnly[1].payload.reportedValue,'Negative');assert.equal(result.sourceOnly[1].payload.reportedUnit,null);assert.equal(Object.hasOwn(first,'unitReview'),false);
 });
-test('ambiguous, malformed and oversized rows stay correctable rather than becoming guessed source records',()=>{
- const text='not delimited\nUnknown,\n"Quoted, assay", 2, unit\nUnknown, 2, unit, ref, discarded\n['+'x'.repeat(1000)+']\nUnknown, 2, unit';const result=parseLabPaste(text,date);assert.equal(result.sourceOnly.length,0);assert.ok(result.errors.length>=6);assert.equal(parseLabPaste('Unknown, 2, unit','not-a-date').sourceOnly.length,0);
+test('malformed and oversized rows stay correctable; valid quoted names retain exact source-only facts',()=>{
+ const text='not delimited\nUnknown,\n"Quoted, assay", 2, unit\nUnknown, 2, unit, ref, discarded\n['+'x'.repeat(1000)+']\nUnknown, 2, unit';const result=parseLabPaste(text,date);assert.equal(result.sourceOnly.length,1);assert.equal(result.sourceOnly[0].payload.reportedAnalyte,'Quoted, assay');assert.equal(result.sourceOnly[0].payload.sourceInput.text,'"Quoted, assay", 2, unit');assert.ok(result.errors.length>=6);assert.equal(parseLabPaste('Unknown, 2, unit','not-a-date').sourceOnly.length,0);
 });
 test('keeping source-only rows leaves only genuinely unresolved lines in a correction-only draft',()=>{
  const text='[ Source group ]\nALT, 20, U/L\nUnknown assay, 2.00, source-unit\nbad row';const result=parseLabPaste(text,date),kept=new Set(result.sourceOnly.map(row=>row.line));const remaining=result.errors.filter(error=>!kept.has(error.line));const correction=labPasteCorrections(text,remaining.map(error=>error.line));assert.equal(correction.split('\n').length,4);assert.ok(correction.includes('[ Source group ]'));assert.equal(correction.includes('ALT,'),false);assert.equal(correction.includes('Unknown assay,'),false);assert.ok(correction.includes('bad row'));assert.equal(result.sourceOnly[0].payload.reportedValue,'2.00');
@@ -28,13 +28,15 @@ test('real source analytes beginning Test, Marker or Analyte are never silently 
  assert.equal(parseLabPaste(many,date).sourceOnly.length,50,'Structural headings do not consume the result limit; actual Test-prefixed rows do');
 });
 
-test('extra report columns are never silently discarded or promoted into an interpreted result',()=>{
+test('explicit numeric reference columns are retained; extra unknown columns are never silently discarded',()=>{
  const parsed=parseLabPaste('Analyte,Value,Unit,Reference interval\nALT, 20, U/L, 10–30\nALT, 21, U/L, 10–30, unexplained',date);
- assert.equal(parsed.valid.length,0);
- assert.equal(parsed.errors.length,2);
- assert.equal(parsed.sourceOnly.length,1);
- assert.equal(parsed.sourceOnly[0].payload.reportedAnalyte,'ALT');
- assert.equal(parsed.sourceOnly[0].payload.reportedReferenceInterval,'10–30');
- assert.equal(parsed.sourceOnly[0].payload.sourceInput.rowOrder,1);
+ assert.equal(parsed.valid.length,1);
+ assert.equal(parsed.errors.length,1);
+ assert.equal(parsed.errors[0].line,3);
+ assert.equal(parsed.sourceOnly.length,0);
+ assert.equal(parsed.valid[0].payload.referenceLow,10);
+ assert.equal(parsed.valid[0].payload.referenceHigh,30);
+ assert.equal(parsed.valid[0].payload.sourceInput?.text,'ALT, 20, U/L, 10–30');
+ assert.equal(parsed.valid[0].payload.sourceInput?.rowOrder,1);
  assert.equal(parseLabPaste('ALT, 20, U/L,',date).valid.length,1,'An empty trailing column does not manufacture a range');
 });

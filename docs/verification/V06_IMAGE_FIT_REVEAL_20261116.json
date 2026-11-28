@@ -1,0 +1,22 @@
+{
+  "task": "T1c-fit-and-reveal",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "revisionOf": "V06_READY_ART_INSTALL_20261116.json; explicit owner screenshot correction",
+  "changes": [
+    "Override inherited120px media block size inside square Bloodwork thumbnails; use full-frame contain/center so complete organs remain visible",
+    "Increase thumbnail boxes to72px,64px on narrow screens, retaining source counts and link targets",
+    "Biology copy background stays transparent; shorten continuous fade to76% and constrain copy to62% so more original artwork is visible"
+  ],
+  "validation": {
+    "bloodworkBrowser": "PASS50 original source rows,16 mode/viewport/theme states and200% text, all supplied thumbnail image boxes exactly fit their64/72px frames with contain, original navigation/detail focus and owner withdrawal",
+    "biologyBrowser": "PASS32 mode/viewport/theme/text-size states,136 contrast samples,min5.455355; native1x/2x source/high-DPI,200% zoom,keyboard,source outage,offline geometry/reload and original destinations",
+    "screenshots": "/tmp/bloom-full-organ-thumbnails and /tmp/bloom-biology-visible-art; implementer inspected390px dark complete heart and four Biology cards with expanded image visibility",
+    "sourceAudit": "Capability52 IDs unchanged; biology522 identities and scientific statuses unchanged; only existing QA source hash refreshed",
+    "imageBytes": "No image bytes changed; all33 original optimized source checks reused",
+    "exactHosted": "Pending correction publication; original asset sourceaf99a2f live01:18:02Z with all33 built-copy hashes verified by actual Render build logs"
+  },
+  "remaining": [
+    "Exact correction CI/review-runtime verification",
+    "Full integrated v0.6 RC and independent physical/device acceptance remain open"
+  ]
+}

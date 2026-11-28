@@ -1,0 +1,632 @@
+{
+  "version": "v3",
+  "date": "2026-10-30",
+  "structural_drawings": [
+    {
+      "id": "butyrate",
+      "path": "structures/butyrate.svg",
+      "name": "Butyrate",
+      "PubChemCID": 104775,
+      "formula": "C₄H₇O₂⁻",
+      "formal_charge": -1,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "O",
+        "O⁻"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          5,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "butyric-acid",
+      "path": "structures/butyric-acid.svg",
+      "name": "Butyric acid",
+      "PubChemCID": 264,
+      "formula": "C₄H₈O₂",
+      "formal_charge": 0,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "O",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          5,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "acetate",
+      "path": "structures/acetate.svg",
+      "name": "Acetate",
+      "PubChemCID": 175,
+      "formula": "C₂H₃O₂⁻",
+      "formal_charge": -1,
+      "atom_labels": [
+        "C",
+        "C",
+        "O",
+        "O⁻"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          3,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "acetic-acid",
+      "path": "structures/acetic-acid.svg",
+      "name": "Acetic acid",
+      "PubChemCID": 176,
+      "formula": "C₂H₄O₂",
+      "formal_charge": 0,
+      "atom_labels": [
+        "C",
+        "C",
+        "O",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          3,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "propionate",
+      "path": "structures/propionate.svg",
+      "name": "Propionate",
+      "PubChemCID": 104745,
+      "formula": "C₃H₅O₂⁻",
+      "formal_charge": -1,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "O",
+        "O⁻"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          4,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "propionic-acid",
+      "path": "structures/propionic-acid.svg",
+      "name": "Propionic acid",
+      "PubChemCID": 1032,
+      "formula": "C₃H₆O₂",
+      "formal_charge": 0,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "O",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          4,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "lactate",
+      "path": "structures/lactate.svg",
+      "name": "Lactate · unspecified stereo",
+      "PubChemCID": 91435,
+      "formula": "C₃H₅O₃⁻",
+      "formal_charge": -1,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "O",
+        "O⁻",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          4,
+          1
+        ],
+        [
+          1,
+          5,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "lactic-acid",
+      "path": "structures/lactic-acid.svg",
+      "name": "Lactic acid · unspecified stereo",
+      "PubChemCID": 612,
+      "formula": "C₃H₆O₃",
+      "formal_charge": 0,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "O",
+        "OH",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          2,
+          4,
+          1
+        ],
+        [
+          1,
+          5,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "succinate",
+      "path": "structures/succinate.svg",
+      "name": "Succinate",
+      "PubChemCID": 160419,
+      "formula": "C₄H₄O₄²⁻",
+      "formal_charge": -2,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "O",
+        "O⁻",
+        "O",
+        "O⁻"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          2
+        ],
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          3,
+          6,
+          2
+        ],
+        [
+          3,
+          7,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "succinic-acid",
+      "path": "structures/succinic-acid.svg",
+      "name": "Succinic acid",
+      "PubChemCID": 1110,
+      "formula": "C₄H₆O₄",
+      "formal_charge": 0,
+      "atom_labels": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "O",
+        "OH",
+        "O",
+        "OH"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          2
+        ],
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          3,
+          6,
+          2
+        ],
+        [
+          3,
+          7,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "hydrogen-sulfide",
+      "path": "structures/hydrogen-sulfide.svg",
+      "name": "Hydrogen sulfide",
+      "PubChemCID": 402,
+      "formula": "H₂S",
+      "formal_charge": 0,
+      "atom_labels": [
+        "H",
+        "S",
+        "H"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "choline",
+      "path": "structures/choline.svg",
+      "name": "Choline cation",
+      "PubChemCID": 305,
+      "formula": "C₅H₁₄NO⁺",
+      "formal_charge": 1,
+      "atom_labels": [
+        "C",
+        "C",
+        "O",
+        "N⁺",
+        "C",
+        "C",
+        "C"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          1
+        ],
+        [
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          5,
+          1
+        ],
+        [
+          3,
+          6,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "trimethylamine",
+      "path": "structures/trimethylamine.svg",
+      "name": "Trimethylamine",
+      "PubChemCID": 1146,
+      "formula": "C₃H₉N",
+      "formal_charge": 0,
+      "atom_labels": [
+        "N",
+        "C",
+        "C",
+        "C"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "id": "tmao",
+      "path": "structures/tmao.svg",
+      "name": "Trimethylamine N-oxide",
+      "PubChemCID": 1145,
+      "formula": "C₃H₉NO",
+      "formal_charge": 0,
+      "atom_labels": [
+        "N⁺",
+        "C",
+        "C",
+        "C",
+        "O⁻"
+      ],
+      "bond_graph": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          1
+        ]
+      ],
+      "layout": "manually positioned atoms; bond connectivity specified; stereochemistry not asserted",
+      "automated_graph_validation": "not_executed",
+      "independent_chemist_approval": "pending",
+      "distribution": "disabled"
+    }
+  ],
+  "deferred": [
+    {
+      "name": "Indole",
+      "reason": "fused aromatic rings need exact structure renderer and review"
+    },
+    {
+      "name": "D-glucose",
+      "reason": "stereochemically specified structure required"
+    }
+  ]
+}

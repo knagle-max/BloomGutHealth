@@ -1,0 +1,42 @@
+{
+  "id": "BLOOM-EE-01-SWIPE-PROTOTYPE",
+  "date": "2026-11-21",
+  "status": "PROTOTYPE_TESTED_LOCAL_NOT_INTEGRATED_NOT_OWNER_ART_APPROVED",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 3761,
+      "sha256": "ac6637ee2cd3e00fcc8bd63592f9972e89a26117ff208dd0cf24e5930b74589c"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 8735,
+      "sha256": "66e69b3e24145ace510e0c4eb442c9065e5305ac0c2c67be5bddd44035ce10ab"
+    },
+    {
+      "path": "app.js",
+      "bytes": 11597,
+      "sha256": "49334db0b0f4af25b241fbc5ffaa2ca55e20e1a3839ddc5481045c3f83fdcd00"
+    },
+    {
+      "path": "periodic-elements.json",
+      "bytes": 21595,
+      "sha256": "5cb7d57bd52ce638f820c448b05605511094772c2933eee613e557c21f60ae02"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3506,
+      "sha256": "bd13a1f1bb16161b9d6e1b597426572df3a188849bdcb92825740d4c5698128b"
+    },
+    {
+      "path": "QA_RESULTS.md",
+      "bytes": 1481,
+      "sha256": "ec3e6f5b92732b1a24d57eed1f11bc89dc17a397d9a5d6c135f1bf8cd2cf3277"
+    },
+    {
+      "path": "desktop_demo_preview.png",
+      "bytes": 154965,
+      "sha256": "1c96e31c11133ab308c64229a60c823d915d69f6f2f391718b563d433f45870d"
+    }
+  ]
+}

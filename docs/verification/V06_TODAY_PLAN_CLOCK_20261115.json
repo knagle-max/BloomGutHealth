@@ -1,0 +1,24 @@
+{
+  "task": "T2a-plan-clock",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "risk": "LOW: next-meal planning display only; preserve targets and source checks, no new food/medical assumptions or database writes. Reuses existing minute/focus/visibility clock and source failure behavior.",
+  "changes": [
+    "Current local day/hour/timezone offset scopes the query and update response; minute ticks do not refetch within the same hour",
+    "Late previous-scope mutation cannot replace current-day suggestions; edited targets retained",
+    "Regenerated existing visual-ID projection for35 owner-authored requirements; sourcecheck previously failed from stale28-ID projection; no image files imported or lifecycle advanced"
+  ],
+  "validation": {
+    "baseline": "RED reproduced at c13c6e169cc2950e66217c6468b3f0548ab1b9ca: mounted planner retained previous-day suggestions after midnight",
+    "browser": "PASS actual App with synthetic HTTP source fixtures; pending prior-day update, midnight/new-hour requests, exact local offset, retained2200kcal draft, rejected late previous-day response, no per-minute polling,503 withdrawal/retry,320px",
+    "focused": "10/10 existing Today planner and visual registry tests PASS",
+    "types": "PASS",
+    "build": "PASS including original media source/build checks and35-ID source projection",
+    "sourceAudits": "PASS;522 source identities and scientific statuses unchanged; source files735",
+    "exactPublicationCI": "PENDING"
+  },
+  "remaining": [
+    "T2a complete concrete dinner/edit/review/save/consumed journey is separate; clock regression is a source-context prerequisite",
+    "Standing Tester1 grant implementation is next narrow owner correction",
+    "Original generated image archive bytes still not present;35 IDs are requirements, not35 delivered images"
+  ]
+}

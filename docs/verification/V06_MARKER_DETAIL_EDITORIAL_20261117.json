@@ -1,0 +1,52 @@
+{
+  "task": "V06-P1-MARKER-DETAIL-EDITORIAL",
+  "status": "IMPLEMENTED_UNVERIFIED",
+  "authority": [
+    "docs/architecture/BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
+    "docs/architecture/BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md"
+  ],
+  "baseCommit": "1e7254bd998fec7ccdd49037fbe857d8da9ebcf6",
+  "implementation": [
+    "Expanded child-only identity/result/history/always-visible two-part primer/context order. Parent group art, grouping, search, route and current selection/source state retained; explicit Back returns focus to the existing marker control.",
+    "Existing LabTrend SVG/scales/point IDs/strict source comparator and pairwise display classifier retained. No new chart engine or interpolated readings; unknown source dates and lab labels remain explicit, actual source-native values/units and source drilldown preserved.",
+    "Provider configuration, copied laboratory-range correction, comparison and deeper science remain reachable through deliberate disclosures. Original source interval and saved None remain independently active without opening administration. Source-withdrawal notice remains conspicuous outside disclosure.",
+    "Immutable canonical Biology text reused for What is/Why does it matter; no invented clinical copy, source-derived priority or treatment targets. Review/citation limitations preserved; deeper original literature/discussion/limitations remain available.",
+    "Two additive requested LDL thumbnail slots BVA-0048/0049 in existing canonical registry/projection, lifecycle Briefed with no paths/hashes/licence or approval claims. Reserved dimensions plus licensed lucide symbols; no replacement/regeneration of existing artwork. No second registry."
+  ],
+  "validation": [
+    "22 focused science/display/source-interval and registry boundary tests PASS.",
+    "Actual App5-source LDL/editorial DOM and visual order, essential primer visible, optional admin/source actions/None, keyboard/source focus and back return, source immutability/owner withdrawal,48 layouts320/390/768/1440 xEveryday/Athlete xlight/dark x200%zoom/text PASS. Forced colors/reduced motion/reserved-media fallback exercised.",
+    "Actual HTTP/encrypted local SQL laboratory-range correction regression PASS including lost-response retry, original ciphertext, concurrent draft, removal, mode/reload/None/account boundaries and48 layouts.",
+    "Actual Canadian comparison regression PASS, including ambiguous/provisional manual preview, synthetic verified exact/national applicability, original precedence, saved None, owner isolation and48 layouts.",
+    "Actual pairwise mixed-state and chart-first original ranges/browser PASS through the new optional controls; scientific numeric eligibility remains unchanged.",
+    "Original47 registry objects deep-equal published baseline, existing category-art component exact text unchanged, all original declared local media paths readable; source/built original media checks PASS. No public media changes.",
+    "Final TypeScript, registry check/source API/capability/Biology audits and production build PASS. Final source-notice correction is included.",
+    "Final maintained92-label x6 original records explorer/science/source citations/unknown assays/saved source revision and deletion/Back/reload/focus/failed original media/owner regression PASS. Final34-result real HTTP/SQL import/report overlay journey PASS, including prominent missing-report source notice after deletion, no interval retarget, saved None no-flash and48 layouts."
+  ],
+  "pending": [
+    "Exact candidate source/CI/Render verification; independent integrated RC review",
+    "Physical VoiceOver/iOS Safari and novice human teach-back NOT TESTED",
+    "Requested LDL educational art is not delivered; reserved presentation remains functional without it"
+  ],
+  "evidence": [
+    "/tmp/bloom-marker-editorial-unit.log",
+    "/tmp/bloom-marker-editorial-final-browser.log",
+    "/tmp/bloom-marker-editorial-final/",
+    "/tmp/bloom-marker-editorial-correction.log",
+    "/tmp/bloom-marker-editorial-canadian.log",
+    "/tmp/bloom-marker-editorial-pairwise.log",
+    "/tmp/bloom-marker-editorial-chart-first.log",
+    "/tmp/bloom-marker-editorial-preservation.log",
+    "/tmp/bloom-marker-editorial-build.log",
+    "/tmp/bloom-marker-editorial-explorer-qualified.log",
+    "/tmp/bloom-marker-editorial-overlay-final.log",
+    "/tmp/bloom-marker-editorial-final-build.log"
+  ],
+  "interpretation": "The exact approved pairwise sequence display is preserved alongside the editorial layout. The editorial reference curve is illustrative; no smoothing, scientific promotion or connection through incompatible observations is introduced. Owner source screenshot bytes are not in the workspace; composition follows the consolidated exact written production contract, and independent image parity is not claimed.",
+  "privacy": "Synthetic local/isolated data only. No actual private health query, new exposure authorization, production write/main merge/manual deployment.",
+  "publication": {
+    "commit": "c24d04538ec3cff26a30746c47bbea6d03d51e28",
+    "workflow": "44001344457",
+    "status": "Exact isolated hosted binding check failed after deployed source advanced to descendant; no synthetic accounts created by failed gate. Not claimed green. Descendant qualification remains pending."
+  }
+}

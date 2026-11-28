@@ -40,6 +40,7 @@ test("account erasure verifies credentials, rolls back all classes on failure, r
  await pg.exec("INSERT INTO erasure_hold VALUES('a')");await assert.rejects(()=>store.eraseAccount('a',password));for(const table of tables)assert.equal(await count(getTableName(table)),2);assert.equal(await count('session'),4);
  await pg.exec('DELETE FROM erasure_hold;DROP TABLE health_observations;DROP TABLE health_source_consents;');
  let guarded=false;const sessionGuard=new AccountSessionGuard(db as any);await sessionGuard.withActiveAccount('a',async()=>{guarded=true;});assert.equal(guarded,true);
+ await pg.exec("UPDATE meals SET meal_text='',meal_context='{\"_deletedSaveIntent\":true}'::jsonb WHERE id='meal-a'");
  await store.eraseAccount('a',password);
  await assert.rejects(()=>sessionGuard.withActiveAccount('a',async()=>{assert.fail('deleted account must not create a session');}));
  for(const table of tables.filter(t=>t!==s.healthObservations&&t!==s.healthSourceConsents))assert.equal(await count(getTableName(table)),1);

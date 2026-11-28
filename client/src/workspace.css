@@ -93,6 +93,8 @@ body { -webkit-font-smoothing: antialiased; }
 .app-shell button.hero-button { white-space:normal; max-width:100%; height:auto; }
 .journal-workspace [data-testid^=card-meal] .bloom-panel { padding:16px 0; border:0; box-shadow:none; }
 .app-shell .overflow-x-auto { max-width:100%; }.app-shell .overflow-x-auto table { min-width:400px; }
+/* Compact label comparisons wrap in their existing source disclosure. */
+.app-shell .overflow-x-auto table.label-source-table { min-width:0; width:100%; table-layout:fixed; }
 .header-actions button { min-width:44px; min-height:44px; }.app-shell .profile-link { width:40px; height:40px; }.mobile-navigation-sheet > button:last-child { min-width:40px; min-height:40px; display:grid; place-items:center; }
 .workspace-tabs > [role=tabpanel][data-state=inactive] { display:none; }
 /* Athlete mode has its own identity, not a reskin of everyday targets. */

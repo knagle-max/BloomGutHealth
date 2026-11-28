@@ -29,7 +29,10 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .demo-fixed-example { border:1px dashed hsl(var(--border)); border-radius:16px; padding:20px; margin-top:24px; background:hsl(var(--muted)); }
 .quick-start { border-top:4px solid hsl(var(--primary)) !important; }
 .quick-start-heading { display:flex; gap:16px; align-items:center; }
-.quick-start .bloom-input { display:block; width:100%; }
+.quick-start .bloom-input { display:block; width:100%; min-width:0; }
+.quick-start-heading {flex-wrap:wrap;}
+.quick-start-heading > div {min-width:0;flex:1 1 12rem;overflow-wrap:anywhere;}
+.quick-start-actions button {white-space:normal;height:auto;min-height:44px;max-width:100%;overflow-wrap:anywhere;}
 .evidence-state { display:inline-flex; width:fit-content; gap:6px; align-items:center; border:1px solid hsl(var(--border)); border-radius:8px; padding:5px 9px; font-size:14px; font-weight:600; background:hsl(var(--muted)); }
 .insight-value { font-size:28px !important; font-weight:650; letter-spacing:-.5px; }
 .evidence-insight { display:grid; gap:12px; }
@@ -37,7 +40,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-chart text { fill:hsl(var(--foreground)); font-size:12px; }
 .lab-history-table { width:100%; border-collapse:collapse; font-size:14px; }
 .lab-history-table :is(td,th) { text-align:left; padding:10px 6px; border-bottom:1px solid hsl(var(--border)); overflow-wrap:anywhere; }
-.lab-review-row { border:1px solid hsl(var(--border)); border-radius:16px; padding:20px; display:grid; gap:12px; }
+.lab-review-row { min-width:0; overflow-wrap:anywhere; border:1px solid hsl(var(--border)); border-radius:16px; padding:20px; display:grid; gap:12px; }
 .lab-review-row select { width:100%; }
 .lab-source-text { white-space:pre-wrap; overflow-wrap:anywhere; }
 @media(max-width:600px) {
@@ -154,9 +157,10 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-source-section { padding:12px 0 8px; margin-top:8px; border-top:1px solid hsl(var(--border)); color:hsl(var(--foreground)); font-weight:600; }
 
 /* Exercise Intelligence v1.2: Food Review parity with real parent/child observations. */
+.activity-workspace button { max-width:100%; white-space:normal; overflow-wrap:anywhere; min-height:44px; height:auto; }
 .activity-source-description { padding:12px; background:hsl(var(--muted)); border-radius:16px; }
 .activity-review-row { border-top:1px solid hsl(var(--border)); padding:16px 0; min-width:0; }
-.activity-review-row > summary { display:flex; align-items:center; gap:12px; min-height:44px; }
+.activity-review-row > summary { display:flex; flex-wrap:wrap; align-items:center; gap:12px; min-height:44px; }
 .activity-review-row > summary > span:first-child { flex:1; min-width:0; overflow-wrap:anywhere; }
 .activity-review-row strong,.activity-review-row small { display:block; }
 .activity-review-row small,.activity-row-status { color:hsl(var(--muted-foreground)); font-size:13px; }
@@ -224,6 +228,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 .weekly-review-workspace .science-heading h1 { font-family:Georgia,serif; font-weight:500; }
 .weekly-review-workspace .workspace-disclosure > summary { min-height:44px; align-content:center; }
+.weekly-review-workspace button { max-width:100%; white-space:normal; overflow-wrap:anywhere; min-height:44px; }
 
 .progress-observation-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; }
 .progress-observation-metrics dt { color:hsl(var(--muted-foreground)); font-size:13px; }
@@ -331,6 +336,8 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-category-icon img {display:block;width:36px;height:36px;}
 
 /* Native settings rows retain disclosure state and forms without repeated card introductions. */
+/* Preserve the Profile heading at narrow viewports and enlarged text. */
+.profile-workspace > .science-heading h1 {overflow-wrap:anywhere;}
 .profile-workspace .profile-settings-list {padding:0;overflow:hidden;}
 .profile-settings-list > details + details {border-top:1px solid hsl(var(--border));}
 .profile-settings-list > .profile-section > summary {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:16px 20px;min-height:80px;}
@@ -352,3 +359,116 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 /* Closed food rows stay scannable; their native summary retains48px targets. */
 .meal-review .review-food-row:not([open]) {padding-block:10px;}
+
+/* Accessibility reflow only when a set row has less than 180px available.
+   Original five-column hierarchy remains at normal 320/390px presentation. */
+.activity-workspace .activity-set-row { container-type:inline-size; }
+@container(max-width:180px) {
+ .activity-workspace .activity-set-compact { grid-template-columns:44px minmax(0,1fr) 44px; gap:2px; overflow-wrap:anywhere; }
+ .activity-workspace .activity-set-compact > :first-child { grid-column:1; grid-row:1 / 4; }
+ .activity-workspace .activity-set-compact > :nth-child(2) { grid-column:2; grid-row:1; }
+ .activity-workspace .activity-set-compact > :nth-child(3) { grid-column:2; grid-row:2; }
+ .activity-workspace .activity-set-compact > :nth-child(4) { grid-column:2; grid-row:3; }
+ .activity-workspace .activity-set-compact > :last-child { grid-column:3; grid-row:1 / 4; }
+ .activity-workspace .activity-set-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .activity-workspace .activity-set-fields > label:last-child { grid-column:1 / -1; }
+}
+
+/* Keep Athlete navigation targets operable under enlarged page zoom. */
+@media(max-width:767px) {
+ .app-shell .bloom-bottom-nav { flex-wrap:wrap; }
+ .app-shell .bloom-bottom-nav a { flex:1 1 44px; min-width:44px; max-width:100%; overflow-wrap:anywhere; text-align:center; }
+}
+
+.activity-workspace { container-type:inline-size; overflow-wrap:anywhere; }
+.activity-workspace legend { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+@container(max-width:180px) {
+ .activity-workspace .bloom-panel { padding-left:8px; padding-right:8px; }
+ .activity-workspace .activity-summary-values { grid-template-columns:minmax(0,1fr); }
+}
+
+/* Header actions reflow when zoom leaves less room than their source labels. */
+.app-shell .bloom-header-inner { flex-wrap:wrap; height:auto; min-height:84px; }
+.app-shell .header-context { min-width:0; overflow-wrap:anywhere; }
+.app-shell .header-actions { min-width:0; max-width:100%; flex-wrap:wrap; }
+.app-shell .profile-link { flex-shrink:0; min-width:44px; min-height:44px; }
+
+@media(max-width:991px) {
+ .app-shell .bloom-header-inner { min-height:68px; }
+ .app-shell.athlete-mode main { padding-bottom:calc(120px + env(safe-area-inset-bottom,0px)); }
+}
+
+.activity-workspace fieldset { min-inline-size:0; }
+
+/* BIO-UI06: source amounts stay with their organism in the default list. */
+.microbial-organism-list {list-style:none;padding:0;margin:0;min-width:0;}
+.microbial-organism-list>li+li {border-top:1px solid hsl(var(--border));}
+.microbial-organism-row {padding:12px 0;min-height:72px;}
+.microbial-organism-amount {display:block;font-size:.875rem;line-height:1.5;font-variant-numeric:tabular-nums;}
+
+/* BP-UI05: recorded domain content leads; existing scene stays subordinate. */
+.progress-workspace .progress-context-scene {height:64px;min-width:0;overflow:hidden;border-radius:1rem;margin-top:1rem;}
+.progress-workspace .progress-context-scene>.bv-media {width:100%;height:100%;block-size:100%;margin:0;}
+.progress-workspace .progress-context-scene img {width:100%;height:100%;block-size:100%;object-fit:cover;object-position:center;}
+
+/* BP-UI04: one existing plot, actual source geometry at a readable height. */
+.progress-workspace .food-progress-plot {height:200px;width:100%;display:block;}
+
+.progress-workspace .food-progress-controls button {min-height:44px;}
+
+/* BP-UI09: enlarged labels reflow as whole tabs, never split words. */
+.progress-domain-tabs {display:flex;flex-wrap:wrap;}
+.progress-domain-tabs [role="tab"] {flex:1 0 max-content;white-space:nowrap;}
+
+.progress-workspace .food-progress-controls [role="group"] {display:flex;flex-wrap:wrap;}
+.progress-workspace .food-progress-controls [role="group"] button {flex:1 0 max-content;white-space:nowrap;}
+
+/* TODAY-UI03/06: action first, canonical sources alongside/below, totals on demand. */
+.today-primary-workspace {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.today-primary-workspace > * {min-width:0;}
+.app-shell .today-next-step {padding:20px;margin-bottom:0;}
+.app-shell .today-next-step h2 {font-size:22px;line-height:1.2;max-width:none;margin-bottom:12px;letter-spacing:-.02em;}
+.today-next-step .today-focus-reason {margin-bottom:12px;}
+.today-next-step .today-focus-actions {gap:8px 12px;margin-bottom:4px;}
+.today-next-step .eyebrow {margin-bottom:8px;}
+.today-next-step > .bv-media-slot {display:none;}
+.today-day-column h2 {font-size:18px;margin-bottom:12px;}
+.today-day-column .today-status {margin-bottom:0;}
+.today-day-column .today-status-strip {border-radius:0;border-width:1px 0;background:transparent;}
+.today-food-details {margin:16px 0;}
+.today-food-details > summary {min-height:44px;cursor:pointer;display:list-item;align-content:center;}
+@media(min-width:1024px){
+ .today-primary-workspace {grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px;align-items:start;}
+ .app-shell .today-next-step h2 {font-size:26px;}
+ .today-next-step > .bv-media-slot {display:block;max-height:96px;overflow:hidden;border-radius:16px;}
+ .today-next-step > .bv-media-slot .bv-media {margin:0;height:96px;block-size:96px;min-height:0;}
+ .today-next-step > .bv-media-slot img {height:100%;width:100%;object-fit:cover;}
+}
+/* Keep the approved headline; remove duplicated header/panel spacing. */
+.app-shell .bloom-dashboard .dashboard-heading {margin-bottom:16px;}
+.app-shell .bloom-dashboard .dashboard-heading h1 {margin:0;font-size:30px;}
+.app-shell .bloom-dashboard .dashboard-heading .panel-note {margin:8px 0 0;}
+.app-shell .today-next-step h2 {margin-bottom:8px;}
+.today-next-step .today-focus-evidence {margin-top:8px;}
+.app-shell .today-day-column h2 {font-size:18px;margin:0 0 8px;}
+@media(min-width:1024px){.app-shell .bloom-dashboard .dashboard-heading h1 {font-size:34px;}}
+.today-day-column .today-status-strip {overflow:visible;}
+.app-shell .today-day-column .today-status-item {border:0;border-radius:0;background:transparent;}
+.app-shell .today-day-column .today-status-item + .today-status-item {border-left:1px solid var(--bv-line);}
+
+/* TODAY-UI06/07: one real local date, including narrow and enlarged-text views. */
+.bloom-dashboard .dashboard-heading > div {width:100%;min-width:0;}
+.today-heading-meta {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;margin-bottom:8px;}
+.today-heading-meta .eyebrow {margin:0;}
+.app-shell .bloom-dashboard .today-local-date {display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%;font-size:.8125rem;line-height:1.4;color:var(--bv-secondary);white-space:normal;}
+.today-local-date svg {flex-shrink:0;}
+
+/* Athlete Today: primary source action precedes secondary catalogue/history. */
+.athlete-record-tools {display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;}
+.athlete-record-tools :is(a,button) {display:inline-flex;align-items:center;min-height:44px;}
+.athlete-secondary-tools {display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0;}
+.athlete-secondary-tools > * {min-width:0;}
+
+/* Native Athlete date affordances follow the selected theme, without icon filters. */
+.athlete-workspace :is(input[type="date"],input[type="datetime-local"]) {color-scheme:light;}
+:root.dark .athlete-workspace :is(input[type="date"],input[type="datetime-local"]) {color-scheme:dark;}

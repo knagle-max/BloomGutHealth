@@ -39,6 +39,9 @@ export const labelInputSchema = z
     "Enter at least one amount shown on the label.",
   );
 export type LabelInput = z.infer<typeof labelInputSchema>;
+/** New producer command: old servers reject this envelope before any write. */
+export const privateLabelSaveCommandSchema=z.object({version:z.literal('private-label-save-v1'),intentId:z.uuid().transform(value=>value.toLowerCase()),label:labelInputSchema}).strict();
+export type PrivateLabelSaveCommand=z.infer<typeof privateLabelSaveCommandSchema>;
 export type Product = {
   source: ProductRef["source"];
   id: string;
@@ -51,6 +54,8 @@ export type Product = {
   url: string | null;
   retrievedAt: string;
   notes: string[];
+  /** Exact source quantity text for this serving, before app-unit conversion. */
+  labelDeclarations?:{name:string;amount:number;unit:string;operator:string}[];
   /** Private user-entered context, never verified provider provenance. */
   sourceNote?: string;
   otherNutrients?: { name: string; amount: number; unit: string }[];
@@ -96,11 +101,12 @@ export const productResponseSchema = z.object({
   url: z.string().refine(value=>{try{return ['https:','http:'].includes(new URL(value).protocol);}catch{return false;}}).nullable(),
   retrievedAt: z.string(), notes: z.array(z.string()),
   sourceNote: z.string().trim().min(1).max(500).optional(),
+  labelDeclarations:z.array(z.object({name:z.string().max(120),amount:z.number().finite().nonnegative(),unit:z.string().max(30),operator:z.string().max(12)}).strict()).max(80).optional(),
   otherNutrients: z.array(z.object({name:z.string(),amount:z.number().finite().nonnegative(),unit:z.string()})).optional(),
   provenance: z.object({version:z.literal('usda-branded-v1'),fdcId:z.number().int().positive(),gtin:z.string().nullable(),brandOwner:z.string(),marketCountry:z.string().nullable(),publishedDate:z.string().nullable(),modifiedDate:z.string().nullable(),ingredients:z.string().nullable()}).optional(),
 });
 export const productListResponseSchema=z.object({products:z.array(productResponseSchema)});
-export const productSearchResponseSchema=productListResponseSchema.extend({warnings:z.array(z.string()),attribution:z.string(),query:z.object({original:z.string(),normalized:z.string()}).optional()});
+export const productSearchResponseSchema=productListResponseSchema.extend({warnings:z.array(z.string()),attribution:z.string(),query:z.object({original:z.string(),normalized:z.string()}).optional(),barcodeLookup:z.object({original:z.string(),canonical:z.string().nullable(),status:z.enum(["exact-barcode-verified","saved-private-label","possible-not-verified","no-authoritative-match","provider-unavailable","invalid-barcode"])}).strict().optional()});
 export function readProductResponse<T>(schema:z.ZodType<T>,value:unknown):T{
  const result=schema.safeParse(value);
  if(!result.success)throw Error('The food source response could not be verified. Retry the search or enter the nutrition from your label.');

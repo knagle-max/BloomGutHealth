@@ -8,6 +8,8 @@ function stable(value:unknown):unknown{
  if(value&&typeof value==="object")return Object.fromEntries(Object.entries(value).filter(([key])=>key!=="retrievedAt"&&key!=="analyzedAt").sort(([a],[b])=>a<b?-1:a>b?1:0).map(([key,item])=>[key,stable(item)]));
  return value;
 }
+// Shared source-review normalization; retrieval clocks are not formulation changes.
+export {stable as stableReviewSourceValue};
 export function mealReviewRevision(userId:string,result:Analysis){
  const i=result.intelligence;
   return createHash("sha256").update(JSON.stringify(stable({userId,ingredients:i.ingredients,nutrients:i.nutrients,nutrientSourceSnapshots:i.nutrientSourceSnapshots||[],foodMatches:i.foodMatches,productDetails:i.productDetails||[],status:i.status,pathways:i.pathways,sources:i.sources,nutritionalData:result.nutritionalData.map(({name,...facts}:any)=>facts)}))).digest("hex");

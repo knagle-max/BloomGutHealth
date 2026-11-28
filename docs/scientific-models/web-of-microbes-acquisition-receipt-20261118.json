@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "bloom-wom-acquisition-qualification-v1",
+  "asOf": "2026-11-18",
+  "ownerProgram": "BLOOM_SCIENTIFIC_AI_MODEL_DEVELOPMENT_PROGRAM_ARCHITECT_DECISION_20261118.md",
+  "status": "METADATA_INSPECTED_RIGHTS_AND_RAW_ACQUISITION_BLOCKED",
+  "trainingApproved": false,
+  "privateUserDataUsed": false,
+  "rawExperimentalFilesDownloaded": false,
+  "sourceItems": [
+    {
+      "id": "wom-2018-paper",
+      "name": "Web of Microbes Kosina et al 2018",
+      "url": "https://doi.org/10.1186/s12866-018-1256-y",
+      "kind": "peer_reviewed_paper",
+      "access": "PUBLIC_HTML",
+      "rights": "paper openly accessible; dataset-specific machine-learning/commercial re-use unconfirmed",
+      "evidence": "SQLite downloadable via About tab historically; current endpoint not confirmed"
+    },
+    {
+      "id": "wom-original-live",
+      "name": "Legacy original WoM site",
+      "url": "https://www.webofmicrobes.org/",
+      "kind": "legacy_website",
+      "access": "REDIRECT_TO_UNREACHABLE_METATLAS_NERSC",
+      "rights": "unverified",
+      "evidence": "Site redirect observed; no SQLite blob acquired, no verified public download endpoint"
+    },
+    {
+      "id": "wom-berdl-2018",
+      "name": "BERDL kescience_webofmicrobes 2018 snapshot",
+      "url": "https://beril.kbase.us/projects/webofmicrobes_explorer",
+      "kind": "hosted_archived_collection",
+      "access": "PUBLIC_PROJECT_REPORT_NOT_VERIFIED_BULK_EXPORT",
+      "rights": "BERDL and underlying WoM rights and commercial model-training use unverified; active BERDL JupyterHub/Spark may require authorization",
+      "schemaTables": [
+        "compound",
+        "environment",
+        "organism",
+        "project",
+        "observation"
+      ],
+      "secondaryReportedStats": {
+        "organismRecords": 37,
+        "compounds": 589,
+        "environments": 10,
+        "projects": 5,
+        "reportedObservationTotal": 10744,
+        "byActorAction": {
+          "control:D": 742,
+          "control:N": 1023,
+          "organism:I": 1338,
+          "organism:E": 1155,
+          "organism:N": 7509
+        },
+        "countsAmbiguity": "Sum of action counts is 11767; report's total 10744 excludes 1023 control:N rows. Verify query predicates/schema and independent aggregation before adopting record totals.",
+        "organismDecreaseCount": 0
+      },
+      "status": "SECONDARY_INVENTORY_NOT_RAW_ROW_VERIFIED"
+    },
+    {
+      "id": "wom-northenlab-2026",
+      "name": "Northen Lab public software and processed data",
+      "url": "https://github.com/northenlab/webofmicrobes",
+      "kind": "public_code_and_processed_data",
+      "sourceCommit": "de19b23dcb9ef4b183bc22000ff0655303f7f46e",
+      "sourceCommitDate": "2026-11-06",
+      "access": "PUBLIC_REPOSITORY_METADATA_AND_SOURCE_CODE_INSPECTED",
+      "rights": "Repository software licence permits source/binary redistribution with notices; NOT proof of training/redistribution rights for underlying experimental data, ChEBI and upstream source files.",
+      "metadataInspectedFiles": [
+        "LICENSE",
+        "wom/README.md",
+        "wom/loaders/config.py",
+        "wom/loaders/loaders.py",
+        "wom/processed_data/exometabolite.parquet"
+      ],
+      "processedFileBytesReportedByGitHub": 612963,
+      "rawTrainingSourceNamesDeclared": [
+        "wom_1.tsv",
+        "wom_3.tsv",
+        "wom_4.tsv",
+        "wom_5.tsv",
+        "wom_6.tsv",
+        "wom_7.tsv",
+        "wom_8.tsv",
+        "wom_9.csv",
+        "wom_10.csv",
+        "wom_11.csv",
+        "nature_2021_wom_format.tsv"
+      ],
+      "sourceInRepo": "wom/exometabolite_data contains validation only at inspected HEAD; main training TSV/CSV files not present in inspected directory",
+      "codeDerivedLabels": {
+        "consumed": "assertion numeric <= -2",
+        "secreted": "assertion numeric >= +2",
+        "neutral": "otherwise; NaN also mapped to neutral by this code; INVALID as experimental negative without raw provenance"
+      },
+      "criticalLimitations": [
+        "Processed Parquet has unverified upstream provenance/licensing and cannot automatically replace original assay files",
+        "Current code sorts a time column then keeps latest per organism: may lose timepoint/replicate identity",
+        "Current NaN-to-neutral mapping confounds unmeasured and unchanged, ineligible as negative without reconciliation",
+        "Trained weights or published benchmark code are not validated ground truth"
+      ],
+      "trainingStatus": "NOT_APPROVED"
+    },
+    {
+      "id": "wom-de-raad-2022",
+      "name": "de Raad et al 2022 Defined Medium for Cultivation and Exometabolite Profiling of Soil Bacteria",
+      "url": "https://doi.org/10.3389/fmicb.2022.855331",
+      "kind": "peer_reviewed_experiment",
+      "access": "OPEN_ACCESS_PAPER_AND_SUPPLEMENTS_REVIEW_NEEDED",
+      "rights": "Underlying raw intensity data and model training licence require exact accession/source verification",
+      "sourceTask": "Investigate mass spectrometry GNPS/MassIVE/associated accession and replicate-level raw values; do not presume GNPS2 is the authoritative release for WoM 2018"
+    },
+    {
+      "id": "wom-gnps2",
+      "name": "GNPS2-associated WoM/current resources",
+      "url": "https://gnps2.org",
+      "kind": "metabolomics_portal",
+      "access": "GENERAL_PORTAL_KNOWN_EXACT_WOM_DATA_EXPORT_NOT_CONFIRMED",
+      "rights": "dataset-by-dataset terms and original depositor rights unverified",
+      "sourceTask": "Only use exact documented accession/access path after confirmation; don't scrape or bypass auth"
+    }
+  ],
+  "actionCodeDictionary": [
+    {
+      "scope": "control",
+      "code": "D",
+      "meaning": "metabolite detected in starting medium",
+      "derivedFrom": "BERDL archived snapshot report",
+      "trainingRole": "context_only"
+    },
+    {
+      "scope": "control",
+      "code": "N",
+      "meaning": "metabolite not detected in starting medium",
+      "derivedFrom": "BERDL archived snapshot report",
+      "trainingRole": "context_only_detection_limit"
+    },
+    {
+      "scope": "organism",
+      "code": "I",
+      "meaning": "metabolite signal increased relative to control and detection threshold",
+      "derivedFrom": "BERDL archived snapshot report",
+      "trainingRole": "candidate_positive_increase_when_source_verified"
+    },
+    {
+      "scope": "organism",
+      "code": "E",
+      "meaning": "metabolite newly detectable in spent medium when absent from control",
+      "derivedFrom": "BERDL archived snapshot report",
+      "trainingRole": "candidate_positive_emergence_not_proof_of_de_novo_synthesis"
+    },
+    {
+      "scope": "organism",
+      "code": "N",
+      "meaning": "no statistically significant difference observed in reported assay",
+      "derivedFrom": "BERDL archived snapshot report",
+      "trainingRole": "candidate_unchanged_only_not_proven_no_production_or_absence"
+    },
+    {
+      "scope": "organism",
+      "code": "decrease",
+      "meaning": "the 2018 paper describes decreases, but the archived BERDL data have no organism-level decrease code/observations",
+      "derivedFrom": "Kosina 2018 vs BERDL report",
+      "trainingRole": "NO_CONSUMPTION_LABELS_IN_2018_ARCHIVE"
+    }
+  ],
+  "recordCountStatus": "reported_not_independently_verified",
+  "chemistryStatus": "59%+ compounds unidentified or formula mappings ambiguous, inspect raw IDs and standards",
+  "experimentSplitStatus": "37 organism rows includes co-cultures/control/theoretical; 20 experimental reported; insufficient untested independent strain/study groups for broad claims",
+  "feasibility": "CONDITIONAL_GO_FOR_SCHEMA_AND_RIGHTS_INSPECTION_ONLY; NO_GO_FOR_WOM_CONSUMPTION_TRAINING; WOM_INCREASE_OR_EMERGENCE_TASK_UNDECIDED_PENDING_RAW_RIGHTS_GROUP_AUDIT",
+  "missing": [
+    "Raw authorized SQLite or equivalent experiment source files and SHA256",
+    "Documented bulk BERDL export authorization",
+    "File-level source licence/commercial train authorization",
+    "Exact source sample IDs, replicate, method and media conditions",
+    "Raw feature identities and assay limits",
+    "Full action field and numeric threshold re-verification",
+    "Independent group holdout plan"
+  ],
+  "nextAction": "Codex implement bounded metadata/source probe and in-memory schema inspection under approved rights; request permission from Northen Lab/LBNL/BERDL if source restrictions ambiguous, never train from unknown rights."
+}

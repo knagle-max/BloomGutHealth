@@ -1,0 +1,4 @@
+# Optional local serving only. Does not change production requirements.
+-r requirements-development-api.txt
+uvicorn==0.54.0
+click==8.5.1

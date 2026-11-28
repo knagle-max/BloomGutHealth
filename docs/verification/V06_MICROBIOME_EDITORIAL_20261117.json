@@ -1,0 +1,60 @@
+{
+  "task": "V06-P1-MICROBIOME-EDITORIAL",
+  "requirementStatus": "IMPLEMENTED_AND_TESTED",
+  "implementationStatus": "ENGINEERING_TESTED_PENDING_PUBLICATION_EXACT_CI_DEPLOY",
+  "baseCommit": "f94f1a1e4b9644288058a37719bf86effdac31aa",
+  "ownerAuthority": [
+    "Owner2026-11-17 supplied new microbiome overview and individual organism reference JPEGs. Hero may be a new placeholder/registry entry; do not reuse existing images for that hero.",
+    "Owner clarifies that highlights and the full organism list must be dynamic, not fixed to mockup taxa."
+  ],
+  "references": "docs/design-references/microbiome/reference-manifest.json",
+  "implementation": [
+    "New dedicated reserved hero BVA-0051, no raster/SVG/previous hero reuse. Original50 registry objects and all22 morphology images/hashes unchanged; requested is not generated, licensed or independently approved.",
+    "Overview uses the current selected owned report: source observation count/date/origin, up to4 source-order highlights, complete existing searchable/comparable source list and source-record actions. No hardcoded94, named mockup organisms or health ranking. One existing controller opens profiles from cards or original rows.",
+    "Relative percentages show only finite source-supplied values0\u2013100, preserving zero and full precision. No read-count conversion, invented Other remainder, normalization, healthy range or active function inference. Qualitative amounts remain in the source list.",
+    "Shared OrganismPrimer reuses existing exact-name/rank-aware canonical Biology/research explanations. Overview and detail do not introduce a second interpretation service. Original food/scientific/citation/source fields remain reachable.",
+    "Existing Radix profile becomes a wide-art editorial sheet/dialog with italic identity, source-listed badge, actual reported resolution/group (including literal provider-group notes), visible What/Why, Your report and Research context actions. Unreported genus/rank stays unknown; no name-based inference.",
+    "Existing public thumbnail/portrait assets remain source-bound; original36px source-table thumbnails preserved, new card and wide portrait presentations use the same approved variants/IDs. Missing/offline/ambiguous source artwork still falls back to labelled neutral context.",
+    "Responsive layout uses actual container space for source rows and report context, including200% text/zoom. Theme changes in tests occur outside the active modal, matching its existing focus trap. Source/owner changes withdraw stale overview/profile state."
+  ],
+  "validation": [
+    "19 focused reported-taxa/morphology/functional/registry tests PASS.",
+    "Actual full60 overview mode/theme/width/text/zoom states at320/390/768/1024/1440, plus10 modal views PASS. Dynamic20\u21926\u219220 report counts, names and highlights; all original rows retained, exact0/1.23456789 values, unknown read counts/rank, source/research/citation/Back/focus and owner withdrawal PASS; no writes.",
+    "Actual20 quantified +20 canonical-parser qualitative source profiles PASS: source names/zero/unknown/precision, archaea/strain boundaries, disclosures, keyboard trap/Escape/Back/return focus, search/report state, source withdrawal, offline artwork and CSS200% zoom.",
+    "Actual94 structured +94 native Viome plural-group imports +94 reordered legacy observations PASS.11 source-bound styles,22 original public hash/MIME files, source group labels, same image identity with responsive portrait sizes,16 theme/mode/width states, no-referrer/legacy/offline/owner guards and original data unchanged.",
+    "Existing functional research filter/source-citation/strain/source withdrawal journey PASS.",
+    "Actual App/authenticated HTTP/in-memory SQL report deletion PASS: cancel/focus/retry/CAS/linked report preservation/dependent cache reset/changed-actor denial/empty reload; other Biology categories preserved.",
+    "Final typecheck, API/source exposure inventories and production build PASS; original artwork verification retained."
+  ],
+  "visualReview": {
+    "referencePixels": "Original owner JPEGs preserved byte-for-byte, dimensions and hashes in reference manifest; opened as real image files.",
+    "brandCoherence": "PASS engineering visual review: canonical serif/sans, tactile source surfaces, actual scientific imagery, green/blue identity retained.",
+    "purposeSpecificExperience": "PASS engineering render/interaction review: source-led overview, shared data/actions, readable mobile card grid, intentional wide composition, accessible source-first organism sheet.",
+    "deliberateDifferences": [
+      "Mobile highlights use2 columns for readable names/touch size; tablet/desktop use4.",
+      "No mockup beneficial-organism claim or inferred Genus chip. Source order, reported resolution/group and canonical qualified education remain authoritative.",
+      "Native0\u2013100 percentage meters retain literal values; no fake Other percentage or rescaling to match an illustrative bar length.",
+      "Hero is intentionally reserved rather than an existing/generated image, exactly as authorized."
+    ],
+    "independentFinalDesignReview": "NOT_TESTED",
+    "physicalVoiceOverSafari": "NOT_TESTED",
+    "finalRC": "NOT_READY; independent physical/integrated review and remaining approved Core tasks are separate."
+  },
+  "evidenceDirectories": [
+    "/workspace/bloom-microbiome-before",
+    "/workspace/bloom-microbiome-editorial",
+    "/tmp/bloom-morphology-artwork"
+  ],
+  "ciBudget": {
+    "previousSource": "f94f1a1e4b9644288058a37719bf86effdac31aa",
+    "workflow": 44099793663,
+    "conclusion": "cancelled",
+    "observedEvidence": "803/803 units and all3 exact hosted checks passed; live Neon startup/athlete persistence/routine-source correction/reference registry also passed before final cancellation. No false full-green claim.",
+    "change": "Validation job budget30\u219245 minutes to accommodate expanded browser/source suite and final isolated Neon checks. Individual gates/eligibility/source binding/security assertions unchanged."
+  },
+  "privacy": "Synthetic local/isolated accounts only. No private actual-user queries, production data writes, main merge or manual deployment. Static artwork remains public; source observations stay account-scoped.",
+  "next": [
+    "Commit/push this complete engineering slice and qualify exact source CI/Render.",
+    "Reconcile remaining Core Food12 with existing verified sourced dinner/serving/review/save paths; do not redo proven precision fixes. Then remaining Response15 contributors/actions and full integrated RC evidence."
+  ]
+}

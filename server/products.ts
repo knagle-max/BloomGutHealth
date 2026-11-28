@@ -1,4 +1,6 @@
-import { canonicalBarcode, isBarcodeSearch } from "../shared/barcodes";
+import {PrivateLabelSaveError} from './private-product-storage';
+import { canonicalBarcode, normalizeBarcode, isBarcodeSearch } from "../shared/barcodes";
+import {scaleLabelAmount} from '../shared/label-portion';
 import { normalizeProductQuery, brandedSearchQuery, rankProducts, homePreparedQuery, isHomePreparedSource } from "../shared/product-search";
 import { normalizeUSDABranded } from "./usda-branded";
 import {
@@ -7,7 +9,7 @@ import {
   type MealIntelligence,
 } from "../shared/meal-intelligence";
 import {
-  labelInputSchema,
+  labelInputSchema,privateLabelSaveCommandSchema,
   productIngredient,
   type Product,
   type ProductRef,
@@ -54,6 +56,8 @@ const downloadResponse: ProductFetch = async (url, init) => {
   try{return JSON.parse(text);}catch{throw new ProductSourceError("invalid-response");}
 };
 const download:ProductFetch=async(url,init)=>{try{return await downloadResponse(url,init);}catch(error){throw sourceFailure(error);}};
+/** Public, bounded source read reused by opt-in contract probes; no account data. */
+export const fetchProductSource=download;
 const num = (v: unknown): v is number =>
   typeof v === "number" && Number.isFinite(v) && v >= 0;
 const now = () => new Date().toISOString();
@@ -121,9 +125,19 @@ const dsldNames: Record<string, string> = {
   vitamink: "vitamin_k_ug",
   cholesterol: "cholesterol_mg",
 };
-export function normalizeDSLD(raw: any): Product[] {
-  if (!raw || !/^\d+$/.test(String(raw.id)) || typeof raw.fullName !== "string")
+/** Only whole GS1 values in the authoritative upcSku field qualify. Unknown
+ * object formats, regulatory IDs and arbitrary digits in label text abstain. */
+export function dsldBarcodes(value:unknown):string[]{
+ const values=typeof value==='string'?[value]:Array.isArray(value)&&value.length<=16?value:[];
+ return Array.from(new Set<string>(values.flatMap(code=>typeof code==='string'&&normalizeBarcode(code)?[normalizeBarcode(code)!]:[])));
+}
+export function normalizeDSLD(raw: any,options:{retrievedAt?:string;expectedBarcode?:string}={}): Product[] {
+  if (!raw || !/^\d+$/.test(String(raw.id)) || (typeof raw.fullName !== "string"||!raw.fullName.trim()))
     throw Error("Invalid supplement label.");
+  const codes=dsldBarcodes(raw.upcSku),expected=options.expectedBarcode;
+  if(expected&&!codes.some(code=>canonicalBarcode(code)===canonicalBarcode(expected)))throw new ProductSourceError('invalid-response');
+  const barcode=expected?normalizeBarcode(expected)!:codes.length===1?codes[0]:undefined;
+  const retrievedAt=options.retrievedAt??now();
   const declared = (order: number) => {
     const values = new Set<number>();
     function walk(rows: any[]) {
@@ -163,6 +177,7 @@ export function normalizeDSLD(raw: any): Product[] {
       return [];
     const perServing: Record<string, number> = {},
       otherNutrients: NonNullable<Product["otherNutrients"]> = [],
+      labelDeclarations: NonNullable<Product["labelDeclarations"]> = [],
       notes = [
         "NIH DSLD reproduces a submitted label, not a certification of accuracy or clinical benefit. Check the product, country and label date.",
         "Missing nutrients are unknown; blend weights are not counted again as macro nutrients.",
@@ -176,6 +191,7 @@ export function normalizeDSLD(raw: any): Product[] {
               v.servingSizeOrder === size.order &&
               v.servingSizeQuantity === size.minQuantity,
           );
+        if(q&&num(q.quantity)&&typeof q.unit==='string'&&labelDeclarations.length<80)labelDeclarations.push({name:name.slice(0,120),amount:q.quantity,unit:q.unit.slice(0,30),operator:typeof q.operator==='string'?q.operator.slice(0,12):'not supplied'});
         if (q && q.operator === "=" && num(q.quantity)) {
           const target = ["folate_ug", "vitamin_a_ug"].includes(key)
               ? undefined
@@ -203,9 +219,10 @@ export function normalizeDSLD(raw: any): Product[] {
     return [
       {
         source: "dsld" as const,
+        ...(barcode?{barcode}:{}),
         id: `${raw.id}:${index}`,
         name: raw.fullName.slice(0, 120),
-        brand: String(raw.brandName || "").slice(0, 100),
+        brand: typeof raw.brandName==='string'?raw.brandName.slice(0,100):"",
         servingDescription:
           `${size.minQuantity} ${size.unit}${size.notes ? " · " + size.notes : ""}`.slice(
             0,
@@ -214,12 +231,14 @@ export function normalizeDSLD(raw: any): Product[] {
         servingGrams: grams,
         perServing,
         url: `https://dsld.od.nih.gov/label/${raw.id}`,
-        retrievedAt: now(),
+        retrievedAt,
         notes: [
           ...notes,
+          ...(barcode?["Barcode listed on the NIH full label (upcSku); confirm the current package, country and formulation."]:[]),
+          ...(codes.length>1?["This source label lists multiple package barcodes; package equivalence is not established."]:[]),
           `Label entered: ${raw.entryDate || "date not supplied"}`,
         ],
-        otherNutrients,
+        otherNutrients,labelDeclarations,
       },
     ];
   });
@@ -300,12 +319,27 @@ export function localProduct(id: string): Product {
 export class ProductService {
   private cache = new Map<string, { until: number; value: any }>();
   private inFlight = new Map<string, Promise<any>>();
-  private sharedSourceBudget:((source:"usda-branded")=>Promise<boolean>)|undefined;
-  setSharedSourceBudget(check:(source:"usda-branded")=>Promise<boolean>){this.sharedSourceBudget=check;}
+  private sharedSourceBudget:((source:"usda-branded"|"dsld")=>Promise<boolean>)|undefined;
+  setSharedSourceBudget(check:(source:"usda-branded"|"dsld")=>Promise<boolean>){this.sharedSourceBudget=check;}
   private async usdaRead(url:string,init?:RequestInit){
     this.usdaLimit();
     if(this.sharedSourceBudget&&!await this.sharedSourceBudget("usda-branded"))throw new ProductSourceError("budget");
     return this.fetchJson(url,init);
+  }
+  private dsldWindow={at:0,count:0};
+  private async dsldRead(url:string){
+    if(Date.now()-this.dsldWindow.at>60000)this.dsldWindow={at:Date.now(),count:0};
+    if(this.dsldWindow.count>=12)throw new ProductSourceError('budget');
+    this.dsldWindow.count++;
+    if(this.sharedSourceBudget&&!await this.sharedSourceBudget('dsld'))throw new ProductSourceError('budget');
+    try{return await this.fetchJson(url);}catch(error){throw sourceFailure(error);}
+  }
+  private dsldLabel(id:string,refresh=false){
+    return this.cached('dsld-raw:'+id,async()=>{
+      const raw=await this.dsldRead(`https://api.ods.od.nih.gov/dsld/v9/label/${id}`);
+      if(!raw||String(raw.id)!==id)throw new ProductSourceError('invalid-response');
+      return{raw,retrievedAt:now()};
+    },300000,refresh);
   }
   private usdaWindow={at:0,count:0};
   private usdaLimit(){
@@ -339,15 +373,15 @@ export class ProductService {
       console.warn(`USDA Branded startup check: category=${failure.category}; status=${failure.status||0}; gateway=${failure.providerCode||"none"}; elapsedMs=${Date.now()-start}`);
     }
   }
-  private async cached(key: string, read: () => Promise<any>) {
+  private async cached(key: string, read: () => Promise<any>,ttl=86400000,refresh=false) {
     const old = this.cache.get(key);
-    if (old && old.until > Date.now()) return old.value;
+    if (!refresh && old && old.until > Date.now()) return old.value;
     if (this.inFlight.has(key)) return this.inFlight.get(key);
     const p = read()
       .then((value) => {
         if (this.cache.size >= 512)
           this.cache.delete(this.cache.keys().next().value!);
-        this.cache.set(key, { until: Date.now() + 86400000, value });
+        this.cache.set(key, { until: Date.now() + ttl, value });
         return value;
       })
       .finally(() => this.inFlight.delete(key));
@@ -371,16 +405,17 @@ export class ProductService {
     const q = query.trim(),
       results: Product[] = [],
       warnings: string[] = [];
+    let dsldCandidates=false,dsldUnavailable=false,barcodeProviderUnavailable=false;
     const code=canonicalBarcode(q);
     if(isBarcodeSearch(q)&&!code)return {
-      products:[],query:{original:q,normalized:q},
+      products:[],query:{original:q,normalized:q},barcodeLookup:{original:q,canonical:null,status:"invalid-barcode" as const},
       warnings:["This barcode has an unsupported length or check digit. Check the package digits, or search by product name."],
       attribution:"No product identified. You can still enter the package label manually.",
     };
     const own = await store.getNutritionProducts(userId);
     if(code){
       const matches=own.filter(p=>p.barcode&&canonicalBarcode(p.barcode)===code);
-      if(matches.length)return {products:matches,warnings:[],attribution:"Your privately saved package label. Confirm the current formula and serving."};
+      if(matches.length)return {products:matches,query:{original:q,normalized:q},barcodeLookup:{original:q,canonical:code,status:"saved-private-label" as const},warnings:[],attribution:"Your privately saved package label. Confirm the current formula and serving."};
     }
     results.push(
       ...own.filter((p) =>
@@ -396,6 +431,7 @@ export class ProductService {
     if(kind!=="supplement"&&key)jobs.push(this.usdaSearch(q).then(data=>{
       for(const raw of (Array.isArray(data.foods)?data.foods:[]).slice(0,20))try{results.push(normalizeUSDABranded(raw,false));}catch{}
     }).catch(error=>{
+      if(code)barcodeProviderUnavailable=true;
       const failure=sourceFailure(error);
       console.warn(`USDA Branded request failed: category=${failure.category}; status=${failure.status||0}; gateway=${failure.providerCode||"none"}`);
       const reason=failure.category==="http"&&[401,403].includes(failure.status||0)?"access was denied by the source. The app operator needs to check the configured API key"
@@ -405,6 +441,26 @@ export class ProductService {
       warnings.push(`USDA Branded Foods ${reason}. Your saved labels and manual label entry still work.`);
     }));
     if(kind!=="supplement"&&!key)warnings.push("USDA Branded Foods is not configured. Enter your package label or use a private saved product; generic USDA foods are estimates.");
+    if(kind!=="food"&&code)jobs.push((async()=>{
+      try{
+        const digits=normalizeBarcode(q)!;
+        const data=await this.cached('dsld-upc-search:'+digits,()=>this.dsldRead(`https://api.ods.od.nih.gov/dsld/v9/search-filter?${new URLSearchParams({q:'"'+digits+'"',size:'10',sort_by:'_score'})}`),300000);
+        if(!data||!Array.isArray(data.hits))throw new ProductSourceError('invalid-response');
+        dsldCandidates=data.hits.length>0;
+        const ids=Array.from(new Set<string>(data.hits.slice(0,10).flatMap((hit:any)=>/^\d{1,9}$/.test(String(hit?._id))?[String(hit._id)]:[]))).slice(0,3);
+        await Promise.all(ids.map(async id=>{
+          try{
+            const {raw,retrievedAt}=await this.dsldLabel(id);
+            if(!dsldBarcodes(raw.upcSku).some(value=>canonicalBarcode(value)===code))return;
+            const labels=normalizeDSLD(raw,{retrievedAt,expectedBarcode:digits});
+            if(!labels.length)warnings.push('A NIH record lists this code, but no supported serving definition was supplied. Enter your package label; no serving was inferred.');
+            results.push(...labels);
+          }catch{dsldUnavailable=true;}
+        }));
+        if(data.hits.length>3)warnings.push('Only a bounded set of NIH labels was checked. Confirm the exact package or enter its label.');
+      }catch{dsldUnavailable=true;}
+      if(dsldUnavailable)warnings.push('NIH barcode verification is unavailable or incomplete. This is not proof the product is absent; your private label entry still works.');
+    })());
     if (kind !== "food" && !code)
       jobs.push(
         this.cached("dsld-search:" + q.toLowerCase(), () =>
@@ -461,6 +517,7 @@ export class ProductService {
             }
           })
           .catch(() => {
+            if(code)barcodeProviderUnavailable=true;
             warnings.push(
               "Open Food Facts search is temporarily unavailable. Generic USDA foods, saved labels and supplement search may still be available.",
             );
@@ -471,8 +528,10 @@ export class ProductService {
     if(kind!=="supplement"&&homePreparedQuery(q).requested)warnings.push(results.some(isHomePreparedSource)
       ? "A home-prepared source describes a reference recipe. Your own ingredients and amounts can differ. Review the amount or build from individual ingredients in Add Food."
       : "Generic USDA results are estimates, not verified home-prepared recipes. Packaged labels are alternatives only; choose and review explicitly, or describe the individual ingredients in Add Food.");
+    const ranked=rankProducts(results,q);
     return {
-      products: rankProducts(results,q),
+      products: ranked,
+      ...(code?{barcodeLookup:{original:q,canonical:code,status:ranked.length?"exact-barcode-verified" as const:(dsldUnavailable||barcodeProviderUnavailable)?"provider-unavailable" as const:dsldCandidates?"possible-not-verified" as const:"no-authoritative-match" as const}}:{}),
       query: {original:q,normalized:brandedSearchQuery(q)},
       warnings,
       attribution:
@@ -480,7 +539,7 @@ export class ProductService {
     };
   }
   async resolve(
-    ref: Pick<ProductRef, "source" | "id">,
+    ref: Pick<ProductRef, "source" | "id"> & {query?:string},
     store: ProductStore,
     userId: string,
   ): Promise<Product[]> {
@@ -506,13 +565,9 @@ export class ProductService {
     if (ref.source === "dsld") {
       const id = ref.id.split(":")[0];
       if (!/^\d{1,9}$/.test(id)) throw Error("Invalid label ID.");
-      const all = await this.cached("dsld:" + id, async () =>
-        normalizeDSLD(
-          await this.fetchJson(
-            `https://api.ods.od.nih.gov/dsld/v9/label/${id}`,
-          ),
-        ),
-      );
+      const {raw,retrievedAt}=await this.dsldLabel(id,true);
+      const expectedBarcode=ref.query&&canonicalBarcode(ref.query)?ref.query:undefined;
+      let all:Product[];try{all=normalizeDSLD(raw,{retrievedAt,expectedBarcode});}catch{throw new ProductSourceError("invalid-response");}
       return ref.id.includes(":")
         ? all.filter((p: Product) => p.id === ref.id)
         : all;
@@ -534,6 +589,7 @@ export async function lookupProductNutrition(
   store: ProductStore,
   userId: string,
   service = productService,
+  clock:()=>number = Date.now,
 ) {
   const nutrients = nutrientDefinitions.map(([key, name, unit]) => ({
       key,
@@ -562,13 +618,15 @@ export async function lookupProductNutrition(
       i.assumption = `${servings} × ${p.servingDescription}; ${p.source === "manual" ? "your saved label" : "database label; verify the formula and market"}. Missing nutrients are unknown.`;
       for (const n of nutrients)
         if (num(p.perServing[n.key])) {
-          n.amount = (n.amount ?? 0) + p.perServing[n.key] * servings;
-          counts[n.key] = (counts[n.key] || 0) + 1;
+          const amount=scaleLabelAmount(p.perServing[n.key],servings);
+          if(amount!==null){n.amount = (n.amount ?? 0) + amount;
+          counts[n.key] = (counts[n.key] || 0) + 1;}
         }
       // Do not retain references into a mutable provider/cache or private-label object.
       const labelSnapshot=structuredClone(p);
       productDetails.push({
         labelSnapshot,
+        labelPortion:{version:'label-portion-v1',servings},
         name: p.name,
         serving: `${servings} × ${p.servingDescription}`,
         source: p.source,
@@ -610,10 +668,11 @@ export function registerProductRoutes(
   auth: RequestHandler,
   store: ProductStore,
   service = productService,
+  clock:()=>number = Date.now,
 ) {
   const limits = new Map<string, { at: number; count: number }>();
   const limit: RequestHandler = (req, res, next) => {
-    const t = Date.now();
+    const t = clock();
     for (const [id, v] of Array.from(limits))
       if (t - v.at > 60000) limits.delete(id);
     const id = req.session.userId!,
@@ -661,21 +720,23 @@ export function registerProductRoutes(
   });
   app.get("/api/products/:source/:id", limit, async (req, res) => {
     const p = productRefSchemaForRoute.safeParse(req.params);
-    if (!p.success)
+    const selected=z.object({barcode:z.string().max(32).refine(value=>normalizeBarcode(value)!==null).optional()}).strict().safeParse(req.query);
+    if (!p.success||!selected.success)
       return res.status(400).json({ error: "Choose a supported product." });
     try {
       res.json({
-        products: await service.resolve(p.data, store, req.session.userId!),
+        products: await service.resolve({...p.data,...(selected.data.barcode?{query:selected.data.barcode}:{})}, store, req.session.userId!),
       });
-    } catch {
-      res.status(404).json({
+    } catch(error) {
+      res.status(error instanceof ProductSourceError?503:404).json({
         error:
           "Product label could not load. Retry or enter your package label.",
       });
     }
   });
   app.post("/api/products", limit, async (req, res) => {
-    const p = labelInputSchema.safeParse(req.body);
+    const command=privateLabelSaveCommandSchema.safeParse(req.body);
+    const p=command.success?{success:true as const,data:command.data.label}:labelInputSchema.safeParse(req.body);
     if (
       !p.success ||
       (p.success &&
@@ -687,15 +748,16 @@ export function registerProductRoutes(
         error: "Check the label name, serving size, nutrient values and units.",
       });
     try {
-      if ((await store.getNutritionProducts(req.session.userId!)).length >= 200)
+      if (!command.success&&(await store.getNutritionProducts(req.session.userId!)).length >= 200)
         return res.status(400).json({
           error:
             "Your saved-product list is full. Remove an unused label first.",
         });
       res
         .status(201)
-        .json(await store.insertNutritionProduct(req.session.userId!, p.data));
-    } catch {
+        .json(await store.insertNutritionProduct(req.session.userId!, p.data,command.success?command.data.intentId:undefined));
+    } catch(error) {
+      if(error instanceof PrivateLabelSaveError)return res.status(error.status).json({error:error.message,code:error.code});
       res.status(503).json({ error: "Product label could not save." });
     }
   });

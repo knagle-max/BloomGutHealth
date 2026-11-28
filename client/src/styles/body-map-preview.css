@@ -1,0 +1,61 @@
+/* Preview-only EMP chrome: reuse existing Bloom surface/type/focus roles. */
+.body-map-preview{max-width:1120px;margin:auto;padding-top:16px}
+.body-map-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.body-map-heading h1{font-size:30px;line-height:1.16;margin:0;letter-spacing:-.02em}
+.body-map-icon{display:grid;place-items:center;min-width:44px;min-height:44px;border-radius:50%;color:hsl(var(--foreground));background:hsl(var(--card));border:1px solid hsl(var(--border))}
+.body-map-helper{font-size:14px;line-height:1.45;margin:12px 0;color:hsl(var(--muted-foreground))}
+.body-map-primary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 16px;border-radius:14px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-weight:600;text-decoration:none}
+.body-map-compact{display:grid;grid-template-columns:1fr auto;gap:8px}
+.body-map-compact>*{margin-top:0!important}
+.body-map-compact>fieldset{grid-column:1;grid-row:1}
+.body-map-compact>fieldset legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.body-map-compact>.anatomy-map-options{grid-column:2;grid-row:1;position:relative;align-self:center}
+.body-map-compact>.anatomy-map-options>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:14px}
+.body-map-compact>.anatomy-map-options[open]{position:absolute;right:16px;z-index:10;padding:12px;border-radius:16px;background:hsl(var(--card));border:1px solid hsl(var(--border));max-width:min(320px,90vw)}
+.anatomy-map-options:not(.is-compact)>summary,.anatomy-region-details:not(.is-compact)>summary{display:none}
+.body-map-compact .anatomy-selector-layout{grid-column:1/-1;display:block}
+.body-map-compact .anatomy-selector-figure{height:min(60svh,600px);width:100%;max-width:none;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.body-map-compact .anatomy-selector-svg{width:auto;height:100%;max-width:100%;aspect-ratio:320/820}
+.body-map-compact .anatomy-region-details>summary{min-height:44px;cursor:pointer;font-size:14px;display:flex;align-items:center}
+.body-map-sheet{max-height:60svh;overflow-y:auto;background:hsl(var(--card));color:hsl(var(--foreground));border-radius:24px 24px 0 0;padding:24px 20px max(20px,env(safe-area-inset-bottom));}
+.body-map-sheet .contextual-symptom-editor>summary{display:none}
+.body-map-sheet .contextual-symptom-editor>div{padding-top:0}
+.body-map-sheet form>button[type=submit]{position:sticky;bottom:0;min-height:48px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));border-radius:14px;font-weight:600;padding:12px 16px}
+.body-map-activity{padding:20px 0}.body-map-activity li{display:grid;grid-template-columns:1fr auto;gap:8px;padding:16px 0;border-bottom:1px solid hsl(var(--border))}.body-map-activity li a{grid-column:1/-1;min-height:44px;display:flex;align-items:center}.body-map-activity h2{font-size:20px}
+.body-map-preview button:focus-visible,.body-map-preview summary:focus-visible,.body-map-sheet button:focus-visible{outline:3px solid hsl(var(--ring));outline-offset:3px}
+@media(min-width:900px){.body-map-heading h1{font-size:34px}.body-map-sheet{top:0;bottom:0;left:auto;right:0;width:420px;max-height:100svh;height:100svh;border-radius:24px 0 0 24px}.body-map-compact .anatomy-selector-figure{height:60svh}}
+@media(prefers-reduced-motion:reduce){.body-map-sheet{animation:none!important;transition:none!important}}
+.body-map-sensation{display:flex;flex-wrap:wrap;gap:8px}.body-map-sensation legend{margin-bottom:8px}.body-map-sensation button{min-height:44px;padding:8px 12px;border:1px solid hsl(var(--border));border-radius:999px;text-transform:capitalize}.body-map-sensation button[aria-pressed=true]{background:hsl(var(--primary));color:hsl(var(--primary-foreground));border-color:hsl(var(--primary))}
+
+.body-map-overlay{background:rgba(0,0,0,.28)}
+.body-map-sheet .contextual-symptom-editor form>fieldset>legend{display:none}
+/* One field scroll area plus a separate reachable CTA; no sticky overlap. */
+.body-map-sheet:has(.contextual-symptom-editor){display:flex;flex-direction:column;height:60svh;overflow:hidden}
+.body-map-sheet:has(.contextual-symptom-editor)>*{flex-shrink:0}
+.body-map-sheet .contextual-symptom-editor{flex:1;min-height:0;overflow:hidden}
+.body-map-sheet .contextual-symptom-editor>div{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
+.body-map-sheet .contextual-symptom-editor form{display:flex;flex-direction:column;min-height:0;flex:1;gap:12px}
+.body-map-sheet .contextual-symptom-editor form>fieldset{min-height:0;overflow-y:auto;overscroll-behavior:contain;flex:1;padding:0 4px 12px}
+.body-map-sheet .contextual-symptom-editor form>button[type=submit]{position:static;flex-shrink:0}
+@media(min-width:900px){.body-map-sheet:has(.contextual-symptom-editor){height:100svh}}
+@media(max-height:600px){.body-map-sheet:has(.contextual-symptom-editor){height:88svh;max-height:88svh}}
+
+.body-map-activity .anatomy-selector-figure{height:42svh}
+
+/* EMP-UI09: selection stays visible when system colors remove filled states. */
+@media(forced-colors:active){
+ .body-map-preview [role=tab][data-state=active],
+ .body-map-preview button[aria-pressed=true],
+ .body-map-sheet button[aria-pressed=true]{font-weight:700;text-decoration:underline;text-underline-offset:4px;}
+}
+
+/* EMP-UI06: keep sensation pills intrinsic; the field pane owns spare height. */
+.body-map-sheet .contextual-symptom-editor form>fieldset {align-content:start;}
+.body-map-sheet .body-map-sensation {align-content:flex-start;align-items:flex-start;}
+@media(prefers-reduced-motion:no-preference){
+ .body-map-sheet {animation-duration:180ms!important;transition-duration:180ms!important;}
+}
+/* Enlarged text gets usable field space; normal mobile composition stays compact. */
+@media(max-width:899px){
+ .body-map-sheet:has(.contextual-symptom-editor){height:max(60svh,min(88svh,32rem));max-height:88svh;}
+}

@@ -1,3 +1,8 @@
+import {conditionContextCommandSchema} from '../shared/condition-context';
+import {GiSourceError,giSourceContextSchema,investigationSharingCommandSchema} from '../shared/gi-source-context';
+import {labReferenceCorrectionCommandSchema} from '../shared/lab-reference-correction';
+import {labReportMetadataCommandSchema,LabReportMetadataError} from '../shared/lab-report-metadata';
+import {labSourceReviewSchema} from '../shared/lab-source-review';
 import {buildWellnessContext} from "./wellness-context";
 import{reportFoodDisplay,microbiomeFoodPlanningGuard,microbiomeFoodPlanningGuardSchema}from'../shared/microbiome-food-influence';
 import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
@@ -11,7 +16,7 @@ import {resolvePlanningContext} from "./planning-context";
 import {historicalPlanRecord} from "./plan-history";
 import {aiExecutionContext} from "./metered-ai";
 import { requireRestrictedCapability } from "./capability-policy";
-import { buildTodayPlan } from "../shared/today-planner";
+import { buildTodayPlan,todayMealChoicesSchema,TodayMealChoiceError,type TodayMealChoices } from "../shared/today-planner";
 import { localDayBounds } from "../shared/nutrition-summary";
 import type { Express, RequestHandler } from "express";
 import { z } from "zod";
@@ -45,17 +50,28 @@ type Store = Pick<
   | "getMeals"
   | "getUser"
   | "getUserSamples"
+  | "getPrecisionContextSource"
   | "getPrecisionContext"
+  | "getConditionContext"
+  | "putConditionContext"
+  | "getInvestigationSharing"
+  | "putInvestigationSharing"
+  | "getCheckinSource"
+  | "insertGiCheckin"
+  | "updateGiCheckin"
   | "putPrecisionContext"
   | "getPrecisionRecords"
   | "insertPrecisionRecord"
   | "insertReviewedLab"
   | "correctLabDate"
+  | "reviewLabSource"
   | "getGeneticSources"
   | "changeGeneticSource"
   | "getMicrobiomeFood"
   | "putMicrobiomeFood"
   | "getLabSources"
+  | "saveLabReportMetadata"
+  | "saveLabReferenceCorrection"
   | "deleteLabSource"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
@@ -80,12 +96,13 @@ export function registerPrecisionRoutes(
     }catch(error){unavailable(res,error);}
   });
   async function reportFor(userId: string, sampleId?: string) {
-    const [rawContext, records, user, samples] = await Promise.all([
-      store.getPrecisionContext(userId),
+    const [contextSource, records, user, samples] = await Promise.all([
+      store.getPrecisionContextSource?store.getPrecisionContextSource(userId):store.getPrecisionContext(userId).then(context=>({context,revision:null})),
       store.getPrecisionRecords(userId),
       store.getUser(userId),
       store.getUserSamples(userId),
     ]);
+    const rawContext=contextSource.context;
     const context =
       rawContext === undefined
         ? contextSchema.parse({})
@@ -164,6 +181,7 @@ export function registerPrecisionRoutes(
     });
     return {
       ...result,
+      contextRevision:contextSource.revision,
       ageSources: resolved.ageSources,
       gutReportInventory:gutReportInventory(samples),
       availableReports: owned.map((s) => ({
@@ -228,7 +246,7 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
-  async function todayPlanFor(userId: string, input: { date: string; timezoneOffset: number; hour: number; plan?: import("../shared/weekly-planner").WeeklyRequest }) {
+  async function todayPlanFor(userId: string, input: { date: string; timezoneOffset: number; hour: number; plan?: import("../shared/weekly-planner").WeeklyRequest; choices?:TodayMealChoices }) {
     const bounds = localDayBounds(input.date, input.timezoneOffset);
       const id = userId,
         [user, records, meals, report] = await Promise.all([
@@ -295,6 +313,7 @@ export function registerPrecisionRoutes(
         prefs.success ? prefs.data : defaultPreferences,
         report,
         request,
+        input.choices,
       );
       if (!input.plan && !saved.success && !profileComplete) {
         result.meals = [];
@@ -312,6 +331,7 @@ export function registerPrecisionRoutes(
         timezoneOffset: z.number().int(),
         hour: z.number().int().min(0).max(23),
         plan: weeklyRequestSchema.optional(),
+        choices:todayMealChoicesSchema.optional(),
       })
       .strict()
       .safeParse(req.body);
@@ -330,6 +350,7 @@ export function registerPrecisionRoutes(
     try {
       res.json(await todayPlanFor(req.session.userId!, parsed.data));
     } catch (e) {
+      if(e instanceof TodayMealChoiceError)return res.status(400).json({error:e.message});
       unavailable(res, e);
     }
   });
@@ -522,16 +543,42 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
+  const giFailure=(res:any,error:unknown)=>error instanceof GiSourceError?res.status(error.status).json({error:error.message}):unavailable(res,error);
+  app.get('/api/precision/conditions',async(req,res)=>{
+    try{if(!store.getConditionContext)return res.status(503).json({error:'Condition selection is unavailable.'});res.json(await store.getConditionContext(req.session.userId!));}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/conditions',async(req,res)=>{
+    const input=conditionContextCommandSchema.safeParse(req.body);if(!input.success)return res.status(400).json({error:'Review the condition selections and response state (maximum 30).'});
+    try{if(!store.putConditionContext)return res.status(503).json({error:'Condition selection is unavailable.'});res.json(await store.putConditionContext(req.session.userId!,input.data));}catch(error){giFailure(res,error);}
+  });
+  app.get('/api/precision/investigation-sharing',async(req,res)=>{
+    try{if(!store.getInvestigationSharing)return res.status(503).json({error:'Source privacy controls are unavailable.'});res.json(await store.getInvestigationSharing(req.session.userId!));}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/investigation-sharing',async(req,res)=>{
+    const input=investigationSharingCommandSchema.safeParse(req.body);if(!input.success)return res.status(400).json({error:'Review the current privacy choices.'});
+    try{if(!store.putInvestigationSharing)return res.status(503).json({error:'Source privacy controls are unavailable.'});res.json(await store.putInvestigationSharing(req.session.userId!,input.data));}catch(error){giFailure(res,error);}
+  });
+  app.get('/api/precision/checkins/:id/source',async(req,res)=>{
+    try{if(!store.getCheckinSource)return res.status(503).json({error:'Check-in sources are unavailable.'});const source=await store.getCheckinSource(req.session.userId!,req.params.id);if(!source)return res.status(404).json({error:'Check-in source is unavailable.'});res.json(source);}catch(error){giFailure(res,error);}
+  });
+  app.put('/api/precision/checkins/:id/context',async(req,res)=>{
+    const input=z.object({revision:z.string().regex(/^[a-f0-9]{64}$/),sharingRevision:z.string().uuid(),gi:giSourceContextSchema,confirmed:z.literal(true)}).strict().safeParse(req.body);
+    if(!input.success)return res.status(400).json({error:'Review the current check-in details.'});
+    try{if(!store.updateGiCheckin)return res.status(503).json({error:'Check-in correction is unavailable.'});res.json(await store.updateGiCheckin(req.session.userId!,req.params.id,input.data.revision,input.data.sharingRevision,input.data.gi));}catch(error){giFailure(res,error);}
+  });
   app.put("/api/precision/context", async (req, res) => {
-    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")))return res.status(400).json({error:"Manage dataset selection and report food preferences using their separate controls."});
+    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")||Object.hasOwn(req.body,"investigationSharing")||Object.hasOwn(req.body,"conditionSource")))return res.status(400).json({error:"Manage dataset selection, condition selections and report food preferences using their separate controls."});
     const p = contextSchema.safeParse(req.body);
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
     try {
-      await store.putPrecisionContext(req.session.userId!, p.data);
+      const revision=req.get('X-Bloom-Context-Revision');
+      if(!revision||!/^[a-f0-9]{64}$/.test(revision))return res.status(428).json({error:'Reload the saved health context before submitting an edit.'});
+      if(!store.getPrecisionContextSource)return res.status(503).json({error:'Versioned health-context editing is unavailable. No unversioned save was attempted.'});
+      await store.putPrecisionContext(req.session.userId!, p.data,revision);
       res.json(p.data);
     } catch (e) {
-      unavailable(res, e);
+      giFailure(res, e);
     }
   });
   app.post("/api/precision/labs/import", async(req,res)=>{
@@ -539,7 +586,7 @@ export function registerPrecisionRoutes(
     const key=req.get("Idempotency-Key");
     if(!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))return res.status(400).json({error:"Review the source result and current matches with a valid save reference."});
     const payload=input.data.payload;
-    if(payload.dateCorrection||("unitReview" in payload&&payload.unitReview&&(payload.unitReview.status!=="pending"||payload.unitReview.confirmedAt!==null||payload.unitReview.supersedes!==null||payload.value!==payload.unitReview.originalValue)))
+    if(payload.sourceCorrection||payload.dateCorrection||("unitReview" in payload&&payload.unitReview&&(payload.unitReview.status!=="pending"||payload.unitReview.confirmedAt!==null||payload.unitReview.supersedes!==null||payload.value!==payload.unitReview.originalValue)))
       return res.status(400).json({error:"Import original source facts; use the separate date and unit review actions for revisions."});
     try{
       if(!store.insertReviewedLab)return res.status(503).json({error:"Atomic laboratory match review is unavailable. No legacy save was attempted."});
@@ -558,10 +605,12 @@ export function registerPrecisionRoutes(
         .status(400)
         .json({ error: p.error.issues.map((i) => i.message).join("; ") });
     const saveKey=req.get("Idempotency-Key");
-    if(saveKey!==undefined&&(p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
+    const giCheckin=p.data.kind==="checkin"&&p.data.payload.gi!==undefined;
+    if(p.data.kind==="checkin"&&p.data.payload.giSource!==undefined)return res.status(400).json({error:"Source metadata is server managed."});
+    if(saveKey!==undefined&&(!giCheckin&&p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
     try {
       const userId = req.session.userId!;
-      if (p.data.kind === "lab" && p.data.payload.dateCorrection)
+      if (p.data.kind === "lab" && (p.data.payload.dateCorrection||p.data.payload.sourceCorrection))
         return res.status(400).json({error:"Use the reviewed date correction action to preserve source history."});
       if (p.data.kind === "lab" && "unitReview" in p.data.payload && p.data.payload.unitReview &&
         (p.data.payload.unitReview.status !== "pending" || p.data.payload.unitReview.confirmedAt !== null ||
@@ -575,6 +624,12 @@ export function registerPrecisionRoutes(
             .status(400)
             .json({ error: "Select one of your saved plans." });
       }
+      if(giCheckin){
+        const revision=req.get("X-Bloom-Source-Revision");
+        if(!store.insertGiCheckin)return res.status(503).json({error:"Check-in capture is unavailable."});
+        if(!z.string().uuid().safeParse(saveKey).success||!z.string().uuid().safeParse(revision).success)return res.status(400).json({error:"Review the current journal and save reference."});
+        return res.status(201).json(await store.insertGiCheckin(userId,p.data.payload,saveKey!,revision!));
+      }
       const record = await store.insertPrecisionRecord(
         userId,
         p.data.kind,
@@ -583,6 +638,7 @@ export function registerPrecisionRoutes(
       );
       res.status(201).json(record);
     } catch (e) {
+      if(e instanceof GiSourceError)return giFailure(res,e);
       if(e instanceof Error&&e.message==="PRECISION_SAVE_CONFLICT")return res.status(409).json({error:"This save reference belongs to different results. Retry the original result or start a separate reviewed entry."});
       unavailable(res, e);
     }
@@ -651,6 +707,19 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
+  app.post("/api/precision/labs/:id/review-source",async(req,res)=>{
+    const input=labSourceReviewSchema.safeParse(req.body),key=req.get("Idempotency-Key");
+    if(req.get("X-Bloom-Confirm")!=="review-lab-source"||!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))return res.status(400).json({error:"Review the reported marker, unit and optional reference limits against the original report, with a reason and new review reference."});
+    try{
+      if(!store.reviewLabSource)return res.status(503).json({error:"Source review is unavailable. The original result was retained."});
+      return res.status(201).json(await store.reviewLabSource(req.session.userId!,req.params.id,input.data,key));
+    }catch(error){
+      if(error instanceof Error&&error.message==="LAB_NOT_FOUND")return res.status(404).json({error:"Laboratory result not found in your account."});
+      if(error instanceof Error&&["LAB_SOURCE_CHANGED","PRECISION_SAVE_CONFLICT"].includes(error.message))return res.status(409).json({error:"The source or review reference changed. Cancel and review the current result."});
+      if(error instanceof z.ZodError||error instanceof Error&&["LAB_REVIEW_NUMBER_UNKNOWN","LAB_REVIEW_IDENTITY_UNKNOWN","LAB_REVIEW_INVALID"].includes(error.message))return res.status(400).json({error:"Keep an exact numeric source value and confirm a supported analyte and unit. Qualitative or threshold findings remain source-only."});
+      unavailable(res,error);
+    }
+  });
   app.post("/api/precision/labs/:id/correct-date", async (req, res) => {
     const input=labDateChangeSchema.safeParse(req.body),key=req.get("Idempotency-Key");
     if(req.get("X-Bloom-Confirm")!=="correct-lab-date"||!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))
@@ -697,6 +766,20 @@ export function registerPrecisionRoutes(
    try{await store.putMicrobiomeFood(req.session.userId!,parsed.data.control,parsed.data.revision);res.json({success:true});}catch(e){if(e instanceof Error&&e.message==='MICROBIOME_FOOD_CHANGED')return res.status(409).json({error:'The setting or report changed. Reload and choose the current report.'});unavailable(res,e);}
   });
   app.get("/api/precision/labs/sources",async(req,res)=>{try{if(!store.getLabSources)return res.status(503).json({error:"Laboratory source management is unavailable."});return res.json(await store.getLabSources(req.session.userId!));}catch(e){unavailable(res,e);}});
+  app.post('/api/precision/labs/sources/:id/reference-range',async(req,res)=>{
+   if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload your laboratory results.'});
+   const parsed=labReferenceCorrectionCommandSchema.safeParse(req.body),key=z.string().uuid().safeParse(req.get('Idempotency-Key'));
+   if(!parsed.success||!key.success||!z.string().regex(/^[a-f0-9]{64}$/).safeParse(req.params.id).success)return res.status(400).json({error:'Review the copied laboratory range and source before saving.'});
+   if(!store.saveLabReferenceCorrection)return res.status(503).json({error:'Laboratory range corrections are unavailable. Original observations are unchanged.'});
+   try{return res.json(await store.saveLabReferenceCorrection(req.session.userId!,req.params.id,parsed.data,key.data));}catch(error){if(error instanceof LabReportMetadataError)return res.status(error.status).json({error:error.message});unavailable(res,error);}
+  });
+  app.post('/api/precision/labs/sources/:id/metadata',async(req,res)=>{
+    if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload before managing a laboratory source.'});
+    const parsed=labReportMetadataCommandSchema.safeParse(req.body),key=z.string().uuid().safeParse(req.get('Idempotency-Key'));
+    if(!parsed.success||!key.success||!z.string().regex(/^[a-f0-9]{64}$/).safeParse(req.params.id).success)return res.status(400).json({error:'Review the exact laboratory source, provider and reference preference before saving.'});
+    if(!store.saveLabReportMetadata)return res.status(503).json({error:'Laboratory report metadata is unavailable. Original observations are unchanged.'});
+    try{return res.json(await store.saveLabReportMetadata(req.session.userId!,req.params.id,parsed.data,key.data));}catch(error){if(error instanceof LabReportMetadataError)return res.status(error.status).json({error:error.message});unavailable(res,error);}
+  });
   app.delete("/api/precision/labs/sources/:id",async(req,res)=>{
     if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload before deleting a laboratory source.'});
     const command=z.object({revision:z.string().regex(/^[a-f0-9]{64}$/),confirmed:z.literal(true)}).strict().safeParse(req.body);

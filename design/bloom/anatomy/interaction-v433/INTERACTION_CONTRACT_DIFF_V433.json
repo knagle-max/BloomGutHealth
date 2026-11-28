@@ -1,0 +1,57 @@
+[
+  {
+    "op": "add",
+    "path": "/candidate_version",
+    "value": "V4.3.3_NOT_PRODUCTION"
+  },
+  {
+    "op": "add",
+    "path": "/candidate_architecture",
+    "value": "B: exact passive V432 visual silhouettes plus separately partitioned hit geometry; review recommendation only"
+  },
+  {
+    "op": "add",
+    "path": "/default_mode_candidate_override",
+    "value": {
+      "active": 44,
+      "front": 24,
+      "back": 20,
+      "preserveOriginalIdsAndBytes": true,
+      "independentAdditions": "detail_only_provisional; supersedes earlier app52-target proposal for this candidate"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/candidate_detailed_geometry",
+    "value": {
+      "frontSvgTargets": 34,
+      "backSvgTargets": 28,
+      "listOnlyResiduals": 6,
+      "passiveArt": "No pointer/focus target; source d unchanged except front residual correction",
+      "upperTrapezius": "Expanded provisional hit footprint; no old-parent canonical reassignment",
+      "nativeList": "44px minimum, exact IDs/names, Tab/Enter/Space; passive hover/focus preview only; spec NOT runtime verified"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/candidate_data_contract",
+    "value": {
+      "persistence": "NOT_AUTHORIZED",
+      "parentCounts": "account-scoped distinct observation-ID union only; never parent+child sum",
+      "historicalBroadRecords": "remain on original exact parent ID, never imputed to child",
+      "editsRevocationsClear": "exact selected source target and source revision only; revoke derived caches if later authorized",
+      "expandedUpperTrapRollup": "NONE pending anatomical/ownership review",
+      "noHealthClaims": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/candidate_pending_owner_choices",
+    "value": [
+      "Approve architecture B or require unified selectable/paint geometry A",
+      "Approve provisional expanded trapezius ownership and labels, including no automatic old-parent rollup",
+      "Review retained gaps and inherited front independent-region symmetry",
+      "Qualified anatomy/rights/runtime accessibility review before any production promotion"
+    ]
+  }
+]

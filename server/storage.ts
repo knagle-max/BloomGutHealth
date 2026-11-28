@@ -1,3 +1,8 @@
+import {readDietaryReferenceInputs,type DietaryReferenceInputs} from './dietary-reference-context';
+import type {LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
+import type {LabReportMetadataCommand} from '../shared/lab-report-metadata';
+import type {LabSourceReview} from '../shared/lab-source-review';
+import {LabResponseContextStorage} from './lab-response-context-storage';
 import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
 import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
@@ -8,7 +13,7 @@ import {readProfileMeasurementSource} from "./profile-measurement-source";
 import type {ProfileMeasurementWrite,ProfileMeasurementSource} from "../shared/profile-measurement-source";
 import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
-import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
+import { getOwnedMeal,getOwnedMealSaveRecord,getOwnedMeals,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {updateMealWithReview,type MealEditReceipt} from './meal-edit';
 import {importStructuredReportWithReceipt,deleteOwnedMicrobiomeReport,changeOwnedViomeRelationship} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
@@ -20,6 +25,7 @@ import { BiologyStorage } from "./biology-storage";
 import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
 import type { BiologicalRegistry } from "../shared/biological-model";
 import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
+import {SupplementIntakeStorage} from './supplement-intake-storage';
 import type { LabelInput, Product } from "../shared/products";
 import {
   type User,
@@ -46,10 +52,13 @@ import type {
 import { eq, and, sql, desc } from "drizzle-orm";
 
 export interface IStorage extends ExperienceStore {
+  supplementIntakes?:SupplementIntakeStorage;
+  labResponseContext?:Pick<LabResponseContextStorage,'history'|'view'|'prepare'|'save'|'deleteHistory'>;
   getBiologicalRegistry(): Promise<BiologicalRegistry>;
   getNutritionProducts(userId: string): Promise<Product[]>;
-  insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
+  insertNutritionProduct(userId: string, label: LabelInput,intentId?:string): Promise<Product>;
   deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
+  getDietaryReferenceInputs?(id:string):Promise<DietaryReferenceInputs>;
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -85,14 +94,24 @@ export interface IStorage extends ExperienceStore {
 
 
   getMeal(id: string,userId:string): Promise<Meal | undefined>;
+  /** Internal recovery read including spent intents; never expose directly. */
+  getMealSaveRecord?(id:string,userId:string):Promise<Meal|undefined>;
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
   updateMeal(id: string, updates: MealUpdates,userId:string): Promise<Meal|undefined>;
   updateReviewedMeal?(id:string,userId:string,revision:string,updates:MealUpdates,receipt:MealEditReceipt):Promise<Meal|undefined>;
   deleteMeal(id: string,userId:string): Promise<void>;
 
+  getConditionContext?: PrecisionStorage["getConditionContext"];
+  putConditionContext?: PrecisionStorage["putConditionContext"];
+  getInvestigationSharing?: PrecisionStorage["getInvestigationSharing"];
+  putInvestigationSharing?: PrecisionStorage["putInvestigationSharing"];
+  getCheckinSource?: PrecisionStorage["getCheckinSource"];
+  insertGiCheckin?: PrecisionStorage["insertGiCheckin"];
+  updateGiCheckin?: PrecisionStorage["updateGiCheckin"];
+  getPrecisionContextSource?: PrecisionStorage["getPrecisionContextSource"];
   getPrecisionContext(userId: string): Promise<unknown>;
-  putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
+  putPrecisionContext(userId: string, context: PrecisionContext, expectedRevision?:string): Promise<void>;
   getPrecisionRecords(userId: string): Promise<PrecisionRecord[]>;
   insertPrecisionRecord(
     userId: string,
@@ -101,6 +120,7 @@ export interface IStorage extends ExperienceStore {
     saveKey?: string,
   ): Promise<PrecisionRecord>;
   insertReviewedLab?(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]):Promise<PrecisionRecord>;
+  reviewLabSource?(userId:string,sourceId:string,input:LabSourceReview,saveKey:string):Promise<PrecisionRecord>;
   correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   getGeneticSources?(userId:string):Promise<GeneticSourceSnapshot>;
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
@@ -109,6 +129,8 @@ export interface IStorage extends ExperienceStore {
   getBiologicalReports?(userId:string,category:BiologicalReportCategory):Promise<BiologicalReportSnapshot>;
   deleteBiologicalReports?(userId:string,input:BiologicalReportDelete):Promise<{success:true;state:"deleted"|"not-present"}>;
   getLabSources?(userId:string):Promise<LabSourceSummary[]>;
+  saveLabReferenceCorrection?(userId:string,sourceId:string,input:LabReferenceCorrectionCommand,key:string):Promise<LabSourceSummary>;
+  saveLabReportMetadata?(userId:string,sourceId:string,input:LabReportMetadataCommand,key:string):Promise<LabSourceSummary>;
   deleteLabSource?(userId:string,id:string,revision:string):Promise<void>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
@@ -116,6 +138,9 @@ export interface IStorage extends ExperienceStore {
 }
 
 export class DatabaseStorage implements IStorage {
+  getDietaryReferenceInputs(id:string){return readDietaryReferenceInputs(db,id);}
+  readonly supplementIntakes=new SupplementIntakeStorage(db);
+  readonly labResponseContext=new LabResponseContextStorage(db);
   private biology = new BiologyStorage(db);
   getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
   // Inactive unscoped prediction/cohort accessors are intentionally not part of this application interface.
@@ -188,13 +213,10 @@ export class DatabaseStorage implements IStorage {
   insertMlAnalysis(analysis:InsertMlAnalysis,userId:string) { return insertOwnedAnalysis(db,analysis,userId); }
 
   getMeal(id:string,userId:string) { return getOwnedMeal(db,id,userId); }
+  getMealSaveRecord(id:string,userId:string) { return getOwnedMealSaveRecord(db,id,userId); }
 
   async getMeals(userId: string): Promise<Meal[]> {
-    return await db
-      .select()
-      .from(meals)
-      .where(eq(meals.userId, userId))
-      .orderBy(desc(meals.loggedAt));
+    return getOwnedMeals(db,userId);
   }
 
   async insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal> {
@@ -206,11 +228,16 @@ export class DatabaseStorage implements IStorage {
   deleteMeal(id:string,userId:string) { return deleteOwnedMeal(db,id,userId); }
 
   private readonly experience = new ExperienceStorage(db);
+  ensureExperienceLifecycle = (id:string) => this.experience.ensureExperienceLifecycle(id);
   getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
   putExperienceSettings: ExperienceStore["putExperienceSettings"] = (id,p) => this.experience.putExperienceSettings(id,p);
   putExperienceSettingsIfCurrent = (id:string,p:Parameters<ExperienceStore["putExperienceSettings"]>[1],revision:string) => this.experience.putExperienceSettingsIfCurrent(id,p,revision);
+  getCheckinRecord(userId:string,id:string){return this.experience.getCheckinRecord(userId,id);}
   getCheckinFeedback(userId:string,id:string){return this.experience.getCheckinFeedback(userId,id);}
   createActivity(...args:Parameters<ExperienceStorage["createActivity"]>){return this.experience.createActivity(...args);}
+  createActivityRoutine(...args:Parameters<ExperienceStorage["createActivityRoutine"]>){return this.experience.createActivityRoutine(...args);}
+  updateActivityRoutine(...args:Parameters<ExperienceStorage["updateActivityRoutine"]>){return this.experience.updateActivityRoutine(...args);}
+  changeRoutineOccurrence(...args:Parameters<ExperienceStorage["changeRoutineOccurrence"]>){return this.experience.changeRoutineOccurrence(...args);}
   createSession(...args:Parameters<ExperienceStorage["createSession"]>){return this.experience.createSession(...args);}
   putCheckinFeedback(...args:Parameters<ExperienceStorage["putCheckinFeedback"]>){return this.experience.putCheckinFeedback(...args);}
   exportExperience = (id:string) => this.experience.exportExperience(id);
@@ -224,15 +251,23 @@ export class DatabaseStorage implements IStorage {
   deleteExperienceRecord: ExperienceStore["deleteExperienceRecord"] = (id,r) => this.experience.deleteExperienceRecord(id,r);
   clearExperienceData: ExperienceStore["clearExperienceData"] = (id) => this.experience.clearExperienceData(id);
   private readonly precision = new PrecisionStorage(db);
+  getConditionContext: PrecisionStorage["getConditionContext"] = (...args) => this.precision.getConditionContext(...args);
+  putConditionContext: PrecisionStorage["putConditionContext"] = (...args) => this.precision.putConditionContext(...args);
+  getInvestigationSharing: PrecisionStorage["getInvestigationSharing"] = (...args) => this.precision.getInvestigationSharing(...args);
+  putInvestigationSharing: PrecisionStorage["putInvestigationSharing"] = (...args) => this.precision.putInvestigationSharing(...args);
+  getCheckinSource: PrecisionStorage["getCheckinSource"] = (...args) => this.precision.getCheckinSource(...args);
+  insertGiCheckin: PrecisionStorage["insertGiCheckin"] = (...args) => this.precision.insertGiCheckin(...args);
+  updateGiCheckin: PrecisionStorage["updateGiCheckin"] = (...args) => this.precision.updateGiCheckin(...args);
+  getPrecisionContextSource: PrecisionStorage["getPrecisionContextSource"] = (...args) => this.precision.getPrecisionContextSource(...args);
   getPrecisionContext(userId: string) {
     return this.precision.getPrecisionContext(userId);
   }
-  putPrecisionContext(userId: string, context: PrecisionContext) {
-    return this.precision.putPrecisionContext(userId, context);
+  putPrecisionContext(userId: string, context: PrecisionContext, expectedRevision?:string) {
+    return this.precision.putPrecisionContext(userId, context,expectedRevision);
   }
   private readonly privateProducts=new PrivateProductStorage(db);
   getNutritionProducts(userId:string){return this.privateProducts.getNutritionProducts(userId);}
-  insertNutritionProduct(userId:string,label:LabelInput){return this.privateProducts.insertNutritionProduct(userId,label);}
+  insertNutritionProduct(userId:string,label:LabelInput,intentId?:string){return this.privateProducts.insertNutritionProduct(userId,label,intentId); }
   deleteNutritionProduct(userId:string,id:string){return this.privateProducts.deleteNutritionProduct(userId,id);}
   getPrecisionRecords(userId: string) {
     return this.precision.getPrecisionRecords(userId);
@@ -243,6 +278,7 @@ export class DatabaseStorage implements IStorage {
   insertReviewedLab(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]){
     return this.precision.insertReviewedLab(userId,payload,saveKey,reviewedMatches);
   }
+  reviewLabSource(userId:string,sourceId:string,input:LabSourceReview,saveKey:string){return this.precision.reviewLabSource(userId,sourceId,input,saveKey);}
   correctLabDate(userId:string, sourceId:string, input:LabDateChange, saveKey:string) {
     return this.precision.correctLabDate(userId,sourceId,input,saveKey);
   }
@@ -253,6 +289,8 @@ export class DatabaseStorage implements IStorage {
   getBiologicalReports(userId:string,category:BiologicalReportCategory){return getBiologicalReports(db,userId,category);}
   deleteBiologicalReports(userId:string,input:BiologicalReportDelete){return deleteBiologicalReports(db,userId,input);}
   getLabSources(userId:string){return this.precision.getLabSources(userId);}
+  saveLabReferenceCorrection(...args:Parameters<PrecisionStorage["saveLabReferenceCorrection"]>){return this.precision.saveLabReferenceCorrection(...args);}
+  saveLabReportMetadata(...args:Parameters<PrecisionStorage["saveLabReportMetadata"]>){return this.precision.saveLabReportMetadata(...args);}
   deleteLabSource(userId:string,id:string,revision:string){return this.precision.deleteLabSource(userId,id,revision);}
   deleteLabEntry(userId: string, id: string) {
     return this.precision.deleteLabEntry(userId, id);

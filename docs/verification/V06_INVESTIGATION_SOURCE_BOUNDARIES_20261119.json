@@ -1,0 +1,37 @@
+{
+  "scope": "P1 initial source/privacy/reference boundaries; not full investigator",
+  "date": "2026-11-19",
+  "implementation": {
+    "publicQuestionBoundary": "IMPLEMENTED_AND_TESTED",
+    "candidateReferenceContract": "IMPLEMENTED_AND_TESTED",
+    "privateSourceCollector": "IMPLEMENTED_AND_TESTED_SCOPED",
+    "actualReasoning": "NOT_TESTED",
+    "scientificVerifier": "NOT_IMPLEMENTED",
+    "independentHoldoutBenchmark": "NOT_TESTED",
+    "durableSharedRelease": "NOT_IMPLEMENTED",
+    "consumerExposure": "DISABLED"
+  },
+  "tests": {
+    "combinedScienceAndCanonicalReaderFixtures": "34 PASS",
+    "finalCollectorGuardRegression": "9 PASS",
+    "typecheck": "PASS",
+    "integrationBuildBeforeCollector": "PASS",
+    "screenshots": "NOT_REQUIRED_NO_UI_CHANGE"
+  },
+  "boundaries": [
+    "No production/private queries or provider calls",
+    "No installed research task catalog or provider enabling",
+    "No clinical or scientific truth established by schema/reference validation",
+    "Existing canonical readers; food record time is not ingestion",
+    "Current source-only corrections suppress prior supported records",
+    "Optimistic stable reads; recollect and reauthorize before output, not serializable DB snapshot",
+    "Genetics, microbiome and activity explicitly not collected in this initial slice",
+    "No new store, HTTP route, nav, clinical rule or billing platform"
+  ],
+  "next": [
+    "INV01 extend scoped collector only for required real source puzzle",
+    "INV02 current rights-reviewed supportive/contrary source retrieval",
+    "INV04\u201308 bounded local/private reasoning and independent scientific verification/benchmark",
+    "P2 immutable nonpersonal reviewed release with two clean restores/retraction"
+  ]
+}

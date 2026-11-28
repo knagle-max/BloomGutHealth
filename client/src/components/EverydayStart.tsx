@@ -17,7 +17,7 @@ export default function EverydayStart() {
   actor.current=user?.id;
   useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
   const currentPrefs=prefs.fetchStatus==="idle"&&!prefs.isError&&!prefs.isStale ? prefs.data : undefined;
-  const save=useMutation({mutationFn:async(v:{owner:string;preferences:SavedPreferences;goal:string;exclusions:string[]})=>{
+  const save=useMutation({mutationFn:async(v:{owner:string;preferences:SavedPreferences;goal:string;exclusions:string[];destination:"/"|"/log-meal"})=>{
     if(!mounted.current || actor.current!==v.owner) throw Error("Setup was interrupted. Your saved preferences can be reviewed when you return.");
     await apiRequest("PUT","/api/preferences",{...preferenceValues(v.preferences),
       goals:v.goal ? [v.goal] : v.preferences.goals,
@@ -25,7 +25,9 @@ export default function EverydayStart() {
     if(!mounted.current || actor.current!==v.owner) throw Error("Setup was interrupted. Your saved preferences can be reviewed when you return.");
     await patchAsync({onboarding:{status:"complete"}});
   },onSettled:async()=>{refreshExperience();await Promise.all([queryClient.invalidateQueries({queryKey:["/api/preferences"]}),invalidatePlanningInputs()]);},
-    onSuccess:(_data,v)=>{if(mounted.current&&actor.current===v.owner)navigate("/log-meal");}});
+    onSuccess:(_data,v)=>{if(mounted.current&&actor.current===v.owner)navigate(v.destination);}});
+  const cannotFinish=save.isPending||!currentPrefs||!user||saving||!ready;
+  function finish(destination:"/"|"/log-meal"){if(cannotFinish||!currentPrefs||!user)return;save.mutate({owner:user.id,preferences:currentPrefs,goal,exclusions:[...exclusions],destination});}
   return <section className="bloom-panel quick-start space-y-4" aria-label="Optional Everyday setup">
     <div className="quick-start-heading"><BloomBrand icon/><div><p className="eyebrow">START SMALL · OPTIONAL SETUP</p><h2>Build your first food snapshot</h2></div></div>
     <p>Start with one meal. You can use Bloom without lab results, genetics or a microbiome test.</p>
@@ -36,7 +38,7 @@ export default function EverydayStart() {
     <details><summary>Foods I prefer to avoid (optional)</summary><p className="panel-note">Preferences are not an allergy assessment. Existing exclusions are retained. Add medical allergies and safety context in My biology before personalized planning.</p>
       {(["seafood","dairy","gluten","nuts","eggs","soy"] as const).map(v=><label key={v}><input type="checkbox" checked={exclusions.includes(v)} onChange={e=>setExclusions(e.target.checked?[...exclusions,v]:exclusions.filter(x=>x!==v))}/>{v.charAt(0).toUpperCase()+v.slice(1)}</label>)}
     </details>
-    <div className="flex flex-wrap gap-3"><Button disabled={save.isPending || !currentPrefs || !user || saving || !ready} onClick={()=>{if(currentPrefs&&user)save.mutate({owner:user.id,preferences:currentPrefs,goal,exclusions:[...exclusions]});}}>{save.isPending?"Saving…":"Save & log my first meal"}</Button><Button variant="ghost" disabled={saving||save.isPending||!ready} onClick={()=>patch({onboarding:{status:"skipped"}})}>Skip setup</Button></div>
+    <div className="quick-start-actions flex flex-wrap gap-3"><Button disabled={cannotFinish} onClick={()=>finish("/")}>{save.isPending?"Saving…":"Save & continue"}</Button><Button variant="outline" disabled={cannotFinish} onClick={()=>finish("/log-meal")}>Save & log my first meal</Button><Button variant="ghost" disabled={saving||save.isPending||!ready} onClick={()=>patch({onboarding:{status:"skipped"}})}>Skip setup</Button></div>
     </fieldset>
     {!currentPrefs&&<p role="status">{prefs.isError?"Preferences could not load.":"Refreshing your preferences…"} You can skip setup to log a meal. {prefs.isError&&<Button variant="ghost" onClick={()=>prefs.refetch()}>Retry preferences</Button>}</p>}
     <p className="panel-note">You can change preferences later in Profile. Skipping does not confirm that you have no allergies or grant data-processing consent.</p>

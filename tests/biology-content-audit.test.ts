@@ -1,3 +1,4 @@
+import {markerDefinitions} from '../shared/precision-nutrition';
 import test from'node:test';import assert from'node:assert/strict';import{inventoryBiologyFixture}from'../scripts/lib/biology-content-audit';
 import{readFileSync}from'node:fs';import{organismBiography,organismBiographies}from'../shared/biology-content';
 
@@ -20,7 +21,7 @@ test('dynamic source names remain explicit gaps and pathway prose is inventoried
 test('developer audit separates the supplied 94 cohort, synthetic labels, unsupported assays and source-aligned lab review',()=>{
  const audit=JSON.parse(readFileSync('docs/verification/biology-content-coverage.json','utf8'));
  assert.deepEqual(audit.originalCohort,{total:94,reviewedDraft:16,limited:61,unresolvedIdentity:17,independentlyApproved:0});
- assert.equal(audit.counts.supportedMarkers,14);assert.equal(audit.counts.registryTaxa,organismBiographies.length);
+ assert.equal(audit.counts.supportedMarkers,markerDefinitions.length);assert.equal(audit.counts.registryTaxa,organismBiographies.length);
  assert.equal(audit.entries.filter((x:any)=>x.kind==='supported-marker'&&x.coverageStatus==='reviewed').length,14);
  const fake=audit.entries.filter((x:any)=>x.kind==='taxon'&&/^Syntheticus (bacterium|phage|eukaryote) FIX-/.test(x.sourceSpellings[0]));assert.equal(fake.length,94);assert.ok(fake.every((x:any)=>x.profileRegistryId===null&&x.coverageStatus==='unresolved identity'));
  assert.equal(new Set(audit.entries.map((x:any)=>x.uniqueId)).size,audit.entries.length);

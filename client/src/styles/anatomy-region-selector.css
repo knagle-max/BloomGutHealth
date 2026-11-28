@@ -1,0 +1,40 @@
+/* Exact source paths; only the active interpretation layer is mounted. */
+.anatomy-region-selector{min-width:0}
+.anatomy-region-selector button{min-height:44px;min-width:44px;padding:.6rem .8rem;border:1px solid hsl(var(--border));border-radius:.6rem;text-align:left;overflow-wrap:anywhere;max-width:100%;color:hsl(var(--foreground));background:hsl(var(--card))}
+.anatomy-region-selector button[aria-pressed=true]{border:2px solid hsl(var(--primary));background:hsl(var(--accent))}
+.anatomy-region-selector button:focus-visible{outline:3px solid hsl(var(--ring));outline-offset:3px}
+.anatomy-region-selector button:disabled{opacity:.6}
+.anatomy-selector-layout{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:1.5rem;align-items:start}
+.anatomy-selector-figure{min-width:0;max-width:320px;width:100%;margin:auto}
+.anatomy-selector-svg{display:block;width:100%;height:auto;aspect-ratio:320/820}
+.anatomy-selector-path{fill:transparent;stroke:none;cursor:pointer;pointer-events:all;touch-action:manipulation}
+.anatomy-selector-path[data-selected=true]{fill:hsl(var(--primary)/.4);stroke:hsl(var(--primary));stroke-width:2;vector-effect:non-scaling-stroke}
+.anatomy-selector-regions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));gap:.5rem;margin:1rem 0}
+@media(max-width:560px){.anatomy-selector-layout{grid-template-columns:minmax(0,1fr)}}
+@media(forced-colors:active){.anatomy-selector-path[data-selected=true]{fill:Highlight;stroke:CanvasText}.anatomy-region-selector button[aria-pressed=true]{border-color:Highlight}}
+/* BVA-0089 original marker radii and palette; no area heatmap or animation. */
+.anatomy-marker-layer{pointer-events:none}
+.anatomy-marker-tier{fill:none;stroke-width:1.8;vector-effect:non-scaling-stroke}
+.anatomy-marker[data-level="1"] .anatomy-marker-tier{stroke:#b5d7c7}
+.anatomy-marker[data-level="2"] .anatomy-marker-tier{stroke:#d1c9a4}
+.anatomy-marker[data-level="3"] .anatomy-marker-tier{stroke:#dfbc89}
+.anatomy-marker-dot{fill:#d3e0d7;stroke:#182021;stroke-width:1}
+.anatomy-marker-unrated{fill:#15191d;stroke:#e0d8bd;stroke-width:2;vector-effect:non-scaling-stroke}
+.anatomy-marker-selected{fill:none;stroke:#fff5d6;stroke-width:1.7;vector-effect:non-scaling-stroke}
+.anatomy-marker-focused{fill:none;stroke:#d7b880;stroke-width:2.2;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.anatomy-marker-badge rect{fill:#2c363a;stroke:#89988f;stroke-width:.8}
+.anatomy-marker-badge text{fill:#f4f5f0;font:700 10px ui-sans-serif,system-ui}
+.anatomy-region-state{display:block;font-size:.8em;margin-top:.25rem}
+/* The photographic base keeps its colours in forced-colour modes. Preserve
+   its contrasting marker paint too; native equivalent list controls retain
+   system colours and keyboard focus indicators. */
+.anatomy-marker-layer{forced-color-adjust:none}
+.anatomy-selector-source{overflow-wrap:anywhere}
+
+.anatomy-marker-zero{fill:#f4f5f0;stroke:#15191d;stroke-width:1;paint-order:stroke fill;font:700 12px ui-sans-serif,system-ui}
+
+.anatomy-muscle-paint{pointer-events:none;vector-effect:non-scaling-stroke}
+.anatomy-muscle-hit{pointer-events:fill;cursor:pointer;touch-action:manipulation}
+
+/* Pain uses neutral geography with location circles, never filled muscle areas. */
+.anatomy-pain-locations .anatomy-selector-path[data-selected=true]{fill:transparent;stroke:none}

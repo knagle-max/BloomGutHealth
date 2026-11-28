@@ -1,3 +1,5 @@
+import MuscleHistoryPanel from '@/components/MuscleHistoryPanel';
+import RecordedIntakeSources from '@/components/RecordedIntakeSources';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import CheckinEntrySource from "@/components/CheckinEntrySource";
@@ -11,7 +13,7 @@ import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-
 import { useExperienceRecords } from "@/lib/experience";
 import DeviceObservations from "@/components/DeviceObservations";
 
-import LabExplorer from "@/components/LabExplorer";
+import {useEffect} from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -22,6 +24,8 @@ export default function Progress() {
   const [, navigate] = useLocation();
   const params = new URLSearchParams(useSearch());
   const requestedView = params.get("view"), requestedMarker=params.get("marker"),requestedGroup=params.get("group");
+  const legacyLabLink=requestedGroup||requestedMarker;
+  useEffect(()=>{if(!legacyLabLink)return;const next=new URLSearchParams();next.set('tab','labs');for(const name of ['group','marker','point','firstResult','secondResult']){const value=params.get(name);if(value)next.set(name,value);}navigate('/precision?'+next.toString(),{replace:true});},[legacyLabLink,params.toString(),navigate]);
   const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : requestedMarker ? "biology" : undefined;
   const { user } = useAuth(),
     { mode, settings, loading } = useExperience(),
@@ -43,24 +47,26 @@ export default function Progress() {
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
-        <EditorialMedia slot="progress" sizes="120px" />
         <p className="eyebrow">{bloomCopy.progress.eyebrow}</p>
-        <h1>{bloomCopy.progress.h1}</h1>
+        <h1>Progress</h1>
         <p>
           {bloomCopy.progress.takeaway}
         </p>
       </div>
-      <Tabs value={activeView} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
+      <Tabs value={activeView} onValueChange={view => {const next=new URLSearchParams(params);next.set('view',view);navigate('/progress?'+next.toString());}} className="space-y-5">
         <TabsList aria-label="Progress view" className="progress-domain-tabs">
           <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
           <TabsTrigger value="activity">{mode === "athlete" ? "Training" : "Activity"}</TabsTrigger>
           <TabsTrigger value="biology">Biology</TabsTrigger>
         </TabsList>
         <TabsContent value="nutrition" forceMount className="space-y-5 data-[state=inactive]:hidden">
+
           <FoodProgress />
+          <RecordedIntakeSources key={JSON.stringify([params.get('nutrient'),params.get('sourceDate'),params.get('sourceZone')])} summaryLabel="Micronutrients" showCorrectionLinks active={activeView==='nutrition'} micronutrientsOnly defaultOpen={!!params.get('nutrient')} initialNutrientKey={params.get('nutrient')??undefined} initialDate={params.get('sourceDate')??undefined} initialTimeZone={params.get('sourceZone')??undefined}/>
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
+       <MuscleHistoryPanel/>
        {currentRoutines&&<ActivityWeekSummary records={currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[])}/>}
        {routines.isError?<p role="alert">Activity history could not load.</p>:checkingRoutines?<p role="status">Checking recorded activity…</p>:<>{currentRoutines?.some(row=>row.kind==="activity")?<ul className="space-y-3">{currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3>{row.payload.components&&row.payload.components.items.length>1&&<p>{row.payload.components.items.map(part=>part.title).join(" + ")}</p>}<p>{activityTimeText(row.payload)} · {activityAmountText(row.payload)}{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
        {canRetryRoutines&&<button type="button" className="text-link min-h-11" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry activity and training history</button>}
@@ -116,7 +122,7 @@ export default function Progress() {
         {(report.isError||report.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={report.isFetching} onClick={()=>report.refetch()}>Retry Progress observations</button>}
         {currentReport&&!!currentReport.pendingLabs?.length&&<p className="panel-note">{currentReport.pendingLabs.length} result(s) need unit confirmation and are excluded from confirmed trends. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Review source units in Bloodwork</Link></p>}
         {currentReport&&!!currentReport.sourceOnlyLabs?.length&&<p className="panel-note">{currentReport.sourceOnlyLabs.length} source result(s) await marker identification. They remain available in Bloodwork and are excluded from confirmed trends.</p>}
-        <LabExplorer key={user?.id} owner={user?.id||""} report={currentReport} marker={requestedMarker} group={requestedGroup} selection={{point:params.get('point')||'',first:params.get('firstResult')||'',second:params.get('secondResult')||''}} onSelectionChange={patch=>{const next=new URLSearchParams(params);for(const key of ['point','first','second']as const)if(key in patch){const name=key==='first'?'firstResult':key==='second'?'secondResult':'point';if(patch[key])next.set(name,patch[key]!);else next.delete(name);}if(next.toString()!==params.toString())navigate('/progress?'+next.toString());}} onSelect={(group,marker)=>{const next=new URLSearchParams(params);if(marker&&marker!==requestedMarker){const ownedIds=currentReport?.trends.find(t=>t.marker===marker)?.points.flatMap(p=>[p.id,...p.supersededIds])||[];const retained=[params.get("point"),params.get("firstResult"),params.get("secondResult")].some(id=>id&&ownedIds.includes(id));if(requestedMarker||!retained){next.delete("point");next.delete("firstResult");next.delete("secondResult");}}next.set("view","biology");if(group)next.set("group",group);else next.delete("group");if(marker)next.set("marker",marker);else next.delete("marker");navigate("/progress?"+next.toString());}}/>
+        <p><Link className="hero-button inline-flex min-h-11 items-center" href="/precision?tab=labs">Explore illustrated bloodwork & charts</Link></p>
         {currentReport && !currentReport.trends.length && (
           <p>
             {(currentReport.pendingLabs?.length||currentReport.sourceOnlyLabs?.length)?"No confirmed numeric trends are available. Source records awaiting identification or unit review remain in Bloodwork.":"No dated laboratory results yet. Add a report's values to establish a baseline."}
@@ -145,6 +151,7 @@ export default function Progress() {
       <DeviceObservations />
         </TabsContent>
       </Tabs>
+        <div className="progress-context-scene"><EditorialMedia slot="progress-scene" sizes="(max-width:767px) 100vw, 1000px" showCaption={false}/></div>
       <details className="bloom-panel workspace-disclosure">
         <summary>Weekly responses, goals & experiments</summary>
         <WeeklyReviewPanel mode={mode} />

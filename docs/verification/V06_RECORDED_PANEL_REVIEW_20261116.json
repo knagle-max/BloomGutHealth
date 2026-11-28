@@ -1,0 +1,45 @@
+{
+  "task": "T2b-recorded-panel-review-overview",
+  "status": "ENGINEERING_TESTED_DEPLOYED_HOSTED_UI_UNVERIFIED",
+  "authority": "docs/architecture/RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md",
+  "scope": [
+    "Read-only assessment of every active owned canonical/pending/source-only marker using existing explorer, source bounds and comparability",
+    "Representative lipid, glycemic, liver and iron/CBC family context; source-bound cues explicitly not clinical ranking",
+    "Aligned paired-report TG/LDL/ApoB discordance; no percent-change leaderboard or causal probability",
+    "Explicit selected/not-selected reasons, unknown-source review, canonical marker/source drilldown, primary internal chart links target unified Atlas",
+    "No new clinical engine, database ledger, writes or provider interval substitution"
+  ],
+  "tests": [
+    "Eight new model regressions PASS; includes date-only same-day ambiguity, pending units, one-sided exclusive bound, zero, all source rows, source-only PSA, aligned paired-report lipid tradeoff and non-TG findings",
+    "19 focused panel/comparability/reference/explorer tests PASS before added date-precision case; final8 panel+2 source-map tests PASS",
+    "34 original rows/31 markers browser PASS;8 mode/theme/mobile states and200% text, canonical drilldown, source removal, owner/source withdrawal and no writes",
+    "Existing Atlas browser regression PASS:50 original source rows,16 mode/theme/width states+200%, all category/source drill-ins, keyboard and second-owner withdrawal",
+    "Report-scoped reference regression PASS:34-result actual SQL import,48 visual states, original/one-sided bounds priority, separate verified synthetic comparison, source deletion/account withdrawal/reload-original",
+    "TypeScript and complete production build PASS; final client production rebuild PASS after date-precision safeguard",
+    "Full unit run:757 tests,756 passed; only failure was stale source fingerprint after internal navigation edit. Corrected map lists new surfaces and preserves all52 REQUIRED authorization states. Final2 crosswalk tests PASS; full suite not repeated after metadata-only correction."
+  ],
+  "limitations": [
+    "Full Response #15 remains partial: dated/recalled context capture, source-timed contributors, cited conditional actions and revised explanations remain actionable",
+    "Source-bound cues do not establish clinical significance or safety triage",
+    "Hosted browser unavailable through workspace proxy; no actual-owner health records inspected",
+    "Physical VoiceOver/independent RC review not claimed"
+  ],
+  "evidence": "/tmp/bloom-panel-review/evidence.json",
+  "broadRegression": {
+    "initialTests": 757,
+    "initialPassed": 756,
+    "initialFailed": 1,
+    "failure": "capability-crosswalk current source hash mismatch",
+    "correction": "Reviewed affected navigation/display sources, registered overview surfaces, refreshed source fingerprints without permission promotion",
+    "focusedRerun": "2/2 PASS",
+    "additionalDatePrecisionRegression": "PASS after full-run snapshot"
+  },
+  "publication": {
+    "commit": "0cfc34d13677410cb8c4d8e26ec84d0b03e98a48",
+    "branch": "enhance/bloom-experience",
+    "renderDeploy": "dep-dbtgirm417fc738kr0gg",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T13:49:08.394622Z",
+    "hostedUi": "Unverified: workspace public HTTPS proxy403; no private account inspection"
+  }
+}

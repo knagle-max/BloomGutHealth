@@ -1,0 +1,278 @@
+[
+  {
+    "id": "head",
+    "label": "Head",
+    "side": "midline",
+    "category": "head",
+    "d": "M 135 51 C 135 30 149 21 165 21 C 184 21 196 35 196 54 L 194 88 C 190 106 178 119 165 120 C 150 119 138 106 135 87 Z",
+    "anchor": {
+      "x": 165,
+      "y": 71
+    },
+    "hitPathId": "sym-head"
+  },
+  {
+    "id": "neck",
+    "label": "Neck",
+    "side": "midline",
+    "category": "neck",
+    "d": "M 150 114 C 157 121 174 121 180 113 L 184 137 Q 166 147 145 138 Z",
+    "anchor": {
+      "x": 165,
+      "y": 131
+    },
+    "hitPathId": "sym-neck"
+  },
+  {
+    "id": "chest_right",
+    "label": "Chest \u00b7 anatomical right",
+    "side": "right",
+    "category": "chest",
+    "d": "M 102 176 C 115 164 140 162 158 175 L 158 221 Q 138 238 114 227 Q 101 214 102 176 Z",
+    "anchor": {
+      "x": 129,
+      "y": 199
+    },
+    "hitPathId": "sym-chest_right"
+  },
+  {
+    "id": "chest_left",
+    "label": "Chest \u00b7 anatomical left",
+    "side": "left",
+    "category": "chest",
+    "d": "M 162 175 C 181 162 205 166 228 178 Q 227 215 212 228 Q 187 237 162 221 Z",
+    "anchor": {
+      "x": 196,
+      "y": 199
+    },
+    "hitPathId": "sym-chest_left"
+  },
+  {
+    "id": "upper_abdomen",
+    "label": "Upper abdomen",
+    "side": "midline",
+    "category": "upper_abdomen",
+    "d": "M 119 238 Q 161 250 207 239 Q 216 271 206 305 Q 165 310 118 305 Q 109 269 119 238 Z",
+    "anchor": {
+      "x": 163,
+      "y": 273
+    },
+    "hitPathId": "sym-upper_abdomen"
+  },
+  {
+    "id": "lower_abdomen",
+    "label": "Lower abdomen",
+    "side": "midline",
+    "category": "lower_abdomen",
+    "d": "M 117 310 Q 160 317 207 311 Q 208 346 200 369 Q 163 386 127 369 Q 111 349 117 310 Z",
+    "anchor": {
+      "x": 163,
+      "y": 341
+    },
+    "hitPathId": "sym-lower_abdomen"
+  },
+  {
+    "id": "pelvis",
+    "label": "Pelvic / groin area",
+    "side": "midline",
+    "category": "pelvis",
+    "d": "M 124 376 Q 163 391 200 375 L 200 416 Q 184 431 166 440 Q 143 432 124 415 Z",
+    "anchor": {
+      "x": 164,
+      "y": 401
+    },
+    "hitPathId": "sym-pelvis"
+  },
+  {
+    "id": "shoulder_right",
+    "label": "Shoulder \u00b7 anatomical right",
+    "side": "right",
+    "category": "shoulder",
+    "d": "M 96 156 Q 76 155 65 173 Q 60 187 66 215 L 90 214 Q 93 189 107 180 Z",
+    "anchor": {
+      "x": 82,
+      "y": 187
+    },
+    "hitPathId": "sym-shoulder_right"
+  },
+  {
+    "id": "shoulder_left",
+    "label": "Shoulder \u00b7 anatomical left",
+    "side": "left",
+    "category": "shoulder",
+    "d": "M 219 179 Q 236 154 253 165 Q 270 182 269 212 L 245 215 Q 241 190 219 179 Z",
+    "anchor": {
+      "x": 252,
+      "y": 187
+    },
+    "hitPathId": "sym-shoulder_left"
+  },
+  {
+    "id": "upper_arm_right",
+    "label": "Upper arm \u00b7 anatomical right",
+    "side": "right",
+    "category": "upper_arm",
+    "d": "M 65 216 Q 83 213 90 219 Q 82 270 67 312 L 48 303 Q 55 258 65 216 Z",
+    "anchor": {
+      "x": 70,
+      "y": 264
+    },
+    "hitPathId": "sym-upper_arm_right"
+  },
+  {
+    "id": "upper_arm_left",
+    "label": "Upper arm \u00b7 anatomical left",
+    "side": "left",
+    "category": "upper_arm",
+    "d": "M 242 219 Q 254 217 270 215 Q 286 259 285 302 L 267 307 Q 249 270 242 219 Z",
+    "anchor": {
+      "x": 265,
+      "y": 264
+    },
+    "hitPathId": "sym-upper_arm_left"
+  },
+  {
+    "id": "forearm_right",
+    "label": "Forearm \u00b7 anatomical right",
+    "side": "right",
+    "category": "forearm",
+    "d": "M 48 306 L 68 317 Q 57 367 44 411 L 29 405 Q 31 355 48 306 Z",
+    "anchor": {
+      "x": 47,
+      "y": 360
+    },
+    "hitPathId": "sym-forearm_right"
+  },
+  {
+    "id": "forearm_left",
+    "label": "Forearm \u00b7 anatomical left",
+    "side": "left",
+    "category": "forearm",
+    "d": "M 269 314 L 286 308 Q 303 353 306 407 L 291 412 Q 280 367 269 314 Z",
+    "anchor": {
+      "x": 287,
+      "y": 360
+    },
+    "hitPathId": "sym-forearm_left"
+  },
+  {
+    "id": "hand_right",
+    "label": "Hand \u00b7 anatomical right",
+    "side": "right",
+    "category": "hand",
+    "d": "M 28 410 Q 42 409 47 416 L 55 474 Q 46 483 34 463 Q 21 446 28 410 Z",
+    "anchor": {
+      "x": 38,
+      "y": 440
+    },
+    "hitPathId": "sym-hand_right"
+  },
+  {
+    "id": "hand_left",
+    "label": "Hand \u00b7 anatomical left",
+    "side": "left",
+    "category": "hand",
+    "d": "M 292 416 Q 303 409 309 409 Q 318 442 299 471 Q 286 479 283 465 Z",
+    "anchor": {
+      "x": 300,
+      "y": 440
+    },
+    "hitPathId": "sym-hand_left"
+  },
+  {
+    "id": "thigh_right",
+    "label": "Thigh \u00b7 anatomical right",
+    "side": "right",
+    "category": "thigh",
+    "d": "M 106 423 Q 133 426 157 444 L 158 551 Q 150 585 133 589 Q 106 575 98 539 L 95 469 Q 98 441 106 423 Z",
+    "anchor": {
+      "x": 127,
+      "y": 505
+    },
+    "hitPathId": "sym-thigh_right"
+  },
+  {
+    "id": "thigh_left",
+    "label": "Thigh \u00b7 anatomical left",
+    "side": "left",
+    "category": "thigh",
+    "d": "M 174 445 Q 202 429 229 423 Q 247 455 242 502 L 234 548 Q 223 586 201 588 Q 182 574 178 548 Z",
+    "anchor": {
+      "x": 210,
+      "y": 505
+    },
+    "hitPathId": "sym-thigh_left"
+  },
+  {
+    "id": "knee_right",
+    "label": "Knee \u00b7 anatomical right",
+    "side": "right",
+    "category": "knee",
+    "d": "M 107 578 Q 132 592 150 581 Q 159 616 146 633 Q 123 640 110 622 Z",
+    "anchor": {
+      "x": 131,
+      "y": 606
+    },
+    "hitPathId": "sym-knee_right"
+  },
+  {
+    "id": "knee_left",
+    "label": "Knee \u00b7 anatomical left",
+    "side": "left",
+    "category": "knee",
+    "d": "M 195 583 Q 221 593 235 579 L 230 620 Q 215 638 197 634 Q 188 618 195 583 Z",
+    "anchor": {
+      "x": 214,
+      "y": 606
+    },
+    "hitPathId": "sym-knee_left"
+  },
+  {
+    "id": "lower_leg_right",
+    "label": "Lower leg \u00b7 anatomical right",
+    "side": "right",
+    "category": "lower_leg",
+    "d": "M 110 634 Q 128 645 149 635 Q 161 679 148 740 L 139 771 L 117 771 Q 109 728 108 690 Z",
+    "anchor": {
+      "x": 130,
+      "y": 699
+    },
+    "hitPathId": "sym-lower_leg_right"
+  },
+  {
+    "id": "lower_leg_left",
+    "label": "Lower leg \u00b7 anatomical left",
+    "side": "left",
+    "category": "lower_leg",
+    "d": "M 195 636 Q 215 646 232 632 Q 238 673 230 716 L 223 773 L 198 773 Q 186 711 195 636 Z",
+    "anchor": {
+      "x": 214,
+      "y": 699
+    },
+    "hitPathId": "sym-lower_leg_left"
+  },
+  {
+    "id": "foot_right",
+    "label": "Foot \u00b7 anatomical right",
+    "side": "right",
+    "category": "foot",
+    "d": "M 117 769 L 139 768 L 151 805 Q 124 818 106 816 Z",
+    "anchor": {
+      "x": 128,
+      "y": 789
+    },
+    "hitPathId": "sym-foot_right"
+  },
+  {
+    "id": "foot_left",
+    "label": "Foot \u00b7 anatomical left",
+    "side": "left",
+    "category": "foot",
+    "d": "M 198 768 L 224 769 L 240 816 Q 218 819 190 806 Z",
+    "anchor": {
+      "x": 215,
+      "y": 789
+    },
+    "hitPathId": "sym-foot_left"
+  }
+]

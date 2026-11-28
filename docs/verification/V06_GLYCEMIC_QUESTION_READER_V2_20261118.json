@@ -1,0 +1,57 @@
+{
+  "task": "V06-C2-GLYCEMIC-QUESTION-READER-V2",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "exposure": "COMPATIBILITY_READER_ONLY_LOCAL_PENDING_PUBLICATION",
+  "baseCommit": "84f22233",
+  "sourceReview": {
+    "retrievedOn": "2026-11-18",
+    "sources": [
+      "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+      "https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test"
+    ],
+    "support": "NIDDK says A1C does not require fasting. Existing canonical MedlinePlus HbA1c source discusses medicines affecting results and not stopping them without provider direction. Supports a source-specific question correction, not drug causality, diagnosis or dose."
+  },
+  "change": [
+    "Allow the existing immutable medication-change question ID in glycemic recalled-context readers. Preserve old fasting-context text/answers and all source/time/revision provenance.",
+    "Shared protocol2 used by current app and history controls. Version1/unknown clients cannot receive a glycemic medicine question/answer or reach its answer writer; existing legacy questions and aware B12/CBC readers remain compatible.",
+    "Actual canonical source-target helper deliberately remains unchanged in this commit. Real encrypted storage rejects an HbA1c medication-question command until a separate source-target transition follows compatible deployment. No new records/clinical output activated.",
+    "Reuse existing authenticated account/source ledger, quota/replay/revision/erasure controls; no new store, migration, clinical model or generic writer."
+  ],
+  "verification": {
+    "focused": "18/18 reader/actual encrypted-storage/remembered-guidance tests PASS. Explicit future glycemic payload retains original meaning; unsupported clients get409/no-store/no content/no answer-writer calls; source-aware actual storage rejects premature medication question.",
+    "browser": "Actual App/authenticated HTTP/encrypted SQL existing full B12/CBC compatibility journey PASS with protocol2:48mode/theme/width/zoom/text states, canonical citations/action, unchanged question/answer bytes and source ciphertext, draft-question pinning/no cross-prefill, stale target denial, actual B12 save/retry and second-owner withdrawal. This is existing-journey regression, not a new HbA1c UI producer claim.",
+    "typesBuild": "TypeScript and production build/original media PASS.",
+    "audits": "8/8 API/capability/Biology audit tests PASS before final documentation refresh."
+  },
+  "next": "Publish compatible reader after683 exactCI44341737935 qualifies, hold that published SHA for qualification; only then change HbA1c-only target and run actual HbA1c legacy/new-question UI+SQL acceptance. Glucose-containing selections retain fasting question.",
+  "limits": [
+    "Current HbA1c-only prompt correction remains incomplete until producer transition; do not claim full feature/RC.",
+    "No actual-owner data, clinical/independent human/device acceptance or manual production deployment."
+  ],
+  "publicationObservation": {
+    "commit": "750b3da8bf42fc516ef790d1236b4b26db3ec015",
+    "workflow": 44347757468,
+    "job": 134954716659,
+    "conclusion": "failure",
+    "reason": "Unrelated common-source browser assertion retained the capitalized sentence Your recorded intake is not assessed; life-stage paragraph lowercased it. Restore the exact sentence, no assertion weakened. Full common source/meal/zero/unknown/owner browser regression passes locally.",
+    "compatibleRuntime": "Latest Architect docs descendant454c4c55 RenderLIVE dep-dbuu1bj9f4gs73c6gtag17:33:28UTC. Exact full CI still pending repair qualification; new HbA1c producer not activated."
+  },
+  "repairedPublicationQualification": {
+    "commit": "50c32e4699b2febc29532685d9d3580f3b9c3ccd",
+    "workflowRun": 44382591347,
+    "job": 135078578651,
+    "conclusion": "SUCCESS",
+    "tests": 885,
+    "pass": 885,
+    "fail": 0,
+    "skipped": 0,
+    "hosted": "All required exact binding/recovery/navigation/media/source-byte checks PASS",
+    "isolatedNeon": "All required persistence/account/atomicity/control gates PASS",
+    "render": {
+      "id": "dep-dbuvrg142hec73apgob0",
+      "status": "LIVE",
+      "finishedAt": "2026-11-18T19:36:04.960792Z"
+    },
+    "scope": "Compatible glycemic protocol2 reader, general life-stage reference views and case-sensitive copy repair; no HbA1c producer activation yet"
+  }
+}

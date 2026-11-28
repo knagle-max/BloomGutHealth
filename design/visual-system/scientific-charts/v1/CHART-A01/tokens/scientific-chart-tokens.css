@@ -1,0 +1,129 @@
+/* CHART-A01 v1 — visual tokens only; scope intentionally OPT-IN, no DOM/UX changes. */
+/* Import after brand-tokens.css and bloom-visual-scoped.css once Architect approves. */
+/* Opt-in on existing chart container: class="bv-scientific-chart". */
+:where(.app-shell[data-bloom-visual="premium"]) .bv-scientific-chart {
+  --bvc-line-width: 2.5px;
+  --bvc-comparison-line-width: 2px;
+  --bvc-grid-width: 1px;
+  --bvc-reference-opacity: .45;
+  --bvc-series-area-max-opacity: .14;
+  --bvc-touch-target: 44px;
+  --bvc-point-focus-width: 3px;
+  --bvc-axis-font-size: 13px;
+  --bvc-tabular-font: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+/* everyday-light — opt-in and scoped */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart {
+  --bvc-canvas: #F8F9F3;
+  --bvc-surface: #FFFEFA;
+  --bvc-surface-muted: #F5F3EB;
+  --bvc-ink: #173E32;
+  --bvc-ink-muted: #52685C;
+  --bvc-axis: #52685C;
+  --bvc-grid: #C5D5C6;
+  --bvc-border: #D9E7D5;
+  --bvc-series-primary: #246B50;
+  --bvc-series-secondary: #70548E;
+  --bvc-series-tertiary: #87532C;
+  --bvc-comparison: #52685C;
+  --bvc-categorical4: #386685;
+  --bvc-categorical5: #805B63;
+  --bvc-reference-band: #D9E7D5;
+  --bvc-reference-line: #246B50;
+  --bvc-threshold: #87532C;
+  --bvc-uncertainty: #70548E;
+  --bvc-focus: #14543B;
+  --bvc-selection-halo: #EDF3EC;
+  --bvc-observed: #246B50;
+  --bvc-research: #70548E;
+  --bvc-modelled: #87532C;
+  --bvc-unknown: #52685C;
+}
+/* everyday-dark — opt-in and scoped */
+html.dark .app-shell[data-bloom-visual="premium"] .bv-scientific-chart {
+  --bvc-canvas: #101C17;
+  --bvc-surface: #22382E;
+  --bvc-surface-muted: #192B24;
+  --bvc-ink: #EFF6EE;
+  --bvc-ink-muted: #CADACF;
+  --bvc-axis: #CADACF;
+  --bvc-grid: #52685C;
+  --bvc-border: #52685C;
+  --bvc-series-primary: #A6DEBA;
+  --bvc-series-secondary: #D6C2EF;
+  --bvc-series-tertiary: #E8BE99;
+  --bvc-comparison: #CADACF;
+  --bvc-categorical4: #9BC9EA;
+  --bvc-categorical5: #F0B7C6;
+  --bvc-reference-band: #345442;
+  --bvc-reference-line: #A6DEBA;
+  --bvc-threshold: #E8BE99;
+  --bvc-uncertainty: #D6C2EF;
+  --bvc-focus: #A6DEBA;
+  --bvc-selection-halo: #345442;
+  --bvc-observed: #A6DEBA;
+  --bvc-research: #D6C2EF;
+  --bvc-modelled: #E8BE99;
+  --bvc-unknown: #CADACF;
+}
+/* athlete-light — opt-in and scoped */
+html[data-experience="athlete"]:not(.dark) .app-shell[data-bloom-visual="premium"] .bv-scientific-chart {
+  --bvc-canvas: #F8FAF8;
+  --bvc-surface: #FFFFFF;
+  --bvc-surface-muted: #EAF2ED;
+  --bvc-ink: #173E32;
+  --bvc-ink-muted: #52685C;
+  --bvc-axis: #52685C;
+  --bvc-grid: #C6D6D4;
+  --bvc-border: #D4E1D8;
+  --bvc-series-primary: #2264A6;
+  --bvc-series-secondary: #246B50;
+  --bvc-series-tertiary: #70548E;
+  --bvc-comparison: #52685C;
+  --bvc-categorical4: #87532C;
+  --bvc-categorical5: #805B63;
+  --bvc-reference-band: #D9E7D5;
+  --bvc-reference-line: #2264A6;
+  --bvc-threshold: #87532C;
+  --bvc-uncertainty: #70548E;
+  --bvc-focus: #2264A6;
+  --bvc-selection-halo: #E1EFFE;
+  --bvc-observed: #2264A6;
+  --bvc-research: #70548E;
+  --bvc-modelled: #87532C;
+  --bvc-unknown: #52685C;
+}
+/* athlete-dark — opt-in and scoped */
+html.dark[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bv-scientific-chart {
+  --bvc-canvas: #0F1B2E;
+  --bvc-surface: #182B45;
+  --bvc-surface-muted: #233F61;
+  --bvc-ink: #F1F6FF;
+  --bvc-ink-muted: #C3D4E9;
+  --bvc-axis: #C3D4E9;
+  --bvc-grid: #477095;
+  --bvc-border: #477095;
+  --bvc-series-primary: #81BEFF;
+  --bvc-series-secondary: #A6DEBA;
+  --bvc-series-tertiary: #E1BDF4;
+  --bvc-comparison: #C3D4E9;
+  --bvc-categorical4: #F0C69B;
+  --bvc-categorical5: #F2B4C9;
+  --bvc-reference-band: #254967;
+  --bvc-reference-line: #81BEFF;
+  --bvc-threshold: #F0C69B;
+  --bvc-uncertainty: #E1BDF4;
+  --bvc-focus: #81BEFF;
+  --bvc-selection-halo: #254967;
+  --bvc-observed: #81BEFF;
+  --bvc-research: #E1BDF4;
+  --bvc-modelled: #F0C69B;
+  --bvc-unknown: #C3D4E9;
+}
+@media (max-width: 420px) {
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart { --bvc-axis-font-size: 12px; }
+}
+@media (forced-colors: active) {
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart { --bvc-reference-opacity: 1; forced-color-adjust: auto; }
+}
+/* Do not use semantic color alone for thresholds, provisional or unknown states; A05/A06 provide patterns. */

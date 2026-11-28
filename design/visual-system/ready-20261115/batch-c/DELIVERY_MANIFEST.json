@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0",
+  "batch": "C",
+  "date": "2026-11-14",
+  "source": "Current Bloom image-generation conversation; manual code-authored SVG kit",
+  "rights": "Source AI generation terms require operator verification for intended commercial deployment; do not claim rights independently signed off",
+  "status": "Delivered to Shared Library; not integrated or accepted for clinical accuracy",
+  "registrySource": "docs/visual-assets/visual-asset-registry.json",
+  "assetCount": 5,
+  "rasterOriginals": 5,
+  "rasterWebPs": 5,
+  "svgPathwayKitFiles": 5,
+  "assets": [
+    {
+      "registryId": "BVA-0017",
+      "name": "microbiome-editorial-backdrop",
+      "route": "/microbiome",
+      "component": "Gut report system overview",
+      "role": "hero",
+      "interpretation": "Conceptual microbial community in botanical environment; not a micrograph, species identification or user result",
+      "origin": "AI-generated through ChatGPT image generation; original image from this conversation",
+      "sourceImageFile": "dreamy_gut_microbiome_ecosystem.png",
+      "delivery": [
+        {
+          "relativePath": "originals/BVA-0017-microbiome-editorial-backdrop.png",
+          "format": "png",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 1897462,
+          "sha256": "868c55c547e939c1cc3bbf3d47d298f5047d1f4a3dc0663e3d820146f6cdeca8"
+        },
+        {
+          "relativePath": "webp/BVA-0017-microbiome-editorial-backdrop.webp",
+          "format": "webp",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 69234,
+          "sha256": "0426d2990d497e509b7d6d92cab9543ced48df6f51999846e1f3be4e4b812af7"
+        }
+      ],
+      "status": "Generated; pending scientific/design/rights review; not app-integrated",
+      "cropGuidance": {
+        "desktop": "Use 16:9-ish full-frame object-fit cover; left copy-safe negative region; no text directly on detail",
+        "mobile": "Prefer image separate from heading; use full visual or deliberate right-focal crop and test at 320,390,768; never crop meaningful subject"
+      }
+    },
+    {
+      "registryId": "BVA-0018",
+      "name": "genetics-editorial-accent",
+      "route": "/precision",
+      "component": "Genetics overview",
+      "role": "accent",
+      "interpretation": "Conceptual stylized DNA double helix; not a personal genotype or sequence",
+      "origin": "AI-generated through ChatGPT image generation; original image from this conversation",
+      "sourceImageFile": "luminous_botanical_dna_helix.png",
+      "delivery": [
+        {
+          "relativePath": "originals/BVA-0018-genetics-editorial-accent.png",
+          "format": "png",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 1975978,
+          "sha256": "811358783921525a8c1bdc7d434f2cc7c452a023aa8c3324099123f812ba9a67"
+        },
+        {
+          "relativePath": "webp/BVA-0018-genetics-editorial-accent.webp",
+          "format": "webp",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 82980,
+          "sha256": "90e95d1ba65d7919de6e3b805dec8e9f99387f718054c80d15877450713cfeda"
+        }
+      ],
+      "status": "Generated; pending scientific/design/rights review; not app-integrated",
+      "cropGuidance": {
+        "desktop": "Use 16:9-ish full-frame object-fit cover; left copy-safe negative region; no text directly on detail",
+        "mobile": "Prefer image separate from heading; use full visual or deliberate right-focal crop and test at 320,390,768; never crop meaningful subject"
+      }
+    },
+    {
+      "registryId": "BVA-0019",
+      "name": "explore-living-atlas",
+      "route": "/explore",
+      "component": "Mechanism explorer hero",
+      "role": "hero",
+      "interpretation": "Botanical and food science metaphor; no claim of personal molecular activity",
+      "origin": "AI-generated through ChatGPT image generation; original image from this conversation",
+      "sourceImageFile": "golden_microcosm_of_bloom_and_berries.png",
+      "delivery": [
+        {
+          "relativePath": "originals/BVA-0019-explore-living-atlas.png",
+          "format": "png",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 2143840,
+          "sha256": "848e7c24d2de892dc364ecbd33444ee2a3f84528e26051b90f7dbc610ab0e656"
+        },
+        {
+          "relativePath": "webp/BVA-0019-explore-living-atlas.webp",
+          "format": "webp",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 113556,
+          "sha256": "0390f1d0266784097068d71dc9dd8f91947d8b19cd8faa53b424d87c2e0f5138"
+        }
+      ],
+      "status": "Generated; pending scientific/design/rights review; not app-integrated",
+      "cropGuidance": {
+        "desktop": "Use 16:9-ish full-frame object-fit cover; left copy-safe negative region; no text directly on detail",
+        "mobile": "Prefer image separate from heading; use full visual or deliberate right-focal crop and test at 320,390,768; never crop meaningful subject"
+      }
+    },
+    {
+      "registryId": "BVA-0020",
+      "name": "explore-pathway-reference",
+      "route": "/explore",
+      "component": "Graph mechanism nodes and links",
+      "role": "reference-only",
+      "interpretation": "Non-factual aesthetic reference only; do not present raster nodes as evidenced causal pathways",
+      "origin": "AI-generated through ChatGPT image generation; original image from this conversation",
+      "sourceImageFile": "luminous_biological_pathway_network.png",
+      "delivery": [
+        {
+          "relativePath": "originals/BVA-0020-explore-pathway-reference.png",
+          "format": "png",
+          "width": 1448,
+          "height": 1086,
+          "mode": "RGB",
+          "bytes": 2116021,
+          "sha256": "265d035902b4d799c1d55c308982c1d3324bf3e1b68361f9daab6708a0c533a0"
+        },
+        {
+          "relativePath": "webp/BVA-0020-explore-pathway-reference.webp",
+          "format": "webp",
+          "width": 1448,
+          "height": 1086,
+          "mode": "RGB",
+          "bytes": 111752,
+          "sha256": "458ef94a87b6fe4fb7de67f4c2fd8d4bde6fd5441f3e545300ee116431522416"
+        }
+      ],
+      "status": "Generated; pending scientific/design/rights review; not app-integrated",
+      "cropGuidance": {
+        "desktop": "Use 16:9-ish full-frame object-fit cover; left copy-safe negative region; no text directly on detail",
+        "mobile": "Prefer image separate from heading; use full visual or deliberate right-focal crop and test at 320,390,768; never crop meaningful subject"
+      },
+      "use": "Non-shipping mood reference ONLY. Use accompanying SVG kit for actual editable pathway UI."
+    },
+    {
+      "registryId": "BVA-0021",
+      "name": "progress-editorial-scene",
+      "route": "/progress",
+      "component": "Progress header",
+      "role": "hero",
+      "interpretation": "Decorative longitudinal growth metaphor; never a user trend or numeric outcome",
+      "origin": "AI-generated through ChatGPT image generation; original image from this conversation",
+      "sourceImageFile": "dewy_botanical_growth_journey.png",
+      "delivery": [
+        {
+          "relativePath": "originals/BVA-0021-progress-editorial-scene.png",
+          "format": "png",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 1898610,
+          "sha256": "6fab96e1a85cc475ccf3b28b36dcbec27093a6050b71d0d97811b0d4fa4997c2"
+        },
+        {
+          "relativePath": "webp/BVA-0021-progress-editorial-scene.webp",
+          "format": "webp",
+          "width": 1672,
+          "height": 941,
+          "mode": "RGB",
+          "bytes": 76552,
+          "sha256": "b7fc320473dd5c6ec45493f076381f3396c6a59405d69014d9521e9cb28a6683"
+        }
+      ],
+      "status": "Generated; pending scientific/design/rights review; not app-integrated",
+      "cropGuidance": {
+        "desktop": "Use 16:9-ish full-frame object-fit cover; left copy-safe negative region; no text directly on detail",
+        "mobile": "Prefer image separate from heading; use full visual or deliberate right-focal crop and test at 320,390,768; never crop meaningful subject"
+      }
+    }
+  ],
+  "svgKit": {
+    "registryId": "BVA-0020",
+    "files": [
+      {
+        "relativePath": "svg/pathway-node-plant.svg",
+        "sha256": "563e8858537c20372cf8ba5f7fad4e91d33c84353586c4c82d51dd255ed7cc8f",
+        "bytes": 438
+      },
+      {
+        "relativePath": "svg/pathway-node-molecule.svg",
+        "sha256": "1951eeb9f92c743a058f6a6d4d05455d8646d05b4ba6c8e0b07200f4dac7fad3",
+        "bytes": 591
+      },
+      {
+        "relativePath": "svg/pathway-node-microbe.svg",
+        "sha256": "eace929cd954f72a5107eb60e5d81de97ca382a63cff1894b615f1f605068ebf",
+        "bytes": 471
+      },
+      {
+        "relativePath": "svg/pathway-connector.svg",
+        "sha256": "7b9d269283138566f95fcbea7ab5cd336cd40fa6cd20978246a4c13010cb62da",
+        "bytes": 363
+      },
+      {
+        "relativePath": "svg/pathway-overview-decorative.svg",
+        "sha256": "210d1e9309a26a39697227b04facafdae5292c3376f0db0f2efbbec20ce0ea2e",
+        "bytes": 1419
+      }
+    ],
+    "use": "Editable conceptual building blocks, not licensed biological pathways; developer binds actual reviewed evidence nodes and arrows separately",
+    "labelPolicy": "No biological causal or personalised relationship is implied by these decorative source drawings"
+  },
+  "acceptance": [
+    "Science reviewer verifies anatomy/relation interpretations before educational use",
+    "Designer verifies desktop/mobile/light/dark crops and visible content",
+    "Developer imports actual binary assets and references BVA IDs",
+    "Rights provenance review",
+    "Check colour contrast and reduced-motion and no fake measured values"
+  ]
+}

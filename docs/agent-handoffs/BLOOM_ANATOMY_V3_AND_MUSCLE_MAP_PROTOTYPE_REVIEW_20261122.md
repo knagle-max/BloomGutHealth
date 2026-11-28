@@ -1,0 +1,191 @@
+# Bloom — Architect review: anatomy v3, interactive demo and React muscle-map draft
+
+**Reviewed:** 2026-11-22 | **Branch:** `enhance/bloom-experience`  
+**Status:** SOURCE REVIEW; DESIGN PRODUCTION CANDIDATE; **NOT CODE INTEGRATION OR INDEPENDENT ANATOMY/ACCESSIBILITY APPROVAL**.  
+**Authority:** `AGENTS.md` → `NEXT_ACTIONS.md`; current GI-01..GI-10 baseline + owner-review STOP remains the only active Codex task. This handoff is recorded for later eligible BVA-0078/BVA-0079 integration and does **not** change priority.
+
+## 1. Exact artifacts reviewed
+
+| Owner-supplied artifact | Verified physical content / SHA-256 |
+|---|---|
+| `bloom_anatomy_final_v3(1).zip` | ZIP with 14 entries, including four source SVGs, four PNG static previews, `muscle-groups.json`, `BloomMuscleMap.jsx`, `README.md`, `interactive-demo.html`, two screenshot previews. ZIP SHA-256 `c36d7665a9389fa034a458a1dab284fd38bf8990a7a2263f8a90db2d784e37fb`. |
+| `interactive-demo(1).html` | Byte-identical to ZIP's `bloom_anatomy_final/interactive-demo.html`; SHA-256 `f63b8f9bc051d2c4858f216d60e1fc5b215b2079321b1235d1523019e28c1ab7`. No need to maintain duplicate deliverable. |
+| `Bloom_Interactive_Muscle_Map__Draft_Prototype_.txt` | 1505-line React/TypeScript/JSX draft as text; SHA-256 `843d2251b6c78c3a9c585d9b6dc7e412adebba31fc6706c9a01559dd0b8d9b68`. Independent prototype, **not** a working production module. |
+
+**Import limitation:** These are conversation attachments and are **not automatically in Codex's repository checkout**. Before any future integration, provide exact original ZIP as an authorized attachment or transfer, verify archive/member SHA values, inspect rights, and import source files through normal scoped workflow. A GitHub text review does not upload four SVG bytes. No app integration, deployed browsing or external anatomy review has been run.
+
+## 2. Design/artwork disposition
+
+**Retain v3 as the preferred design-production candidate for BVA-0078 (anterior) and BVA-0079 (posterior)**, replacing the assumption that those assets exist only as briefs. It contains **male and female variants for both views**. The ZIP has 32 clickable region paths per front SVG and 20 per back SVG; each source has unique path IDs and region, side, labels and keyboard-related attributes. Its source readme expressly disclaims independent medical-illustrator validation and Bloom app testing. The two PNG screenshots show an information-first clean visual, restrained colors and parallel front/back maps. Those screenshots demonstrate packaged prototype appearance, **not source/actual app correctness**.
+
+Do not generate a fresh map from scratch before evaluating/fixing these existing original vector assets. Do **not** mark `Integrated`, `Visually Verified`, `Scientific Reviewed` or consumer-ready. Existing BVA-0005/0022/0023 are separate Athlete art and not replacements for these maps. Source design files remain only inside the ZIP until authorized transfer.
+
+## 3. Blocking correctness and scientific integration gaps
+
+1. **Taxonomy mismatch (BLOCKING):** v3 art/`muscle-groups.json` exposes **20 named display groups** (`neck`, `deltoids`, `chest`, `serratus`, `abdominals`, `obliques`, `hip-flexors`, `adductors`, `tibialis-anterior`, etc). Existing architectural Phase-1 coverage defines **15 reviewed fitness groups**; the separate React draft includes 15 IDs with another naming variant (`spinal_erectors`, `lats`, `upper_back_traps`, `abs_obliques`). Build a **versioned, explicit, expert-reviewed SVG region → canonical muscle group crosswalk**. Some art groups have no supported Phase-1 equivalent (notably neck/serratus/hip-flexors/adductors/tibialis), and some canonical groups distinguish anterior/lateral/posterior deltoids whereas v3 uses one `deltoids` shape. **Do not invent a 1:1 map**, silently collapse medically/biomechanically distinct regions, or automatically expand the core canonical schema to 20 groups. Unsupported visual paths must be neutral/noninteractive or given an honest descriptive-only state pending scientifically approved taxonomy extension. Review surface anatomy, including deep hip flexors represented only as approximate surface zone.
+2. **Undefined SVG paint server (visual defect):** All four SVGs use `fill="url(#skin-ambient)"` on eight silhouette shapes, but none defines an element with `id="skin-ambient"`. Fix the missing paint definition or use a verified CSS/static skin fill; confirm in actual browser and all themes. Do not rely on HTML demo's static screenshot masking the bug.
+3. **React draft calendar logic is incorrect:** `diffDays()` clamps future dates with `Math.max(0,...)`, so `daysAgo < 0` cannot filter future workouts; the `daysAgo > windowDays` boundary also includes an extra calendar day if using inclusive window semantics. Hard-coded `REFERENCE_AS_OF_DATE = "2026-11-22"` is demonstration-only. Use account-local calendar boundaries, DST-aware source timestamps and exclude future/planned events.
+4. **React draft confirms ambiguous input too easily:** candidate `Shoulder raises` is preassociated with `ex_lateral_raise`, and a single one-click `handleConfirmCandidate` upgrades it without independent variation-specific matching. Real review must explicitly choose exact exercise, original source, actual completed set IDs, and mapping/catalog revision before confirmed projection.
+5. **No source-level production read model:** React `WorkoutEntry` is mock aggregate `sets`/`isCompleted`, not the existing canonical completed child set ledger, and it lacks source revision/owner/actual-set IDs and correction/invalidation semantics. Existing `shared/experience.ts`, `ActivityLog`, `TrainingSetsEditor` and `trainingSessionSchema` stay the source of truth. No second logger or separate session store. Never count scheduled/non-completed child sets, infer a real workout from preset or silently merge separate Everyday/Athlete records.
+6. **Partial logging notice is user-toggleable into an unjustified completeness claim:** unchecking the box displays "All training entries for this lookback window are marked as logged." That is not justified by data. A user can dismiss/help-toggle explanation but must not convert unknown historical completeness to verified completeness.
+7. **Display-state semantics differ:** HTML demo uses `primary/secondary` for deliberately selected example movements; React draft colors recent activity by 0–2/3–6/7+ days with different clinical-feeling intensity. Neither is a verified physiological response. Define separate explicit **selection**, **recorded strength/endurance association**, and **source-known recency** semantics. Don't reuse one highlight/legend as recovery, activation, hypertrophy or quality scoring. Avoid whole-body "coverage %" from sparse logs.
+8. **Input/theme accessibility is not yet fully proved:** HTML uses a list of 20 group buttons plus 52 front/back path buttons per sex (with repeated abdominal/tibialis labels). Many SVG paths are far below robust touch sizes. The demo has keyboard handlers and reduced-motion CSS, but no actual screen-reader/physical-touch/200% zoom/320px/full Bloom accessibility evidence. Require adjacent grouped accessible list, low-friction selection, focus restoration on SVG swap, announced selection changes, sufficient tap targets, and matching light/dark+Athlete visual tokens. The v3 `BloomMuscleMap.jsx` uses trusted `?raw` SVG + `DOMParser` + `dangerouslySetInnerHTML`; adapt only to audited checked-in first-party SVG and current bundler/CSP, never untrusted uploaded SVG markup. Verify against actual application.
+9. **Anatomy/design review pending:** Four variants are consistent mechanically but illustrations appear stylized, not clinical; the female/male figures share much of the same silhouette geometry. Validate real superficial visibility, front/back and side orientation, separate shoulder groups, adequate hitboxes, and appropriate optional presentation labels. Male/female illustration option must **not** infer health sex, reproductive eligibility, strength norms or physiological responses.
+10. **Source asset acceptance:** Four SVGs and corresponding PNG previews are present inside ZIP. The source README notes no remote fonts/scripts/images, and a structural inspection confirmed SVG region attributes/IDs; do not infer commercial rights, file source authorship, formal WCAG pass, scientific review, or app/runtime performance from those facts alone.
+
+## 4. Combined product direction for a future eligible slice
+
+- **Visual source:** Favor v3 four original SVG figures for BVA-0078/0079 after the undefined fill fix, taxonomy crosswalk and scientific/design QA; PNGs are static previews only.
+- **Behavior source:** Reuse the React draft's *ideas* of 7/14/30-day windows, separate Strength/Endurance, confirmed vs candidate/unmapped, descriptive direct/secondary recorded sets, detailed source contributions and unknown logging. **Do not copy its mock data store or invalid date/confirmation logic as production truth.**
+- **UI source:** Keep v3's calmer information hierarchy but reduce clutter using Bloom's progressive disclosure. In consumer app, map + one short selected-muscle explanation, one primary recorded metric, and reachable source detail; avoid permanent prototype "quick log" duplicates and 20 buttons dominating narrow mobile screens. Existing Activity/Athlete logging remains usable even when anatomy assets unavailable.
+- **Interoperability:** Explicit versioned crosswalk, canonical 15-group taxonomy until separately reviewed change, identity/versioned catalog, source-scoped deterministic projection, accessible list alternative and user-local time. No fake precision, exercise effects, individual physiology or clinical claims.
+
+## 5. Testing when functionality is ready
+
+Reconcile against **EX-MAP-01..EX-MAP-22**, existing `ML-ACT`, `UT-EXAI`, `MKT-EXAI`, ATH/SNAP/PRIV/SYS tests. Test eligible functionality only when implementation exists; unbuilt behavior remains `NOT_READY`, not a failed implementation or invented PASS. Focus v3-source tests on unique IDs, supported group mapping, no unresolved `url(#...)`, source bytes/rights, 4 variants, path selection and keyboard parity, accessible list, mobile/touch/theme/zoom/reduced-motion and fallback. Focus data tests on source-backed completed sets, time windows, corrections, account isolation, explicit duplicates, unknowns and versioned mapping. Separate Design/Anatomy/Engineering/Security/Hosted/Consumer gate receipts.
+
+**Disposition: APPROVED AS DESIGN CANDIDATE FOR FUTURE REVIEW/INTEGRATION; NOT APPROVED AS SCIENTIFICALLY VERIFIED OR PRODUCTION-READY.** Preserve the owner-requested GI baseline priority; no code/schema/asset binary changes authorized here.
+
+## 6. Owner's follow-up — exact interactive-demo markup corrections (2026-11-22)
+
+The owner independently inspected the supplied `interactive-demo.html` and confirmed the vector interaction skeleton is worth retaining. A fresh local static inspection of the **uploaded exact HTML** confirmed four SVG templates, **32 `url(#skin-ambient)` references and zero matching definitions**; each front template contains **32** clickable paths, each back template **20**. The visual 20-key `names` object is a display vocabulary, not canonical muscle physiology taxonomy. This is source-document verification, **not** a browser or screen-reader pass.
+
+**Future eligible designer/engineering corrections, not tasks to execute now:**
+
+1. **Paint/fill**: Replace unsupported `url(#skin-ambient)` with a defined, scoped SVG gradient or plain valid theme-variable fill. Avoid ambiguous presentation conflicts between per-shape `fill`/`stroke` attributes and the intended `--bm-skin` / `--bm-outline` CSS. A missing paint server does not have one guaranteed cross-browser fallback; verify visually on all four variants and themes.
+2. **Canonical mapping**: Author a versioned, explicit visual-group / SVG path-to-`CanonicalMuscleId` map grounded in reviewed anatomy. Separate decorative subparts and distinct visual shapes from the 15 established training coverage groups. A mapping must not merge distinct anatomical regions without expert review or silently introduce unsupported new canonical measurements.
+3. **Keyboard focus / accessible grouping**: The 8 segmented front abdominal paths and 4 front tibialis-anterior paths each act as independently tabbable buttons with repeated labels. Collapse to one semantic keyboard target per meaningful selectable group *per view* (or a roving-tabindex pattern with equal access), retaining individual visual paths for pointer styling. Provide one operable adjacent textual group list and meaningful announced current selection. Ensure grouped path focus remains obvious after `draw()` replaces SVG DOM; avoid leaving focus on destroyed nodes. Add hit regions or list alternatives for very small paths; do not enlarge anatomically drawn muscles falsely to solve touch sizing.
+4. **Front/back and illustrative silhouette review**: Templates largely reuse the same head/limb/torso shapes and the rear still includes front-style head detail lines. Make rear-facing geometry intentionally posterior (head/neck, shoulder blades, gluteal/leg silhouette), and review male/female distinctions for intentional styling without inferring reproductive status or physiological differences. A human anatomy reviewer determines what is scientifically valid, not the sample screenshot.
+5. **Selection ≠ recorded training**: Current `data-state=primary|secondary|idle` in the HTML is a *demo preset/selection state*. When later integrated, derived values must come from current authenticated-account, deduplicated, genuinely completed source exercise/child-set records over local 7/14/30-day windows with actual-as-of boundaries; future/planned/candidate and unavailable inputs must not become completed training. Preserve separate Strength/Endurance units and source contribution links. Do not present demo highlight semantics as factual muscle recruitment, hypertrophy or recovery.
+6. **Explicit test trigger**: Acceptance cases (EX-MAP-01..22 and related ATH/SNAP/PRIV/UX) are executed only when the corresponding capability genuinely exists and has been selected for verification; missing code is `NOT_READY`, not an invitation to build new functionality or claim an invented PASS.
+
+**Decision:** Retain v3 as the design source candidate and the HTML as interaction reference. Focus corrections and source mapping should be added to BVA-0078/0079 and the designer worklist. The active GI baseline/STOP and all approval restrictions remain unchanged.
+
+## 7. Superseding owner-submitted v4 refinement (2026-11-22)
+
+**New preferred candidate: Bloom Anatomy Refined v4** (retains original v3 vector geometry). This is a refinement/source audit, **not** integration approval, an instruction to rework current GI tasks, or a declaration that anatomy review has passed. Earlier v3 findings are historical; the following v4-specific statuses supersede them:
+
+| Physical source | Static verification |
+| --- | --- |
+| Owner-uploaded `bloom_anatomy_refined_v4(1).zip` | SHA-256 `768f09ff84e781595a291f53babec4d4205e10a7e4a5e55e543bb09c856ff615`; 19 ZIP entries, archive CRC check passed; four editable SVGs, eight preview PNGs, three contact sheets, v4 demo, JSX integration reference, proposed grouping JSON and README. |
+| Owner-uploaded `interactive-demo(2).html` | SHA-256 `c5dd067bd8b1eb87181eb940ea70d400691bddd1196c3d1158ae2f1121be1e92`; byte-identical to bundled v4 HTML. The standalone copy is **not** an additional asset requirement. |
+| Four SVGs | Each has exactly two internal gradient definitions (`bloom-skin` and `bloom-muscle`), zero `skin-ambient` references, unique IDs **within each SVG**, selectable groups and a separate text-selector in demo; male/female front has 32 geometry paths but **9** keyboard group targets each; male/female back has 20 paths but **10** keyboard group targets each. |
+
+### Verified improvements over v3
+
+- Missing `skin-ambient` definition **corrected in source**, using defined and theme-variable-controlled gradients; visual rendering still requires browser verification (CairoSVG PNG fallback is not browser proof).
+- Per-path tab spam **meaningfully reduced** to one `tabindex=0` per proposed visual group per view; small SVG regions can be reached via 44px-min adjacent group buttons. Native SVG shape focus still needs screen-reader/touch/focus review.
+- `muscle-groups.json` explicitly labels the 20 → 15 **proposed visual categories** as `PROPOSED`, not confirmed Bloom canonical entities. It preserves original display-group identity in `data-display-group`.
+- Both Everyday/Athlete palettes and selected-state previews exist. The demo uses selected/idle only and correctly disclaims actual workout records or measured physiology.
+- The prior front-facing rear-head strokes were removed. **Original underlying silhouettes are still shared extensively between front and back and male/female**; anatomical differentiation and fidelity remain unapproved.
+
+### Remaining blockers / new v4-specific issues
+
+1. **Scientific taxonomy mismatch — BLOCKING before wiring.** v4's 15 broad **visual categories** are not Bloom's authoritative 15 exercise groups. For example, `shoulders` folds the anterior/lateral/posterior deltoid distinctions, `core` lumps serratus/abdominals/obliques, `hips` combines deep hip flexor zones/adductors, `lower-legs` combines tibialis anterior and calf, and `traps` lumps neck/trapezius. No one-to-one transfer into canonical coverage metrics. Approve explicit versioned visual-to-canonical association and neutral/unavailable presentation for unresolvable areas. Correct v4 README's suggestion to reconcile against **GI-01..GI-10 taxonomy**: GI cases concern gastrointestinal investigation, **not** the exercise muscle taxonomy; use the existing Exercise Intelligence/EX-MAP and canonical Activity/Athlete contracts after GI owner-review stop and new task selection.
+2. **Event listener accumulation (demo correctness).** The v4 `interactive-demo.html` defines `render()` that registers `click` and `keydown` listeners on each persistent `.figure` container every time render is called. Repeated selections, theme or sex changes accumulate duplicate handlers, yielding repeated calls/replacements and potential focus problems. Bind once outside `render()` or use stable event delegation.
+3. **SVG namespace/cross-instance uniqueness.** Each isolated SVG has unique path IDs, but all four use `id="bloom-skin"`/`id="bloom-muscle"`. The demo displays two inline SVGs simultaneously; repeated same-view components may introduce additional collisions. Prefix paint servers and references per instance or verify tested safe scoping. HTML reference uses `innerHTML`; JSX uses `DOMParser` and `dangerouslySetInnerHTML` of trusted `?raw` assets. Do not accept untrusted uploaded SVG/XML or bypass CSP/security review.
+4. **Group-level semantic access.** Inactive parts have `aria-hidden=true` and `tabindex=-1` but still carry pointer interaction through delegation, which is acceptable only if equivalent accessible group list/actions remain synchronized. The design uses **9 front + 10 back focusable group shapes**, not 15 in either view; missing groups must be discoverable via the 15-option adjacent list. Preserve focus and announce state when re-rendering SVG/adjacent buttons. Device, screen reader, contrast, reduced-motion and zoom QA is not performed.
+5. **Scientific illustration still incomplete.** Posterior surface layering, attachments/origins, deep hip-flexor projection, shoulder segmentation and actual male/female differentiation remain more schematic than the premium anatomy standard. Surface artwork cannot assert biological muscle activation or infer user sex/physiology. Independent appropriately qualified anatomical review and designer signoff required before treating as finished anatomical deliverable.
+6. **No real workout integration.** The refined JSX is a rendering wrapper only. There is no authenticated user data, 7/14/30-day source-backed projection, deduplication, permission/snapshot invalidation, incomplete logging treatment or tests. EX-MAP readiness and all other proofs remain outstanding.
+7. **Release/code scope.** This is a designer-delivered replacement for *source candidate v3*, not a new BVA ID, an instruction to regenerate originals, a new app feature or current Codex task. Preserve previous v3 ZIP as provenance and fallback until v4 art/science/integration review.
+
+**Updated decision:** BVA-0078/0079 now have owner-supplied v4 candidate artwork. **Source structure has been verified, but full production integration, anatomical fidelity, accessibility, cross-instance SVG behavior, exact canonical training taxonomy, rights and actual in-app rendering are NOT VERIFIED.** Prefer v4 for future designer refinement, with later scoped engineering work only when selected by `NEXT_ACTIONS.md`.
+
+## 8. V3 → V4 → proposed canonical exercise taxonomy crosswalk clarification (2026-11-22)
+
+Owner supplied a precise markup crosswalk. Verified directly against V4 `muscle-groups.json` and `interactive-demo.html`. These are **three different vocabularies**, not three equivalent sets of 15. The V4 file enumerates 20 V3 `data-display-group` keys that roll up to 15 **visual selector** keys; the exercise architecture independently proposes 15 `CanonicalMuscleId` keys (pending Biology/UX review). Their numerical equality is coincidence, not equivalence.
+
+**Source of proposed exercise IDs:** `docs/architecture/Bloom_Exercise_Intelligence_Muscle_Map_Handoff_2026-11-22.md`, section 3 (the precise list below); *not* GI-01..GI-10 and *not* the independent React sample whose some names differ.
+
+| V4 visual key | Source V3 display keys | Proposed exercise canonical mapping / disposition |
+| --- | --- | --- |
+| `traps` | `neck`, `trapezius` | `trapezius` is a candidate for `upper_back_traps`; `neck` is **not automatically equivalent**. Preserve region provenance; unresolved neck remains neutral or illustrative-only. |
+| `shoulders` | `deltoids` | **Ambiguous**: must split/review geometry into `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, or display a generic shoulder selection with no false per-head counting. |
+| `chest` | `chest` | Candidate `pectorals`, subject to anatomical review. |
+| `biceps` | `biceps` | Candidate `biceps`. |
+| `triceps` | `triceps` | Candidate `triceps`. |
+| `forearms` | `forearms` | Candidate `forearms_grip`; don't assert grip from any isolated silhouette segment. |
+| `core` | `serratus`, `abdominals`, `obliques` | `abdominals`/`obliques` candidates for `abdominals_obliques`; `serratus` requires separate evidence and cannot be silently reassigned. |
+| `hips` | `hip-flexors`, `adductors` | **No canonical ID in proposed 15**. Both remain descriptive surface/neutral or explicitly unavailable; never merge into `glutes`, `quadriceps` or `hamstrings` just to fill a heatmap. |
+| `quads` | `quadriceps` | Candidate `quadriceps`. |
+| `lower-legs` | `tibialis-anterior`, `calves` | Posterior `calves` candidate `calves`; anterior `tibialis-anterior` **not `calves`**, and not a surrogate for plantarflexion or running work. |
+| `upper-back` | `upper-back` | Candidate `upper_back_traps`, avoiding accidental overlap/double-count with `trapezius`. |
+| `lats` | `lats` | Candidate `latissimus_dorsi`. |
+| `lower-back` | `lower-back` | Candidate `erector_spinae` only if geometry/labels support it. |
+| `glutes` | `glutes` | Candidate `glutes`. |
+| `hamstrings` | `hamstrings` | Candidate `hamstrings`. |
+
+**Proposed canonical 15 keys from the architecture document (not yet final, independently verified registry):**
+`pectorals`, `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, `triceps`, `biceps`, `forearms_grip`, `upper_back_traps`, `latissimus_dorsi`, `erector_spinae`, `abdominals_obliques`, `glutes`, `quadriceps`, `hamstrings`, `calves`.
+
+**Implementation representation when eligible:** Preserve immutable `SvgRegionId` and source `data-display-group` plus `VisualSelectorId`; a reviewed, versioned association can map an exact region to `CanonicalMuscleId | null`. Do not implement a broad V4-selector-key `Record<15, CanonicalMuscleId>`: some selectors contain multiple anatomically distinct originals and some canonical groups require finer separation than the artwork supports. Resolve at the **region/display-key level** with `reviewStatus`, `mappingVersion` and precise rationale. Never infer clinical muscle activation, source-backed completion or coverage from presence of a colored SVG shape.
+
+**One additional implementation caution:** V4's hidden second-path siblings are pointer-selectable by the demo even though they have `aria-hidden=true`; the adjacent accessible selector must provide equivalent function. Ensure visual selection, keyboard list, and descriptive state stay synchronized. The repeated gradient IDs and reattached event listener issue in section 7 still apply.
+
+**Acceptance remains readiness-triggered.** No new code, catalog, tests, asset art or queue changes are authorized by this clarification. Active GI work still precedes eligible exercise work.
+
+## 9. Bloom Anatomy V10.1 — read-only design handoff intake (2026-11-22)
+
+**Exact source read:** `Bloom_V10_1_Read_Only_Design_Handoff.md`, 78 lines, user's shared ChatGPT Library source, authored 2026-11-22. The document itself identifies an inspected V10.1 archive: `bloom_anatomy_v10_1/interactive-demo.html`, `visual-groups-provisional.json`, `assets/bloom-neutral-front.svg`, `assets/bloom-neutral-back.svg`, `README.md` and `qa-manifest.json`. **The underlying V10.1 archive/media bytes were not attached to this review or found available in the current library search; this architect review confirms the handoff text, not its claimed visual/structural inspections.** Do not claim V10.1 SHA, original assets, tests, rendering or integration as independently verified.
+
+**Intake decision:** **ACCEPT the V10.1 design-review and integration-gate findings as the latest reported V10.1 *handoff guidance*. DO NOT interpret it as approval to alter the frozen V10.1 baseline, production signoff or permission to build an exercise feature.** Retain V4 and V3 source provenance, their verified technical findings and registry identifiers BVA-0078/0079. Until the actual V10.1 archive is accessible and verified, its status is **REPORTED_FROZEN_DESIGN_BASELINE / ORIGINAL_BYTES_UNVERIFIED**, not a proven supersession or integrated asset. No new asset ID necessary.
+
+### Accepted observations from the read-only handoff (claims about V10.1 are source-reported)
+
+- Clear prototype copy: illustrative primary/secondary targets, no measured activation, effort, growth, recovery or injury; example push/pull/legs presets, with no workout history connected.
+- Delineated empty states: preset cleared; no example target supplied; no authoritative mapping; no workout input; unknown/unavailable information. `None` chips are tolerable in the visual study, but require differentiated and origin-aware text before live use.
+- **Fix later in integration, not frozen V10.1:** screen-reader/live-region output for idle selection currently reads `{Group} selected (idle target)`; prefer `{Group} selected for inspection; not listed as a primary or secondary example target` (or shorter equivalent) without inventing a training role. Selecting a region must not upgrade or synthesize its primary/secondary status.
+- Fifteen **provisional visual keys**, *not canonical ID proof*: `traps`, `shoulders`, `chest`, `biceps`, `triceps`, `forearms`, `core`, `hips`, `quads`, `lower-legs`, `upper-back`, `lats`, `lower-back`, `glutes`, `hamstrings`. The read-only audit reports front/back coverage; see its exact per-view table in the source document.
+- Existing exercise architecture separately proposes canonical 15 `pectorals`, `deltoids_anterior`, `deltoids_lateral`, `deltoids_posterior`, `triceps`, `biceps`, `forearms_grip`, `upper_back_traps`, `latissimus_dorsi`, `erector_spinae`, `abdominals_obliques`, `glutes`, `quadriceps`, `hamstrings`, `calves`; these remain **suggested pending Biology/UX taxonomy tests**, not approved merely by matching the number 15. The specific risk of shins/tibialis anterior being collapsed into calf training persists.
+- The handoff asks for explicit adapter cardinality, rationale and reviewer, side and view behavior, collision precedence for multiple canonical roles into one visible region, unknown/stale-ID abstention, and synchronicity of SVG/JSON/ARIA/chips/fixtures. Preserve source-specific exercise truth; no color for unmapped unknowns.
+- Later actual workout-screen checks: don't displace sets/reps/completion controls; narrow-screen and theme/contrast accessibility, keyboard/VoiceOver/TalkBack/reduced-motion, qualified primary/secondary roles, separate missingness and privacy/source authorization, one maintained SVG source and generated variants to prevent drift.
+- Five gates remain: GI read-only baseline → explicit owner approval of next task → taxonomy/movement/role verification → source-safe extraction with existing workout infrastructure → independent design/accessibility/science claim testing.
+
+### Authority/nomenclature correction
+
+V10.1 uses **GI-07/GI-09 as general review lenses**, expressly noting it does not certify those cases. GI-07/GI-09 are actual **gastrointestinal investigator** acceptance IDs. For exercise implementation, use `EX-MAP-01..EX-MAP-22`, `ML-ACT`, `UT-EXAI`, `MKT-EXAI`, ATH/SNAP/UX/PRIV/SYS cases as applicable; apply the *principles* of missingness and calibrated claims without reclassifying GI tests as muscle-map tests. Do not let those labels expand the active GI case inventory into exercise work.
+
+### Codex/Designer receipt boundary
+
+**Now:** no code, current registry lifecycle promotions, changed visual ZIPs, source transfer, new build tasks, broad acceptance testing or queue changes. Keep `NEXT_ACTIONS.md`'s GI-01..GI-10 evidence inventory and owner-review STOP unchanged.
+
+**When owner explicitly selects future eligible exercise integration:** obtain/fingerprint actual V10.1 original files and inspect source (the Library handoff alone is insufficient), verify rights/visual output/geometry/ARIA/unique SVG defs and selectors, compare to V4 provenance, formally reconcile canonical role/movement identity, then run only ready EX-MAP acceptance slices and actual app user journey tests. Maintain `BVA-0078`/`BVA-0079` rather than duplicating registry identities.
+
+**Conclusion:** V10.1 read-only review accepted as guidance; independent V10.1 asset acceptance and consumer integration **NOT VERIFIED**.
+
+## 10. Owner-approved consolidated Anatomy Stages 1–3 visual handoff (2026-11-22)
+
+**Source physically inspected this turn:** user-uploaded `Bloom_Approved_Anatomy_Design_Handoff(1).zip` SHA-256 **`a6c6485876f7c9720f3adda4ef6bf08f727fead38a88faf432ee20ea30518511`** (4,776,270 bytes); ZIP CRC check passed. Package contains a root folder `Bloom_Approved_Anatomy_Design_Handoff/` and 28 files listed in `PACKAGE_MANIFEST.json`; **all 28 byte-length and SHA-256 manifest entries matched actual uncompressed members**. This is stronger source verification than the prior V10.1 Library-only read-only handoff. **Original ZIP binaries remain in the owner's uploaded attachment, not in GitHub/Codex checkout**; no transfer or integration is asserted.
+
+**Approval authority as reported in source:** `APPROVED_HANDOFF_README.md` states **owner-approved consolidated visual design** after Stages 1 (torso/back), 2 (lower body), 3 (arms/shoulders), and consolidated QA. `QA_HANDOFF.md` is an earlier/conservative design-QA report that says review candidate subject to final owner visual signoff; the package-level approved README is the latest disposition for **visual design only**. Do not conflate approval of the appearance with approval of anatomy accuracy, exercise taxonomy, product integration, data-source rights, release or production use. The independent source artwork origin/licence evidence and specialist anatomical review remain outstanding.
+
+### Source-of-truth and physical file verification
+
+- `assets/bloom-neutral-front.svg` — **267,919 bytes**, SHA-256 `fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106`.
+- `assets/bloom-neutral-back.svg` — **267,265 bytes**, SHA-256 `f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e`.
+- `assets/body-front.png` — SHA-256 `7199ba6bb11129b7cb9826f77c61a2fc24acb935f38b50063628b5cde42feec2`.
+- `assets/body-back.png` — SHA-256 `ab5b12c40c4e6936c50e49675c7d78d1c9e2fdf16b61318a73fae0b8e9c11338`.
+- `interactive-demo.html` — SHA-256 `610099acccca17c03bdfc7f19c4c230df8a0bf071a0d8319b923ce1a4ce08314`, **visual QA demo only**, not production integration.
+- `visual-groups-provisional.json` — 15 unapproved visual keys, **not** canonical exercise IDs; `structure-audit.json`, `browser-qa.json`, `QA_HANDOFF.md`, source previews and contact sheets are review evidence, not scientific approval.
+- I parsed both original SVGs: front has **24** selectable paths, **9** distinct displayed visual groups with exactly one keyboard focus representative per group; back has **20** paths and **10** displayed visual groups with exactly one representative per group. All element `id` values are unique **within each SVG**. The combined visual vocabulary is **15** distinct provisional group keys. Structural source inspection found no unresolved `skin-ambient` fill reference.
+- SVG roots have `viewBox="0 0 320 820"` and each includes one embedded raster `image` node. **This is a hybrid raster-body + vector-overlay product**, not solely original vector anatomical geometry. The separate original `body-front.png`/`body-back.png` are also included. Verify embedded versus external body image provenance, cross-instance clip/paint ID uniqueness and the app's CSP/data-URI handling in any eventual integration.
+- I viewed the `browser-contact-everyday.png` source screenshot grid: professionally restrained dark anatomical figure, differentiated colored primary/secondary regions and readable example legend. A screenshot is not proof of actual device/assistive technology or biological correctness.
+- `browser-qa.json` **reports 35/35 Chromium checks passed, zero console errors**, including example states, theme, Explore/keyboard, focus retention, 390px viewport and minimum 44px exercise-selector targets. This turn independently verified the QA record, not the tests; never cite as independent current-app QA. Open gates explicitly include VoiceOver, TalkBack, real touch devices, exhaustive WCAG/contrast, anatomy-specialist review and full integrated-route checks.
+
+### Impact on earlier candidates and historical findings
+
+1. **This package is now the owner-design-approved visual source for canonical BVA-0078 (front) and BVA-0079 (back)**, superseding V4 as the preferred *artwork* while preserving V3/V4/V10.1 history. The two BVA identities remain unchanged; do not make a parallel asset registry or duplicate images.
+2. The handoff describes a **V12.1-derived separate Stage 1–3 staging copy**, with 42 path replacements and unchanged body PNGs. The older V10.1 remains a previous frozen technical baseline, not proof that this newer visual approval is already installed.
+3. Use the two original SVG files as the maintained vector-overlay geometry masters. `interactive-demo.html` embeds generated copies of those SVGs; maintain generated parity rather than hand-editing three independent versions. The original body PNG layer is required. Do not reconstruct from contact-sheet screenshots or a screenshot-based tracing exercise.
+4. **Still not canonical taxonomy:** 15 visual labels, e.g. `shoulders`, `hips`, `core`, `lower-legs`, remain **not** a one-to-one map to the proposed 15 exercise IDs; preserve region-level provenance and the crosswalk reviewed in §8. Front tibialis/anterior shins are not posterior calves; deltoids cannot be collapsed into one reviewed exercise head. For unknown/unmapped regions abstain. Never invent a workout participation value from a beautiful colored shape.
+5. **Not workout data:** Push/Pull/Legs/All-lit/None are design fixtures. All-lit is for alignment QA, not one workout or 15 trained muscles; the source never establishes an actual user session or a physiological metric.
+6. **Scientific/accessibility gate:** Clearer contours and browser smoke tests do not equal qualified anatomical precision or accessibility certification. Preserve equivalent adjacent list, focus semantics and the distinction between descriptive grouping/selected/example roles.
+
+### Later integration gates (no current execution authorization)
+
+- GI-01..GI-10 source/evidence baseline must finish, followed by owner review; no change to `NEXT_ACTIONS.md` priority or infrastructure pause.
+- Owner explicitly selects exercise integration task and authorizes exact source transfer; verify ZIP checksum and 28-member manifest in Codex's workspace.
+- Review canonical exercise target IDs, mapping-version, rights, manual versus completed data, source lineage and correction/invalidation first. Use existing Activity/Athlete logs and EX-MAP-01..22 acceptance when genuinely ready; avoid another workout backend/logger.
+- Evaluate exact four-theme app requirements, mobile, light/dark, 200% zoom, physical touch, screen reader, fallback on unavailable raster/SVG, unique clip/paint IDs, security and full user flows. Distinguish designer's limited reported QA from actual build tests, anatomy review and consumer release gates.
+
+**Architect disposition: OWNER-APPROVED VISUAL DESIGN SOURCE; 28/28 MANIFEST SOURCES VERIFIED; INTEGRATION / TAXONOMY / SCIENTIFIC ANATOMY / INDEPENDENT ACCESSIBILITY / RIGHTS / HOSTED RELEASE NOT APPROVED OR VERIFIED.** No application code, schemas, migrated data, execution priorities or asset original bytes were changed by this handoff update.

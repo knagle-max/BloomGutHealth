@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { eq, and } from "drizzle-orm";
 import { meals, type InsertMeal, type Meal } from "../shared/schema";
 import type { db } from "./db";
+import {isDeletedMealSave} from './meal-save-state';
 
 export type MealSaveReceipt = { id: string; fingerprint: string };
 export function mealSaveReceipt(userId: string, key: string, payload: unknown): MealSaveReceipt {
@@ -9,6 +10,7 @@ export function mealSaveReceipt(userId: string, key: string, payload: unknown): 
   return { id: hash(JSON.stringify(["meal-save-v1", userId, key])), fingerprint: hash(JSON.stringify(payload)) };
 }
 export function checkMealReceipt(meal: Meal, receipt: MealSaveReceipt): Meal {
+  if(isDeletedMealSave(meal))throw new Error('MEAL_SAVE_DELETED');
   if ((meal.mealContext as any)?._saveReceipt !== receipt.fingerprint) throw new Error("MEAL_SAVE_CONFLICT");
   return meal;
 }

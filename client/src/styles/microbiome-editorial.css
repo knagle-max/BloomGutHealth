@@ -1,0 +1,116 @@
+/* Owner2026-11-17 overview + organism references; same source/controller/artwork. */
+.microbiome-editorial {--microbiome-edge:color-mix(in srgb,hsl(var(--foreground)) 17%,transparent);}
+.microbiome-editorial .microbiome-editorial-hero {position:relative;isolation:isolate;overflow:hidden;min-height:13rem;display:flex;align-items:center;border-radius:1.5rem;}
+.microbiome-editorial .microbiome-new-hero {position:absolute;inset:0;z-index:-1;}
+.microbiome-editorial .microbiome-new-hero>.bv-media {block-size:100%;height:100%;width:100%;border-radius:inherit;background:hsl(var(--muted));}
+.microbiome-editorial .microbiome-new-hero .bv-media-placeholder {height:100%;background:linear-gradient(120deg,hsl(var(--background)),hsl(var(--muted)));}
+.microbiome-editorial .microbiome-hero-copy {padding:1.5rem;max-width:100%;overflow-wrap:anywhere;}
+.microbiome-editorial .microbiome-hero-copy h1 {font:500 clamp(2rem,5vw,3.5rem)/1.1 var(--font-serif,Georgia,serif);margin:.6rem 0 1rem;}
+.microbiome-editorial .microbiome-count-pill {display:inline-block;padding:.35rem .8rem;border:1px solid var(--microbiome-edge);border-radius:2rem;font-size:.875rem;background:hsl(var(--card)/.75);}
+.microbiome-editorial .microbiome-editorial-overview {display:grid;gap:1rem;min-width:0;}
+.microbiome-editorial .microbiome-editorial-overview>section {min-width:0;border:1px solid var(--microbiome-edge);border-radius:1.25rem;padding:clamp(1rem,2vw,1.5rem);background:color-mix(in srgb,hsl(var(--card)) 92%,transparent);box-shadow:inset 0 1px 0 #ffffff09;}
+.microbiome-editorial .microbiome-editorial-overview h2 {font:500 clamp(1.35rem,3vw,1.8rem)/1.25 var(--font-serif,Georgia,serif);margin-bottom:.8rem;overflow-wrap:anywhere;}
+.microbiome-editorial .microbiome-latest-count {font-family:var(--font-serif,Georgia,serif);font-size:1.4rem;margin:.5rem 0;}
+.microbiome-editorial .microbiome-latest-count strong {font-size:3.8rem;font-weight:400;line-height:1.1;}
+.microbiome-editorial .microbiome-section-heading {display:flex;align-items:baseline;justify-content:space-between;gap:1rem;}
+.microbiome-editorial .microbiome-section-heading>span {font-size:.875rem;white-space:nowrap;}
+.microbiome-editorial .microbiome-highlight-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:1rem;}
+.microbiome-editorial .microbiome-highlight-card {display:flex;flex-direction:column;gap:.6rem;min-width:0;text-align:left;border:1px solid var(--microbiome-edge);border-radius:1rem;padding:.65rem;background:hsl(var(--background)/.45);}
+.microbiome-editorial .microbiome-highlight-card i {font-family:var(--font-serif,Georgia,serif);font-size:1rem;line-height:1.3;overflow-wrap:anywhere;}
+.microbiome-editorial .microbiome-highlight-card>span:last-child {font-size:.75rem;line-height:1.4;padding:.25rem .5rem;border-radius:1rem;background:hsl(var(--muted));}
+.microbiome-editorial .organism-visual-card {display:grid;place-items:center;width:100%;min-width:0;aspect-ratio:4/3;border-radius:.75rem;overflow:hidden;background:hsl(var(--muted));}
+.microbiome-editorial .organism-visual-card img {display:block;width:100%;height:100%;object-fit:cover;}
+.microbiome-editorial .microbiome-relative-panel h2 small {font-size:.8em;font-family:var(--font-sans);font-weight:400;}
+.microbiome-editorial .microbiome-relative-rows {display:grid;gap:.85rem;margin-block:1rem;}
+.microbiome-editorial .microbiome-relative-row {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr) max-content;align-items:center;gap:.75rem;min-width:0;font-size:.85rem;}
+.microbiome-editorial .microbiome-relative-row i {overflow-wrap:anywhere;}
+.microbiome-editorial .microbiome-relative-row>span {font-variant-numeric:tabular-nums;}
+.microbiome-editorial .microbiome-relative-row meter {width:100%;min-width:0;height:.8rem;appearance:none;border:0;background:hsl(var(--muted));border-radius:1rem;}
+.microbiome-editorial meter::-webkit-meter-bar {background:hsl(var(--muted));border:0;border-radius:1rem;}
+.microbiome-editorial meter::-webkit-meter-optimum-value {background:hsl(var(--primary));border-radius:1rem;}
+.microbiome-editorial meter::-moz-meter-bar {background:hsl(var(--primary));border-radius:1rem;}
+.microbiome-editorial .microbiome-featured-organism {display:grid;grid-template-columns:5rem minmax(0,1fr);gap:1rem;align-items:start;}
+.microbiome-editorial .microbiome-featured-organism>.organism-visual-card {aspect-ratio:1;}
+.microbiome-editorial .organism-primer h3 {font:500 1.2rem/1.3 var(--font-serif,Georgia,serif);margin:.75rem 0 .4rem;}
+.microbiome-editorial .organism-primer p {font-size:.95rem;line-height:1.6;}
+.microbiome-editorial .microbiome-report-context dl {display:grid;gap:1rem;}
+.microbiome-editorial .microbiome-report-context dt {font-size:.9rem;font-weight:600;margin-bottom:.4rem;}
+.microbiome-editorial .microbiome-report-context dd {margin:0;font-size:.875rem;line-height:1.55;overflow-wrap:anywhere;}
+.microbiome-editorial :is(button,summary):focus-visible {outline:3px solid hsl(var(--ring));outline-offset:3px;}
+@media(min-width:768px){.microbiome-editorial .microbiome-highlight-grid{grid-template-columns:repeat(4,minmax(0,1fr));}.microbiome-editorial .microbiome-featured-organism{grid-template-columns:minmax(8rem,.45fr) minmax(0,1.55fr);gap:1.5rem;}.microbiome-editorial .microbiome-report-context dl{grid-template-columns:repeat(3,minmax(0,1fr));}.microbiome-editorial .microbiome-report-context dl>div+div{border-left:1px solid var(--microbiome-edge);padding-left:1rem;}}
+@media(min-width:1200px){.microbiome-editorial .microbiome-editorial-overview{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start;}.microbiome-editorial .microbiome-latest-panel,.microbiome-editorial .microbiome-report-context{grid-column:1/-1;}.microbiome-editorial .microbiome-highlights{grid-column:1/-1;}.microbiome-editorial .microbiome-featured-organism{grid-template-columns:5rem minmax(0,1fr);}}
+/* Existing Radix dialog and source state retained; only its presentation changes. */
+.microbial-profile-sheet[data-editorial-profile="true"] {display:flex;flex-direction:column;gap:0;width:min(46rem,calc(100% - 3rem));left:50%;right:auto;transform:translateX(-50%);top:5dvh;bottom:auto;max-height:90dvh;border-radius:1.5rem;padding:1.25rem;background:hsl(var(--background));box-shadow:0 24px 80px #00000038;}
+.microbial-profile-sheet[data-editorial-profile="true"]>.microbial-profile-close {flex:none;position:sticky;top:0;float:none;align-self:flex-end;margin:0 0 .5rem;z-index:3;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-portrait {display:block;margin:0 0 1rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-visual-portrait {display:grid;place-items:center;width:100%;height:auto;aspect-ratio:16/9;border-radius:1.25rem;overflow:hidden;background:hsl(var(--muted));}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-visual-portrait img {display:block;width:100%;height:100%;object-fit:cover;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-title {font:italic 500 clamp(1.8rem,5vw,2.7rem)/1.15 var(--font-serif,Georgia,serif);margin:.4rem 0 .75rem;overflow-wrap:anywhere;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-identity-chips {display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0;padding-bottom:1rem;border-bottom:1px solid hsl(var(--border));}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-identity-chips>span {display:inline-flex;gap:.5rem;align-items:center;max-width:100%;font-size:.85rem;line-height:1.4;padding:.5rem .8rem;border:1px solid hsl(var(--border));border-radius:2rem;overflow-wrap:anywhere;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-primer>div+div {border-top:1px solid hsl(var(--border));margin-top:1rem;padding-top:1rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-primer h3 {font:italic 500 1.5rem/1.25 var(--font-serif,Georgia,serif);margin:.25rem 0 .6rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-primer p {font-size:1rem;line-height:1.6;margin-top:.5rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] :is(.microbial-observation,.microbial-research-context) {border:1px solid hsl(var(--border));border-radius:1.15rem;padding:0;margin:1rem 0 0;background:hsl(var(--card)/.7);}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-action {display:flex;gap:1rem;align-items:center;min-height:72px;padding:1rem;cursor:pointer;list-style:none;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-action::-webkit-details-marker {display:none;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-action>span {flex:1;min-width:0;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-action strong {display:block;font-weight:500;font-size:1.1rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-action small {display:block;font-size:.875rem;line-height:1.45;font-weight:400;margin-top:.25rem;color:hsl(var(--muted-foreground));}
+.microbial-profile-sheet[data-editorial-profile="true"] :is(.microbial-observation,.microbial-research-context)>:not(summary) {margin:0 1rem 1rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] .organism-portrait-caption {order:99;font-size:.85rem;line-height:1.5;font-style:italic;color:hsl(var(--muted-foreground));margin-top:1.25rem;}
+.microbial-profile-sheet[data-editorial-profile="true"] :is(summary,button):focus-visible {outline:3px solid hsl(var(--ring));outline-offset:3px;}
+@media(max-width:639px){.microbial-profile-sheet[data-editorial-profile="true"]{left:0;right:0;transform:none;top:auto;bottom:0;width:100%;max-height:90dvh;border-radius:1.5rem 1.5rem 0 0;padding:1rem;}}
+@media(forced-colors:active){.microbiome-editorial .microbiome-editorial-overview>section,.microbial-profile-sheet[data-editorial-profile="true"],.microbial-profile-sheet[data-editorial-profile="true"] :is(.microbial-observation,.microbial-research-context){background:Canvas;color:CanvasText;border:1px solid CanvasText;box-shadow:none;}}
+@media(prefers-reduced-transparency:reduce){.microbial-profile-sheet[data-editorial-profile="true"] :is(.microbial-observation,.microbial-research-context),.microbiome-editorial .microbiome-editorial-overview>section{background:hsl(var(--card));}}
+.microbiome-editorial .microbiome-section-heading {flex-wrap:wrap;}
+/* Respond to available text space, including200% text, not only viewport width. */
+.microbiome-editorial .microbiome-editorial-overview {container:microbiome-overview / inline-size;}
+.microbiome-editorial .microbiome-featured-organism {grid-template-columns:minmax(0,1fr);}
+.microbiome-editorial .microbiome-relative-row {grid-template-columns:minmax(0,1fr);}
+.microbiome-editorial .microbiome-relative-row>span {justify-self:end;overflow-wrap:anywhere;max-width:100%;}
+.microbiome-editorial .organism-primer :is(h3,p) {overflow-wrap:anywhere;}
+@container microbiome-overview (min-width:14rem){.microbiome-editorial .microbiome-featured-organism {grid-template-columns:5rem minmax(0,1fr);}.microbiome-editorial .microbiome-relative-row {grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr) max-content;}}
+
+/* Report context also follows its actual container at zoomed desktop widths. */
+.microbiome-editorial .microbiome-report-context dl {grid-template-columns:minmax(0,1fr);}
+.microbiome-editorial .microbiome-report-context dl>div+div {border-left:0;padding-left:0;}
+.microbiome-editorial .microbiome-report-context :is(dt,dd) {overflow-wrap:anywhere;}
+@container microbiome-overview (min-width:36rem){.microbiome-editorial .microbiome-report-context dl {grid-template-columns:repeat(3,minmax(0,1fr));}.microbiome-editorial .microbiome-report-context dl>div+div {border-left:1px solid var(--microbiome-edge);padding-left:1rem;}}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-listed-badge {align-self:flex-start;max-width:100%;}
+
+/* BVA-0051: exact supplied art; portrait mobile crops never sit behind copy. */
+.microbiome-editorial .microbiome-new-hero img {width:100%;height:100%;block-size:100%;object-fit:cover;object-position:center;}
+@media(max-width:767px){
+ .microbiome-editorial .microbiome-editorial-hero {display:grid;grid-template-columns:minmax(0,1fr) 38%;background:hsl(var(--card));}
+ .microbiome-editorial .microbiome-new-hero {position:relative;inset:auto;z-index:auto;grid-column:2;grid-row:1;align-self:stretch;min-height:13rem;}
+ .microbiome-editorial .microbiome-hero-copy {grid-column:1;grid-row:1;padding:1.25rem;min-width:0;}
+ .microbiome-editorial .microbiome-hero-copy h1 {font-size:clamp(1.7rem,6vw,2rem);}
+}
+@media(min-width:768px){
+ .microbiome-editorial .microbiome-editorial-hero {background:#15382e;color:#f5f3eb;}
+ .microbiome-editorial .microbiome-hero-copy {max-width:52%;}
+ .microbiome-editorial .microbiome-hero-copy .eyebrow {color:inherit;}
+ .microbiome-editorial .microbiome-count-pill {background:#102b25cc;border-color:#f5f3eb66;}
+}
+
+/* BIO-UI07: identity and source finding lead, full provenance remains disclosed. */
+.microbial-profile-identity-header {display:grid;grid-template-columns:112px minmax(0,1fr);gap:1rem;align-items:center;position:relative;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-identity-header .organism-portrait {margin:0;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-identity-header .organism-visual-portrait {width:112px;height:112px;aspect-ratio:1;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-identity-header .organism-portrait-caption {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-identity-header .microbial-profile-title {font-size:clamp(1.5rem,4vw,2.2rem);margin:0 0 .5rem;}
+.microbial-profile-source-summary {margin:0 0 1rem;padding-bottom:1rem;border-bottom:1px solid hsl(var(--border));overflow-wrap:anywhere;}
+@media(max-width:360px){.microbial-profile-identity-header {grid-template-columns:80px minmax(0,1fr);gap:.75rem;}.microbial-profile-sheet[data-editorial-profile="true"] .microbial-profile-identity-header .organism-visual-portrait {width:80px;height:80px;}}
+
+/* Source categories are text, not quantitative score badges. */
+.report-explainer .report-card-top--qualitative {flex-wrap:wrap;}
+.report-explainer .report-card-top--qualitative h4 {flex:1 1 100%;}
+.report-explainer .report-value.report-value--qualitative {max-width:100%;font-size:1rem;line-height:1.5;text-align:left;font-weight:500;color:hsl(var(--foreground));}
+.report-explainer .report-value--qualitative small {max-width:none;font-size:.75rem;}
+
+/* BIO-UI10: portalled organism details retain a visible system focus indicator. */
+@media(forced-colors:active){
+ .microbiome-editorial :is(button,summary):focus-visible,
+ .microbial-profile-sheet[data-editorial-profile="true"] :is(summary,button):focus-visible {outline-color:Highlight;}
+}

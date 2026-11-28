@@ -1,0 +1,34 @@
+{
+  "task": "V06-LABEL-PORTION-SOURCE",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "baseCommit": "fd06e868cae61275ec9a8d1145446b7d1a5fb687",
+  "scope": "Shared saved-label contribution groundwork within M1/M3. Not a new taken-supplement event, recurring-consumption implementation, personal DRI matching, adequacy or full M3 closure.",
+  "implementation": [
+    "Versioned numeric labelPortion captured beside frozen label at canonical review, covered by existing review/receipt persistence.",
+    "Extract existing multiplication into one shared pure helper used by canonical product review and read-only saved-source projection; no second total, intake store or current source fetch.",
+    "Owner/event/source scoped, exact native serving amount/record time/zero/unknown; legacy or malformed/mismatched portions abstain instead of parsing display text or grams.",
+    "Compound weights and unmapped/other label ingredients remain separate. No form, RAE/DFE/NE/IU, elemental dose, absorbed amount, supplement ingestion or safety assessment is inferred.",
+    "Lazy existing source table adds recorded portion column only for saved records; scoped fixed-layout override removes global400px minimum only from label table, preserving all other tables/charts/art."
+  ],
+  "verification": {
+    "focused": "15 tests PASS: label source/projection, actual canonical product adapter, generic observations and save replay; fractional/repeated sources/native zero/missing nutrient/compound/legacy/owner/time/invalid/overflow inputs.",
+    "browser": "PASS actual App/HTTP/encrypted private label/PGlite: explicit review/single save, frozen two-serving label after source deletion/reload, source0/unknown, second-owner empty, failed reads/recovery, no provider requests; final scoped compact-table run PASS.",
+    "layout": "PASS label60 responsive states (5 widths x2modes x2themes x3 normal/text200%/page200% scales), plus existing generic60 source states; closed sources lazy, native keyboard/focus retained, all3 label columns fit ordinary text across widths.",
+    "screenshots": "Opened and reviewed actual390px Everyday light and Athlete dark viewport captures in /workspace/bloom-label-portion-screens. Original400px minimum caused mobile crop; class-scoped min-width0/fixed-layout repair verified. Not independent design or physical VoiceOver acceptance.",
+    "typecheck": "Final npm run check PASS",
+    "build": "Final npm run build PASS including original assets/registry byte verifiers",
+    "audits": "Final API/capability/Biology source checks +4 audit tests PASS; public food adapter coverage verify PASS. Review/clinical/rights states unchanged."
+  },
+  "remaining": [
+    "Actual dated taken-supplement controls, formulation/elemental/source applicability, correction/undo and no duplication across food/supplement still require subsequent approved M3 work.",
+    "Full RC, independent physical-device/accessibility and clinical review are not claimed."
+  ],
+  "logs": [
+    "/workspace/bloom-label-portion-final-unit.log",
+    "/workspace/bloom-label-portion-final-browser.log",
+    "/workspace/bloom-label-portion-types-final.log",
+    "/workspace/bloom-label-portion-final-build.log",
+    "/workspace/bloom-label-portion-final-audit-tests.log",
+    "/workspace/bloom-label-portion-source-coverage.log"
+  ]
+}

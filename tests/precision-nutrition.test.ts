@@ -2,7 +2,7 @@ import {recordedLabDifference} from "../shared/lab-history";
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import {
   buildPrecisionReport,
   parse23andMe,
@@ -337,12 +337,17 @@ test("authenticated precision API persists inputs and plans, isolates accounts a
   const records = new Map<string, any>(),
     profiles = new Map<string, unknown>();
   let serial = 0;
+  const contextRevision = (id:string) => createHash("sha256").update(JSON.stringify([id,profiles.get(id)??null])).digest("hex");
   const store: any = {
     getUser: async () => ({ dietaryPreferences: defaultPreferences }),
     getUserSamples: async () => [],
     getMeals: async () => [],
     getPrecisionContext: async (id: string) => profiles.get(id),
-    putPrecisionContext: async (id: string, c: any) => profiles.set(id, c),
+    getPrecisionContextSource: async (id:string) => ({context:profiles.get(id),revision:contextRevision(id)}),
+    putPrecisionContext: async (id: string, c: any, revision:string) => {
+      assert.equal(revision,contextRevision(id),"HTTP must forward the loaded source revision");
+      profiles.set(id,c);
+    },
     getPrecisionRecords: async (id: string) =>
       Array.from(records.values()).filter((r) => r.userId === id),
     insertPrecisionRecord: async (
@@ -392,12 +397,14 @@ test("authenticated precision API persists inputs and plans, isolates accounts a
     body?: any,
     user = "a",
     confirm = false,
+    revision?:string,
   ) =>
     fetch(`http://127.0.0.1:${port}/api/precision${path}`, {
       method,
       headers: {
         "Content-Type": "application/json",
         ...(user ? { "x-user": user } : {}),
+        ...(revision ? { "X-Bloom-Context-Revision": revision } : {}),
         ...(confirm ? { "x-bloom-confirm": "delete-precision-data" } : {}),
       },
       ...(body ? { body: JSON.stringify(body) } : {}),
@@ -408,7 +415,11 @@ test("authenticated precision API persists inputs and plans, isolates accounts a
       (await send("/context", "PUT", { ...context, userId: "b" })).status,
       400,
     );
-    assert.equal((await send("/context", "PUT", context)).status, 200);
+    assert.equal((await send("/context", "PUT", context)).status, 428);
+    assert.equal(profiles.has("a"),false,"Unversioned edits must not persist");
+    const loadedRevision=(await(await send()).json()).contextRevision;
+    assert.match(loadedRevision,/^[a-f0-9]{64}$/);
+    assert.equal((await send("/context", "PUT", context,"a",false,loadedRevision)).status, 200);
     const saved = await send("/records", "POST", {
       kind: "lab",
       payload: lab(),

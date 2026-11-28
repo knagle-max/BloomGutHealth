@@ -1,0 +1,160 @@
+{
+  "schema": "bloom-asset-registry-extension-draft-v1",
+  "createdAt": "2026-11-22",
+  "status": "DESIGN_APPROVED_NOT_INTEGRATED",
+  "target": "docs/visual-assets/visual-asset-registry.json",
+  "sourceBranch": "enhance/bloom-experience",
+  "observedMaxId": "BVA-0077",
+  "notAMirrorRegistry": true,
+  "mergeRule": "At actual eligible HEAD verify no intervening IDs. Preserve existing schema/lifecycle. If 0078/0079 used, allocate next free permanent IDs and update dependent requirements; never overwrite/recycle. Do not mark as produced, approved, integrated or verified without evidence.",
+  "reuseReviews": [
+    {
+      "id": "BVA-0005",
+      "name": "Athlete editorial hero",
+      "decision": "reuse-only-for-Athlete-context; not-muscle-geometry",
+      "review": "Confirm latest owner approved exact bytes, responsive crop, rights, blue light/dark, and current actual runtime placement; do not regenerate or supersede."
+    },
+    {
+      "id": "BVA-0022",
+      "name": "Athlete exercise technique study",
+      "decision": "conditional-reuse-featured-exercise-card",
+      "review": "Historical rejected rendition is NOT cleared. Check current owner-approved newer source, form biomechanics, actual rights, output quality and current crop; if unapproved use icon/text fallback; not a clickable anatomy SVG."
+    },
+    {
+      "id": "BVA-0023",
+      "name": "Athlete recovery editorial",
+      "decision": "reuse-only-for-editorial-recovery-context",
+      "review": "Recheck approved source bytes, actual integration and rendering. Not a physiological recovery visualization."
+    },
+    {
+      "reference": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4",
+      "decision": "review-existing-source-and-amendments",
+      "review": "Check actual files and hashes; preserve v1.4 compact per-set controls and labels; do not create duplicate screens."
+    },
+    {
+      "reference": "conversation:bloom_brand_delivery_v1(1).zip",
+      "decision": "brand-token-reference-only",
+      "review": "Contains Athlete logo/icon assets and design tokens but no anatomical front/back map. Existing newer approvals supersede conflicting brand components; do not overwrite."
+    }
+  ],
+  "newAssets": [
+    {
+      "id": "BVA-0078",
+      "name": "Muscle coverage \u2014 anterior interactive SVG",
+      "view": "anterior",
+      "category": "scientific-interactive-svg",
+      "route": "/activity | /athlete",
+      "component": "MuscleCoverageMap",
+      "purpose": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "No baked-in text; all counts, headings, legends, selection and accessible labels rendered from live UI",
+      "format": "SVG editable paths + CSS currentColor/tokens",
+      "targetDimensions": {
+        "viewBox": "0 0 480 720 conceptual; final viewBox from design source",
+        "artboardAspect": "2:3"
+      },
+      "responsiveVariants": [
+        "mobile 320px with separate accessible list",
+        "tablet and desktop",
+        "large text and high contrast",
+        "reduced motion"
+      ],
+      "scientificReview": "Human anatomy expert validates grouped anterior/posterior silhouettes, borders, left/right and per-path muscle IDs; exercise participation mappings require separate Biology review",
+      "rights": "First-party original vector art or confirmed reusable source; no scraped anatomy atlas, unlicensed tracing or unknown third-party stock",
+      "fallback": "Structured accessible muscle list and neutral shape if artwork unavailable; logging itself remains fully usable",
+      "productionEvidence": {
+        "filePath": null,
+        "sha256": null,
+        "sourceLicenseProof": null,
+        "designReview": null,
+        "anatomyReview": null,
+        "renderedQa": null
+      },
+      "lifecycle": "Briefed",
+      "filePaths": [],
+      "renderVerified": false,
+      "sourceRelation": {
+        "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
+        "existingAssetAuditRequired": true
+      },
+      "accessibleBehavior": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding",
+      "subject": "Adult neutral anatomical anterior body silhouette showing only supported superficial muscle display-group shapes, bilateral clean paths and truthful anatomy.",
+      "brief": "Produce an original clean anterior front-view anatomical muscle-region vector for a premium consumer workout-history dashboard. Full adult neutral human silhouette from head/neck to feet, natural proportions, calm pose with arms slightly separated and palms appropriately oriented. Clear region boundaries for pectorals, anterior/lateral deltoid, biceps/forearm, abdominals/obliques, quadriceps and calves where actually visible; do not pretend posterior muscles are visible from front. No organs, transparent X-ray or physiology gauges. Each clickable group represented by stable nonoverlapping SVG path IDs for sides, semantically grouped to the 15-group taxonomy; unrepresented regions neutral. Provide complete source SVG with unobstructed outlines plus separately reviewed JSON path\u2192muscle mappings, viewBox and orientation. Consistent stroke and spatial proportions with posterior pair. CSS tokenized blue/light/dark; no embedded numbers, labels, heatmap color values, text, logos, diagnosis symbols or gradients that obscure click regions.",
+      "pathIdConvention": {
+        "example": "muscle-front-pectorals-left",
+        "requiredMapping": "All enabled SVG path ids must have an explicit one-to-one mapping to a supported canonical group; neutral geometry noninteractive; bilateral paths may share group."
+      },
+      "reviewCriteria": [
+        "Geometry corresponds to actual superficial orientation and muscle coverage",
+        "No fictional measured activation intensity",
+        "Screen-reader alternate list and pointer+keyboard parity",
+        "Mobile touch testing and light/dark contrast",
+        "Path IDs consistent with independently versioned mapping",
+        "Actual source files and SHA plus licensed origin confirmed",
+        "No auto promotion to integrated or anatomy-approved"
+      ]
+    },
+    {
+      "id": "BVA-0079",
+      "name": "Muscle coverage \u2014 posterior interactive SVG",
+      "view": "posterior",
+      "category": "scientific-interactive-svg",
+      "route": "/activity | /athlete",
+      "component": "MuscleCoverageMap",
+      "purpose": "Precise accessible region-selectable visual representation of CONFIRMED RECORDED exercise associations, not measured activation, injury, diagnosis, growth or readiness",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "No baked-in text; all counts, headings, legends, selection and accessible labels rendered from live UI",
+      "format": "SVG editable paths + CSS currentColor/tokens",
+      "targetDimensions": {
+        "viewBox": "0 0 480 720 conceptual; final viewBox from design source",
+        "artboardAspect": "2:3"
+      },
+      "responsiveVariants": [
+        "mobile 320px with separate accessible list",
+        "tablet and desktop",
+        "large text and high contrast",
+        "reduced motion"
+      ],
+      "scientificReview": "Human anatomy expert validates grouped anterior/posterior silhouettes, borders, left/right and per-path muscle IDs; exercise participation mappings require separate Biology review",
+      "rights": "First-party original vector art or confirmed reusable source; no scraped anatomy atlas, unlicensed tracing or unknown third-party stock",
+      "fallback": "Structured accessible muscle list and neutral shape if artwork unavailable; logging itself remains fully usable",
+      "productionEvidence": {
+        "filePath": null,
+        "sha256": null,
+        "sourceLicenseProof": null,
+        "designReview": null,
+        "anatomyReview": null,
+        "renderedQa": null
+      },
+      "lifecycle": "Briefed",
+      "filePaths": [],
+      "renderVerified": false,
+      "sourceRelation": {
+        "action": "new-required-if-no-suitable-approved-existing-anatomy-svg",
+        "existingAssetAuditRequired": true
+      },
+      "accessibleBehavior": "Focusable region+equivalent operable list, visible focus, readable legend; tap and keyboard both open same source-qualified breakdown; no color-only encoding",
+      "subject": "Adult neutral anatomical posterior body silhouette showing only supported superficial posterior muscle group shapes, anatomically accurate symmetrical left/right path geometry.",
+      "brief": "Produce an original anatomically accurate posterior back-view muscle-region vector matching BVA-0078 in proportions and pose. Neutral adult rear silhouette, arms gently offset from torso, legs naturally separated, with clearly mapped rear deltoids, traps/upper back, lats, erector spinae region, triceps/forearms, glutes, hamstrings and posterior calves only where surface anatomy supports them. Explicit separate left/right path IDs grouped to the reviewed canonical taxonomy. Keep shoulder blade/back anatomy plausible; no invented separated muscles, false internal anatomy, labels, text, baked-in data or user-specific body attributes. Deliver source SVG with region map JSON and CSS-tokenized neutral/selected/disabled states consistent with anterior companion.",
+      "pathIdConvention": {
+        "example": "muscle-back-hamstrings-right",
+        "requiredMapping": "All enabled SVG path ids must have an explicit one-to-one mapping to a supported canonical group; neutral geometry noninteractive; bilateral paths may share group."
+      },
+      "reviewCriteria": [
+        "Geometry corresponds to actual superficial orientation and muscle coverage",
+        "No fictional measured activation intensity",
+        "Screen-reader alternate list and pointer+keyboard parity",
+        "Mobile touch testing and light/dark contrast",
+        "Path IDs consistent with independently versioned mapping",
+        "Actual source files and SHA plus licensed origin confirmed",
+        "No auto promotion to integrated or anatomy-approved"
+      ]
+    }
+  ]
+}

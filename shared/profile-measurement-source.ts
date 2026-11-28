@@ -1,11 +1,13 @@
+import {birthYearSchema} from './profile-demographics';
 import {z} from "zod";
 import {parseHeightEntry,parseMassEntry} from "./measurement-entry";
 const token=z.string().max(128).regex(/^[ \t]*(?:\d+(?:\.\d*)?|\.\d+)[ \t]*$/);
 export const profileMeasurementFieldsSchema=z.object({
+ birthYear:birthYearSchema.optional(),
  height:z.object({unit:z.enum(["cm","m","ft-in"]),primary:token,inches:z.union([z.string().max(128).regex(/^[ \t]*$/),token])}).strict().refine(value=>(value.unit==="ft-in"||value.inches==="")&&parseHeightEntry(value).kind==="valid").optional(),
  weight:z.object({unit:z.enum(["kg","lb"]),value:token}).strict().refine(value=>parseMassEntry(value).kind==="valid").optional(),
 }).strict();
-export const profileMeasurementWriteSchema=z.object({version:z.literal(1),expectedRevision:z.union([z.literal("none"),z.string().uuid()]),fields:profileMeasurementFieldsSchema}).strict();
+export const profileMeasurementWriteSchema=z.object({version:z.literal(1),expectedRevision:z.union([z.literal("none"),z.string().uuid()]),fields:profileMeasurementFieldsSchema.omit({birthYear:true})}).strict();
 export type ProfileMeasurementWrite=z.infer<typeof profileMeasurementWriteSchema>;
 export type ProfileMeasurementFields=z.infer<typeof profileMeasurementFieldsSchema>;
 export type ProfileMeasurementSource={available:false}|{available:true;revision:string;fields:ProfileMeasurementFields};

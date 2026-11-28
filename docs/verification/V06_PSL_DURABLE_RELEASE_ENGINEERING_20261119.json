@@ -1,0 +1,49 @@
+{
+  "scope": "P2 bounded technical persistence proof; synthetic reviewed fixture only",
+  "date": "2026-11-19",
+  "states": {
+    "manifestAndDigest": "IMPLEMENTED_AND_TESTED",
+    "twoCleanIsolatedPGliteRestores": "IMPLEMENTED_AND_TESTED",
+    "futureInvestigationRetrieval": "IMPLEMENTED_AND_TESTED_SYNTHETIC",
+    "withdrawalSurvivesReleaseRollback": "IMPLEMENTED_AND_TESTED",
+    "databaseAppendOnlyGuards": "IMPLEMENTED_AND_TESTED",
+    "actualGeminiCandidateIndependentlyVerified": "NOT_TESTED",
+    "realRightsReviewedCorpusInstalled": "NOT_TESTED",
+    "productionMigration": "NOT_INSTALLED",
+    "clinicalRelease": "NOT_AUTHORIZED",
+    "fullV06RC": "NOT_COMPLETE"
+  },
+  "tests": {
+    "focusedReleaseRetrievalStorageBiologySchema": "25 PASS",
+    "typecheck": "PASS",
+    "productionBuild": "PASS",
+    "earlierBroadRun": "928 total:927 PASS,1 schema inventory expected-list failure; expected list updated and focused schema assertions PASS; no clean exact-head full suite claimed"
+  },
+  "proof": [
+    "Identical immutable manifest and existing biological registry fingerprints after restore into two fully fresh isolated databases",
+    "Idempotent restore; same release ID/different digest and same graph version/different fingerprint rejected",
+    "Future retrieval reads restored source review; null finding preserved",
+    "Durable withdrawals remain after old-release replay and authority omission; unrelated source retrieval protected by original helper fixtures",
+    "DB triggers reject rewriting/deleting immutable manifest or withdrawal rows",
+    "Authority change rolls back all graph/manifest writes",
+    "Corrupt persisted graph refused on retrieval",
+    "Private observation/prompt/provider-response fields and arbitrary entity metadata excluded by strict manifest; free prose still requires independent nonpersonal review",
+    "Trusted external authority must independently approve the exact release digest; self-declared manifest review flags cannot restore a new digest",
+    "Source/rights withdrawals observed during retrieval persist before later authority omission"
+  ],
+  "persistence": {
+    "graph": "Existing biology_versions/entities/sources/relationships/link tables",
+    "additiveTables": [
+      "biology_scientific_releases",
+      "biology_scientific_withdrawals"
+    ],
+    "migration": "migrations/proposed/0018_biology_scientific_releases.sql",
+    "installation": "Explicit composition only; no application startup installer, provider invocation or production/private query"
+  },
+  "limits": [
+    "Current external withdrawal authority is mandatory after full database reset; historical manifest cannot supply permission",
+    "PGlite proves isolated Postgres mechanics, not an actual Neon/production reset",
+    "No automatic model promotion, source truth, clinical acceptance, provider independence or model-weight training",
+    "P1 real bounded reasoning, scientific verifier and independent holdout evaluation remain open"
+  ]
+}

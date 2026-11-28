@@ -1,8 +1,11 @@
+import {labReferenceCorrectionSchema} from '../shared/lab-reference-correction';
 import {readProfileMeasurementSource} from "./profile-measurement-source";
+import {labReportMetadataSchema} from "../shared/lab-report-metadata";
 import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
-import { eq, sql } from "drizzle-orm";
-import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords,experimentVersions, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
+import { and,eq,ne, sql } from "drizzle-orm";
+import {activeMealPredicate} from './meal-save-state';
+import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords,labReportMetadataVersions, nutritionProducts, experienceSettings, experienceRecords,experimentVersions, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
 import { decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 
@@ -24,7 +27,7 @@ export class AccountExportStorage {
         return rows;
       };
       stage="journal";
-      const journal = checked(await tx.select().from(meals).where(eq(meals.userId,userId)).limit(50001));
+      const journal = checked(await tx.select().from(meals).where(and(eq(meals.userId,userId),activeMealPredicate())).limit(50001));
       stage="gut-samples";
       const samples = checked(await tx.select({id:microbiomeSamples.id,testDate:microbiomeSamples.testDate,testingCompany:microbiomeSamples.testingCompany,testId:microbiomeSamples.testId,structuredData:microbiomeSamples.structuredData,notes:microbiomeSamples.notes,processingStatus:microbiomeSamples.processingStatus,diversityIndex:microbiomeSamples.diversityIndex,uploadedAt:microbiomeSamples.uploadedAt}).from(microbiomeSamples).where(eq(microbiomeSamples.userId,userId)).limit(50001));
       stage="gut-bacteria";
@@ -41,12 +44,23 @@ export class AccountExportStorage {
       const [context] = await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       stage="biology-records";
       const precision = checked(await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})).map(historicalPlanRecord);
+      stage="lab-report-metadata";
+      const metadataTable=await tx.execute<{present:boolean}>(sql`SELECT to_regclass('public.lab_report_metadata_versions') IS NOT NULL AS present`);
+      const metadataRows=metadataTable.rows[0]?.present?checked(await tx.select().from(labReportMetadataVersions).where(eq(labReportMetadataVersions.userId,userId)).limit(50001)).map(({encryptedPayload,...record})=>({...record,payload:decryptPrecision(encryptedPayload,userId)})):null;
+      const rangeCorrections=metadataRows?.flatMap(({payload:raw,...record})=>{
+        const parsed=labReferenceCorrectionSchema.safeParse(raw);if(!parsed.success)return[];
+        const {requestFingerprint,...payload}=parsed.data;return[{...record,payload}];
+      })??null;
+      const reportMetadata=metadataRows?.flatMap(({payload:raw,...record})=>{
+        if(labReferenceCorrectionSchema.safeParse(raw).success)return[];
+        const {receiptHash,...payload}=labReportMetadataSchema.parse(raw);return[{...record,payload}];
+      })??null;
       stage="labels";
       const labels = checked(await tx.select().from(nutritionProducts).where(eq(nutritionProducts.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
       stage="experience-settings";
       const [settings] = await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
       stage="experience-records";
-      const experience = checked(await tx.select().from(experienceRecords).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
+      const experience = checked(await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'supplement-intent'))).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
       stage="experience-history";
       const historyTable=await tx.execute<{history_table:string|null}>(sql`SELECT to_regclass('experiment_versions')::text AS history_table`);
       const history=historyTable.rows[0]?.history_table?checked(await tx.select({id:experimentVersions.id,recordId:experimentVersions.recordId,encryptedPayload:experimentVersions.encryptedPayload,sourceCreatedAt:experimentVersions.sourceCreatedAt,sourceUpdatedAt:experimentVersions.sourceUpdatedAt,supersededAt:experimentVersions.supersededAt}).from(experimentVersions).innerJoin(experienceRecords,eq(experimentVersions.recordId,experienceRecords.id)).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})):null;
@@ -61,7 +75,7 @@ export class AccountExportStorage {
       const profileMeasurementSource=await readProfileMeasurementSource(tx,userId,profile);
       return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v2",derivedOutputPolicy:{historicalGeneratedRecords:"metadata-only",genomeFunctionalProfiles:"withheld",originalSourceObservations:"preserved"},exportedAt:new Date().toISOString(),profile,profileMeasurementSource,journal,
         gutReports:{samples,bacteria:bacteria.map(record=>({...record,genomeData:null,interpretationStatus:"stored_taxonomy_only"})),metabolites:historicalDerivedMetadata(compounds,"metabolite-prediction"),healthImpacts:historicalDerivedMetadata(impacts,"health-impact"),analyses:historicalAnalysisMetadata(analyses),recommendations:historicalDerivedMetadata(advice,"recommendation")},
-        biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision},
+        biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision,reportMetadata:{status:reportMetadata===null?"not-provisioned":"available",versions:reportMetadata,rangeCorrections}},
         savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience,history:{status:history===null?"not-provisioned":"available",versions:history}},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},
         limits:["Optional health-source sections are null with storage status not-provisioned when those tables are absent in an older deployment; this is distinct from a provisioned empty collection.","Sensitive health information. Store privately and share only with people you choose.","Original observations and units are preserved. Unsupported historical model concentrations, functional profiles, health effects, scores and advice are withheld; metadata records identify their existence. This does not delete stored history or validate a medical interpretation.","Includes the account-owned application records listed here. Excludes passwords, sessions, encryption keys, internal file paths, operational logs and request receipts, database backups and records held independently by external providers.","Downloading does not delete records, revoke permissions or stop future processing. Active-account erasure is a separate action; backup/vendor lifecycle handling is not included in this download."]};
     }); } catch(error) {

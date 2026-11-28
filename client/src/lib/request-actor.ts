@@ -1,3 +1,5 @@
+import {symptomMovementHeader,symptomMovementVersion} from '@shared/symptom-movement';
+import {setContextHeader,setContextVersion} from '@shared/training-set-context';
 /** Derived tab identity only. The signed server session remains the authority. */
 let actor: string | null = null;
 let epoch = 0;
@@ -39,6 +41,9 @@ export async function accountFetch(url: string, init?: RequestInit): Promise<Res
   const owned = ownedApi(url), assertCurrent = accountContextGuard();
   const headers = new Headers(init?.headers);
   headers.delete('X-Bloom-Actor');
+  headers.delete(setContextHeader);
+  headers.delete(symptomMovementHeader);
+  if (owned) {const origin=typeof window==='undefined'?'https://bloom.invalid':window.location.origin;if(new URL(url,origin).pathname.startsWith('/api/experience/')){headers.set(setContextHeader,setContextVersion);headers.set(symptomMovementHeader,symptomMovementVersion);}}
   if (owned && actor !== null) headers.set('X-Bloom-Actor', actor);
   const response = await fetch(url, { ...init, headers });
   if (owned) assertCurrent();

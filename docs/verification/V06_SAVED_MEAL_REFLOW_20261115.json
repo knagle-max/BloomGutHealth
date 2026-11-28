@@ -1,0 +1,43 @@
+{
+  "status": "ALREADY_VERIFIED",
+  "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
+  "baseLocal": "8258aa3fbd9b4ea4feae0e4d153d8a0648124734",
+  "problem": "Reproduced320px light/200% text overflow in Log this saved meal and Remove saved meal before changes",
+  "implementation": [
+    "Reuse existing scoped Food editorial heading; bounded wrapping saved-meal actions and intrinsic-safe fieldset",
+    "Only CSS import/classes in SavedMeals; log/reuse/edit/remembered correction/retry handlers and source payloads unchanged",
+    "No new images help the source/portion task; no BVA image publication, original media replacement or lifecycle promotion"
+  ],
+  "semanticProof": {
+    "file": "client/src/components/SavedMeals.tsx",
+    "normalizedSemanticSha256": "1eb1584ace2ed0928e941eb7438b7c6c904e398493aa932ae8bfcc59c6de44cf",
+    "result": "CSS import/classes only; every source/save/retry/portion/remembered-correction handler unchanged"
+  },
+  "sourceSha256": {
+    "client/src/components/SavedMeals.tsx": "58c8d105cf3d5613614830a9b7722f96245b5e107e2ed1504f9585a6a9cfc826",
+    "client/src/styles/food-editorial.css": "c570a83627fdac6a7871da68a8aef97ba6d5f41ee6d4814a24a34d161a59ce6b",
+    "scripts/qa/saved-template-retry-journey.mjs": "fd5ebb1ee49cd7d57cb1041aaab32d8543486c14f7704d4a748d2481d0e9b069",
+    ".github/workflows/neon_workflow.yml": "9a691dcdcfbbc48a9ec0830927fcd34b9c3fd464a993689fd438145c9bdac8b7"
+  },
+  "validation": {
+    "types": "PASS",
+    "productionBuild": "PASS; original scientific/R4/M1 media source/build fingerprints retained",
+    "layoutAndRetry": "PASS16 mode/viewport/theme states plus200% text; previous320px overflow removed; frozen pending inputs, exact retry receipt/body yields one row, subsequent explicit log creates a separate intent; inactive meal sources invalidated. Synthetic HTTP storage with real App.",
+    "actualEncryptedSourceJourney": "PASS actual App/API/encrypted SQL saved template \u21922x canonical ingredients \u2192independent first-ingredient correction \u2192explicit journal save. Original100g/20g recipe unchanged; saved150g/40g new entry; source error/retry and owner isolation;320px.",
+    "beforeAfter": "Source-asserted original SavedMeals module versus current; matched320/390 light/dark/everyday/athlete at100% and200% in /tmp/bloom-saved-ui-before and /tmp/bloom-saved-ui-after. Implementer inspected320light/200% pair. Baseline intentionally retains known overflow; after asserts none.",
+    "sourceAudit": "Only reviewed SavedMeals page hash updated in capability map; all52 feature entries and all521 biological identity records unchanged. Capability/biology checks pass.",
+    "exactCI": {
+      "sha": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+      "run": "43750257253",
+      "job": "132922420884",
+      "status": "SUCCESS",
+      "tests": "733/733",
+      "hosted": "Exact isolated binding, report lab/province/overlay exact retry and reauthentication, unchanged source observations, owned export/account erasure/other-account denial;72 deployed layout states,18 real-network media recovery placements and synthetic account cleanup"
+    }
+  },
+  "limits": [
+    "No independent brand/physical VoiceOver or full Food redesign approval claimed",
+    "Authentication style source8258aa3f is already locally tested and committed; this slice adds no auth behavior",
+    "Full v0.6 RC and other route/theme/Core tasks remain open; no main merge or production data changed"
+  ]
+}

@@ -11,7 +11,7 @@ import {
   nutrientDefinitions,
   recommendMeals,
 } from "../shared/meal-intelligence";
-import { weeklyRequestSchema } from "../shared/weekly-planner";
+import { eligiblePlanningRecipes, weeklyRequestSchema } from "../shared/weekly-planner";
 import { parseLabPaste } from "../shared/lab-paste";
 import { recipePreparation } from "../shared/recipe-preparation";
 import { goalGuidance } from "../shared/goal-guidance";
@@ -306,6 +306,16 @@ test("today endpoint uses only the authenticated account, validates dates/target
       other = await (await post({ ...body, plan: request }, "b")).json();
     assert.equal(own.eatenMeals, 1);
     assert.equal(other.eatenMeals, 0);
+    const dinnerRecipe=own.availableChoices.find((recipe:any)=>recipe.mealType==='main');
+    assert.ok(dinnerRecipe);
+    const selected=await post({...body,plan:request,choices:{dinner:{recipeId:dinnerRecipe.id,portion:.625}}});
+    assert.equal(selected.status,200);
+    const checked=await selected.json();assert.deepEqual(checked.requestedChoices,{dinner:{recipeId:dinnerRecipe.id,portion:.625}});
+    assert.equal((await post({...body,plan:request,choices:{dinner:{recipeId:'unknown',portion:1}}})).status,400);
+    assert.equal((await post({...body,plan:request,choices:{breakfast:{recipeId:dinnerRecipe.id,portion:1}}})).status,400);
+    assert.equal((await post({...body,plan:request,choices:{dinner:{recipeId:dinnerRecipe.id,portion:2.1}}})).status,400);
+    assert.equal((await post({...body,plan:request,choices:{dinner:{recipeId:dinnerRecipe.id,portion:1,userId:'b'}}})).status,400);
+
     assert.equal(
       (await post({ ...body, plan: request, userId: "b" })).status,
       400,
@@ -327,4 +337,41 @@ test('bounded planner explains unmet minimums and observed exclusions without re
  assert.equal(denied.tradeoffs,null);assert.equal(denied.status,'needs-context');
  const unknown=buildTodayPlan([{totalCalories:null,intelligence:{nutrients:[]}}],18,prefs,report,tight);
  assert.equal(unknown.tradeoffs,null,'Incomplete intake cannot be presented as a measured minimum shortfall');
+});
+
+test('explicit daily meal and fractional portion are preserved while the remaining day is rechecked',()=>{
+ const intake=[logged('breakfast'),logged('lunch')],before=JSON.stringify({intake,request});
+ const initial=buildTodayPlan(intake,18,prefs,report,request);
+ const main=initial.availableChoices.find(recipe=>recipe.mealType==='main')!;
+ const choices={dinner:{recipeId:main.id,portion:.625}};
+ const result=buildTodayPlan(intake,18,prefs,report,request,choices);
+ const dinner=result.meals.find(meal=>meal.slot==='dinner')!;
+ assert.ok(dinner);assert.equal(dinner.recipe.id,main.id);assert.equal(dinner.portion,.625);
+ assert.deepEqual(result.requestedChoices,choices);assert.deepEqual(result.unappliedChoices,[]);
+ assert.ok(dinner.recipe.foodIngredients.length);assert.ok(dinner.recipe.ingredients.some(ingredient=>ingredient.grams*.625%1!==0));
+ for(const check of result.checks)if(check.max!==null&&check.projected!==null)assert.ok(check.projected<=check.max+1e-6,check.key);
+ assert.equal(JSON.stringify({intake,request}),before,'Checking never mutates consumption or target inputs');
+ const weeklyOnly=weeklyRequestSchema.parse({...request,locked:{'d0-dinner':{recipeId:main.id,portion:2}}});
+ assert.deepEqual(buildTodayPlan(intake,18,prefs,report,weeklyOnly).requestedChoices,{},'Weekly locks are not daily meal choices');
+});
+test('ineligible or expired choices reject and oversized choices never silently shrink or substitute',()=>{
+ const initial=buildTodayPlan([],18,prefs,report,request),main=initial.availableChoices.find(recipe=>recipe.mealType==='main')!;
+ assert.throws(()=>buildTodayPlan([],18,prefs,report,request,{breakfast:{recipeId:main.id,portion:1}}),/no longer remaining/);
+ assert.throws(()=>buildTodayPlan([],18,prefs,report,request,{snack:{recipeId:main.id,portion:1}}),/no longer eligible/);
+ assert.throws(()=>buildTodayPlan([],18,prefs,report,request,{dinner:{recipeId:'not-a-recipe',portion:1}}),/no longer eligible/);
+ assert.throws(()=>buildTodayPlan([],18,prefs,report,request,{dinner:{recipeId:main.id,portion:0}}));
+ const full=[logged('breakfast',1200),logged('lunch',1200)];
+ const noFit=buildTodayPlan(full,18,prefs,report,request,{dinner:{recipeId:main.id,portion:2}});
+ assert.equal(noFit.status,'no-fit');assert.deepEqual(noFit.meals,[]);assert.deepEqual(noFit.unappliedChoices,['dinner']);
+ assert.match(noFit.warnings.join(' '),/no limits were relaxed/);assert.deepEqual(noFit.request.targets,request.targets);
+ const blocked=buildTodayPlan([],18,prefs,buildPrecisionReport([],contextSchema.parse({}),prefs,null),request,{dinner:{recipeId:main.id,portion:1}});
+ assert.equal(blocked.status,'needs-context');assert.deepEqual(blocked.availableChoices,[]);assert.deepEqual(blocked.meals,[]);
+});
+
+test('an explicit choice is revalidated against current exclusions and known upper-limit coverage',()=>{
+ const recipes=eligiblePlanningRecipes(prefs,[]).recipes;
+ const seafood=recipes.find(recipe=>recipe.mealType==='main'&&recipe.ingredients.some(ingredient=>ingredient.tags.includes('seafood')));
+ assert.ok(seafood,'Source menu has seafood to exercise changed preference eligibility');
+ const restricted=preferenceSchema.parse({...prefs,exclusions:['seafood']});
+ assert.throws(()=>buildTodayPlan([],18,restricted,buildPrecisionReport([],context,restricted,null),request,{dinner:{recipeId:seafood.id,portion:1}}),/no longer eligible/);
 });

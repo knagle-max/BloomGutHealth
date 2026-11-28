@@ -1,0 +1,24 @@
+{
+  "task": "V06-M2-B12-NO-UPPER-LIMIT",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "exposure": "LOCAL_PENDING_CURRENT_EXACT_CI",
+  "baseCommit": "13690ce8",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+  "retrievedOn": "2026-11-18",
+  "location": "Table3 B12 adult rows, footnotes14/f",
+  "change": [
+    "Adult EAR2/RDA2.4\u00b5g/day; no fabricated UL/AI/CDRR. Source-specific micrograms are not blood pmol/L or absorbed amounts.",
+    "Source note preserves older-adult food-bound absorption context and fortified-food/supplement discussion without inferring a personal absorption problem or suggesting a supplemental dose. No established UL is explicitly distinct from unlimited safety.",
+    "Existing public disclosure/profile applicability reused; no source record/producer, measurement or prescription changed."
+  ],
+  "verification": {
+    "sourceProfile": "20/20 source/schema/eligibility tests PASS including units/no-UL/age36\u201372 and no personal assessment.",
+    "apiAudits": "9/9 owned encrypted-context API and API/capability/Biology tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile B12RDA2.4\u00b5g/day, absentUL and absorption scope; prior all nutrient/iron assumptions/source/date/outage/owner/deep-link and32mode/theme/width/zoom states PASS,0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media PASS."
+  },
+  "limits": [
+    "Hold push while906 exact CI44335001853 catches up; do not relax source binding.",
+    "Full M2/C2/Core/RC unfinished. No private production data, manual deployment or independent human/device claim."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "task": "V06-M3-SB-UPC-10",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
+  "scope": "Reusable private catalogue label receipt; saving a label is not consumption.",
+  "compatibilityPrerequisite": {
+    "source": "dbe83bce3605776445980cc372a4c662b3b52ac4",
+    "liveDescendant": "d4659078710b30dd439ff4da0512ac35799dfae6",
+    "deploy": "dep-dbulcpglujjs73930lb0",
+    "liveAt": "2026-11-18T07:43:12Z"
+  },
+  "implementation": [
+    "Versioned strict command freezes label and nonce before dispatch. Same account+intent replays the original label ID/time; changed payload conflicts. Account lock serializes save/delete; recovery precedes active200-row limit. Existing encrypted nutrition_products only; no migration.",
+    "Deletion scrubs label and health-content hash into technical spent intent; old retries cannot recreate it. Explicit new entry generates fresh intent. Account deletion removes markers. Legacy clients/read/export remain compatible.",
+    "Unknown save outcome holds form and offers one same-command retry. Actor guard runs before queued requests and after responses; context-error retry cannot unlock uncertain draft. Original source0 versus unknown and frozen event snapshots retained.",
+    "Scoped supplement dialog grid/padding repaired for 320px and200% zoom without weakening content overflow assertion. No images/screenshots generated.",
+    "Confirmed intake requests pin a server-only receipt cutoff before any awaited source/transaction work; future create/correction rejected before provider lookup. Stored confirmation time is distinct from commit/change time; committed replay preserves original timestamps."
+  ],
+  "verification": {
+    "red": "Old writer created distinct IDs for concurrent same-intent submissions.",
+    "focused": "20/20 integrated receipt/product/budget/supplement HTTP/request-actor tests PASS; earlier7/7 export/erasure checks PASS (overlap).",
+    "actualBrowser": [
+      "4-code App\u2192HTTP\u2192encrypted SQL; failure before commit and lost reply after commit; frozen retry; actor change before React render sends no foreign POST; deleted committed label returns409; deliberate fresh entry; all4 rescan/reload; one explicit taken event and zero meals.",
+      "Common source/intake persistence and source60+dialog60 theme/width/zoom layouts PASS.",
+      "Branded food/manual label\u2192saved meal/daily card; source0/unknown; owner switch;320\u20131440px PASS."
+    ],
+    "types": "PASS",
+    "buildAndOriginalMedia": "PASS",
+    "fullRegression": "847/847 PASS,0 failed/skipped; latest confirmation-time change separately9/9 PASS, final App/API/SQL recovery, types/build/media and8 audit tests PASS.",
+    "confirmationTime": "RED reproduced actual HTTP200 after slow source advanced a future claim; fix passes9/9 timing/storage/API/reader tests. Future create/correction0 writes/lookups; valid slow create/correction pin confirmation time and replay once."
+  },
+  "limitations": [
+    "Full M2/M3/Food12/Response15/RC and independent science/device acceptance remain open.",
+    "Actual CI public NIH search returned no-authoritative-match for4codes; no product identity/absence or clinical verification inferred. Earlier workspace probe remains separate."
+  ],
+  "sourceCommit": "3b65e3bd2ebf152629a221899b67487abd2bd03d",
+  "publication": {
+    "renderStatus": "LIVE",
+    "deploy": "dep-dbum3149v7es738cp0ng",
+    "finishedAt": "2026-11-18T08:29:20.941665Z",
+    "ciRun": 44267196044,
+    "ciStatus": "pending",
+    "rebasedVerification": "11/11 relevant source/audit/timing tests and types PASS after preserving incoming standalone Advanced research code/docs. No manual deployment."
+  },
+  "qualifiedAncestry": {
+    "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+    "ciRun": 44267810669,
+    "jobId": 134677682928,
+    "status": "SUCCESS",
+    "fullTests": {
+      "passed": 851,
+      "failed": 0,
+      "skipped": 0
+    },
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "renderDeploy": "dep-dbum4vijnfac73bo68o0",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T08:33:37.046984Z",
+    "publicSourceObservation": "V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json"
+  }
+}

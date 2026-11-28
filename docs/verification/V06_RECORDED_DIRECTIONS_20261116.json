@@ -1,0 +1,34 @@
+{
+  "task": "V06-T2B-PAIRED-DIRECTIONS",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_FOR_IMPLEMENTED_SCOPE",
+  "baseCommit": "341ada7a32dca4773f7d2410d59bd368716183b2",
+  "change": "Aligned TG-down/LDL-or-ApoB-up observations remain visible without requiring an exceeded original source bound. Text describes recorded directions, without claiming clinical worsening, improvement, overall benefit or cause. All-marker assessments and original source-bound relevance remain unchanged.",
+  "validation": [
+    "15 focused panel/chronology tests PASS",
+    "Actual App read-only journey PASS: within-bound LDL/ApoB and absent TG bounds; opposite directions retained; mismatched report IDs/methods and unchanged TG abstain; original source values/IDs, owner withdrawal/no writes;48 mode/theme/320/390/768/1440/200% zoom+text states",
+    "Final TypeScript, source API/capability/Biology audits and production/source+built media checks PASS"
+  ],
+  "evidence": [
+    "/tmp/bloom-response-direction-unit.log",
+    "/tmp/bloom-response-direction-browser.log",
+    "/tmp/bloom-response-direction-types.log",
+    "/tmp/bloom-response-direction-audits.log",
+    "/tmp/bloom-response-direction-build.log"
+  ],
+  "pending": [
+    "Full Response#15 remains partial: source-cited contributors, adaptive context and conditional actions still in the active Core queue"
+  ],
+  "limits": "Synthetic data only. No actual private health query, clinical significance/urgency/causal score, medication recommendation, main merge or manual deployment.",
+  "qualification": {
+    "commit": "cacf81c30242f159453cb23be1df8a36b8d4075a",
+    "workflowRun": 43970831399,
+    "workflowJob": 133662225146,
+    "conclusion": "success",
+    "tests": 784,
+    "passed": 784,
+    "failed": 0,
+    "renderDeploy": "dep-dbto8atg1s2s73ednv60",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T22:33:01.164131Z"
+  }
+}

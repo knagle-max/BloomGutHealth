@@ -1,0 +1,54 @@
+{
+  "task": "V06-M3-CONFIRMED-SUPPLEMENT-CONTROLS",
+  "status": "RENDERED_USER_FLOW_VERIFIED_PENDING_EXACT_CI",
+  "baseCommit": "3b41fa0343d5d47d8a471d0873a8aa977ec775dd",
+  "scope": "Dedicated source review and explicitly confirmed dated supplement events; full M3 and v0.6 RC remain open.",
+  "implementation": [
+    "Existing encrypted Experience records/settings only; no schema migration, duplicate nutrition store or food inserts. Reviews, schedules and purchases never count as ingestion.",
+    "Owned frozen label or explicit unavailable source, nullable quantity, formulation/version/batch and elemental/compound/unknown mineral basis. No compound equivalents, absorbed dose, adequacy or treatment inference.",
+    "Account epoch checked before source resolution and transaction; replay before deleted-label lookup; immutable original and bounded corrections with CAS; latest exact edit replay only; individual removal scrubs health/source history and retains only opaque spent intent. Whole Experience erasure removes epoch and invalidates old requests.",
+    "Private paginated reader and canonical source review/create/correct/remove routes inherit existing active-account auth, no-store, shared write budget and local resource limiter. Generic writers remain denied.",
+    "Nutrition History and Athlete source recording share one component, protocol compatibility check, response ownership validation, actor guards, explicit preview/confirmation, recoverable immutable uncertain save/removal attempts and current-only source history. No chart/art/navigation replacement."
+  ],
+  "verification": {
+    "focused": "10/10 source/storage/API/Experience tests PASS on actual synthetic encrypted PGlite and HTTP. Concurrent corrections and racing removal, owner/erasure/future/unknown cases included.",
+    "auditsAndBudget": "8/8 route-budget/capability/API inventory tests PASS; all new mutating aliases fail closed before route work when shared store unavailable.",
+    "browser": "Actual App \u2192 HTTP \u2192 encrypted PGlite PASS: review produces zero events, two explicit events; lost-save exact replay after catalog deletion; one-row correction and history; scrubbed removal/lost-response retry; unknown quantity/label; GET outage/recovery; owner and canonical mode persistence; no duplicate meal contribution. Live session-change notification also withdraws an open private dialog and reloads the new account without a page reload; no cross-account draft/card leak.",
+    "responsive": "60 modal states: Everyday/Athlete \u00d7 light/dark \u00d7320/390/768/1024/1440 \u00d7 normal/200% text/200% page zoom. Keyboard Escape and fit/content geometry assertions PASS. Fixed implicit grid min-content overflow at320px enlarged text with explicit minmax grid column.",
+    "visual": "Actual390px Everyday/Athlete dark and1440px Everyday/768px Athlete captures personally inspected: readable mode tokens, bounded dialog, mobile single-column and wider two-column input layout.60 fit/zoom states PASS. Independent design acceptance and physical VoiceOver NOT TESTED.",
+    "types": "npm run check PASS",
+    "build": "npm run build PASS including original source/built media verifiers.",
+    "fullRegression": "834/834 PASS,0 failures/skipped;555350ms. Full current intake/ownership checkpoint. Rebase added Architect documentation only; implementation unchanged.",
+    "liveData": "No private production reads/writes or manual deploys; isolated synthetic fixtures only.",
+    "ciIntegration": "Existing private source-context browser CI step also runs confirmed-intake flow in the same real HTTP/PGlite fixture; all prior source assertions retained. Local combined source + intake run PASS with all prior label/generic-source/Progress/owner/unknown/reload assertions intact."
+  },
+  "remaining": [
+    "Qualify this exact publication with CI and review runtime.",
+    "Canonical food + confirmed-supplement source join exactly once; reference eligibility/form/UL/B6 context and method-qualified usual intake remain incomplete.",
+    "Remaining approved Core/Response and integrated independent RC acceptance."
+  ],
+  "handoffAlignment": "Preserved incoming Architect documentation through0758526f. Science-first consumer-simple directive read: one recording purpose and explicit next action; source fields/chemical distinctions needed for review; formulation optional, source amounts/original history behind disclosure. No app-wide redesign, new app/service/store or clinical advice.",
+  "outcomeStates": {
+    "SPECIFIED": "Approved M3 dated confirmed supplement requirement",
+    "CODE_PRESENT": "Dedicated canonical source/lifecycle/routes/shared UI/tests",
+    "ENGINEERING_TESTED": "834/834 full regression plus focused budget/API/source, types/build PASS",
+    "RENDERED_USER_FLOW_VERIFIED": "Actual synthetic App/HTTP/SQL + combined existing source browser PASS",
+    "HOSTED_VERIFIED": "Exact review Render commit live; exact CI pending. Authenticated hosted browser unavailable through403 proxy; synthetic rendered flow verified locally, not inferred hosted.",
+    "SCIENCE_SECURITY_LEGAL_ACCEPTED": "Independent acceptance not inferred from engineering tests"
+  },
+  "publication": {
+    "commit": "dd3d2321eeb86f4ec0d053272de0955b76aedb99",
+    "reviewRender": {
+      "status": "live",
+      "deploy": "dep-dbuhj8s9v7es7387i1o0",
+      "finishedAt": "2026-11-18T03:22:50.582996Z"
+    },
+    "exactCi": {
+      "run": 44229810435,
+      "status": "completed",
+      "conclusion": "failure",
+      "failedJob": 134553756174,
+      "reason": "New browser screenshot helper hard-coded /workspace, which is unwritable on GitHub runner. Existing source/write assertions reached artifact creation; no full CI claim. Portable tmpdir/env override repair included in subsequent joined-source commit. Latest incoming owner policy removes routine helper screenshot IO entirely while preserving functional assertions."
+    }
+  }
+}

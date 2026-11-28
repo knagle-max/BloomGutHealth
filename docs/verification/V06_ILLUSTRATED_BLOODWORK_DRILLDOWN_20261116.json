@@ -1,0 +1,30 @@
+{
+  "task": "T1d-unified-illustrated-bloodwork",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "requirements": "docs/architecture/BLOODWORK_PROGRESS_UNIFIED_ILLUSTRATED_DRILLDOWN_20261115.md",
+  "implementation": [
+    "Existing LabExplorer reused with illustrated category summaries inside BloodworkAtlas",
+    "Existing LabTrend, education, report overlays and source rows retained",
+    "Progress retains non-lab observations and links to canonical illustrated flow",
+    "Legacy group/marker and point/first/second URL values forward with replace navigation",
+    "CBC and Iron use distinct supplied original assets; no image bytes altered"
+  ],
+  "testsPassed": [
+    "12 lab explorer/history/content/registry unit checks",
+    "TypeScript",
+    "Initial actual50-row Atlas journey:16 responsive states,200% text,all categories\u2192inline marker detail,original source focus,legacy selection forwarding,Progress non-lab sections and second-owner withdrawal",
+    "Expanded320/390 light/dark numeric chart200% PASS; actual category/detail screenshots captured",
+    "Complete92-label/552-source-row education/comparison/revision/overlay/units/5width/offline/source-withdrawal/other-owner browser regression PASS",
+    "All9 supplied category images explicitly scrolled into view and network-failed; fallback while selected chart remains usable PASS",
+    "Production build PASS; original34 optimized image/SVG source and built bytes preserved"
+  ],
+  "pending": [
+    "Exact publication/CI/hosted qualification",
+    "Independent integrated RC review"
+  ],
+  "limits": [
+    "No new clinical calculations, source writes or authorization changes",
+    "No physical VoiceOver or independent final RC approval claimed"
+  ],
+  "screenshots": "/tmp/bloom-inline-atlas/inline-ldl-{320,390}-{light,dark}.png"
+}

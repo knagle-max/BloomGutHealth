@@ -9,3 +9,17 @@
 @import './bloom-visual-scoped.css' layer(bloom-premium);
 
 @import "./r4-integration.css" layer(bloom-premium);
+
+@import "./visual-asset-fallback.css" layer(bloom-premium);
+@import "./navigation-shell.css" layer(bloom-premium);
+@import "./auth-shell.css" layer(bloom-premium);
+@import "./bloodwork-atlas.css" layer(bloom-premium);
+@import "./biology-source-banners.css" layer(bloom-premium);
+@import "./scientific-chart-tokens.css" layer(bloom-premium);
+@import "./scientific-chart-laboratory.css" layer(bloom-premium);
+@import "./scientific-chart-comparison.css" layer(bloom-premium);
+@import "./scientific-chart-integration.css" layer(bloom-premium);
+
+/* Scoped component overrides must outrank unlayered legacy relationship-card rules. */
+@import "./lab-marker-editorial.css";
+@import "./microbiome-editorial.css";

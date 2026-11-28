@@ -1,9 +1,10 @@
+import ActivityRoutines from '@/components/ActivityRoutines';
 import { bloomCopy } from "@/content/bloomCopy";
 import {reportDateText} from "@shared/report-dates";
 import {useLocalClock} from "@/lib/use-local-clock";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
-import { useExperience } from "@/lib/experience";
+import { localDate, useExperience } from "@/lib/experience";
 import TodayStatus from "@/components/TodayStatus";
 import TodayFocus from "@/components/TodayFocus";
 import TodayFoodSummary from "@/components/TodayFoodSummary";
@@ -78,19 +79,27 @@ export default function Dashboard() {
     <main className="bloom-dashboard">
       <div className="dashboard-heading">
         <div>
-          <p className="eyebrow">{bloomCopy.today.eyebrow}</p>
+          <div className="today-heading-meta">
+            <p className="eyebrow">{bloomCopy.today.eyebrow}</p>
+            <time className="today-local-date" dateTime={localDate(now)}><CalendarDays size={16} aria-hidden="true"/>{date}</time>
+          </div>
           <h1>{bloomCopy.today.h1}</h1>
           <p className="panel-note">{bloomCopy.today.takeaway}</p>
         </div>
-        <span className="date-pill">
-          <CalendarDays size={16} />
-          {date}
-        </span>
       </div>
 
-      <TodayFocus now={now} mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={checkingMeals} journalError={mealError} />
-      <TodayFoodSummary summary={summary} loading={checkingMeals} error={mealError} energyUnit={settings.displayUnits.energy}/>
-      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={checkingMeals} unavailable={mealError} />
+      <div className="today-primary-workspace">
+        <TodayFocus now={now} mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={checkingMeals} journalError={mealError} />
+        <section className="today-day-column" aria-labelledby="today-day-heading">
+          <h2 id="today-day-heading">Your day so far</h2>
+          <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={checkingMeals} unavailable={mealError} />
+        </section>
+      </div>
+      <details className="workspace-disclosure today-food-details" open={mealError || undefined}>
+        <summary>Food details</summary>
+        <TodayFoodSummary summary={summary} loading={checkingMeals} error={mealError} energyUnit={settings.displayUnits.energy}/>
+      </details>
+      <ActivityRoutines/>
       {(checkingMeals || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>
       <summary>Nutrition so far</summary>
@@ -189,7 +198,7 @@ export default function Dashboard() {
           <Skeleton className="h-24 w-full mt-4" />
         ) : summary.meals.length ? (
           <div className="meal-list">
-            {summary.meals.map((meal) => (
+            {summary.meals.slice(0, 3).map((meal) => (
               <Link key={meal.id} href="/nutrition" className="meal-row">
                 <span className="meal-icon">
                   <Utensils size={19} />
@@ -220,6 +229,11 @@ export default function Dashboard() {
               <h3>No meals yet</h3>
             </div>
           </div>
+        )}
+        {!checkingMeals && !mealError && summary.meals.length > 0 && (
+          <Link href="/nutrition" className="text-link inline-flex min-h-11 items-center gap-2 mt-2" aria-label="View all food journal entries">
+            View all <ChevronRight size={16} aria-hidden="true" />
+          </Link>
         )}
       </section>}
       {hasSettings && !checkingMeals && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}

@@ -22,7 +22,7 @@ export default function AppHeader({
   const [location] = useLocation();
   const {mode}=useExperience();
   const [menuOpen, setMenuOpen] = useState(false);
-  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
+  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location === "/pain-preview" ? "Pain & discomfort" : location === "/body-map-preview" ? "Explore body regions" : location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
   return (
     <header className="bloom-header">
       <div className="bloom-header-inner">
@@ -35,7 +35,7 @@ export default function AppHeader({
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild><Button className="mobile-menu-trigger" variant="ghost" size="icon" aria-label="Open navigation"><Menu size={20} /></Button></SheetTrigger>
             <SheetContent side="left" className="mobile-navigation-sheet">
-              <SheetHeader><SheetTitle>Explore Bloom</SheetTitle><SheetDescription>Your daily tools and health information.</SheetDescription></SheetHeader>
+              <SheetHeader className="mobile-navigation-heading"><SheetTitle>Explore Bloom</SheetTitle><SheetDescription>Your daily tools and health information.</SheetDescription></SheetHeader>
               <NavigationLinks onNavigate={() => setMenuOpen(false)} />
               {onToggleDarkMode&&<Button type="button" variant="outline" className="mt-6 min-h-[44px]" data-testid="button-menu-theme-toggle" onClick={()=>{onToggleDarkMode();setMenuOpen(false);}}>Switch to {isDarkMode?'light':'dark'} mode</Button>}
             </SheetContent>

@@ -1,0 +1,39 @@
+{
+  "task": "V06-M2-ZINC-K-SODIUM-REFERENCE-COVERAGE",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "baseCommit": "d3243edd",
+  "sources": [
+    "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
+    "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html"
+  ],
+  "retrievedOn": "2026-11-18",
+  "scope": [
+    "Sodium2019 adult AI1500/CDRR2300mg/day, never UL/normal interval/treatment target; saved planner targets unchanged.",
+    "VitaminK adult maleAI120/femaleAI90\u00b5g/day, no establishedUL and no below-AI deficiency or all-K-form estimate from phylloquinone.",
+    "Zinc maleEAR9.4/RDA11, femaleEAR6.8/RDA8, shared totalUL40mg/day. Retain explicit mixed-diet basis for zinc and iron requirements; actual diet is not inferred from preferences or sparse logs. No vegetarian multiplier or absorption estimate.",
+    "Source values remain public/general. Unknown dietary pattern retracts only iron/zinc requirement applicability badges, not facts or their sharedUL. Earlier local male-iron matching is superseded by this more specific source-basis guard.",
+    "59adult nonpregnant/nonlactating rows across13existing nutrient fields. Generic21 producers and all source observations remain unchanged. Other life stages/usual-intake methods remain separate work."
+  ],
+  "verification": {
+    "focused": "23/23 source/schema/profile tests PASS: AI/CDRR/noUL, source units, sex categories, source-diet guard and no target/dose/adequacy inference.",
+    "apiAudits": "9/9 scoped encrypted-context API and API/capability/Biology audit tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile: sodiumAI/CDRR distinct and noUL; KAI120 noUL; public zinc11/8 with no assumed actual diet, iron source assumptions retained; all previous source/date/outage/account/deep-link plus32mode/theme/width/zoom states PASS,0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media PASS.",
+    "broader": "878/878 integrated tests passed at preceding iron/B12/weight snapshot. This source-only delta has scoped tests above; no new full-suite count claimed."
+  },
+  "qualifiedParent": {
+    "commit": "906416646518377e3d1db6a263308b50a478bfc7",
+    "workflow": 44335001853,
+    "job": 134909272392,
+    "conclusion": "success",
+    "unit": "871/871PASS0failed/skipped",
+    "hosted": "Exact binding/privacy/recovery and navigation/media PASS",
+    "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
+    "render": "dep-dbus5ke1egvs73b95vi0",
+    "liveAt": "2026-11-18T15:24:39.246874Z"
+  },
+  "limits": [
+    "Next exact commit CI/Render pending; full M2/C2/Core/RC unfinished.",
+    "No production data access/manual deployment, clinical assessment or independent human/device claim."
+  ]
+}

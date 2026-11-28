@@ -1,0 +1,42 @@
+{
+  "version": "20261126-owner-authorized-integration",
+  "sourceBundleSha256": "27f0b34cce364a2a294bb4151d3551d2433456b1b451e5221139fed23bf9042f",
+  "files": {
+    "front-everyday.svg": {
+      "sha256": "193074bc318c76980904919def5ea1fad184b90144804db95607ab3011a84a08",
+      "sourceFile": "variants/bloom-front-image-right-serratus-thigh-review-everyday.svg",
+      "status": "OWNER_FRONT_PLACEMENT_APPROVED"
+    },
+    "front-athlete.svg": {
+      "sha256": "6eac8a3a0391327a7b63a71a7b5322c9f63c2415902923a43ccf71b69236ef63",
+      "sourceFile": "variants/bloom-front-image-right-serratus-thigh-review-athlete.svg",
+      "status": "OWNER_FRONT_PLACEMENT_APPROVED"
+    },
+    "back-everyday.svg": {
+      "sha256": "e223f52a9a625d0f4a9163616de5673fac935102cd502deb6369841954a19ef3",
+      "sourceFile": "assets/bloom-back-visual-restored-v434-everyday.svg",
+      "status": "EXACT_LOCAL_V434_RESTORATION_OWNER_CODE_INTEGRATION_AUTHORIZED"
+    },
+    "back-athlete.svg": {
+      "sha256": "a238260579dfe6d1eb3f1183ba9c64e45fac7d920cef61ef8d3fe0a4c5794e23",
+      "sourceFile": "assets/bloom-back-visual-restored-v434-athlete.svg",
+      "status": "EXACT_LOCAL_V434_RESTORATION_OWNER_CODE_INTEGRATION_AUTHORIZED"
+    }
+  },
+  "interaction": "Separate frozen V433 provisional footprints; never canonical muscle participation or personal observations",
+  "defaultTargets": {
+    "front": 24,
+    "back": 20
+  },
+  "authority": "Owner approved front placements, then expressly authorized code changes and GitHub publication; Render/network holds retained",
+  "interactionFiles": {
+    "INTERACTION_CONTRACT_DIFF_V433.json": "c553f7048f993763ed274c5735bf175a72163a1b7f60a8b913e726ab244ab8dc",
+    "LIST_ONLY_RESIDUALS.json": "136ea9129d5615a9cb921cdb675cd477f77fae2fbed65188ced4a1b53a725a82",
+    "PATH_CROSSWALK_V433_PROVISIONAL.csv": "35aa95a5cfbe08029a6fcc6bdb763bf045dbbdc6f93944b85ce45c7c20c41bc1",
+    "back-athlete.svg": "fcf9dbd55a451fd9d56e2b05e532526e4a304ec094ea8928e2b8f17748f26585",
+    "back-everyday.svg": "4a4786228837ba4ba7284e0f9d81cfeb9a77b6e272148ea14c3242ea62313b3b",
+    "front-athlete.svg": "c5d7378dac7a10e4cbe2e777f3fa4b92d00d9e71a450620ec62ff2cd78cd4fce",
+    "front-everyday.svg": "dc158ba777582e1efea40b95fd1eaa869b2bea7894d655149ba6f467f622adb1"
+  },
+  "interactionSourceArchiveSha256": "49b6c0373d29ef75321184c7261e5d7aacb2c24cd4850f59e85e977002c22ad5"
+}

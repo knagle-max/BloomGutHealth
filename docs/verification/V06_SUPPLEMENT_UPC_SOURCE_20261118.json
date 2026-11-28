@@ -1,0 +1,59 @@
+{
+  "task": "V06-M3-SB-UPC-01-15",
+  "phase": "Exact lookup/native source/private fallback; catalogue receipt reader before later producer",
+  "status": "VERIFIED_IN_D357_ANCESTRY",
+  "baseCommit": "2c4e56db9f6532dad15a783a854c9f980fb7c273",
+  "handoff": "docs/architecture/BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md",
+  "implementation": [
+    "Valid UPC dispatches a bounded quoted NIH search; max3 authoritative labels checked, actual upcSku whole GS1 strings only, grouped/padded equality. Hit title/code/NPN do not establish a match. Existing strict rank, own saved labels first, USDA/text/OFF licensing gates preserved.",
+    "Distinguish invalid/private/exact/unverified/no-match/unavailable. Refresh full label on selection and barcode recheck; source ID mismatch/404/429/network/schema failure never becomes verified substitute. Shared+local NIH12/min ceiling and bounded cached public source data; private rows never in shared source cache.",
+    "Source-native ingredient names/amounts/operators/units preserved separately from app-unit fields, including enzyme activity units and ambiguous equivalents. Original source values visible in ProductPicker/meal/intake disclosures; no double counting, dosing, absorption or adequacy claim.",
+    "Barcode-prefilled one-action private manual fallback; leading zeros retained, unnecessary default21-field supplement form replaced with explicit amount selection. Saved labels reused on rescan. Stale errors/results and another actor private draft withdrawn. Source label date/historical caution and serving variants visible for explicit selection.",
+    "Canonical private label reader/deleter supports future versioned save envelopes and opaque spent-label markers; SQL excludes markers before200 active limit, deletion scrubs label+health-content hashes. No new envelope producer is active in this phase; reader must be live before adding post-commit label-save recovery. No new table or schema migration."
+  ],
+  "verification": {
+    "regressions": "36/36 focused adapter/search/budget/label-source/reader/export/erasure tests PASS; final17 source/reader regressions PASS (overlap), latest clean browser also checks reported protein0 retained before save, after503 and in encrypted SQL.",
+    "ui": "Actual App\u2192HTTP\u2192encrypted PGlite PASS: all4owner UPC strings in fallback; quoted/full-source verified fixture and original1200GDU display; stale source recheck; historical variants not auto-selected; simulated camera permission denial; private save/reload/rescan and account isolation; lookup/review0intakes, explicit taken/lost-reply exact retry1event and0meal inserts. New supplement nutrient selection hides unselected fields;5 responsive widths/keyboard PASS. No physical camera/VoiceOver or actual NIH coverage claimed.",
+    "commonUi": "Combined existing label/generic + M3 source App/HTTP/SQL/owner/outage and responsive source/modal flow PASS after adapter changes, before latest manual-field selection (food form unchanged).",
+    "types": "Final npm run check PASS",
+    "build": "Final npm run build PASS including all original source/built media verifiers",
+    "liveProvider": "Actual production Node-fetch probe2026-11-18T06:59:30Z: all4provider-unavailable/network; sourceShapes empty. Earlier urllib official guide/API attempts proxy tunnel403. Not independently verified real matches or no-hits. One-time marker-requested CI public probe can observe from a different permitted environment; no repeated default CI network probes.",
+    "data": "No private production reads/writes, paid vendor, OFF activation, NPN linkage, automatic consumed event, merge or manual production deployment.",
+    "sourceAudits": "API/capability/Biology inventories refreshed;798 scanned source files,523 identities and DRAFT scientific state unchanged. 8/8 final focused API/capability/Biology audit tests PASS."
+  },
+  "outcomeStates": {
+    "SPECIFIED": "Approved exact lookup/private fallback and source-truth contract",
+    "CODE_PRESENT": "Lookup, typed outcome, native declarations, fallback UI, compatibility reader/deleter, tests",
+    "ENGINEERING_TESTED": "Focused tests/actual HTTP SQL browser proof above; final source gates pending",
+    "RENDERED_USER_FLOW_VERIFIED": "Synthetic actual App flow, not a static mockup or live-provider proof",
+    "LIVE_PROVIDER_VERIFIED": "BLOCKED_TECHNICAL: workspace network/proxy; actual source field shapes TO_VERIFY",
+    "HOSTED_VERIFIED": "Not yet this phase; parent joined-source2c4e56db exact CI44248177191 SUCCESS",
+    "SCIENCE_SECURITY_LEGAL_ACCEPTED": "Independent acceptance not inferred; NIH submission is not regulatory package certification"
+  },
+  "remaining": [
+    "Publish/qualify reader compatibility before private catalogue save-command producer.",
+    "Finish SB-UPC-10: recover a reusable-label POST after committed lost response, conflict/replay/deleted intent and frozen explicit retry without duplicating/resurrecting the label. Confirmed-intake idempotence is already verified; it is distinct from catalogue save recovery.",
+    "Observe actual provider query/body from permitted CI when available; unknown shape/coverage never becomes fake product or compulsory source gate. Canadian NPN integration not added without independent SKU linkage.",
+    "Remaining compatible nutrient coverage/subtotals, M2 references/forms/UL/B6, Food/Response and integrated RC."
+  ],
+  "sourceCommit": "dbe83bce3605776445980cc372a4c662b3b52ac4",
+  "publicationQualification": {
+    "compatibleReaderLiveCommit": "d4659078710b30dd439ff4da0512ac35799dfae6",
+    "renderDeploy": "dep-dbulcpglujjs73930lb0",
+    "liveAt": "2026-11-18T07:43:12Z",
+    "ciRun": 44259741600,
+    "ciStatus": "FAILURE",
+    "failure": "Saved nutrient source/contribution browser: scoped supplement dialog at Athlete/light/320px/page zoom200%; public UPC probe not reached. Fix and full120-state rerun pass in follow-up label-save slice."
+  },
+  "latestQualification": {
+    "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+    "ciRun": 44267810669,
+    "jobId": 134677682928,
+    "status": "SUCCESS",
+    "testsPassed": 851,
+    "failed": 0,
+    "allHostedAndNeonGates": "PASS",
+    "publicProbe": "V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json",
+    "coverage": "Four no-authoritative-match outcomes; private fallback verified, no actual product identity or universal absence claim."
+  }
+}

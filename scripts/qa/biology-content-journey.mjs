@@ -14,7 +14,7 @@ await page.route('**/api/**',async route=>{const request=route.request(),p=new U
 const sheet=page.getByRole('dialog'),close=async()=>{await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);};
 const row=name=>page.getByRole('button',{name:name+',',exact:false});
 try{
- await page.goto('http://127.0.0.1:5233/microbiome');await page.getByRole('button',{name:'Bacteria',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),98);
+ await page.goto('http://127.0.0.1:5233/microbiome');await page.getByRole('button',{name:'Organisms',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),98);
  for(const entry of registry.reportedFixtureOrganisms){
   await row(entry.reportedName).first().click();const profile=organismBiography(entry.reportedName);
   const intro=sheet.locator('.microbial-organism-intro');await intro.getByText(profile.firstLayer.meetThisOrganism,{exact:true}).waitFor();
@@ -32,7 +32,7 @@ try{
  await row('Eubacterium hallii').click();await sheet.locator('.microbial-organism-intro').getByText(organismBiography('Anaerobutyricum hallii').firstLayer.meetThisOrganism,{exact:true}).waitFor();await sheet.getByText('Sources & limitations',{exact:true}).click();assert.equal(await sheet.getByRole('link',{name:/Reclassification of Eubacterium hallii/}).getAttribute('href'),'https://pubmed.ncbi.nlm.nih.gov/30351260/');await close();
  await row('Anaerobutyricum hallii').nth(1).click();await sheet.getByText('The label “Anaerobutyricum hallii” needs a resolved taxonomic identity before Bloom can describe its biology.',{exact:true}).waitFor();assert.equal(await sheet.getByRole('heading',{name:'Why researchers study it',exact:true}).count(),0);await close();
  for(const testMode of ['everyday','athlete']){
-  mode=testMode;await page.goto('http://127.0.0.1:5233/microbiome');await page.getByRole('button',{name:'Bacteria',exact:true}).click();
+  mode=testMode;await page.goto('http://127.0.0.1:5233/microbiome');await page.getByRole('button',{name:'Organisms',exact:true}).click();
   for(const width of [320,390,768,1440])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:950});await setAppTheme(page,theme);
    for(const name of ['Eubacterium hallii','Abiotrophia defectiva','Ruminococcus gnavus ATCC 29149']){

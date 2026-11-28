@@ -342,6 +342,7 @@ export default function ManualGenetics({
                   {e.canonicalGene || e.gene} · {e.rsid}: {e.genotype}
                 </strong>
                 {e.sourceCall&&<p className="panel-note">Original call token: {e.sourceCall.original} · normalized unphased call: {e.genotype}. No strand or build conversion.</p>}
+                {e.education&&<div className="space-y-2"><p>{e.education.geneRole}</p><p>{e.education.variantMeaning}</p><p className="panel-note">General research · {e.education.evidence}. Education version: {e.education.version}. Source identity does not establish a personal effect.</p><a href="#genotype-explanations" className="text-link inline-flex min-h-11 items-center">View research sources and limits after saving</a></div>}
                 <p>
                   {e.reviewed
                     ? e.genotype === "--"

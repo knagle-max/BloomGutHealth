@@ -1,0 +1,56 @@
+{
+  "task": "V06-C1-FOOD12-MEAL-CHOICE-RECHECK",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_PUBLICATION",
+  "baseCommit": "9ac0faa0ea0404f42014ec9a84628bec7caa1aec",
+  "change": [
+    "Optional daily meal/portion choices use the existing eligible recipe menu, source nutrient calculation and bounded remaining-day search. Weekly locks retain their separate meaning.",
+    "Exact validated portions are honored or explicitly unapplied with no-fit; no silent substitution, limit relaxation, fabricated nutrient data or consumption write. Current owned intake/context/preferences are reloaded for each request.",
+    "One scoped draft per owner/local day/timezone; unchecked changes disable review. Invalid target drafts remain editable after errors. Original prepared grams, review edits, single consumed-save and idempotent retry remain."
+  ],
+  "tests": [
+    "19 Today/weekly unit and authenticated endpoint tests PASS: exact .625 portion, source identities, max checks, no input mutation, weekly-lock separation, invalid/expired/wrong-slot/unknown/excluded recipe and forged fields, clinical context, no-fit without substitution.",
+    "Actual App/authenticated HTTP/PGlite SQL PASS: two logged meals + goals/exclusions \u2192 invalid-target correction \u2192 different sourced dinner at .75 recipe \u2192 limits rechecked \u2192 unchanged two consumed records \u2192 exact prepared review grams \u2192 one ingredient edit \u2192 confirmed save \u2192 lost-response retry \u2192 exactly one consumed record \u2192 reload and owner denial.",
+    "10 rendered layout states at320/390/768/1024/1440, light/dark and390px200% text PASS no horizontal overflow; engineering screenshot review. Physical VoiceOver/device and independent final design NOT TESTED.",
+    "Existing midnight/hour/timezone/stale-response outage/retry browser regression PASS.",
+    "Updated microbiome media-parity regression PASS8 layouts plus200% text: dedicated reserved hero, old hero absent, no borrowed artwork.",
+    "TypeScript, reviewed API inventory/capability crosswalk/Biology source audits and production build PASS; all original artwork/source/build fingerprints retained."
+  ],
+  "artifacts": [
+    "/workspace/bloom-today-choices-unit.log",
+    "/workspace/bloom-today-choices-browser.log",
+    "/workspace/bloom-today-meal-choices/",
+    "/workspace/bloom-today-choices-clock.log",
+    "/workspace/bloom-today-choices-types.log",
+    "/workspace/bloom-today-choices-build.log",
+    "/workspace/bloom-today-choices-audits.log"
+  ],
+  "integrationRepairs": {
+    "microbiomeCI": {
+      "workflow": 44112267262,
+      "units": "803/803 PASS",
+      "failure": "Hosted navigation/media runner still expected removed gut-report-hero. Selector now asserts actual owner-authorized new placeholder and no old art reuse; local8-state regression PASS. Exact new hosted CI pending."
+    },
+    "incomingDocs": "Four Architect documentation commits preserved by fast-forward; requested BVA52 generated ID projection refreshed without changing asset metadata or images. Render9ac0faa0 build failed at stale generated registry projection; current production build PASS with corrected projection."
+  },
+  "scope": "Closes the explicit Food12 substitution/recheck gap over existing planning/review/save. Remaining Core and integrated RC requirements continue; no full RC, clinical effect or independent human acceptance claim.",
+  "privacy": "Synthetic local accounts/data only. No manual production writes, main merge, manual deployment, private health query or message to others.",
+  "qualification": {
+    "commit": "3f11179b990325be05e3a683d923648c50fc4e21",
+    "runtime": "live",
+    "deploy": "dep-dbu9shu1egvs739g8idg",
+    "liveAt": "2026-11-17T18:37:10Z",
+    "workflow": 44149387207,
+    "ci": "FAILED_QA_ARTIFACT_PATH",
+    "reason": "Real dinner choice/recheck reached the expected result; screenshot mkdir used local /workspace path unavailable on GitHub runner. Fixed default to portable /tmp with optional explicit artifact directory. No assertion removed; exact rerun pending.",
+    "followup": {
+      "commit": "7d3f88a664ce4cea4966dceca101a6634b66ad8c",
+      "runtime": "live",
+      "deploy": "dep-dbu9v8h5efls73c90ae0",
+      "workflow": 44150421590,
+      "dinnerStep": "PASS",
+      "unitsAndBuild": "PASS",
+      "exactIsolatedPersistence": "PASS",
+      "failure": "Hosted media harness expected failed instead of reserved for no-source microbiome hero; repaired with full local80-state/28-case proof in V06_ACTIVITY_SOURCE_DISCUSSION_20261117.json. Full exact next CI pending."
+    }
+  }
+}

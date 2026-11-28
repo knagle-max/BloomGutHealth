@@ -1,9 +1,10 @@
+import {deleteOwnedMeal,getOwnedMeal,getOwnedMeals,getOwnedMealSaveRecord} from '../../server/meal-records.ts';
 import {openIngredientRow} from './lib/meal-flow.mjs';
 import{analyzeMeal}from'../../server/meal-intelligence.ts';
 import{execFileSync}from'node:child_process';import{mkdir}from'node:fs/promises';import path from'node:path';
 import assert from 'node:assert/strict';import{createRequire}from'node:module';import express from'express';import{createServer}from'vite';import{PGlite}from'@electric-sql/pglite';import{drizzle}from'drizzle-orm/pglite';import{eq}from'drizzle-orm';import{meals}from'../../shared/schema.ts';import{insertMealWithReceipt}from'../../server/meal-save.ts';import{registerPlannerRoutes}from'../../server/planner-routes.ts';
 const pg=new PGlite();await pg.exec(`CREATE TABLE meals(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL,meal_text text NOT NULL,meal_type text,logged_at timestamp NOT NULL DEFAULT now(),nutritional_data jsonb,meal_context jsonb,intelligence jsonb,total_calories real,total_protein real,total_carbs real,total_fat real);`);const database=drizzle(pg);
-const store={getMeal:async id=>(await database.select().from(meals).where(eq(meals.id,id)))[0],getMeals:async id=>(await database.select().from(meals).where(eq(meals.userId,id))),insertMeal:(meal,receipt)=>insertMealWithReceipt(database,meal,receipt),updateMeal:async(id,updates)=>(await database.update(meals).set(updates).where(eq(meals.id,id)).returning())[0],getExperienceRecords:async()=>[],getNutritionProducts:async()=>[]};
+const store={getMeal:(id,user)=>getOwnedMeal(database,id,user),getMealSaveRecord:(id,user)=>getOwnedMealSaveRecord(database,id,user),getMeals:user=>getOwnedMeals(database,user),insertMeal:(meal,receipt)=>insertMealWithReceipt(database,meal,receipt),updateMeal:async(id,updates)=>(await database.update(meals).set(updates).where(eq(meals.id,id)).returning())[0],getExperienceRecords:async()=>[],getNutritionProducts:async()=>[]};
 let sourceChanged=false;const analyzer=async(...args)=>{const result=await analyzeMeal(...args);if(sourceChanged)result.nutritionalData[0].calories+=1;return result;};const app=express();app.use(express.json());registerPlannerRoutes(app,(req,_res,next)=>{req.session={userId:'correction-fixture'};next();},store,analyzer);const api=app.listen(0,'127.0.0.1');await new Promise(r=>api.once('listening',r));const base=`http://127.0.0.1:${api.address().port}`;
 const baseline=process.env.BLOOM_REVIEW_BASELINE,uiBaseline=process.env.BLOOM_REVIEW_UI_BASELINE;const vite=await createServer({plugins:baseline||uiBaseline?[{name:'meal-review-baseline',enforce:'pre',load(id){const file=(uiBaseline?['client/src/pages/LogMeal.tsx','client/src/components/MealAnalysis.tsx','client/src/brand.css']:['client/src/pages/LogMeal.tsx']).find(file=>id.split('?')[0]===path.resolve(file));if(file)return execFileSync('git',['show',(uiBaseline||baseline)+':'+file],{encoding:'utf8'});}}]:[],server:{host:'127.0.0.1',port:5236,strictPort:true}});await vite.listen();const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000},locale:'en-CA',timezoneId:'America/Regina'});page.setDefaultTimeout(12000);await page.clock.install({time:new Date('2026-10-26T18:00:00Z')});let lose=false,hold=false,release,reviewCalls=0;const attempts=[];const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());
 await page.route('**/api/**',async route=>{const req=route.request(),u=new URL(req.url());let json=[];
@@ -54,7 +55,27 @@ scenario:try{
   assert.deepEqual(errors,[]);console.log('PASS '+process.env.BLOOM_RECONNECT_CASE+': confirmed memory queue reports offline state, resumes with original reviewed request and retains source/lifetime guards');break scenario;
  }
  hold=true;lose=true;await confirm().click();await page.getByRole('button',{name:'Saving your meal…',exact:true}).waitFor();assert.equal(await page.getByLabel('What did you eat?',{exact:true}).isDisabled(),true);assert.equal(await page.getByLabel('Grams 1',{exact:true}).isDisabled(),true);while(!release)await new Promise(r=>setTimeout(r,25));release();hold=false;
- const retry=page.getByRole('button',{name:'Retry saving my meal',exact:true});await retry.waitFor();assert.equal((await store.getMeals('correction-fixture')).length,1);assert.equal(await page.getByLabel('What did you eat?',{exact:true}).isDisabled(),true);if(process.env.BLOOM_RECONNECT_CASE){
+ const retry=page.getByRole('button',{name:'Retry saving my meal',exact:true});await retry.waitFor();assert.equal((await store.getMeals('correction-fixture')).length,1);assert.equal(await page.getByLabel('What did you eat?',{exact:true}).isDisabled(),true);if(process.env.BLOOM_RECONNECT_CASE==='deleted'){
+ const [original]=await store.getMeals('correction-fixture');await deleteOwnedMeal(database,original.id,'correction-fixture');
+ await retry.click();await page.getByText('The deleted meal will stay deleted.',{exact:false}).waitFor();
+ assert.equal((await store.getMeals('correction-fixture')).length,0);assert.equal(await retry.count(),0);
+ assert.equal(await page.getByTestId('button-review-meal').isDisabled(),true);
+ assert.equal(await page.getByTestId('button-save-meal').isDisabled(),true);assert.equal(await page.locator('.meal-review .saved-nutrients').count(),0);
+ assert.equal(await page.getByRole('checkbox',{name:'Retry this reviewed save when the connection returns',exact:true}).count(),0);
+ await page.evaluate(()=>{dispatchEvent(new Event('online'));});await page.clock.runFor(2000);assert.equal(attempts.length,2);
+ for(const width of [320,390,768,1024,1440])for(const dark of [false,true])for(const zoom of [1,2]){
+  await page.setViewportSize({width,height:1000});await page.evaluate(({dark,zoom})=>{document.documentElement.classList.toggle('dark',dark);document.documentElement.style.fontSize=16*zoom+'px';},{dark,zoom});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'deleted-save recovery reflows '+JSON.stringify({width,dark,zoom}));
+ }
+ await page.evaluate(()=>{document.documentElement.style.fontSize='';});await page.setViewportSize({width:390,height:1000});
+ const fresh=page.getByRole('button',{name:'Start a new entry from this draft',exact:true});await fresh.focus();await page.keyboard.press('Enter');
+ await page.getByRole('button',{name:'Review meal',exact:true}).click();await confirm().waitFor();assert.equal((await store.getMeals('correction-fixture')).length,0);
+ await confirm().click();await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
+ const [newMeal]=await store.getMeals('correction-fixture');assert.notEqual(newMeal.id,original.id);assert.equal(newMeal.intelligence.ingredients[0].grams,200);
+ assert.notEqual(attempts[2].key,attempts[0].key);assert.deepEqual(attempts[0],attempts[1]);
+ assert.equal(await getOwnedMeal(database,original.id,'correction-fixture'),undefined);assert.deepEqual(errors,[]);
+ console.log('PASS deleted-save actual App/HTTP/PostgreSQL: committed response lost, deleted externally, exact retry409, no reconnect resave,20 responsive/theme/text states, keyboard explicit fresh review and new receipt; original remains deleted.');break scenario;
+ }if(process.env.BLOOM_RECONNECT_CASE){
  await page.evaluate(()=>{window.qaOnline=false;Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>window.qaOnline});dispatchEvent(new Event('offline'));});
  const toggle=page.getByRole('checkbox',{name:'Retry this reviewed save when the connection returns',exact:true});await toggle.check();
  if(process.env.BLOOM_RECONNECT_CASE==='cancel')await toggle.uncheck();

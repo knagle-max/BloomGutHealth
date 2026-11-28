@@ -1,0 +1,40 @@
+{
+  "task": "T2b-report-level-source-calendar-activity-context",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_PARTIAL_RESPONSE_SCOPE",
+  "implementation": [
+    "Existing owned activity API and selected marker across the current panel; no new storage/endpoint or duplicate chronology",
+    "Explicit walking classification only; NLP/title suggestions remain generic activity",
+    "Routine occurrence date separate from logging timestamp, duration null preserved, future/invalid/planned records excluded",
+    "Strictly intervening original calendar dates only; no verified pre-collection exposure or adherence/increase/causal inference",
+    "Selected marker canonical editorial guidance/citation and existing activity-history action; source revision, deletion, refresh/error and owner withdrawal replace context"
+  ],
+  "tests": [
+    "14 focused chronology/panel tests PASS including non-TG windows and mixed activity duration not relabelled as walking",
+    "Actual App browser PASS: ALT/TG marker switching with separate windows, typed walking, unknown duration, separate recordedAt, activity deletion/outage/retry/source-date withdrawal, one current panel and owner isolation",
+    "8 Everyday/Athlete \u00d7320/390\u00d7light/dark states and200% text PASS; Athlete390dark inspected",
+    "Final TypeScript/API/capability/Biology audits and production build PASS; no authorization review promotion",
+    "Integrated source audits/types/build and controlled offscreen-lazy16-state atlas PASS"
+  ],
+  "evidence": [
+    "/tmp/bloom-response-panel-context.log",
+    "/tmp/bloom-response-final-tests.log",
+    "/tmp/bloom-response-final-audits.log",
+    "/tmp/bloom-response-final-biologyaudit.log",
+    "/tmp/bloom-response-final-types.log",
+    "/tmp/bloom-response-final-build.log"
+  ],
+  "relatedDefect": "Source refresh regression exposed duplicate Atlas sibling keys and two stale panels; distinct panel/explorer keys resolved actual App RED/GREEN, published separately with chart/CI repair",
+  "remaining": [
+    "Full Response contributors/evidence/conditional actions remain beyond this source chronology slice",
+    "This is source chronology only: full Response#15 still needs vetted exposure windows/population evidence, recalled context integration, meaningful conditional contributors/actions and complete acceptance scenarios",
+    "No independent design/science/physical accessibility or full RC acceptance claimed"
+  ],
+  "privacy": "Synthetic fixtures only; no Tester1 health inspection or actual-account writes",
+  "publication": {
+    "sha": "6db50175bcbdb2fd891fe2dee1daa6bbafe5054b",
+    "workflow": 43942830235,
+    "conclusion": "SUCCESS",
+    "render": "LIVE",
+    "deploy": "dep-dbtlqv1q5pec73fm9rbg"
+  }
+}

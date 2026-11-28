@@ -1,0 +1,1955 @@
+{
+  "schemaVersion": "1.0.0",
+  "program": "Bloom scientific data visualization",
+  "scope": "CHART-A01 through CHART-E05; file and code reviews tracked independently of media BVA registry",
+  "created": "2026-11-15",
+  "items": [
+    {
+      "id": "CHART-A01",
+      "name": "Four-theme scientific chart tokens",
+      "priority": "P0",
+      "lifecycle": "Imported",
+      "reviewStatus": "Designer candidate; Architect/UX/Science/visual browser review pending",
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A01_Four_Theme_Tokens_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A01_Readme_2026-11-15.md",
+        "files": [
+          "tokens/scientific-chart-tokens.json",
+          "tokens/scientific-chart-tokens.css",
+          "editable/CHART-A01-four-theme-token-map.svg",
+          "accessibility/contrast-matrix.json",
+          "accessibility/contrast-matrix.md",
+          "handoff/integration-contract.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "validation": {
+        "svgXml": "PASS",
+        "wcagStaticPairs": "44/44 PASS against solid chart surfaces",
+        "packageZip": "PASS",
+        "renderedInRunningApp": "NOT_TESTED",
+        "darkAthleteCrossMode": "STATIC_ONLY"
+      },
+      "integration": {
+        "status": "PARTIAL_ENGINEERING_TESTED",
+        "importRule": "Single opt-in CSS import once after canonical Bloom visual CSS, no competing global overrides",
+        "suggestedTarget": "design/visual-system/scientific-charts/v1/",
+        "targetFirst": "client/src/components/LabTrend.tsx",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Single opt-in palette in4 actual LabTrend themes; global tokens and typography preserved",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
+      },
+      "importantConstraints": [
+        "No invented numeric data or baked-in plots",
+        "Reference and uncertainty semantically qualified, not purely by color",
+        "Preserve source-aware observation selection, source intervals, exact table alternatives",
+        "Do not treat generated assets as an approved/deployed chart"
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-A01",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
+    },
+    {
+      "id": "CHART-A02",
+      "name": "Observation marker kit",
+      "priority": "P0",
+      "lifecycle": "Imported",
+      "reviewStatus": "Designer candidate produced; UX/Science/Architect and live visual acceptance pending",
+      "dependsOn": "CHART-A01",
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Observation_Markers_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Manifest_2026-11-15.json",
+        "contents": [
+          "svg/markers/ (30 individual SVGs)",
+          "editable/CHART-A02-symbols.svg (30 symbol IDs)",
+          "editable/CHART-A02-four-theme-specimen.svg",
+          "tokens/CHART-A02-markers.css",
+          "handoff/CHART-A02-implementation.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "shapes": [
+        "circle",
+        "ring",
+        "precision-dot"
+      ],
+      "states": [
+        "ordinary",
+        "hover",
+        "selected",
+        "keyboard-focus",
+        "single-point",
+        "partial",
+        "provisional",
+        "incompatible",
+        "source-unknown",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 32/32 SVGs",
+        "editablePreview": "RENDERED",
+        "zipIntegrity": "PASS",
+        "touchTarget": "44px CSS contract, NOT YET BROWSER-TESTED",
+        "runtimeThemeCss": "pending browser tests",
+        "realApp": "NOT_INTEGRATED"
+      },
+      "integration": {
+        "status": "PARTIAL_ENGINEERING_TESTED",
+        "importRule": "Inherit CHART-A01 --bvc-* variables; chart scoped CSS, use inline SVG or CSS masks for dynamic theming; preserve data and source UX",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing observed circle, selected double halo, keyboard focus and single-point treatment adapted; additional canonical states remain future scope",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
+      },
+      "constraints": [
+        "Status symbols may not substitute source text/labels",
+        "Source withdrawn must never expose inaccessible personal data",
+        "Do not bridge missing observations with invented series points",
+        "Native keyboard, focus and table alternatives mandatory",
+        "No data or numerical values embedded"
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-A02",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
+    },
+    {
+      "id": "CHART-A03",
+      "name": "Measurement stroke and gradient kit",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer deliverable; science, structural UX, Architect, Codex integration and same-SHA screenshots pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Strokes_Gradients_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A03-strokes.json",
+          "tokens/CHART-A03-strokes.css",
+          "svg/CHART-A03-definitions.svg",
+          "editable/CHART-A03-everyday-light-specimen.svg",
+          "editable/CHART-A03-everyday-dark-specimen.svg",
+          "editable/CHART-A03-athlete-light-specimen.svg",
+          "editable/CHART-A03-athlete-dark-specimen.svg",
+          "handoff/CHART-A03-implementation.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "styles": [
+        "primaryObserved",
+        "secondaryObserved",
+        "tertiaryObserved",
+        "comparisonObserved",
+        "selectedSegment",
+        "provisionalModelled",
+        "incompatible legend-only"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 5/5",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "editablePreview": "RENDERED everyday-light specimen",
+        "renderedInRunningApp": "NOT_TESTED",
+        "responsiveBehavior": "SPECIFIED NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "target": "client/src/components/LabTrend.tsx",
+        "nextTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "A03 after A01 and A02; all styling opt-in within premium app shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "SVG specimens contain purely synthetic coordinates, never personal results",
+        "Split paths at missing and non-comparable measurements",
+        "Modelled and provisional styling requires explicit text and legend",
+        "Area fill must never bridge time gaps or obscure lab intervals",
+        "Preserve original source values, dates, units, method and keyboard selection"
+      ]
+    },
+    {
+      "id": "CHART-A04",
+      "name": "Scientific axes, grids and labels",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate created; Architect/UX/Science approval and live screenshot acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Axes_Grids_Labels_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A04-axis-grid.json",
+          "tokens/CHART-A04-axis-grid.css",
+          "svg/CHART-A04-axis-grid-symbols.svg",
+          "editable/CHART-A04-*-390-specimen.svg",
+          "responsive/320/",
+          "responsive/390/",
+          "responsive/768/",
+          "responsive/1440/",
+          "handoff/CHART-A04-implementation.md",
+          "accessibility/CHART-A04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "visualPrimitives": [
+        "major/minor gridlines",
+        "axis baseline/tick marks",
+        "source-unit and precise timestamp labels",
+        "responsive density and reserved label spacing",
+        "covered/uncovered time-gap divider when justified"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 21/21 XML-parseable SVG files",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "editablePreview": "RENDERED mobile 390 everyday-light specimen and spacing adjusted",
+        "responsiveSpecimens": 16,
+        "realBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "Only after A01-A03 and approved; all CSS scoped to premium app shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "Actual axes/ticks must be generated from canonical data and user locale",
+        "Specimen dates and values are synthetic, for demonstration only",
+        "Do not infer zero for missing observations or join disconnected periods",
+        "Keep actual source dates, methods, units, and assay metadata available",
+        "Do not draw explicit coverage gap without source evidence of missing period",
+        "No unapproved DOM/UX changes",
+        "320/390/768/1440 and zoom 200%, all themes and accessibility modes pending"
+      ]
+    },
+    {
+      "id": "CHART-A05",
+      "name": "Reference interval and decision threshold treatments",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer delivery available; Architect, scientific, UX and real screenshot acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Reference_Intervals_Thresholds_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A05-reference-intervals.json",
+          "tokens/CHART-A05-reference-intervals.css",
+          "svg/CHART-A05-reference-symbols.svg",
+          "editable/*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A05-implementation.md",
+          "accessibility/CHART-A05-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "referenceKinds": [
+        "source-interval",
+        "selected-only",
+        "alternate-method",
+        "published-comparison",
+        "decision-threshold",
+        "unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 33/33",
+        "zipIntegrity": "PASS",
+        "jsonValid": "PASS",
+        "responsiveSpecimens": 16,
+        "visualPreview": "RENDERED and 320px mobile checked",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabSourceContext"
+        ],
+        "importRule": "A05 CSS once after A01\u2013A04, scoped to premium app-shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "No source-free healthy-range artwork",
+        "Method/context-specific limits only",
+        "Selected-only range not applied across history",
+        "Decision threshold must never look like laboratory reference interval",
+        "Published comparison requires explicit label and scientifically appropriate provenance",
+        "Unavailable means no band, not 0 or normal",
+        "No baked-in lab measurements; source/date/units/assay and exact table retained"
+      ]
+    },
+    {
+      "id": "CHART-A06",
+      "name": "Missingness, incomplete coverage and uncertainty language",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate produced; Architect, Science, UX and live-screen review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Missingness_Uncertainty_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A06-states.json",
+          "tokens/CHART-A06-states.css",
+          "svg/CHART-A06-symbols.svg",
+          "svg/CHART-A06-patterns.svg",
+          "svg/bvc-a06-*.svg",
+          "editable/CHART-A06-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A06-implementation.md",
+          "accessibility/CHART-A06-state-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "states": [
+        "not-measured",
+        "missing-observation",
+        "partial-coverage",
+        "non-comparable",
+        "provisional-range",
+        "unknown-method",
+        "source-withdrawn",
+        "loading",
+        "failed-result"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 43/43",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "mobilePreview": "RENDERED and inspected at 390px",
+        "actualApplication": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "screenReader": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTargets": [
+          "client/src/components/FoodProgress.tsx",
+          "client/src/pages/NutritionHistory.tsx",
+          "client/src/pages/Microbiome.tsx",
+          "client/src/pages/AthleteWorkspace.tsx"
+        ],
+        "importRule": "Scope CSS under premium app shell and .bv-scientific-chart, import once after A01\u2013A05"
+      },
+      "constraints": [
+        "Unknown or not-measured is never 0",
+        "Do not connect series or fill through missing/incomparable periods",
+        "Coverage gaps require actual evidence, not assumed from no logs",
+        "Source-withdrawn must not reveal cached personal data",
+        "Published research comparison is not a lab interval or confidence estimate",
+        "Labels and distinct line/pattern glyphs beyond color",
+        "Data values, dates, provenance and exact table still bound dynamically",
+        "Browser QA 320/390/768/1440, 200% zoom, four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-A07",
+      "name": "Selection crosshair, inspection tooltip and original-source drawer",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; Architect, Science, UX, Codex implementation and real-browser visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Source_Inspection_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A07-inspection.json",
+          "tokens/CHART-A07-inspection.css",
+          "svg/CHART-A07-source-inspection-symbols.svg",
+          "editable/CHART-A07-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A07-implementation.md",
+          "handoff/CHART-A07-interaction-storyboard.md",
+          "accessibility/CHART-A07-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "variants": [
+        "vertical and horizontal source-scoped crosshair",
+        "selected halo",
+        "pinned point selection",
+        "compact tooltip",
+        "expanded native-source inspection panel",
+        "multi-series synchronized timestamp",
+        "mobile tap",
+        "desktop hover",
+        "keyboard focus and return"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 33/33",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "previewRendered": [
+          "390px everyday-light",
+          "1440px athlete-dark"
+        ],
+        "mobilePreviewInspected": "PASS for static design specimen",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "touchAndKeyboardBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabSourceContext"
+        ],
+        "importRule": "Import after A01\u2013A06 once; CSS scoped to premium app-shell and .bv-scientific-chart only"
+      },
+      "constraints": [
+        "Original measured value and unit, exact recorded date/time and source provenance dynamically bound",
+        "Selection keyed by source observation identity not pixel or position",
+        "No connecting missing or incompatible samples, no fake selected points",
+        "Mobile summary below plot, with source drawer preserving CTA and source details",
+        "Do not expose values from withdrawn/revoked sources",
+        "No source data, personal measurements, hardcoded chart data or new UX flow in assets",
+        "Touch hitboxes 44\u00d744, readable keyboard focus, reduced-motion and forced-color equivalents",
+        "320/390/768/1440, 200% zoom, four themes and actual screenshot gates pending"
+      ]
+    },
+    {
+      "id": "CHART-A08",
+      "name": "Legend, annotation, chart-state and motion kit",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate delivered; Architect, Science, UX and real-app visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Legends_Annotations_States_Motion_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A08-legends-states-motion.json",
+          "tokens/CHART-A08-legends-states-motion.css",
+          "svg/CHART-A08-legend-symbols.svg",
+          "svg/CHART-A08-*.svg",
+          "editable/CHART-A08-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "interaction/CHART-A08-motion-state-matrix.md",
+          "handoff/CHART-A08-integration.md",
+          "accessibility/CHART-A08-review.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "legendTypes": [
+        "observed",
+        "comparison",
+        "source reference interval",
+        "selected-record interval",
+        "decision threshold",
+        "research association",
+        "modelled/provisional",
+        "partial coverage",
+        "unavailable",
+        "recorded event"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "one-point",
+        "error",
+        "source-unavailable",
+        "partial",
+        "no-comparable"
+      ],
+      "motion": [
+        "selection change",
+        "tooltip reveal",
+        "legend toggle",
+        "chart entrance",
+        "loading shimmer"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 43/43",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "designPreview": "RENDERED AND INSPECTED 390px Everyday Light and 1440px Athlete Dark SVG",
+        "sourceHashes": "Every file listed with SHA-256 in manifest",
+        "actualApp": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "screenReaderAndTouch": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "Once after CHART-A01\u2013A07; CSS scoped to premium app-shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "All exact chart values, units, intervals and event timestamps supplied by runtime canonical data",
+        "Source reference and decision thresholds have visibly and semantically different marks",
+        "Observed and research/modelled evidence status never presented as equivalent",
+        "Unknown, unavailable and source-withdrawn values never treated as zero or displayed from revoked data",
+        "Single point has no trendline",
+        "No measurement interpolation or source-derived geometry animation",
+        "All interactive legend items require 44px touch targets and keyboard focus",
+        "Exact value table always available",
+        "Mobile/desktop four-theme rendered implementation screenshots and scientific QA pending"
+      ]
+    },
+    {
+      "id": "CHART-B01",
+      "name": "Source-aware longitudinal trend composition family",
+      "priority": "P0",
+      "lifecycle": "Imported",
+      "reviewStatus": "Designer candidate published; Architect, scientific, UX and actual browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_README_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B01-longitudinal.css",
+          "tokens/CHART-B01-contract.json",
+          "specimen-fixtures.json",
+          "responsive/{320,390,768,1440}/",
+          "editable/CHART-B01-*-master.svg",
+          "previews/",
+          "handoff/CHART-B01-implementation.md",
+          "accessibility/CHART-B01-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "fixtures": [
+        "one",
+        "two",
+        "four",
+        "twelve",
+        "gap",
+        "outlier"
+      ],
+      "responsiveWidths": [
+        320,
+        390,
+        768,
+        1440
+      ],
+      "validation": {
+        "xml": "PASS 64/64 SVG",
+        "archive": "ZIP integrity PASS",
+        "fullCompositionVariants": "48 at 390 and 1440, across six fixtures and four themes",
+        "additionalAdaptationVariants": "8 at 320 and 768 across four themes",
+        "editableMasterSVG": "8",
+        "previewPNG": "6 included",
+        "mobileReview": "320 and 390 manually inspected; layout clipping corrected",
+        "desktopReview": "1440 Athlete Dark manually inspected; overlapping note corrected",
+        "actualApplication": "NOT_TESTED",
+        "sourceProvenanceRuntime": "NOT_TESTED",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "PARTIAL_ENGINEERING_TESTED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "secondary": "client/src/pages/Progress.tsx",
+        "importRule": "Reuse A01-A08 and component-local scoped B01 CSS; data-bound chart generated in runtime, no flattened plots",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing chronological measured SVG, source buttons/exact table retained; semantic series/axis/selection styling; numeric comparison requires confirmed source context",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
+      },
+      "constraints": [
+        "Fixture numbers and example interval are fictional and must not appear as personal measurements",
+        "Irregular chronology uses proportional timestamps",
+        "No line for one observation",
+        "Separate incompatible groups only where source evidence supports",
+        "Outlier is an ordinary observed point, not automatic diagnostic warning",
+        "Exact original date/unit/value, assay, source provider, corrections and interval provenance remain retrievable",
+        "44px interactive targets and exact-value table alternative needed",
+        "320/390/768/1440, 200 percent zoom, four themes, keyboard and screen-reader QA pending"
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B01",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
+    },
+    {
+      "id": "CHART-B02",
+      "name": "Laboratory biomarker chart composition with source-aware reference contexts",
+      "priority": "P0",
+      "lifecycle": "Imported",
+      "reviewStatus": "Designer asset delivered; scientific/UX/Architect and real app screenshots pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Laboratory_Biomarker_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B02-contract.json",
+          "tokens/CHART-B02-laboratory-biomarker.css",
+          "svg/CHART-B02-reference-primitives.svg",
+          "fixtures/B02-FICTIONAL-ONLY.json",
+          "editable/*-master.svg",
+          "responsive/{320,390,768,1440}/*",
+          "previews/*.png",
+          "handoff/CHART-B02-implementation.md",
+          "accessibility/CHART-B02-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "source-interval",
+        "selected-only",
+        "alternate-method",
+        "published-comparison",
+        "non-comparable",
+        "unavailable",
+        "decision-threshold",
+        "method-changing"
+      ],
+      "validation": {
+        "xml": "PASS 97/97 SVG",
+        "archive": "PASS",
+        "json": "PASS",
+        "primarySpecimens": "64 for 390 and 1440; four themes and eight scenarios",
+        "responsiveAdaptations": "24 additional 320 and 768 specimens",
+        "editableMasters": "8 SVG",
+        "rasterPreviews": "5 PNG",
+        "mobileReview": "320 and 390px manual image review; overlaps corrected",
+        "desktopReview": "1440 Athlete Dark and Athlete Light rendered",
+        "actualApplication": "NOT_TESTED",
+        "sourceContextRuntime": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "PARTIAL_ENGINEERING_TESTED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabExplorer",
+          "LabSourceContext"
+        ],
+        "importRule": "Scoped additive B02 CSS after A01-A08/B01, no new global theme; all real geometry from canonical records",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Source interval/one-sided bound/published comparison/decision-limit styles added to canonical source-aware geometry",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
+      },
+      "constraints": [
+        "Fictional design data are never user lab results or medical limits",
+        "Historical source intervals never inferred from one selected point",
+        "Alternate assay/method must be compared under validated comparability rules",
+        "Original reference interval must be separate from decision limit or published literature",
+        "Non-comparable observations must not form a connected trend",
+        "Unavailable reference means no band, not normal",
+        "Original date/unit/source/assay and revision chain retrievable",
+        "44px focus/touch targets, exact table alternative, source withdrawal access safeguards",
+        "No deployment or visual signoff without screenshots for mobile/desktop all four themes"
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B02",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
+    },
+    {
+      "id": "CHART-B03",
+      "name": "Two-result comparison and source-aware reference reveal",
+      "priority": "P0",
+      "lifecycle": "Imported",
+      "reviewStatus": "Designer candidate published; Architect, Science, UX and actual application review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01",
+        "CHART-B02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Two_Result_Comparison_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B03.css",
+          "tokens/CHART-B03-contract.json",
+          "fixtures/CHART-B03-FICTIONAL-ONLY.json",
+          "editable/CHART-B03-*-master.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B03-integration.md",
+          "accessibility/CHART-B03-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "comparable",
+        "non-comparable",
+        "zero-baseline",
+        "reference-unavailable",
+        "method-changed",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "editableSVG": "PASS 104/104 XML parsed",
+        "responsiveCompositions": 96,
+        "editableMasters": 8,
+        "zipIntegrity": "PASS",
+        "jsonValid": "PASS",
+        "mobilePreview": "RENDERED and visually inspected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibility": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "PARTIAL_ENGINEERING_TESTED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "secondaryCodeTargets": [
+          "LabRangeSelector",
+          "LabSourceContext",
+          "client/src/pages/Progress.tsx"
+        ],
+        "importRule": "Scoped additive styling after existing A01-A08 and B01/B02; no competing global theme or flattened data chart",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing two-source comparison styled with original values/timestamps/provider/method; unconfirmed context abstains from numeric difference",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
+      },
+      "constraints": [
+        "Never display specimen fictional values as personal measurements",
+        "Only calculate differences for validated comparable methods and canonical units",
+        "Percentage not defined for zero baseline; no fake infinity",
+        "Source-specific reference interval and decision thresholds distinct",
+        "Changed assay alone does not warrant comparison",
+        "Revoked source must be redacted, including cached tooltip and table",
+        "Unknown is never zero",
+        "No causal claim from temporal comparison",
+        "Original date, unit, lab, assay, methods, revisions, source and exact-value table remain accessible",
+        "320/390/768/1440, four themes, zoom, keyboard and forced colors must be validated on actual application"
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B03",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
+    },
+    {
+      "id": "CHART-B04",
+      "name": "Nutrient progress \u2014 source-aware linear and optional radial progress",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer package created and published; Architect, Biology/UX, implemented browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Nutrient_Progress_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B04-contract.json",
+          "tokens/CHART-B04-nutrient-progress.css",
+          "svg/CHART-B04-progress-primitives.svg",
+          "fixtures/CHART-B04-FICTIONAL-ONLY.json",
+          "editable/*.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B04-implementation.md",
+          "accessibility/CHART-B04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "known-target",
+        "partial",
+        "no-target",
+        "unknown",
+        "exceeded",
+        "no-records"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 109/109",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 96,
+        "editableMasters": 12,
+        "previewPNGs": 5,
+        "mobilePreview": "390px Everyday Light and 320px unknown inspected",
+        "desktopPreview": "1440px Athlete Dark inspected",
+        "application": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "a11yBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/NutritionHistory.tsx",
+        "related": [
+          "client/src/components/FoodProgress.tsx",
+          "Today and Food summaries"
+        ],
+        "importRule": "Only additive scoped CSS after CHART-A01\u2013A08 under .app-shell[data-bloom-visual=premium] .bv-scientific-chart"
+      },
+      "constraints": [
+        "Only source-recorded nutrients and a valid selected target enable ratios",
+        "Amount unknown and target unknown never appear as zero",
+        "Incomplete day remains recorded-only and must not suggest total intake",
+        "Over-target ring track caps at 100% without concealing true percent/excess",
+        "No generic health danger or diagnosis implied by target excess",
+        "Numeric/units/target provenance and exact-value table bound from real canonical data",
+        "Source withdrawal and errors must respect privacy",
+        "Responsive 320/390/768/1440, four themes, keyboard, 200% zoom, forced colors and reduced motion require real app verification"
+      ]
+    },
+    {
+      "id": "CHART-B05",
+      "name": "Food intake time series and source-aware recorded-day coverage",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer visual source published; Architect, Biology, UX, real-app rendered review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Food_Intake_Time_Series_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B05-contract.json",
+          "tokens/CHART-B05-food-series.css",
+          "svg/CHART-B05-bar-state-symbols.svg",
+          "fixtures/CHART-B05-FICTIONAL-ONLY.json",
+          "editable/*.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B05-implementation.md",
+          "accessibility/CHART-B05-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "recorded-7",
+        "partial-7",
+        "missing-7",
+        "unknown-7",
+        "period-28",
+        "all-recorded"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 113/113",
+        "responsiveSpecimens": 96,
+        "editableMasters": 16,
+        "previewPNGs": 5,
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "mobileVisualReview": "320 and 390 inspected, footer clipped issue corrected",
+        "desktopVisualReview": "1440 specimen rendered, actual-browser still pending",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/FoodProgress.tsx",
+        "sourceUtility": "@shared/food-progress.recordedFoodPeriod",
+        "importRule": "Scoped to premium app-shell and .bv-scientific-chart; no flattened production plots"
+      },
+      "constraints": [
+        "Unrecorded days are not 0 intake",
+        "Unknown nutrient amounts are unavailable rather than 0",
+        "Partial days represent saved-only amounts, never complete intake",
+        "7/28/all period respects canonical day and timezone records",
+        "All-time dates are spaced chronologically",
+        "Exact-values table and source/date/unit/meal-count retained",
+        "No source data or measurement values baked in, demo values fictional",
+        "Privacy, source withdrawal and correction semantics preserved",
+        "Mobile and desktop across 320/390/768/1440, four themes, 200% zoom, screen reader and keyboard review still required"
+      ]
+    },
+    {
+      "id": "CHART-B06",
+      "name": "Multi-marker small multiples with independently scaled source-aware measurements",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Science, UX and same-SHA browser visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01",
+        "CHART-B02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Multi_Marker_Small_Multiples_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B06-contract.json",
+          "tokens/CHART-B06-multiples.css",
+          "svg/CHART-B06-symbols.svg",
+          "fixtures/CHART-B06-FICTIONAL-ONLY.json",
+          "editable/*-master.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B06-implementation.md",
+          "accessibility/CHART-B06-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "two",
+        "three",
+        "four",
+        "incompatible"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 81/81",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 16,
+        "previewPNGs": 5,
+        "mobileVisualReview": "390px preview inspected; actual date spacing and missing-record labeling confirmed",
+        "desktopVisualReview": "1440px preview inspected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Progress.tsx",
+        "other": [
+          "client/src/components/LabTrend.tsx",
+          "LabExplorer",
+          "Response Intelligence after approved source logic"
+        ],
+        "importRule": "Add scoped B06 CSS, no global overrides or flattened production data"
+      },
+      "constraints": [
+        "Source-backed independent scales/units; shared date x-axis only",
+        "Selection by actual timestamp and source observation identity, not index",
+        "Missing records and method-incompatible observations never implicitly connected",
+        "Keep original assay, source date, laboratory, unit and corrections available in exact table",
+        "No causal inference from temporally aligned plots",
+        "All example values fictional",
+        "Actual browser QA must test 320/390/768/1440, 200% zoom, four modes, keyboard, screen reader, forced colors and data withdrawal"
+      ]
+    },
+    {
+      "id": "CHART-C01",
+      "name": "Source-reported taxonomic abundance bars",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer package produced and shared; Architect, Biology, UX, Codex implementation and live-browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Taxonomic_Abundance_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C01-contract.json",
+          "tokens/CHART-C01-taxonomic-abundance.css",
+          "svg/CHART-C01-abundance-primitives.svg",
+          "fixtures/CHART-C01-FICTIONAL-ONLY.json",
+          "editable/20 SVG masters",
+          "responsive/320,390,768,1440/80 SVG compositions",
+          "previews/5 PNG",
+          "handoff/CHART-C01-integration.md",
+          "accessibility/CHART-C01-checks.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "quantified",
+        "unknown",
+        "long-name",
+        "method-source",
+        "source-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 101/101",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 80,
+        "editableMasters": 20,
+        "previewPNGs": 5,
+        "mobileReview": "320 and 390px static specimens inspected; long-name card sizing corrected",
+        "actualApp": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Microbiome.tsx",
+        "related": [
+          "client/src/pages/MicrobialProfile.tsx"
+        ],
+        "importRule": "Add scoped opt-in C01 CSS using A01 semantic tokens; render all bars dynamically, not as asset SVG data charts"
+      },
+      "constraints": [
+        "Rank and source method retained",
+        "No healthy abundance reference values or activity inference",
+        "Measured relative denominator validated; never rescale longest organism to 100%",
+        "Unknown, unquantified and missing distinct from zero",
+        "Organism names remain tappable links to source-scoped original detail",
+        "Revoked sources must remove cached values",
+        "Exact numbers and source evidence available in table and inspection",
+        "320/390/768/1440 real app screenshots, four themes, zoom, keyboard and forced-colors QA pending"
+      ]
+    },
+    {
+      "id": "CHART-C02",
+      "name": "Microbiome composition summary: validated partitions and optional radial overview",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Editable Designer candidate delivered; Biology, UX, Architect and real-app visual QA pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Microbiome_Composition_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C02-contract.json",
+          "tokens/CHART-C02-composition.css",
+          "svg/CHART-C02-primitives.svg",
+          "fixtures/CHART-C02-FICTIONAL-ONLY.json",
+          "editable/20 editable vector masters",
+          "responsive/{320,390,768,1440}/80 SVG designs",
+          "previews/5 PNG",
+          "handoff/CHART-C02-integration.md",
+          "accessibility/CHART-C02-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "complete",
+        "reported-partial",
+        "rank-mixed",
+        "unquantified",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "xml": "PASS 101/101 SVG",
+        "json": "PASS",
+        "zip": "PASS",
+        "responsiveSpecimens": 80,
+        "editableMasters": 20,
+        "previewPNGs": 5,
+        "mobileStaticReview": "390 complete and 320 mixed-rank reviewed, clipped footer corrected",
+        "desktopStaticReview": "1440 Athlete Dark reviewed, spacing corrected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Microbiome.tsx",
+        "related": [
+          "client/src/pages/MicrobialProfile.tsx",
+          "Gut Reports selected source overview"
+        ],
+        "importRule": "CSS scoped to .app-shell[data-bloom-visual=premium] .bv-scientific-chart, dependent on CHART-A01; geometry and labels dynamically generated"
+      },
+      "constraints": [
+        "A composition or donut only when denominator and non-overlap validated within the same source method/rank",
+        "Never sum parent and child taxa or normalize incomplete records to 100%",
+        "Only source-defined Other/Unclassified can carry that label",
+        "Unquantified, unavailable or withdrawn never become zero/hidden cached values",
+        "No invented healthy gut score or metabolic activity inference",
+        "Keep original source rank, dates, method, reported quantities and exact table available",
+        "Original organism source-linked detail remains tappable",
+        "Desktop donut is optional; mobile prioritizes partition bar and labels",
+        "Actual QA at 320/390/768/1440, four themes, 200% zoom, keyboard, screen reader, forced color pending"
+      ]
+    },
+    {
+      "id": "CHART-C03",
+      "name": "Microbiome report comparison: method, taxonomy and coverage-safe visual system",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Editable designer specimen delivered; Architect, Biology, UX, actual running application and accessibility acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01",
+        "CHART-C02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Microbiome_Comparison_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C03-contract.json",
+          "tokens/CHART-C03-comparison.css",
+          "svg/CHART-C03-comparison-symbols.svg",
+          "fixtures/CHART-C03-FICTIONAL-ONLY.json",
+          "editable/24 SVG masters",
+          "responsive/{320,390,768,1440}/96 SVG compositions",
+          "previews/5 PNG",
+          "handoff/CHART-C03-integration.md",
+          "accessibility/CHART-C03-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "comparable",
+        "method-mismatch",
+        "not-reported",
+        "revised-taxonomy",
+        "unknown-abundance",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 121/121",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 96,
+        "editableMasters": 24,
+        "previewPNGs": 5,
+        "mobileVisualReview": "320px and 390px static render inspected, label spacing adjusted",
+        "desktopVisualReview": "1440px Athlete Dark rendered and overlapping values corrected",
+        "application": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "client/src/pages/Microbiome.tsx",
+          "client/src/pages/MicrobialProfile.tsx"
+        ],
+        "importRule": "Scoped CSS under .app-shell[data-bloom-visual=premium] .bv-scientific-chart; all numeric bars and source labels generated dynamically",
+        "reference": "CHART-C02 composition source-aware denominator contract"
+      },
+      "constraints": [
+        "Only show derived change if methods, denominators, taxon identities and ranks are validated comparable",
+        "An unreported organism is not a measured zero or necessarily absent",
+        "Revised taxonomy requires reviewed crosswalk with original source names retained",
+        "Missing or unknown abundance has no bar; withdrawal removes cached details",
+        "Original report source dates, providers, assay, taxonomic rank/version and quantities retained",
+        "No microbiome health score, activity or causal effects inferred",
+        "Exact table, 44px touch, keyboard, reader and source-linked organism details required",
+        "390/1440 actual rendering plus 320/768 adaptation, zoom, four themes, forced-colors pending"
+      ]
+    },
+    {
+      "id": "CHART-C04",
+      "name": "Molecular pathway node and evidence-aware edge library",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; scientific accuracy, Architect, UX, actual app and accessibility review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Molecular_Pathway_Nodes_Edges_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Manifest_2026-11-15.json",
+        "sha256Archive": "49b065182c30342b47bff3eaa5243d9381b86a65d5ca0956a3d29ec27b7856b2",
+        "contents": [
+          "tokens/CHART-C04-contract.json",
+          "tokens/CHART-C04-pathways.css",
+          "svg/nodes/ seven individual SVGs",
+          "svg/edges/ five individual SVGs",
+          "svg/CHART-C04-node-library.svg",
+          "editable/ twelve master SVG diagrams",
+          "responsive/{320,390,768,1440}/ 48 SVG specimens",
+          "previews/ 5 PNG renderings",
+          "handoff/CHART-C04-integration.md",
+          "accessibility/CHART-C04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "nodeTypes": [
+        "molecule",
+        "gene",
+        "enzyme",
+        "microbe",
+        "process",
+        "reaction",
+        "measurement"
+      ],
+      "edgeTypes": [
+        "curated-biochemical",
+        "population-association",
+        "source-measured",
+        "modelled-experimental",
+        "unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 73/73",
+        "responsiveSpecimens": 48,
+        "editableMasters": 12,
+        "previewPNGs": 5,
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "mobileVisualReview": "390px Everyday Light inspected; footer overlap corrected",
+        "desktopVisualReview": "1440px Athlete Dark inspected",
+        "realApp": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "target": "client/src/pages/Explore.tsx",
+        "legacyReference": "design/visual-system/assets/pathway-nodes.svg",
+        "importRule": "Scoped CSS under .app-shell[data-bloom-visual=premium] .bv-scientific-chart; shapes only as editable SVG, source-backed runtime nodes and links"
+      },
+      "constraints": [
+        "No fake measured pathway or metabolic flux, assay, activity or mechanistic inference",
+        "Nodes show type not measured quantity, outcome or evidence quality",
+        "Only reviewed evidence permits graph relationship edge; unknown is disconnected",
+        "Population association nondirectional and noncausal, experimental/modelled qualified",
+        "Data-derived graph and labels must be rendered at runtime, design specimens are fictional",
+        "Original source record, evidence and citations inspectable",
+        "Responsive mobile vertical layouts and desktop graph, >=44px tap target",
+        "320/390/768/1440 browser validation and 200% zoom, forced colors, reduced motion and full screen reader review pending"
+      ]
+    },
+    {
+      "id": "CHART-C05",
+      "name": "Genetics variant locus, genotype-call and differentiated scientific evidence kit",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, genetics/clinical scientific, UX and real-browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Genetics_Variant_Evidence_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Manifest_2026-11-15.json",
+        "sha256Archive": "c9767033089d1ad776ad5c9121e1d50178159b70d665d17ed03d80e579dbf98b",
+        "contents": [
+          "tokens/CHART-C05-contract.json",
+          "tokens/CHART-C05-genetics.css",
+          "svg/8 individual symbolic vector assets",
+          "editable/28 master SVGs",
+          "responsive/{320,390,768,1440}/112 vector designs",
+          "previews/4 PNG specimens",
+          "handoff/CHART-C05-integration.md",
+          "accessibility/CHART-C05-QA.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "recorded",
+        "association",
+        "functional",
+        "clinical",
+        "quality-unknown",
+        "no-call",
+        "withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 148/148",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 112,
+        "editableMasters": 28,
+        "individualSymbols": 8,
+        "previewPNGs": 4,
+        "mobileStaticReview": "320 and 390 reviewed",
+        "desktopStaticReview": "1440 Athlete Dark reviewed, initial overlap corrected",
+        "actualApp": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "Biology > Genetics",
+          "Explore genetic evidence"
+        ],
+        "importRule": "Reuse A01 tokens + C04 node semantics; all real genotype, source, gene/locus and evidence text from canonical data, never from SVG specimens"
+      },
+      "constraints": [
+        "Locus rail is a schematic without real genomic coordinate or risk magnitude",
+        "Never infer allele, reference call, genome build, strand or method from the drawing",
+        "Reported SNP is not evidence of changed protein/enzyme activity",
+        "Population associations, functional laboratory studies and clinical evidence must be separately qualified and sourced",
+        "No false diagnostic implications, genetic risk scores or other unvalidated claims",
+        "Unknown call not equal reference genotype or zero",
+        "Withdrawn source hidden from caches, detail, tooltip and exact-value table",
+        "Accessible source provenance and keyboard/tap action 44px",
+        "Four themes and 320/390/768/1440 real browser/zoom/forced-color QA pending"
+      ]
+    },
+    {
+      "id": "CHART-C06",
+      "name": "Scientific evidence key \u2014 seven non-color-only semantic classes",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate; science, Architect, UX and live app accessibility approval pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01",
+        "CHART-C02",
+        "CHART-C03",
+        "CHART-C04",
+        "CHART-C05"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Scientific_Evidence_Key_2026-11-15(1).zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Readme_2026-11-15(1).md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Manifest_2026-11-15(1).json",
+        "contents": [
+          "svg/7 separate 24x24 SVG symbols plus combined symbol sprite",
+          "tokens/CHART-C06-evidence-contract.json",
+          "tokens/CHART-C06-evidence.css",
+          "responsive/320,390,768,1440/16 editable SVG specimens",
+          "editable/8 SVG masters and compact symbol examples",
+          "previews/5 PNG images",
+          "handoff/CHART-C06-implementation.md",
+          "accessibility/CHART-C06-QA.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "states": [
+        "measured",
+        "reported",
+        "calculated",
+        "population",
+        "hypothesis",
+        "simulation",
+        "unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 32/32",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "mobileStaticReview": "320px Everyday Light visually inspected",
+        "desktopStaticReview": "1440px Athlete Dark visually inspected",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "Biology",
+          "Gut Reports",
+          "Genetics",
+          "Explore",
+          "Scientific pathway detail"
+        ],
+        "importRule": "Scoped additive CSS under premium app-shell; use A01 tokens, bind evidence and source to actual record DOM text"
+      },
+      "constraints": [
+        "Seven evidence roles are semantic, not levels of certainty, severity, or clinical utility",
+        "Measured not synonymous with clinically meaningful",
+        "Source-reported not independently verified",
+        "Calculated requires inputs and rule",
+        "Population associations do not imply personal prediction or causality",
+        "Modelled/experimental never presented as patient measurement",
+        "Unknown never zero or normal",
+        "No withdrawn source display",
+        "Visible labels beyond colour, keyboard and 44px interaction targets",
+        "320/390/768/1440 and 200% zoom, forced-colors, screen-reader actual app QA pending"
+      ],
+      "notes": "Shared Library assigned (1) suffix to this delivery; registry points to exact confirmed paths, not an earlier namesake."
+    },
+    {
+      "id": "CHART-D01",
+      "name": "Heart rate and zone time-series",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "sampled-zones",
+        "missing-stream",
+        "zones-unavailable",
+        "source-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Sampled heart rate and source-defined zone limits only; no interpolation through unknown stream.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D02",
+      "name": "Training volume / strength progression",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D02_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "performed",
+        "planned-versus-performed",
+        "partial-and-skipped",
+        "load-unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Actual performed sets and validated loads; planned and skipped never treated as completed.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D03",
+      "name": "Pace, power and effort plot",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D03_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "sampled-pace",
+        "sampled-power",
+        "manual-effort",
+        "stream-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Timestamped pace/power only where available; manually reported effort remains discrete.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D04",
+      "name": "Planned versus performed activity timeline",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D04_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "planned-and-completed",
+        "cancelled",
+        "unknown-status",
+        "recurring-plan"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Planned recurrence not evidence of completion; missing status not cancelled.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D05",
+      "name": "Fueling and hydration timeline",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D05_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "logged-with-plan",
+        "hydration-only",
+        "calculated-guidance",
+        "no-intake-recorded"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Recorded intake distinct from plan and calculated recommendations; no logs is not zero.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "extraction": {
+    "recordType": "original-source-extraction-candidate",
+    "schemaVersion": 1,
+    "sourceId": "doi:10.3390/metabo12090846",
+    "title": "Fecal Bile Acids and Neutral Sterols Are Associated with Latent Microbial Subgroups in the Human Gut",
+    "attribution": "Breuninger et al., Metabolites 2022;12(9):846",
+    "doi": "10.3390/metabo12090846",
+    "pmid": "36144250",
+    "pmcid": "PMC9504437",
+    "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9504437/",
+    "publicationDate": "2022-09-08",
+    "observedAt": "2026-11-19",
+    "sourceAccess": {
+      "method": "Primary full-text web retrieval, cached three days earlier",
+      "rawPublisherBytesArchived": false,
+      "publisherEndpoint": "HTTP429",
+      "claim": "No original-file byte hash claimed"
+    },
+    "design": {
+      "class": "human-observational",
+      "cohort": "KORA FF4",
+      "collectionYears": [
+        2013,
+        2014
+      ],
+      "analysis": "cross-sectional",
+      "mainN": 1280,
+      "dietSubanalysisN": 930,
+      "locators": [
+        "2.1",
+        "2.7"
+      ]
+    },
+    "measurement": {
+      "specimen": "stool",
+      "methods": [
+        "UPLC-MS/MS metabolomics",
+        "16S rRNA V3\u2013V4",
+        "Dirichlet regression"
+      ],
+      "groups": 20,
+      "groupScope": "cohort-specific latent subgroups",
+      "locators": [
+        "2.3",
+        "2.4",
+        "2.6",
+        "2.7"
+      ]
+    },
+    "findings": [
+      {
+        "direction": "association",
+        "summary": "Bile-acid associations differed between microbial subgroups.",
+        "locator": "3;Figure2"
+      },
+      {
+        "direction": "analysis-specific-null",
+        "summary": "Ergosterol lacked linear associations; nonlinear models showed associations.",
+        "locator": "3;SupplementaryFigureS4",
+        "supplementaryDataAcquired": false
+      }
+    ],
+    "limits": [
+      "Single stool sample; no causal direction established.",
+      "Diet adjustment and medication exclusion changed some significance.",
+      "Published aggregate findings do not measure personal microbial function."
+    ],
+    "limitLocators": [
+      "3",
+      "4"
+    ],
+    "sourceConflict": {
+      "locator": "Table1 rendered HTML",
+      "totalN": 1280,
+      "maleN": 636,
+      "femaleN": 634,
+      "sum": 1270,
+      "status": "Verify original table; do not silently correct."
+    },
+    "rights": {
+      "articleLicenseObserved": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "articleLicenseLocator": "Copyright and License information",
+      "participantDataset": "restricted-access",
+      "datasetLocator": "Data Availability Statement",
+      "rawDatasetAcquired": false,
+      "modelTrainingEligible": false,
+      "externalProcessingApproved": false
+    },
+    "review": {
+      "identityAndMethodExtraction": "TECHNICALLY_CHECKED_AGAINST_PRIMARY_TEXT",
+      "independentScientificDisposition": "PENDING",
+      "publicationAuthority": "NOT_INSTALLED",
+      "providerClaimVerification": "NOT_TESTED",
+      "clinicalRelease": "NOT_AUTHORIZED",
+      "retractionStatus": "NO_NOTICE_SEEN_ON_RETRIEVED_PAGE_NOT_COMPREHENSIVE_CHECK"
+    },
+    "priorUse": {
+      "upstreamSmokeCommit": "b165a15a",
+      "sourceId": "doi:10.3390/metabo12090846",
+      "scope": "Source identity overlap only; provider response not reviewed here."
+    }
+  },
+  "extractionSnapshotSha256": "7e46bb258a60745e7b559d26ff1d848eca06f16c53f22b6f3a646af647bb858b",
+  "digestScope": "Canonical extraction JSON, not original article bytes."
+}

@@ -1,0 +1,79 @@
+{
+  "assetId": "CHART-B01",
+  "version": "1.0.0",
+  "title": "Source-aware longitudinal trends",
+  "themes": [
+    "everyday-light",
+    "everyday-dark",
+    "athlete-light",
+    "athlete-dark"
+  ],
+  "sourceOfPalette": "CHART-A01 scientific-chart-tokens.json (published)",
+  "dependsOn": [
+    "CHART-A01",
+    "CHART-A02",
+    "CHART-A03",
+    "CHART-A04",
+    "CHART-A05",
+    "CHART-A06",
+    "CHART-A07",
+    "CHART-A08"
+  ],
+  "specimens": {
+    "fullMatrix": {
+      "widths": [
+        390,
+        1440
+      ],
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "fixtures": [
+        "one",
+        "two",
+        "four",
+        "twelve",
+        "gap",
+        "outlier"
+      ]
+    },
+    "responsiveAdaptations": {
+      "widths": [
+        320,
+        768
+      ],
+      "fixture": "gap"
+    }
+  },
+  "runtimeInputs": [
+    "observationId",
+    "collectedAt",
+    "recordedNumericValue",
+    "recordedUnit",
+    "sourceId",
+    "assayMethod",
+    "comparableGroup",
+    "sourceReferenceInterval",
+    "correctionReceipt"
+  ],
+  "invariants": [
+    "No auto-smoothing between measured observations",
+    "Never join a gap known to be incompatible or source-withdrawn",
+    "Long time intervals alone do not prove a missingness gap",
+    "For single point show marker only, never a trend",
+    "Outlier retains normal observed symbol unless validated semantics demand otherwise",
+    "No inferred zero from absent records",
+    "Exact x position must reflect time scale; avoid equal-spacing date categories",
+    "Reference bands only from matching source context",
+    "Selected point keyed to source observation ID and source-specific original record",
+    "Original value, unit, date/time, source assay, conversions and corrected date available on demand",
+    "Exact-value tabular alternative and keyboard navigation",
+    "Minimum 44x44 CSS px hit region per interactive observation",
+    "Retain responsive four-theme light/dark requirements"
+  ],
+  "fixtureData": "Fictional synthetic numerical design data only, located in source fixture JSON and SVG specimens; never render as user results",
+  "status": "DESIGN_DELIVERY_ONLY_NOT_RUNTIME_INTEGRATED"
+}

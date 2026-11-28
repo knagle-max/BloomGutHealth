@@ -1,7 +1,15 @@
+import {exerciseCatalogueReferenceSchema} from './exercise-catalogue-reference';
+import {setLoadContextSchema} from './training-set-context';
+import {localizedSymptomSchema} from './localized-symptoms';
 import {athleteReferenceEntrySourceSchema,sessionEntrySourceSchema,hydrationEntrySourceSchema,athleteEntrySourceMatches} from "./athlete-entry-source";
 import {restaurantRegions} from "./restaurant-entry";
+import {labResponseContextSchema} from './lab-response-context';
+import {supplementIntakeSchema} from './supplement-intake';
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
+/** Opaque request invalidation only. This does not validate preferences,
+ * clinical eligibility or consent and must never grant domain permissions. */
+export const experienceLifecycleSchema=z.object({lifecycleId:z.uuid().transform(value=>value.toLowerCase()).optional()}).passthrough();
 export const dateKey = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v, "Use a real calendar date");
 /** A user choice is an intention, never evidence that food/exercise occurred. */
 export const wellnessChoiceSchema=z.object({
@@ -60,7 +68,10 @@ export const displayUnitsSchema = z.object({
 }).strict();
 export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
 
+export const exerciseCataloguePreferencesSchema=z.object({favourites:z.array(z.string().min(1).max(100)).max(1000).default([]),custom:z.array(z.object({id:z.string().uuid(),name:z.string().trim().min(1).max(120),aliases:z.array(z.string().trim().min(1).max(120)).max(20).default([]),category:z.string().trim().min(1).max(100),equipment:z.array(z.string().trim().min(1).max(100)).max(20).default([])}).strict()).max(500).default([])}).strict();
+export {exerciseCatalogueReferenceSchema} from './exercise-catalogue-reference';
 export const experienceSettingsSchema = z.object({
+  exerciseCatalogue:exerciseCataloguePreferencesSchema.prefault({}),
   lifecycleId:z.string().uuid().optional(), // Server-owned generation; never an entitlement.
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
   onboarding: onboardingSchema.prefault({}),
@@ -69,6 +80,7 @@ export const experienceSettingsSchema = z.object({
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({
+  exerciseCatalogue:exerciseCataloguePreferencesSchema.optional(),
   athleteReviewFor:z.object({base:z.string().max(1024).optional(),targets:z.string().max(1024).optional(),health:z.string().max(1024).optional()}).strict().optional(),
   onboarding: onboardingSchema.optional(),
   displayUnits: displayUnitsSchema.optional(),
@@ -79,22 +91,28 @@ export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
 export const actualSetsSchema = z.object({
   version: z.literal(1),
   sets: z.array(z.object({
+    loadContext:setLoadContextSchema.nullable().optional(),
+    catalogueRef:exerciseCatalogueReferenceSchema.optional(),
     exercise: z.string().trim().min(1).max(120),
     reps: z.number().int().min(0).max(1000).nullable(),
     loadKg: z.number().finite().min(0).max(2000).nullable(),
     completed: z.boolean(),bodyweight:z.literal(true).optional(),reportedBout:z.literal(true).optional(),
     id:z.string().uuid().optional(),loadUnit:z.enum(['kg','lb']).optional(),
     state:z.enum(['described','planned','cancelled']).optional(),side:z.enum(['left','right','both']).nullable().optional(),
-  }).strict()).max(100),
+  }).strict().refine(set=>!set.loadContext||!!set.id,'Load context requires a stable set identity')).max(100),
 }).strict();
 export type ActualSets = z.infer<typeof actualSetsSchema>;
+const actualStepsFields={steps:z.number().int().nonnegative().safe().nullable().optional(),stepScope:z.enum(['session','whole-day']).nullable().optional()};
+const validStepsScope=(value:{steps?:number|null;stepScope?:'session'|'whole-day'|null})=>value.steps==null||value.stepScope!=null;
 export const activityComponentSchema=z.object({
+ catalogueRef:exerciseCatalogueReferenceSchema.optional(),
+ ...actualStepsFields,
  id:z.string().uuid(),title:z.string().trim().min(1).max(120),
  activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),
  match:z.enum(['suggested','reported','unclassified']),minutes:z.number().int().min(1).max(1440).nullable(),
  distanceM:z.number().finite().nonnegative().max(1000000).nullable(),actualSets:actualSetsSchema.optional(),
  sourceSpan:z.object({start:z.number().int().min(0).max(2000),end:z.number().int().min(1).max(2000)}).strict().refine(span=>span.end>span.start).optional(),
-}).strict().refine(part=>!part.actualSets||part.actualSets.sets.every(set=>!!set.id),'Each activity set needs a stable identity');
+}).strict().refine(validStepsScope,'Choose whether actual steps cover this session or the whole day').refine(part=>!part.actualSets||part.actualSets.sets.every(set=>!!set.id),'Each activity set needs a stable identity');
 export const activityComponentsSchema=z.object({version:z.literal(1),items:z.array(activityComponentSchema).min(1).max(20)}).strict().superRefine((value,ctx)=>{
  const ids=value.items.flatMap(part=>[part.id,...(part.actualSets?.sets.map(set=>set.id!)||[])]);
  if(new Set(ids).size!==ids.length)ctx.addIssue({code:'custom',message:'Activity and set identities must be unique'});
@@ -102,7 +120,28 @@ export const activityComponentsSchema=z.object({version:z.literal(1),items:z.arr
  if(sets.length>100||sets.some(set=>set.completed&&(set.state==='planned'||set.state==='cancelled')))ctx.addIssue({code:'custom',message:'Review set count and explicit completion states'});
 });
 export type ActivityComponent=z.infer<typeof activityComponentSchema>;
+/** A reusable plan has no actual step counts or performed sets. */
+export const activityRoutinePlanSchema=z.object({
+ version:z.literal(1),revision:z.string().uuid(),name:z.string().trim().min(1).max(120),
+ components:activityComponentsSchema,
+ weekdays:z.array(z.number().int().min(0).max(6)).min(1).max(7).refine(days=>new Set(days).size===days.length),
+ timeZone:z.string().min(1).max(100).refine(zone=>{try{new Intl.DateTimeFormat('en',{timeZone:zone});return true;}catch{return false;}},'Choose a recognized time zone'),
+ effectiveFrom:dateKey,effectiveTo:dateKey.nullable(),preferredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).nullable(),paused:z.boolean(),
+ stepTarget:z.object({min:z.number().int().nonnegative().safe().nullable(),max:z.number().int().nonnegative().safe().nullable()}).strict().nullable(),
+}).strict().superRefine((plan,ctx)=>{
+ if(plan.effectiveTo&&plan.effectiveTo<plan.effectiveFrom)ctx.addIssue({code:'custom',path:['effectiveTo'],message:'End date precedes the start date'});
+ if(plan.stepTarget?.min!=null&&plan.stepTarget.max!=null&&plan.stepTarget.max<plan.stepTarget.min)ctx.addIssue({code:'custom',path:['stepTarget'],message:'Check target minimum and maximum'});
+ for(const part of plan.components.items)if(part.steps!=null||part.actualSets?.sets.some(set=>set.completed||set.state!=='planned'||set.loadContext?.effortRpe!=null))ctx.addIssue({code:'custom',path:['components'],message:'Routine templates hold plans, never actual counts or performed sets'});
+});
+export type ActivityRoutinePlan=z.infer<typeof activityRoutinePlanSchema>;
+export const routineOccurrenceOverrideSchema=z.object({revision:z.string().uuid(),state:z.enum(['skipped','rescheduled']),toDate:dateKey.nullable()}).strict().refine(value=>value.state==='rescheduled'?value.toDate!==null:value.toDate===null);
+export type RoutineOccurrenceOverride=z.infer<typeof routineOccurrenceOverrideSchema>;
+export const activityRoutineSchema=z.object({priorPlans:z.array(activityRoutinePlanSchema).max(100).default([]),occurrenceOverrides:z.record(dateKey,routineOccurrenceOverrideSchema).refine(rows=>Object.keys(rows).length<=2000).default({}),plan:activityRoutinePlanSchema,sourceActivityId:z.string().min(1).max(100).nullable(),acknowledgedOccurrences:z.record(dateKey,z.object({activityId:z.string().min(1).max(100),revision:z.string().uuid(),receiptHash:z.string().regex(/^[a-f0-9]{64}$/)}).strict()).refine(rows=>Object.keys(rows).length<=2000)}).strict();
+export type ActivityRoutine=z.infer<typeof activityRoutineSchema>;
+export const activityRoutineSourceSchema=z.object({routineId:z.string().min(1).max(100),revision:z.string().uuid(),localDate:dateKey,scheduledDate:dateKey,occurrenceRevision:z.string().uuid().nullable(),timeZone:z.string().min(1).max(100),confirmedPerformed:z.literal(true),timestampBasis:z.literal('log-time'),planSnapshot:activityRoutinePlanSchema}).strict();
 export const activitySchema=z.object({
+ routineSource:activityRoutineSourceSchema.optional(),
+ ...actualStepsFields,
  title:z.string().trim().min(1).max(120),startedAt:z.string().datetime({offset:true}),
  minutes:z.number().int().min(1).max(1440).nullable(),effort:z.enum(["easy","moderate","hard"]).nullable().default(null),
  source:z.literal("manual").default("manual"),
@@ -112,7 +151,7 @@ export const activitySchema=z.object({
  actualSets:actualSetsSchema.optional(),
  components:activityComponentsSchema.optional(),
  capture:z.object({version:z.literal(1),method:z.enum(['describe','select','repeat']),description:z.string().min(1).max(2000).refine(value=>value.trim().length>0),activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),interpretation:z.enum(['rule-suggestion','user-selected','unclassified']),reviewedDescription:z.string().max(2000).optional()}).strict().optional(),
-}).strict().superRefine((activity,ctx)=>{if(activity.capture)for(const part of activity.components?.items||[])if(part.sourceSpan&&part.sourceSpan.end>activity.capture.description.length)ctx.addIssue({code:'custom',message:'Source wording must reference the recorded original description.'});});
+}).strict().refine(validStepsScope,'Choose whether actual steps cover this session or the whole day').superRefine((activity,ctx)=>{if(activity.capture)for(const part of activity.components?.items||[])if(part.sourceSpan&&part.sourceSpan.end>activity.capture.description.length)ctx.addIssue({code:'custom',message:'Source wording must reference the recorded original description.'});});
 export type Activity=z.infer<typeof activitySchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
@@ -210,6 +249,10 @@ export const memorySchema = z.object({
   key: z.string().trim().min(1).max(2000), ingredients: z.array(ingredientSchema.strict()).min(1).max(20),
 }).strict();
 export const experienceEntrySchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal("localized-symptom"),payload:localizedSymptomSchema}).strict(),
+  z.object({kind:z.literal('supplement-intake'),payload:supplementIntakeSchema}).strict(),
+  z.object({kind:z.literal('lab-response-context'),payload:labResponseContextSchema}).strict(),
+  z.object({kind:z.literal("activity-routine"),payload:activityRoutineSchema}).strict(),
   z.object({kind:z.literal("wellness-choice"),payload:wellnessChoiceSchema}).strict(),
   z.object({kind:z.literal("activity"),payload:activitySchema}).strict(),
   z.object({kind:z.literal("session"), payload:trainingSessionSchema}).strict(),

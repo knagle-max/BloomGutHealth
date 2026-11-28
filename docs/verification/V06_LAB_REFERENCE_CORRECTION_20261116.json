@@ -1,0 +1,61 @@
+{
+  "task": "V06-P1-LAB-RANGE-CORRECTION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_FOR_IMPLEMENTED_SCOPE",
+  "baseCommit": "fd2c05a65193566fa8c79278a2831ca68e04fbd9",
+  "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md \u2014 owner source-specific correction extension",
+  "implementation": [
+    "Backed in-chart Use my laboratory\u2019s range; copied lower/upper/operator/unit and optional original report context; explicit report check",
+    "One existing encrypted append-only metadata table, distinct account/observation stream; no migration, duplicate provider store, clinical record write or source reimport",
+    "Server-owned current source identity/revision, current-head CAS, exact receipt retry returning current state, null removal revision; unchanged original source values, intervals, flags and ciphertext",
+    "Copied source interval takes priority only on selected observation; distinct user-confirmed label, localized geometry, None suppresses display; other dates/reports/observations unchanged",
+    "Compatible canonical conversion including affine HbA1c and original assay guards; conflicting copied vitamin-D identity abstains",
+    "Provider identity changes invalidate affected source binding; unrelated report result edits do not invalidate this result; deleted source cannot be recreated by a range retry",
+    "Existing account export includes all owned correction versions separately, without request fingerprints; SQL source cleanup removes every range version with its fact",
+    "Responsive dialog, keyboard/Escape and explicit return focus to opening control; retry retains draft; stale concurrent edits require loading current source"
+  ],
+  "validation": [
+    "13 focused encrypted PostgreSQL/source-range/export/auth tests PASS; broad778/778 PASS; final changed source/formatter/guard9/9 PASS",
+    "Actual App\u2192authenticated HTTP\u2192encrypted SQL PASS: conflicting source-context rejection retains editable draft/no partial annotation; exact lost response retry; selected-result-only priority; source ciphertext unchanged; None/reload/mode; concurrent draft retention; amend/remove/original restoration; new two-sided zero and explicit operators; account withdrawal",
+    "48 Everyday/Athlete \u00d7 light/dark \u00d7320/390/768/1440 \u00d7100%/200% zoom/200% text states PASS; eight original dialog captures; Athlete dark390 inspected; keyboard Escape and explicit opening-control focus restoration PASS",
+    "Final TypeScript, API/capability/Biology exact source audits and production build/source+built original media verification PASS"
+  ],
+  "evidence": [
+    "/tmp/bloom-reference-editor-units-final.log",
+    "/tmp/bloom-reference-editor-browser-final.log",
+    "/tmp/bloom-reference-editor-full-tests.log",
+    "/tmp/bloom-reference-editor-final-types.log",
+    "/tmp/bloom-reference-editor-build-final.log",
+    "/tmp/bloom-lab-reference-editor/"
+  ],
+  "pending": [
+    "Canadian catalogue selection is the next bounded P1 sub-slice; new numeric entries need actual source applicability and rights evidence"
+  ],
+  "limits": [
+    "No actual private health data accessed or changed; owner separately confirmed organism images work",
+    "No physical VoiceOver, independent clinical/visual approval, full RC, main merge or manual deployment claim",
+    "Source corrections that create a new observation ID never automatically retarget an old range; original annotation history remains in owned account export"
+  ],
+  "publication": {
+    "commit": "50b83ceaab683f97b0c5b2bff68f10905c464013",
+    "workflowRun": 43962744020,
+    "workflowJob": 133634163501,
+    "conclusion": "failure",
+    "failure": "Report-scoped reference browser expected old 24\u2013444 wording after formatter correctly exposed \u226524 and \u2264444 (and glucose \u22653.3 and \u22645.5). Numeric bounds/classes and source guards unchanged. Two assertions updated; complete original actual HTTP/SQL34-result journey PASS. Fresh CI with Canadian slice next.",
+    "renderDeploy": "dep-dbtnhbtckfvc73bmft40",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T21:43:46.237961Z"
+  },
+  "qualification": {
+    "commit": "341ada7a32dca4773f7d2410d59bd368716183b2",
+    "workflowRun": 43966986850,
+    "workflowJob": 133648897037,
+    "conclusion": "success",
+    "tests": 783,
+    "passed": 783,
+    "failed": 0,
+    "renderDeploy": "dep-dbtntcbrjlhs73art040",
+    "renderFinishedAt": "2026-11-16T22:09:25.601241Z",
+    "runtime": "Exact hosted persistence matched341ada7a during qualification; subsequently superseded by live descendant cacf81c3, CI43970831399 SUCCESS784/784.",
+    "currentDescendant": "cacf81c30242f159453cb23be1df8a36b8d4075a"
+  }
+}

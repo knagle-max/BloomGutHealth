@@ -1,0 +1,133 @@
+{
+  "assetId": "CHART-B02",
+  "version": "1.0.0",
+  "dependencies": [
+    "CHART-A01",
+    "CHART-A02",
+    "CHART-A03",
+    "CHART-A04",
+    "CHART-A05",
+    "CHART-A06",
+    "CHART-A07",
+    "CHART-A08",
+    "CHART-B01"
+  ],
+  "sourcePalette": "CHART-A01 (values imported exactly; no new palette introduced)",
+  "purpose": "Data-driven laboratory biomarker composition, not medical assessment or static plotted asset",
+  "themes": [
+    "everyday-light",
+    "everyday-dark",
+    "athlete-light",
+    "athlete-dark"
+  ],
+  "scenarios": {
+    "source-interval": {
+      "label": "Source laboratory interval",
+      "description": "Source-specific lower and upper limits, applicable to the selected assay and specimen.",
+      "kind": "band"
+    },
+    "selected-only": {
+      "label": "Selected record only",
+      "description": "The selected observation has a known interval; no interval is inferred for other records.",
+      "kind": "selected"
+    },
+    "alternate-method": {
+      "label": "Different laboratory method",
+      "description": "Method A and method B have different reference contexts; not a single universal band.",
+      "kind": "alternate"
+    },
+    "published-comparison": {
+      "label": "Published comparison",
+      "description": "Research comparison displayed separately from the reporting laboratory interval.",
+      "kind": "research"
+    },
+    "non-comparable": {
+      "label": "Non-comparable assays",
+      "description": "A method change interrupts the comparison; segments must remain disconnected.",
+      "kind": "incompatible"
+    },
+    "unavailable": {
+      "label": "Interval unavailable",
+      "description": "No verified source interval: do not draw a band or infer normality.",
+      "kind": "none"
+    },
+    "decision-threshold": {
+      "label": "Decision threshold",
+      "description": "A source-qualified clinical decision limit is a line, not a laboratory reference band.",
+      "kind": "threshold"
+    },
+    "method-changing": {
+      "label": "Reference context changes",
+      "description": "Records carry their own applicable intervals. Do not paint one interval across both groups.",
+      "kind": "changing"
+    }
+  },
+  "specimens": {
+    "primary": {
+      "widths": [
+        390,
+        1440
+      ],
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "source-interval",
+        "selected-only",
+        "alternate-method",
+        "published-comparison",
+        "non-comparable",
+        "unavailable",
+        "decision-threshold",
+        "method-changing"
+      ]
+    },
+    "responsive": {
+      "widths": [
+        320,
+        768
+      ],
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "source-interval",
+        "alternate-method",
+        "non-comparable"
+      ]
+    }
+  },
+  "requiredRuntimeFields": [
+    "observationId",
+    "sourceId",
+    "originalObservedValue",
+    "originalUnit",
+    "collectionTimestamp",
+    "assayIdentity",
+    "methodIdentity",
+    "sourceSpecificReferenceInterval",
+    "intervalApplicableAtCollectionTime",
+    "referenceProviderAndPopulationWhenAvailable",
+    "conversionMetadata",
+    "correctionAndRevisionHistory",
+    "comparabilityResult",
+    "sourceAccessStatus"
+  ],
+  "mustNotInfer": [
+    "normal or healthy from missing interval",
+    "a historical interval from a selected record",
+    "a continuous trend across non-comparable methods",
+    "an unseen measurement or zero from missingness",
+    "clinical meaning solely from an outlier",
+    "patient values from sample vector specimens"
+  ],
+  "sourceDrawers": "Source-linked exact original values, dates, recorded units, assay, limits and method plus revision provenance; no withdrawn source data",
+  "accessibility": "44x44 control targets, chart description and exact-value table, keyboard selection/focus return, source panel legibility",
+  "status": "DESIGN_DELIVERY_ONLY_NOT_RUNTIME_INTEGRATED"
+}

@@ -1,0 +1,47 @@
+/* Text and navigation are actual source projections; imagery remains decorative.
+   A reserved source uses the same frame and never creates a broken image. */
+.app-shell[data-bloom-visual="premium"] .biology-home-source {
+ position:relative;isolation:isolate;overflow:hidden;min-width:0;
+ min-height:clamp(132px,21vw,184px);padding:clamp(1rem,3vw,1.75rem);
+ border:1px solid var(--bv-line);border-radius:20px;
+ background:var(--bv-porcelain);color:var(--bv-forest);gap:1rem;
+}
+.app-shell[data-bloom-visual="premium"] .biology-home-source > .bv-media {
+ position:absolute;inset:0;margin:0;width:100%;height:100%;border:0;border-radius:inherit;z-index:-2;
+}
+.app-shell[data-bloom-visual="premium"] .biology-home-source > .bv-media :is(img,.bv-media-placeholder) {
+ position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center;
+}
+.app-shell[data-bloom-visual="premium"] .biology-home-source .bv-media-placeholder {
+ background:radial-gradient(ellipse at 95% 10%,var(--bv-mist),transparent 65%),var(--bv-porcelain);
+}
+.app-shell[data-bloom-visual="premium"] .biology-home-source::before {
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(90deg,var(--bv-porcelain) 0%,var(--bv-porcelain) 26%,color-mix(in srgb,var(--bv-porcelain) 94%,transparent) 60%,transparent 76%);
+}
+.app-shell[data-bloom-visual="premium"] .biology-home-source > .biology-home-source-copy {flex:0 1 auto;min-width:0;max-width:62%;padding:.2rem .5rem .2rem 0;background:transparent;overflow-wrap:anywhere;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source strong {font-family:var(--font-display);font-size:clamp(1.25rem,2.8vw,1.65rem);font-weight:500;line-height:1.25;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source small {color:var(--bv-secondary);line-height:1.5;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source > svg {margin-left:auto;width:28px;height:28px;padding:4px;border-radius:50%;background:var(--bv-porcelain);flex-shrink:0;color:var(--bv-brand);}
+.app-shell[data-bloom-visual="premium"] .biology-home-source:focus-visible {outline:3px solid var(--bv-focus);outline-offset:3px;}
+@media(forced-colors:active){.app-shell[data-bloom-visual="premium"] .biology-home-source {background:Canvas;color:LinkText;border-color:CanvasText;}.app-shell[data-bloom-visual="premium"] .biology-home-source > .bv-media,.app-shell[data-bloom-visual="premium"] .biology-home-source::before {display:none;}}
+
+/* BP-UI01: four existing source doors lead; training stays a secondary tool. */
+.biology-overview-scene {height:96px;min-width:0;overflow:hidden;border-radius:1.25rem;}
+.biology-overview-scene>.bv-media {height:100%;block-size:100%;width:100%;margin:0;}
+.biology-overview-scene .bv-media img {width:100%;height:100%;block-size:100%;object-fit:cover;object-position:center;}
+.app-shell[data-bloom-visual="premium"] .biology-home-sources {grid-template-columns:repeat(2,minmax(0,1fr));}
+.app-shell[data-bloom-visual="premium"] .biology-home-source {min-height:132px;padding:1rem;align-items:flex-start;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source>.biology-home-source-copy {max-width:100%;padding:0;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source strong {display:block;padding-right:1.5rem;font-size:1.125rem;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source>svg {position:absolute;top:.75rem;right:.5rem;width:24px;height:24px;}
+@media(max-width:359px){.app-shell[data-bloom-visual="premium"] .biology-home-sources {grid-template-columns:minmax(0,1fr);}.app-shell[data-bloom-visual="premium"] .biology-home-source {min-height:88px;}}
+/* Narrow tiles keep source summaries off the photograph; exact art stays visible. */
+@media(max-width:767px){
+ .app-shell[data-bloom-visual="premium"] .biology-home-source {flex-direction:column;align-items:stretch;padding:.75rem;gap:.5rem;}
+ .app-shell[data-bloom-visual="premium"] .biology-home-source>.bv-media {position:relative;inset:auto;z-index:auto;width:100%;height:48px;block-size:48px;min-height:48px;border-radius:.5rem;overflow:hidden;}
+ .app-shell[data-bloom-visual="premium"] .biology-home-source::before {display:none;}
+ .app-shell[data-bloom-visual="premium"] .biology-home-source strong {padding-right:0;}
+ .app-shell[data-bloom-visual="premium"] .biology-home-source small {line-height:1.4;}
+}
+@media(min-width:768px){.app-shell[data-bloom-visual="premium"] .biology-home-source>.biology-home-source-copy {max-width:62%;}}

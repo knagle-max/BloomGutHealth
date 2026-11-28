@@ -33,3 +33,17 @@ test('reported section navigation retains contiguous original order, repeated he
  const snapshot=structuredClone(rows),sections=reportedLabSections(rows);
  assert.deepEqual(sections.map(section=>[section.firstId,section.reportedSection,section.rows.map(row=>row.id)]),[['a','[ First ]',['a','b']],['c','[ Second ]',['c']],['d','[ First ]',['d']],['e',undefined,['e']]]);assert.deepEqual(rows,snapshot);assert.deepEqual(reportedLabSections([]),[]);
 });
+
+import {latestRecordedLabContext} from '../shared/lab-history';
+test('default chart context follows latest source chronology rather than interval availability or measured value',()=>{
+ const earlier={id:'older-with-range',date:'2026-09-01T12:00:00Z',value:55,referenceHigh:60},latest={id:'latest-no-range',date:'2026-10-01T12:00:00Z',value:55,referenceHigh:null};
+ assert.equal(latestRecordedLabContext([latest,earlier]).point?.id,latest.id);
+ assert.equal(latestRecordedLabContext([earlier,latest]).point?.id,latest.id);
+ assert.equal(latestRecordedLabContext([]).point,undefined);
+});
+test('tied occurrences and unordered date-only sources require explicit selection',()=>{
+ const a={id:'a',date:'2026-10-01T12:00:00Z'},b={...a,id:'b'};
+ assert.equal(latestRecordedLabContext([a,b]).ambiguous,true);assert.equal(latestRecordedLabContext([a,b]).point,undefined);
+ const sourceReport={importId:'00000000-0000-4000-8000-000000000001',enteredDate:'2026-10-01'};
+ assert.equal(latestRecordedLabContext([{...a,sourceReport},{id:'later-stored',date:'2026-10-01T13:00:00Z',sourceReport}]).ambiguous,true);
+});

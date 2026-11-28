@@ -1,0 +1,38 @@
+{
+  "task": "V06-T2B-QUESTION-SEMANTICS-READER",
+  "status": "PUBLISHED_RUNTIME_COMPATIBLE_PENDING_EXACT_CI",
+  "baseCommit": "cacf81c30242f159453cb23be1df8a36b8d4075a",
+  "implementation": [
+    "Compatible immutable question-ID catalogue for B12/CBC and existing families; old question meanings unchanged; current writers still ask their legacy family question",
+    "API exposes target question ID; explicit expected-question guard and semantic-equivalent legacy receipt fallback prevent relabelling/replay across questions",
+    "Aware UI carries protocol1; legacy browsers receive409/reload before a nonlegacy answer/target is returned, while existing legacy questions remain available. Existing auth, source ownership, budgets, CAS/generation/delete and generic-producer denial retained",
+    "Saved answer/history labels use actual stored question; draft is pinned to the question answered and cannot be reused/prefilled for another target; source changes and stale async/account responses still withdraw active state",
+    "No schema migration/new ledger/clinical claim, numerical source curation or new producer activation"
+  ],
+  "validation": [
+    "10 schema/real SQL/HTTP/reader/export/receipt/ownership/deletion tests PASS",
+    "Actual App\u2192authenticated HTTP\u2192encrypted SQL future B12-row fixture and future target DTO PASS: immutable saved question; old-client reload guard; mismatched answer never prefilled; held draft remains pinned through target change; matching prior B12 answer only restored after review; legacy producer rejects premature B12 save; original labs/answers immutable; account withdrawal;48 mode/theme/width/200% zoom+text states",
+    "Complete existing actual App/context lifecycle journey PASS: prepare, remembered date vs learned-at, lost response exact retry, reload, decline removes notes, source correction/deletion and discoverable private deletion, owner/keyboard/320/390 light/dark200%",
+    "Final TypeScript, source API/capability/Biology audits and production original-source/built-media checks PASS"
+  ],
+  "evidence": [
+    "/tmp/bloom-context-question-reader-unit.log",
+    "/tmp/bloom-context-question-reader-browser.log",
+    "/tmp/bloom-context-question-legacy-regression.log",
+    "/tmp/bloom-context-question-reader-final-types.log",
+    "/tmp/bloom-context-question-reader-audits.log",
+    "/tmp/bloom-context-question-reader-build.log"
+  ],
+  "pending": [
+    "Only after compatible reader is live, activate source-derived B12/CBC/iron questions. Require (expectedQuestion ?? legacyQuestion) to equal the server-derived actual target, including old clients; preserve historical receipts and deletion fences",
+    "Then source-cited per-family context/next actions; full Response#15 and RC remain partial"
+  ],
+  "privacy": "Only synthetic local/isolated data. No actual private health query, production data write, main merge/manual deployment or physical VoiceOver claim.",
+  "publication": {
+    "commit": "31d23853d015dd27bdcbfcbf403df8ff451fcbd4",
+    "runtimeDescendant": "baa52b9fd3a74eea9e4f33c3bd779b9baa688101",
+    "deploy": "dep-dbtqtc9evqrc73f9oaeg",
+    "liveAt": "2026-11-17T01:35:39.17841Z",
+    "ci": "43996452281 in_progress at check"
+  }
+}

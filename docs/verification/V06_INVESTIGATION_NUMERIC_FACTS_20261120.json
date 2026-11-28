@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-20",
+  "requirement": "INV-05 structured numeric fact subset",
+  "baseCommit": "5b70433dce37b74303ab72a7f96965c10fc011bd",
+  "status": "LOCAL_ENGINEERING_TESTED_NOT_SCIENTIFIC_ACCEPTANCE",
+  "operations": [
+    "source-value",
+    "recorded-difference"
+  ],
+  "bounds": {
+    "claims": 12,
+    "inputsPerClaim": 2,
+    "canonicalLabFacts": 2000
+  },
+  "checks": {
+    "finalFocused": {
+      "tests": 43,
+      "passed": 43,
+      "failed": 0,
+      "skips": 0
+    },
+    "typescript": "PASS_FINAL_SOURCE",
+    "buildAndMedia": "PASS_DATED_FINAL_SOURCE",
+    "calendarPrecisionNegativeControl": "RED_ACCEPTANCE_REPRODUCED_THEN_GREEN_USING_EXISTING_LATEST_CONTEXT_AND_LAB_SOURCE_SCHEMAS"
+  },
+  "reuse": [
+    "Existing marker units",
+    "Existing assay identity",
+    "Existing lab comparability",
+    "Existing recorded lab difference",
+    "Existing private runner",
+    "Existing exact-review admission"
+  ],
+  "verifiedNotAssumed": [
+    "No model-supplied numeric input or arbitrary formula execution",
+    "Current eligible source lookup and full source-revision provenance",
+    "Original units and chronological comparable difference",
+    "Exact source values; arithmetic roundoff only with no zero floor",
+    "Research candidate and null consumer interpretation; exact independent authority still required"
+  ],
+  "notEstablished": [
+    "All free-prose numbers or semantic scientific truth",
+    "Clinical significance or personal causation",
+    "Live private model or public-provider qualification",
+    "Independent held-out performance or release approval"
+  ],
+  "activation": {
+    "personalData": false,
+    "externalAI": false,
+    "newRuntimeService": false,
+    "networkChanged": false,
+    "renderChanged": false,
+    "deployed": false
+  },
+  "artifacts": [
+    {
+      "path": "shared/investigation-numeric-facts.ts",
+      "sha256": "f716c36842ee6be4a471006df26ae0bb23b1ed32980e87b60ce87a6a6f411ae8"
+    },
+    {
+      "path": "shared/biological-investigation.ts",
+      "sha256": "44404789f978422799f64d704226659d41c24b502492ec93b8a1d59d5e18b33b"
+    },
+    {
+      "path": "server/private-investigation-runner.ts",
+      "sha256": "b81859b430220052d28c2cd52a31199c59d0333ff9ab6ddc014dd8043dcdd9d6"
+    },
+    {
+      "path": "server/investigation-candidate-admission.ts",
+      "sha256": "75f9de5c831c4b86edf6602e9ca55eb32aee18d50be56f3c8d07d9fb2f0846a3"
+    },
+    {
+      "path": "tests/investigation-numeric-facts.test.ts",
+      "sha256": "c2d4f8af3780df6d37608c65cce7fe9705711f4d5fdd3d473a1f6559e4b9b628"
+    },
+    {
+      "path": "tests/private-investigation-runner.test.ts",
+      "sha256": "5b824242c94d9a02cd18d489e742e5645901267463e248667485e294160c014b"
+    },
+    {
+      "path": "tests/investigation-candidate-admission.test.ts",
+      "sha256": "4bca2632389f48da25f23e733a5b722d02dec13308e9de2adeb45f8b7f51501f"
+    },
+    {
+      "path": "tests/private-investigation-pipeline.test.ts",
+      "sha256": "eb21fd9ee9b49abaaf68eaef37013eaffa50c73d089bcddaba95b0dfdc98c482"
+    }
+  ]
+}

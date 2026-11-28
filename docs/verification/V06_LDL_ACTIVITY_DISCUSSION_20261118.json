@@ -1,0 +1,27 @@
+{
+  "task": "V06-C2-LDL-ACTIVITY-DISCUSSION",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "a94a8656",
+  "sourceReview": {
+    "url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+    "retrievedOn": "2026-11-18",
+    "location": "Is there anything else I need to know about my cholesterol levels?",
+    "support": "Regular physical activity is a general factor that may affect LDL, alongside diet, weight, smoking, alcohol and other context. Discuss major routine changes with a provider.",
+    "scope": "Use existing canonical cholesterol citation for source-timed general discussion only. No attribution, intensity/adherence inference, treatment target, clinical dose or borrowed ApoB claim. Original registry review state unchanged."
+  },
+  "change": [
+    "Extend existing activity discussion adapter to LDL only when comparable current original collection-date pair and exact source IDs match. Reuse chronology, current owned records and existing renderer.",
+    "Explain general evidence separately from saved sessions and unknown coverage. LDL that does not decrease gets LDL-specific counter-context, without claiming exercise was ineffective.",
+    "Keep original source drilldown, practical existing activity-review action, source/date correction and account/outage withdrawal; no new writes, evidence graph or predictor."
+  ],
+  "verification": {
+    "focused": "20/20 activity/panel tests PASS: LDL-specific citation, source/event IDs, lower/unchanged/higher LDL, unknown history, unsupported ApoB, stale identity/comparability and no mutation; existing TG/ALT safeguards retained.",
+    "typesBuild": "TypeScript and production build/original media checks PASS.",
+    "audits": "8/8 API/capability/Biology tests PASS before final browser fixture refresh.",
+    "browser": "PASS actual App LDL-specific discussion/canonical citation and existing TG/ALT; typed walking, unknown duration, separate occurrence/log dates, deletion/outage/retry/original-date withdrawal/owner isolation and no writes.20mode/theme/width states plus200% retained. Initial old-fixture failure resolved by adding typed LDL source pair, without weakening assertions."
+  },
+  "limits": [
+    "Full Response15 grouped contributors and remaining Core/RC work open.",
+    "No actual-owner health data, physical device or independent clinical/design approval claimed. Exact publication CI/Render pending."
+  ]
+}

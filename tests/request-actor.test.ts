@@ -39,3 +39,12 @@ test('late body completion and cloned error bodies cannot return data after iden
 });
 
 test('an owner-bound queued task cannot start under a replacement actor, even before its component rerenders',()=>{try{bindRequestActor('source-owner-a');const started=accountContextGuard('source-owner-a');bindRequestActor('source-owner-b');assert.throws(()=>accountContextGuard('source-owner-a'),AccountContextChangedError);assert.throws(started,AccountContextChangedError);const replacement=accountContextGuard('source-owner-b');replacement();bindRequestActor('source-owner-a');assert.throws(started,AccountContextChangedError,'Returning to the same actor cannot revive an older epoch');assert.throws(replacement,AccountContextChangedError);}finally{bindRequestActor(null);}});
+
+test('set-context reader version is explicit only on same-origin experience APIs and never forwarded to external services',async()=>{
+ const original=globalThis.fetch,calls:Headers[]=[];globalThis.fetch=(async(_url,init)=>{calls.push(new Headers(init?.headers));return new Response('{}');})as typeof fetch;
+ try{bindRequestActor('synthetic-owner');for(const url of ['/api/experience/records','https://bloom.invalid/api/experience/records','https://foreign.invalid/api/experience/records','/api/precision','/api/auth/me']){await accountFetch(url,{headers:{'X-Bloom-Set-Fields':'forged'}});assert.equal(calls.at(-1)!.get('X-Bloom-Set-Fields'),url.startsWith('/api/experience/')||url.startsWith('https://bloom.invalid/api/experience/')?'load-context-v2':null);}}finally{globalThis.fetch=original;bindRequestActor(null);}
+});
+test('movement response compatibility header is confined to owned experience requests',async()=>{
+ const original=globalThis.fetch,calls:Headers[]=[];globalThis.fetch=(async(_url,init)=>{calls.push(new Headers(init?.headers));return new Response('{}');})as typeof fetch;
+ try{bindRequestActor('synthetic-movement-owner');for(const url of ['/api/experience/records','/api/precision','https://foreign.invalid/api/experience/records','/api/auth/me']){await accountFetch(url,{headers:{'X-Bloom-Symptom-Fields':'forged'}});assert.equal(calls.at(-1)!.get('X-Bloom-Symptom-Fields'),url==='/api/experience/records'?'movement-response-v1':null);}}finally{globalThis.fetch=original;bindRequestActor(null);}
+});

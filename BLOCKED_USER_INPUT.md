@@ -1,3 +1,120 @@
+2026-11-19 — Original-source access is PARTIAL, not a global hold: metabo12090846 primary full text was successfully retrieved/read through the web source; method/analysis/license observations are preserved in docs/scientific-seeds/source-candidates/metabo12090846_20261119.json. Independent source/publication disposition and comprehensive retraction verification remain pending; no actual participant data, provider call or runtime promotion. Earlier individual-source access errors remain scoped to those sources.
+
+2026-11-19 — Additional bounded source observation: approved16-study candidate Cell DOI10.1016/j.cell.2025.02.029 has primary index identity PMID40239649 / PMCIDPMC12439225, but full PMC source access returns a browser challenge. Indexed text is not acquired original methods/results/license/retraction verification. Keep source/external-processing rights pending; no copied manuscript or scientific activation. Continue independent code and other approved sources; do not repeat unchanged challenge attempts.
+
+2026-11-19 — Science-first scoped dependencies, no routine owner approval requested: P1 live private reasoning and independently held-out evaluation are NOT_VERIFIED; existing OpenAI executor has no live installation and public Gemini transport must not receive personal cases. Continue implementation/synthetic validation and public original-source review independently. One candidate original paper DOI10.1038/s41467-023-38778-x could not be acquired: EuropePMC urllib tunnel403 and publisher web fetch nonretryable redirect500. Keep its exact findings/rights unapproved; do not repeat unchanged attempts or install synthetic review flags as real science. P2 clean-restore proof is synthetic PGlite, proposed migration uninstalled; genuine candidate→independent source review→shared release remains pending. No production/private queries or new provider consent inferred.
+
+2026-11-18 — B6 primary identity RESOLVED by bounded official USDA CI response:1175, Vitamin B-6, mg, number415; witness171688 at15:16:47Z. V06_B6_OFFICIAL_IDENTITY_OBSERVATION_20261118.json. Installed5431-row catalogue still has21fields/no B6, so generic composition coverage remains scoped BLOCKED_TECHNICAL; do not infer food values or backfill. Original label-source path works. No further metadata probe or user question needed.
+
+
+2026-11-18 — Public supplement source access observation updated: exact d357 CI job134677682928 reached official NIH source08:45:40UTC and returned no-authoritative-match for all4owner codes; no live product identity was verified. V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json. Earlier workspace network-unavailable result stays historical, not a current global access blocker. No user question/approval needed; private catalogue fallback is qualified and no unchanged source re-probe is needed.
+
+2026-11-18 scoped technical dependency — NIH live UPC/source-shape verification: official guide/API urllib hits proxy tunnel403; production Node public probe records provider-unavailable/network for all4codes (V06_SUPPLEMENT_UPC_PUBLIC_SOURCE_OBSERVATION_20261118.json). No user question/approval required. One-time opt-in CI probe may obtain permitted public source evidence; no unchanged workspace retries. Independent private fallback and catalogue receipt work continues; source absence/clinical validity is not inferred.
+
+## 2026-11-17 — N02 actual CNF2026 archive access (feature-scoped technical dependency)
+
+Official dataset page and bounded official-ZIP download both return403; the exact archive is absent. Search-index text is not material acquisition. Receipt: `docs/verification/V06_PUBLIC_SOURCE_COVERAGE_20261117.json`. No CNF rows/rights/edition are claimed verified; original USDA/manual food paths remain usable.
+
+Question recorded for when source access is addressed: Can the official `cnf_fcen_all-files-data_2026.zip` and its edition/terms documents be made available in the workspace? Options: **recommended**, mount the original public download bytes in a stable Codex-readable location; or restore access to the exact official Open Government download. This is access to a source artifact, not an approval to change a feature, use private health data or publish a corpus. Dependencies: actual hash/edition/schema/key joins and permitted-use verification before CNF integration. Resume only when bytes/access changes; continue independent source/reference/Core work now.
+
+T1b-bloodwork-atlas: no owner input/approval needed. Six approved/generated archive originals are not locally readable, so existing renderer uses registered decorative reserved frames; full layout/source navigation is implemented/tested. Art-byte import remains scoped; ordinary Core/UI work proceeds. Latest owner policy removes individual-image approval gates.
+
+## Parent qualification and control fixes require no input — 2026-11-15
+
+Published e495708 is fully verified733/733 plus hosted gates. Shared-button/report and200% drawer fixes are locally tested and ready to integrate; no permission or provider activation needed. Font metadata for the already approved typography is available under OFL; use still requires checking packaged license/bytes and rendered parity, not owner photography. Exact original art/ZIP access remains scoped only.
+
+---
+
+## Shared control/report reflow is unblocked — 2026-11-15
+
+Actual mobile enlarged-text overflow is fixed/tested in an isolated branch, including native PDF review/privacy and existing auth/Food source workflows. Integrate after current frozen parent qualifies; no owner input or activation approval needed. Existing original-artifact access remains a scoped dependency for exact new art/fidelity, not a blocker to other UI work.
+
+---
+
+## Drawer check synchronization is locally resolved — 2026-11-15
+
+No owner input: previous full CI's timing-sensitive drawer Escape check now waits for the same focus/animation readiness as existing shell checks, retaining close/focus assertions. Targeted actual-browser checks pass; publish tested auth/saved reflow and QA correction together, then qualify exact source. Artifact access remains feature-scoped only.
+
+---
+
+## Saved-meal reflow needs no user input — 2026-11-15
+
+Reproduced mobile overflow is locally fixed/tested with exact retry and actual encrypted saved-source review. Auth+saved reflow publication awaits the in-progress frozen Food qualification only; no user decision or external activation required. Existing original-artifact access remains feature-scoped.
+
+---
+
+## Account entry styling needs no owner input — 2026-11-15
+
+Login/signup theme refinement is locally tested with actual synthetic session handlers and matched screenshots. Exact publication is pending the current frozen Food source qualification, not a user approval. Existing original-archive access remains feature-scoped; whole-app visual/science/physical-device acceptance is not claimed.
+
+---
+
+## Source audit correction requires no user input — 2026-11-15
+
+Food source-audit mismatch was reproduced and corrected after checking the class-only source diff; no external blocker or approval gate. Exact updated CI remains pending. Existing artifact-access limitation remains feature-scoped; other UI work continues.
+
+---
+
+## Food styling has no new owner-input blocker — 2026-11-15
+
+Approved additive Food presentation and mobile action corrections are locally tested; exact publication CI pending. Existing visual-archive access remains the only deferred dependency for exact new-design/artwork fidelity; it does not pause other UI/Core work. Navigation/media7238d8c is VERIFIED733/733 plus hosted gates; provisional reference ranges remain ungated. No new question or interim permission required.
+
+---
+
+## Feature-scoped original visual artifact access — 2026-11-15
+
+BLOCKED_TECHNICAL for exact new-design source fidelity and already approved media import only: original `stitch_bloom_health_interface_design 2.zip` (SHA256 bc3da1a7a068f86d61af8aab1bb4750275e61202bbbb0cf4ea99f223d947f298) and BVA batch archives referenced in Shared Library are not present in the accessible project attachment filesystem/repository; no connected Library file-access tool was found. Source documents are preserved; they explicitly do not reproduce all original PNG/HTML bytes. Do not invent a source match or regenerate owner-approved artwork. Existing public original media remains available and unchanged.
+
+Exact deferred question: “Which project artifact location makes the original ten-screen Stitch ZIP and approved BVA batch archives readable to Codex?” Options: (recommended) mount the already supplied archives into the project workspace; or provide the originals through the development repository/file connector with manifest hashes. This is access to existing artifacts, not owner photography procurement or a new design approval request. No question is being used to pause independent UI work.
+
+Provisional reference range availability is VERIFIED, not blocked:9d38a21 passed exact727/727 and hosted gates. Current broader RC remains open.
+
+---
+
+## Reference range display no longer blocked — 2026-11-15
+
+Owner authorized provisional display of supplied reference values without waiting for review. The prior empty-catalogue activation hold is superseded for these labelled publication comparisons. No further owner input is required. Missing actual region/analyte data is not invented; all supplied values remain browsable with source/category labels.
+
+---
+
+## Provider/source management execution — 2026-11-15
+
+No owner input is required for the implemented report annotation/preference workflow or its remaining exact CI/isolated-hosted verification. LifeLabs SK/other unverified published comparisons remain feature-scoped unavailable; direct original report bounds remain usable. Pending source verification does not block original-data display or the latest full-app theme/no-regression work. Authentic historical Aug/May importer reproduction and physical VoiceOver remain separately unverified; do not repeat unchanged questions. No new production data write or main merge authorized by this checkpoint.
+
+---
+
+## Scoped unresolved owner-date reproduction — 2026-11-09
+
+Only the exact historical root reproduction remains BLOCKED_USER_INPUT: authentic unshifted full34-result August9 and May panel input plus actual browser date/time/timezone are not present in the handoff. A Library file explicitly shifts collection dates and must not be used as an authentic fixture. Exact question, deferred without interrupting implementation: “Which original, unshifted deidentified34-row input and runtime browser clock reproduce the failure?” Options: original source text/export with clock context (recommended), or a complete reproducible failing paste plus capture context; a shifted reconstruction cannot establish this historical root. Independent typed-path/global-date fixes,49-marker source support and actual date-persistence tests are implemented/verified on c71cad590. This item blocks neither ordinary lab entry nor the rest of v0.6; do not repeatedly ask or re-probe unchanged sources.
+
+Provider-catalogue activation remains a separate technical/source-review constraint, not a new owner approval question. All24 BC CSV rows remain pending full applicability; direct report bounds are available. No normal interval is borrowed from another province or invented from a treatment target.
+
+---
+
+## Feature-scoped provider catalog verification — 2026-11-09
+
+Provider comparison dataset activation is pending independently verified LifeLabs region/test/specimen/assay/method/collection-era/demographic/fasting entries. Official BC PDF access returned HTTP403 from the environment. Owner-supplied examples are pending source leads, not active ranges; B12/folate BC and any SK implementation remain unknown. Original report overlays and all other development continue. No credentials, clinical verification dates, universal ranges or current-Profile historical demographics are invented. No new owner approval question is pending. The handoff and URLs are preserved in docs/architecture/LAB_PROVIDER_RANGE_OVERLAYS_OWNER_HANDOFF_20261108.md.
+
+---
+
+## ACTIVE OWNER STEERING — Bloodwork ranges and missing common tests, 2026-11-09
+
+Prioritize the owner's new request over the next independent food-context projection. Show source-reported laboratory reference ranges on existing bloodwork charts; absent ranges stay unknown, not invented universal normal values. Add missing common tests identified by the owner: ALP/bilirubin; hemoglobin/hematocrit/RBC/WBC/platelets; neutrophils/lymphocytes/eosinophils/basophils; MCV/MCHC/RDW/MPV; iron/TIBC/transferrin; non-HDL cholesterol; total testosterone. Current canonical catalog has14 markers. Preserve absolute-versus-percent differential identity, bilirubin fractions, original numbers/units/reference/source IDs, and true zero versus unknown. Newly supported historical source-only rows need an explicit reviewed identification path; do not silently overwrite original source records. Existing authoritative source/unknown/comparability rules and Biology/Progress explorer handoff apply. No newer missing-marker handoff was found in current main/development or Issue#3; the owner supplied the concrete list directly. Public MedlinePlus source retrieval was blocked by environment network policy; do not invent verification dates or independent clinical approval. Raw-value support and source-faithful charts remain safely actionable.
+
+Previous v0.6 generic nutrient slice is published in draft PR#6 at5cdd39c; first CI42554679672 failed the new320px/200% source-view case. Local48-state source-link wrapping correction is now published at0bbd3ed; exact CI pending. v0.5 remains merged atfb8b24a after verified0e41e45/CI42551184922. No further main merge or production-data changes authorized. Continue code/test/push; no interim approval or screenshot deliverables.
+
+---
+
+## ACTIVE — v0.6 resumed after authorized v0.5 merge, 2026-11-09
+
+v0.5 PR#1 merged atfb8b24ae6da60a0386a446ad323444272b3ecd41 under the owner's explicit “make the changes … then you can merge” authorization. Application0e41e457c1c920202b23b330e02bf2bec95073ac passed exact CI42551184922:676/676, types/source inventories/build, adversarial bloodwork/source browser, hosted72-state media and isolated account/persistence/export/erasure checks. Deployed application matched. Remaining detailed lab raster/independent physical/clinical/provider conditions are scoped disclosures; there is no pending v0.5 owner approval question. Original production records were not modified. Accepted receipt: docs/verification/V05_SCOPED_FINAL_ACCEPTANCE_20261109.json.
+
+Continue approved v0.6 from docs/operations/V06_DEPENDENCY_BACKLOG.md and the latest V06_HANDOFF/Architect decisions. First resumed slice: saved generic nutrient contribution projection (BIO-MICRO-01/07/13; M1 partial). Restored source/test modules from the preserved stash and manually merged props/UI/QA onto current Food code, retaining v0.5 editing and accessible source-scroll controls. No blind stash pop; stash retained. Original native values, estimated source-zero, unknown/conflicting units and saved-record time stay separate. Preview is not recorded intake; foreign owner is denied and missing/ambiguous time stays unknown. Focused8 tests, current TypeScript/production build/source inventories and actual App/API/encrypted SQL review/save/reload/source keyboard flow pass. The48-state320/390/768/1440 × Everyday/Athlete light/dark ×100/200% text/page-zoom matrix passes, retaining every original source row; daily-summary values now wrap at narrow enlarged text sizes. Publication and exact CI are pending. This is generic-source M1 engineering, not complete micronutrient adequacy or a second totals store.
+
+Next: finish this slice's current validation, commit/push and open the next development PR from accepted main, then continue dependency1 permitted food/check-in source projections and staged M1–M3 work. No new main merge/public or paid-provider activation authorized for v0.6. Preserve inherited feature-scoped rights/physical/model/clinical boundaries; do not wait for interim approval or invent major requirements.
+
+---
+
 ## ACTIVE — Owner-authorized scoped correction and merge, 2026-11-09
 
 The owner explicitly instructed “Make the changes found here then you can merge,” referencing specialist consolidation commit8418fcdc22a843553dcfb51f22b7bfa0df23c2ce. This supersedes older requests to ask again before main: complete RC-SCI-01, validate the corrected exact application and merge PR#1 only after required checks pass. No additional owner or specialist approval checkpoint. Preserve production data, disabled external integrations and the v0.6 stash. Incoming original specialist documents synchronized from remote bca748c without overwriting contributor work. Shared assay identity guards cover source interval education, report flags/conversion, trends and incompatible pasted analytes; original source observations remain available. Current validation and exact CI/deployed SHA will be recorded in the scoped correction evidence. Preferred detailed lab-icon archive remains unavailable after bounded attachment/Library metadata search; compact approved SVG fallback retained, with P1 fidelity limitation rather than a global hold. Physical/human/VoiceOver and independent scientific signoff remain NOT RUN, not engineering passes.
@@ -309,3 +426,15 @@ The [cloud runtime skill](skill://plugin_connector_1p_c5b7d5df5d7081918f2c4be5a6
 Exact question for the environment maintainer: **Can public model metadata/assets be allowed for bounded synthetic-only local evaluation, or can an approved pinned offline artifact bundle be supplied?** Options: (1) permit the public model host and observed required artifact origins in environment settings; (2) supply a pinned licence/model/tokenizer/config bundle locally; (3) retain model-unavailable fallback and defer candidate acquisition. Recommendation: scoped public-asset access, followed by actual licence/integrity/version review before weights are packaged or downloaded to users. Required redirect domains must be verified from actual asset manifests; do not grant arbitrary wildcard network access.
 
 Dependencies: real candidate worker inference, model quality/resource benchmark and eventual promotion. **Does not block** canonical deterministic/manual food/activity flows, source-span validation worker, cited research UI, nutrient source integrity, private synthetic Python research or other approved v0.6 engineering. Physical-iPhone/independent held-out requirements remain separate gates. No interactive permission loop is pending in this chat.
+
+2026-11-15 | V06-EXP-ACCESS-01 runtime-only | BLOCKED_USER_INPUT. Standing-access code7944e264 published,21 focused tests+synthetic App preview PASS; current temporary access/ON preference unchanged. Automatic approval review rejected the Render expiry-free supplemental grant mutation because account restoration did not clearly authorize indefinite access. Exact question pending: approve making Tester1 existing synthetic-preview grant standing with same account/service/territory/features/revocation? Options: approve standing access (recommended per latest handoff) / keep existing temporary access. Dependency: one Render setting and fingerprint-guarded one-account preference rebind; no other Core/UI work blocked. No bypass or repeat request.
+
+2026-11-16 | V06-EXP-ACCESS-01 runtime-only RESOLVED | Owner explicitly approved standing tester access. Same supplemental synthetic-preview grant changed to standing type; exact previous-scope fingerprint CAS preserved ON. Deployment7944e264/dep-dbt4f26i0phs73elmh60 live00:01:52Z; readback verified. No renewal required for preview eligibility; all existing revocation/security controls retained.
+
+## 2026-11-16 — Actual Tester1 microbiome illustration coverage
+
+**Resolved by owner acceptance (2026-11-16):** “Organism images work.” No private aggregate query is needed; the pending access question below is withdrawn. This confirmation does not authorize health-record inspection. Historical rejection and question retained for audit only.
+
+Historical scoped blocker: automatic approval review rejected a read-only aggregate source-coverage query on Tester1 private microbiome records, stating health-record inspection was not authorized. No private records or measurements were returned and no workaround/retry was attempted. The exact-name renderer correction, original image integrity, synthetic/legacy UI validation, GitHub commits and public image checks continue independently.
+
+Question: May Codex run an account-scoped, read-only aggregate check of Tester1 microbiome source coverage in the existing review database, returning counts only and no organism names or measurements? Options: approve the scoped read-only check; keep verification synthetic and leave actual source verification for owner RC review. Recommendation: approve only if comfortable with this limited health-record access. Dependency: actual private source-coverage verification only; no coding/other Core hold. Receipt V06_LIVE_MORPHOLOGY_MATCH_20261116.json.

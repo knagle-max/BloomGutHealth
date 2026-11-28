@@ -1,3 +1,4 @@
+import "@/styles/food-editorial.css";
 import {useLocation} from "wouter";
 import EditorialMedia from "@/components/EditorialMedia";
 import {recordedMealTime} from "@shared/meal-time";
@@ -8,6 +9,8 @@ import { useExperience } from "@/lib/experience";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
+import SupplementIntakes from '@/components/SupplementIntakes';
+import RecordedIntakeSources from '@/components/RecordedIntakeSources';
 import { explainFoods } from "@shared/meal-intelligence";
 import { type MealIntelligence } from "@shared/meal-intelligence";
 import { useEffect, useRef, useState } from "react";
@@ -52,24 +55,34 @@ function HistoricalTrends({
 }) {
   const { settings } = useExperience();
   const energyUnit = settings.displayUnits.energy;
+  const historyHeading = useRef<HTMLHeadingElement>(null);
+  const [retryingHistory, setRetryingHistory] = useState(false);
   const currentTargets = targets || {};
   const currentDate = new Date();
   const currentMonth = currentDate.getUTCMonth();
   const currentYear = currentDate.getUTCFullYear();
 
-  const { data: monthlyData, isError: monthlyError } = useQuery<any>({
+  const { data: monthlyData, isError: monthlyError, refetch: retryMonth, isFetching: monthlyFetching } = useQuery<any>({
     queryKey: [
       `/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`,
     ],
     enabled: !!userId,
   });
 
-  const { data: yearlyData, isError: yearlyError } = useQuery<any>({
+  const { data: yearlyData, isError: yearlyError, refetch: retryYear, isFetching: yearlyFetching } = useQuery<any>({
     queryKey: [`/api/nutrition/yearly/${userId}?year=${currentYear}`],
     enabled: !!userId,
   });
 
-  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError) return null;
+  async function retryHistory() {
+    if (retryingHistory) return;
+    setRetryingHistory(true);
+    const results = await Promise.allSettled([monthlyError ? retryMonth() : null, yearlyError ? retryYear() : null]);
+    setRetryingHistory(false);
+    if (results.every(result => result.status === "fulfilled" && !result.value?.isError)) historyHeading.current?.focus();
+  }
+
+  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError && !retryingHistory) return null;
 
   // Recorded partial days are not an adequacy assessment against today's targets.
   const historyAmount = (period: any, key: string, unit: string) => {
@@ -81,15 +94,15 @@ function HistoricalTrends({
 
   return (
     <div className="mb-6 space-y-4">
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+      <h2 ref={historyHeading} tabIndex={-1} className="text-lg font-semibold flex items-center gap-2">
         <Calendar className="h-5 w-5" />
         Historical Trends
       </h2>
       <p className="text-sm text-muted-foreground">Known recorded contributions per UTC day with a meal. Unlogged meals and missing nutrients are not measured zeros; these averages do not establish total intake or adequacy.</p>
-      {(monthlyError||yearlyError)&&<p role="alert">Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p>}
+      {(monthlyError||yearlyError||retryingHistory)&&<div role="alert" className="space-y-2"><p>Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p><Button type="button" variant="outline" className="min-h-11" disabled={retryingHistory||monthlyFetching||yearlyFetching} onClick={()=>void retryHistory()}>{retryingHistory||monthlyFetching||yearlyFetching?"Retrying history…":"Retry nutrition history"}</Button></div>}
 
       {monthlyData?.dailyAverages && (
-        <Card data-testid="card-monthly-averages">
+        <Card className="bloom-food-history-panel" data-testid="card-monthly-averages">
           <CardHeader>
             <CardTitle className="text-base">
               {new Date(currentYear, currentMonth).toLocaleDateString("en-US", {
@@ -200,7 +213,7 @@ function HistoricalTrends({
       )}
 
       {yearlyData?.dailyAverages && yearlyData.monthlyBreakdown?.length > 0 && (
-        <Card data-testid="card-yearly-overview">
+        <Card className="bloom-food-history-panel" data-testid="card-yearly-overview">
           <CardHeader>
             <CardTitle className="text-base">
               {currentYear} - Annual Overview
@@ -412,8 +425,8 @@ export default function NutritionHistory() {
   const getStatusColor = (_percentage: number) => "text-foreground";
 
   return (
-    <main className="science-page journal-page">
-      <div className="science-heading">
+    <main className="science-page journal-page bloom-food-editorial bloom-food-history">
+      <div className="science-heading bloom-food-page-heading">
         <p className="eyebrow">YOUR DAILY RECORD</p>
         <h1>Food journal</h1>
         <p>Your meals and nutrient totals, together in one place.</p>
@@ -426,7 +439,7 @@ export default function NutritionHistory() {
           nutrients are missing; unavailable values are not counted as zero.
         </p>
       )}
-      <div className="journal-workspace">
+      <div className="journal-workspace bloom-food-journal">
       {mealsChecking&&<p role="status">Checking current journal history. Only current available entries for today are shown.</p>}
       {mealsError && (
         <div role="alert" className="bloom-panel space-y-3">
@@ -436,9 +449,9 @@ export default function NutritionHistory() {
       )}
 
 
-      <Card className="mb-6" data-testid="card-daily-summary">
+      <Card className="mb-6 min-w-0 [overflow-wrap:anywhere] bloom-food-summary" data-testid="card-daily-summary">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
             <Calendar className="h-5 w-5" />
             Today's Summary
           </CardTitle>
@@ -448,6 +461,12 @@ export default function NutritionHistory() {
           <CardContent className="space-y-3">
             {dailyChecking?<p role="status">Checking current recorded totals…</p>:<p role="alert">Today's totals could not load. Your saved journal remains available.</p>}
             <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
+          </CardContent>
+        ) : Array.isArray(dailyData.meals) && dailyData.meals.length === 0 ? (
+          <CardContent className="space-y-3">
+            <p>No food intake recorded for today.</p>
+            <p className="panel-note">Diary completeness is unknown. No entries do not establish zero intake or a complete day.</p>
+            <Button onClick={() => navigate("/log-meal")}>Log a meal</Button>
           </CardContent>
         ) : targetsError || !targets ? (
           <CardContent className="space-y-3">
@@ -473,11 +492,11 @@ export default function NutritionHistory() {
         </CardContent>
         ) : (<CardContent className="space-y-4">
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Energy ({energyUnit})</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
                 >
                   {energyAmount(totals.calories, energyUnit)}
                   {dailyData?.nutritionCoverage?.calories?.partial
@@ -515,11 +534,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Protein</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
                 >
                   {summaryAmount("protein", "g")} /{" "}
                   {showAmount(nutrientTargets.protein)}g
@@ -553,11 +572,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Carbs</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
                 >
                   {summaryAmount("carbs", "g")} / {showAmount(nutrientTargets.carbs)}g
                 </span>
@@ -581,11 +600,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Fat</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
                 >
                   {summaryAmount("fat", "g")} / {showAmount(nutrientTargets.fat)}g
                 </span>
@@ -642,6 +661,8 @@ export default function NutritionHistory() {
         </CardContent>)}
       </Card>
 
+      <RecordedIntakeSources/>
+      <SupplementIntakes/>
       <div className="mb-6">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <h2 className="text-lg font-semibold flex items-center gap-2">
@@ -679,9 +700,9 @@ export default function NutritionHistory() {
               const identity = journalIdentity(meal);
 
               return (
-                <Card id={`journal-meal-${meal.id}`} key={meal.id} data-testid={`card-meal-${index}`}>
+                <Card id={`journal-meal-${meal.id}`} key={meal.id} className="bloom-food-meal-row" data-testid={`card-meal-${index}`}>
                   <CardContent className="pt-4">
-                    <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-start justify-between mb-2 bloom-food-meal-heading">
                       <button
                         type="button"
                         className={`flex-1 min-w-0 text-left rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${hasItems ? "hover-elevate" : ""}`}
@@ -703,7 +724,7 @@ export default function NutritionHistory() {
                           {meal.mealType && ` • ${meal.mealType}`}
                         </span>
                       </button>
-                      <div className="flex gap-1 ml-2">
+                      <div className="flex gap-1 ml-2 bloom-food-meal-actions">
                         <Button
                           size="icon"
                           variant="ghost"
@@ -972,6 +993,7 @@ export default function NutritionHistory() {
                             (meal.intelligence as MealIntelligence).analyzedAt
                           }
                           analysis={meal.intelligence as MealIntelligence}
+                          recordedMeal={{id:meal.id,userId:meal.userId,loggedAt:meal.loggedAt}}
                         />}
                       </details>
                     )}
@@ -984,7 +1006,7 @@ export default function NutritionHistory() {
       </div>
 
       </div>
-      <details className="bloom-panel workspace-disclosure mb-6">
+      <details className="bloom-panel workspace-disclosure mb-6 bloom-food-trends">
         <summary>Nutrition history & trends</summary>
         <HistoricalTrends userId={userId} targets={targetsError ? null : targets} />
       </details>

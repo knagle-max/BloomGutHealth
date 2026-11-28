@@ -1,0 +1,79 @@
+/* Adapt approved A01/B01/B02 semantics to the existing source-aware SVG. */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart {
+  color: var(--bvc-ink);
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(.lab-plot-axis,.lab-plot-dates,.lab-chart-caption) {
+  color: var(--bvc-axis);
+  font-size: var(--bvc-axis-font-size);
+  font-variant-numeric: tabular-nums;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-chart {
+  color: var(--bvc-axis);
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-recorded-series {
+  stroke: var(--bvc-series-primary);
+  stroke-width: var(--bvc-line-width);
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-recorded-series-dashed { stroke-dasharray: 6 4; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-legend { display:flex; flex-wrap:wrap; gap:8px 20px; list-style:none; padding:0; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-legend li { display:flex; align-items:center; gap:8px; min-width:0; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key { flex:none; width:28px; height:0; border-top:2px solid var(--bvc-series-primary); }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key-dashed { border-top-style:dashed; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key-disconnected { height:8px; border:0; background:linear-gradient(to right,currentColor 0 25%,transparent 25% 75%,currentColor 75% 100%) center/100% 2px no-repeat; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-context { overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-context button { margin:4px; max-width:100%; white-space:normal; }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button {
+  color: var(--bvc-observed);
+  min-width: var(--bvc-touch-target);
+  min-height: var(--bvc-touch-target);
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button > span {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--bvc-surface);
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button[data-source-selected] > span {
+  box-shadow: 0 0 0 3px var(--bvc-selection-halo), 0 0 0 5px currentColor;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button[data-single-point] > span {
+  outline: 1px dotted currentColor;
+  outline-offset: 7px;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(button,select,summary,[tabindex]):focus-visible {
+  outline: var(--bvc-point-focus-width) solid var(--bvc-focus);
+  outline-offset: 3px;
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-reference-boundary-label {
+  color: var(--bvc-ink);
+  background: var(--bvc-surface);
+  font-variant-numeric: tabular-nums;
+  transform:translateY(calc(-100% - 8px));
+}
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-timeline-reveal {
+  background: var(--bvc-surface-muted);
+  border: 1px solid var(--bvc-border);
+  border-radius: 14px;
+  padding: 12px;
+  overflow-wrap: anywhere;
+}
+@media (forced-colors: active) {
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(.lab-chart,.lab-point-button,.lab-reference-boundary-label) { color: CanvasText; }
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-recorded-series { stroke: CanvasText; }
+  .app-shell[data-bloom-visual="premium"] .lab-segment-key { border-color:CanvasText; }
+  .app-shell[data-bloom-visual="premium"] .lab-segment-key-disconnected { background:none; border-inline:6px solid CanvasText; width:28px; height:2px; }
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b02-published-comparison { stroke: CanvasText; stroke-dasharray: 2 5; }
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-reference-boundary-label { background: Canvas; }
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button > span { background: CanvasText; border-color: Canvas; }
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(button,select,summary,[tabindex]):focus-visible { outline-color: Highlight; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell[data-bloom-visual="premium"] .bv-scientific-chart * { animation: none !important; transition: none !important; }
+}
+
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-source-one-sided {stroke-width:2;stroke-dasharray:8 4 2 4;}
+
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-reference-key { background: var(--bvc-reference-band); border: 1.5px solid var(--bvc-reference-line); }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-reference-kind="comparison"] .lab-reference-key { border-color: var(--bvc-uncertainty); border-style: dotted; }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-reference-shape="limit"] .lab-reference-key { height: 0; background: transparent; border: 0; border-top: 2px dashed var(--bvc-reference-line); vertical-align: middle; }
+
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-published-one-sided {stroke-width:2;stroke-dasharray:2 4;}

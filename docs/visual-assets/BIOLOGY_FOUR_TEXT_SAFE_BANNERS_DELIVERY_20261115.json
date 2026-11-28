@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-15",
+  "branch": "enhance/bloom-experience",
+  "registry": "docs/visual-assets/visual-asset-registry.json",
+  "status": "Shared Library published; GitHub registry committed; image binaries NOT yet imported or live",
+  "fullArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+  "webpOnlyArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_WebP_Only_2026-11-15.zip",
+  "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+  "targetDirectory": "client/public/images/editorial/biology/",
+  "images": [
+    {
+      "id": "BVA-0032",
+      "slug": "biology-bloodwork-vial-text-safe",
+      "original": {
+        "path": "originals/BVA-0032-biology-bloodwork-vial-text-safe.png",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "a5c99ab244d3a7f9544cb0889085e6f54c3b838687f08ccaa80eef575a6e413c"
+      },
+      "webp1x": {
+        "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+        "size": [
+          1086,
+          362
+        ],
+        "sha256": "c0845e423257961d1da5d2eaffc8ae68031b2f7704789f8b56973e7af2ea0633"
+      },
+      "webp2x": {
+        "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe@2x.webp",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "297a42a20a15ad19b94406d50649c851babd0748724b43135d90559b5ae87677"
+      },
+      "targetUrl": "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe.webp"
+    },
+    {
+      "id": "BVA-0033",
+      "slug": "biology-gut-reports-text-safe",
+      "original": {
+        "path": "originals/BVA-0033-biology-gut-reports-text-safe.png",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "fbdb3f288998b12a0417d9286828fe0d28794e4e60badad1440c5a9b4d3496f7"
+      },
+      "webp1x": {
+        "path": "webp/BVA-0033-biology-gut-reports-text-safe.webp",
+        "size": [
+          1086,
+          362
+        ],
+        "sha256": "dc88f5242930b7d5b39660b97efdd04133ceb203ea2a3327679b2ab3843b59b7"
+      },
+      "webp2x": {
+        "path": "webp/BVA-0033-biology-gut-reports-text-safe@2x.webp",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "a2c31c6b01ff47533b70bd510b107f623b9c45eba6ef6ba40ee0221ec6b40fbf"
+      },
+      "targetUrl": "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp"
+    },
+    {
+      "id": "BVA-0034",
+      "slug": "biology-genetics-text-safe",
+      "original": {
+        "path": "originals/BVA-0034-biology-genetics-text-safe.png",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "a84a41f942cacd6b4e047f328bf9542a02f3bc1db0c89b68e708ff73baf2dcc1"
+      },
+      "webp1x": {
+        "path": "webp/BVA-0034-biology-genetics-text-safe.webp",
+        "size": [
+          1086,
+          362
+        ],
+        "sha256": "607aa4505c5f1f1552a7d5896d378c65f67d2ff0b8076681b94419429bd29f3c"
+      },
+      "webp2x": {
+        "path": "webp/BVA-0034-biology-genetics-text-safe@2x.webp",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "5fa95c7d5f4c9edb33e1b2bfd87c82850cadc6e9742f85269844d310ac0e027c"
+      },
+      "targetUrl": "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp"
+    },
+    {
+      "id": "BVA-0035",
+      "slug": "biology-measurements-text-safe",
+      "original": {
+        "path": "originals/BVA-0035-biology-measurements-text-safe.png",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "60c8e0610251ef309a71b5ac24520509fa7ec5baa28f20ccee4d4dbaf23a72c9"
+      },
+      "webp1x": {
+        "path": "webp/BVA-0035-biology-measurements-text-safe.webp",
+        "size": [
+          1086,
+          362
+        ],
+        "sha256": "7443c821c8f25848b1f18a686597e3f93d502dc545e48399968225eaa58a0f0e"
+      },
+      "webp2x": {
+        "path": "webp/BVA-0035-biology-measurements-text-safe@2x.webp",
+        "size": [
+          2172,
+          724
+        ],
+        "sha256": "c4464546e5a816de326395b86f828b341a2af472335d1847ac61247a99450e39"
+      },
+      "targetUrl": "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp"
+    }
+  ],
+  "rules": [
+    "Use one distinct image per corresponding Biology navigation tile",
+    "Do not alter data counts, copy, routes, focus order or controls",
+    "Protect text contrast on real backgrounds at 320/390/768/1440 and 200% zoom, including dark mode",
+    "No personal biological observations may be inferred from illustrative renders",
+    "BVA-0035 includes fictional smartwatch numerals 10,432; these must not be interpreted as real data",
+    "Verify binary hashes and deployed URL responses before marking integrated"
+  ]
+}

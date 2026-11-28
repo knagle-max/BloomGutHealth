@@ -1,0 +1,1741 @@
+{
+  "schema_version": "1.0.0-baseline44",
+  "scope": "wellness_education",
+  "status": "owner-authorized staging crosswalk; not applied to runtime",
+  "source_svg_hashes": {
+    "approved-originals/bloom-neutral-front.svg": "fe4d47b17aa2270979e3c4ff222b5cefe96030c6baf7b0777c7722d31954e106",
+    "approved-originals/bloom-neutral-back.svg": "f0757da834da5db5d9636603ad202c81f75cda8e60d9d2f7d130c45ef43a6e9e"
+  },
+  "svg_path_bindings": [
+    {
+      "anatomy_id": "anat.anterior_shoulder.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-shoulders-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "bdb7a5aa3429dc651076e56fa15272a5d09b54694bee35c92a9a6733eef581a1",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_shoulder.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-shoulders-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "f0b81448578ceaa63f70fed9497d34dfdec86c1f2798f6e1b38532872cb9273e",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.pectoral_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-chest-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "87fff9b43010a833ed9d792496a0569b120ef69945e92b8b0e304b9b2d945f73",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.pectoral_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-chest-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "1c7ff0d54a4a0d90c025aecd05484d9dc12c93f34f5fb2a1aa57b4ad2d5ec2a8",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_upper_arm.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-biceps-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "fa93ed2693d303bfdfcfc6d4013d4e2128a0e64167f1fa6b11625c5921deff92",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_upper_arm.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-biceps-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "28ef0aab1c21e05c477fd43f1c95546885cc5948751294990d72ef4132370497",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_forearm.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-forearms-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "974ad2cb5a040bd58884c3594c5bd5dc613638e2634a5130fc8f4f988f784dc1",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_forearm.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-forearms-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "f188877296cc4c4a3b99ff960675c856f9faafbb5b60ff2b2f98b02a28930be2",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_upper_trapezial_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-traps-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "5e25af4d6311e6b1e48560bb7064abcacb233b23f61add87097764a5ef160d31",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_upper_trapezial_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-traps-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "9b9aa319290bf849cdea10ed7744a277d54258adf65e1c382ea88ae8f0c9dade",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.upper_abdominal_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-core-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "4b6478fdee03db562007b16dcfaaa010b570fe8de90abfe7bae5532133ac496b",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.upper_abdominal_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-core-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "55225a78932fd8ad16bfc45b66aa0f4c1fb1f0896d4de4265ee6d635e7d050c3",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.middle_abdominal_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-core-03",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "20173ff41d233013ca2d780c820c6b991022d576c067ff82dc03938108bb2192",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.middle_abdominal_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-core-04",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "58046c7be9bdf190da1ace1c54c65b2c638513cd57ec41a2f2ea5dacad6f681d",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lower_abdominal_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-core-05",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "db5df727f13037b14a8e6134c4284d20f48e0ad1a9ea2dd2802c41e0769b38e2",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lower_abdominal_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-core-06",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "59e30903c379d7a8baf0f62397169dc69d03ea173f3a3a8a0be74f7f7f8c6dc3",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lateral_abdominal_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-core-07",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "bb987506eb5c96f32fb7efef252750c40c148f60d71de6a7344851069c90744d",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lateral_abdominal_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-core-08",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "0abc7d174f45bbb09f8388801d8cca2f0caca3dd925bb0abf9e6687daf6ae0c4",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_hip_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-hips-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "c84d9c63447ad953d3f1b93dbc2e0ddc91d6c040820d342d53d9d9e89ef6431a",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_hip_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-hips-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "bd28b5e406d7567f14119d3b4b979b1a12da7a35602d4bba1eb405442272e176",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_thigh_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-quads-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "d90b4ea8b3b288306c45f1e3c600d7f09819461f5045b20059403510640baee5",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_thigh_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-quads-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "5b162353ac484830d2766a3edaff910de48d29d92987ecf7c3df77769cc9e228",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_lower_leg_region.right",
+      "view": "front",
+      "side": "right",
+      "svg_path_id": "bloom-front-lower-legs-01",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "e73898cd3ba30a9eebe4899dc6e75af2f91843ebf8a9b8b016cf9d3132b6289a",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.anterior_lower_leg_region.left",
+      "view": "front",
+      "side": "left",
+      "svg_path_id": "bloom-front-lower-legs-02",
+      "svg_file": "approved-originals/bloom-neutral-front.svg",
+      "svg_path_sha256": "a249e4e512af2be2cfb7fe7e53806f1813f1977a7a842c320272b57bde148aab",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_shoulder.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-shoulders-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "55eb1bda15289f37fb2d8d635f79a07c0eed832c7b3f1c2e00934b4cd1988dcc",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_shoulder.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-shoulders-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "f5cb6f72a43186d778b2903c4475badceeeaca9375d9ad72819ec28c3205fd1a",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.scapular_upper_back_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-upper-back-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "fcbcdeb7a8edb41087c1e5c83da888314e7ce722a87ff0377944348d7fe7360c",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.scapular_upper_back_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-upper-back-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "a5e22a0534658c77dd79b6fd87bd2cb618737f21d4d38242fd4743885f17f63b",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterolateral_back_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-lats-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "456e06658bff614014b366b334531711da7d63980b429ef37cddd0043e26c300",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterolateral_back_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-lats-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "03e56e382cef62c12975492a4a4cea17c5f88ee7533372c67015cd28ee3c122c",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lumbar_erector_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-lower-back-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "0a72bbd3f346329f35cdc71efdad9eef6b5e4181b3e07960f3d43677faaff29e",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.lumbar_erector_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-lower-back-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "cdabda962b3ca20ce9752d65c0bab9bfcfc5d5c6cc8244bab87f79d4de6f642e",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_upper_trapezial_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-traps-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "580d7303b6faa866dd2655551c7dd249bfef8a911608abd53cfdcf0ed9c60b07",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_upper_trapezial_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-traps-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "0ac9d8935de13e6d7edbffe22d12675b546d5ae92ce3c55d551544821f3001c8",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_upper_arm.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-triceps-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "b25022e0dbc10c395b1a90de02f58f82ddacb8bfa12c2e57a467a9d51f1216ed",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_upper_arm.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-triceps-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "d09de7ab4d1c0cceeda2d4d0665356ef81343d60209d6e62b8c3e452d655b751",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_forearm.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-forearms-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "9389510ace714c2b840742b5de659b97e394d6b6d3163858f04e1ed319b533a4",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_forearm.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-forearms-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "6e17b5a843e1787e9fbea5a5feb97e823e9497cbbab26494b2daf587c3593f99",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_gluteal_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-glutes-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "dfc08f627dda0a369f5333808f7cbdcbdd7050135fa71ebad187609b5bf8ecd1",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_gluteal_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-glutes-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "e78d2284ce247fea413ef8c9245756a4dc49eee136d498ed2051f5101a7a0dc9",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_thigh_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-hamstrings-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "04aefa35af4b03109c9abba20b1168ce9b2b2e135b8a433a7d276685fad5a7ea",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_thigh_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-hamstrings-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "727987b0475ed20a96d1776a670bca6555c1969ab333f436ca8cf11182e7d760",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_calf_region.left",
+      "view": "back",
+      "side": "left",
+      "svg_path_id": "bloom-back-lower-legs-01",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "0b92e9d851e4fb21b15969af21ec264db2293ab494dab4135fcf9456c6c24807",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    },
+    {
+      "anatomy_id": "anat.posterior_calf_region.right",
+      "view": "back",
+      "side": "right",
+      "svg_path_id": "bloom-back-lower-legs-02",
+      "svg_file": "approved-originals/bloom-neutral-back.svg",
+      "svg_path_sha256": "a806ab8025cb2cbdc7e4ea002283a6a49f4ebae30ffb47e7119273c22f9668c7",
+      "mapping_kind": "one_domain_region_to_one_svg_path",
+      "mapping_status": "canonical_baseline",
+      "record_state": "owner_authorized_baseline_specification",
+      "geometry_reference": "frozen_original_44",
+      "note": "SVG object retained byte-for-byte; domain ID is distinct and stable."
+    }
+  ],
+  "muscle_descriptor_bindings": [
+    {
+      "muscle_descriptor": "Abdominal wall",
+      "exercise_count": 234,
+      "mapped_anatomy_ids": [
+        "anat.upper_abdominal_region.right",
+        "anat.upper_abdominal_region.left",
+        "anat.middle_abdominal_region.right",
+        "anat.middle_abdominal_region.left",
+        "anat.lower_abdominal_region.right",
+        "anat.lower_abdominal_region.left",
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Adductor longus",
+      "exercise_count": 7,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.adductor_longus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Adductor magnus",
+      "exercise_count": 113,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.adductor_magnus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-hips; back-glutes",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-glutes-01",
+        "bloom-back-glutes-02",
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Anconeus",
+      "exercise_count": 20,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.anconeus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "back-triceps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-triceps-01",
+        "bloom-back-triceps-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Ankle stabilizers",
+      "exercise_count": 31,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.ankle_stabilizers",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-lower-legs; back-lower-legs",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-legs-01",
+        "bloom-back-lower-legs-02",
+        "bloom-front-lower-legs-01",
+        "bloom-front-lower-legs-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Anterior deltoid",
+      "exercise_count": 78,
+      "mapped_anatomy_ids": [
+        "anat.anterior_shoulder.right",
+        "anat.anterior_shoulder.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-shoulders",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-shoulders-01",
+        "bloom-front-shoulders-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Biceps brachii",
+      "exercise_count": 83,
+      "mapped_anatomy_ids": [
+        "anat.anterior_upper_arm.right",
+        "anat.anterior_upper_arm.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-biceps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-biceps-01",
+        "bloom-front-biceps-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Brachialis",
+      "exercise_count": 82,
+      "mapped_anatomy_ids": [
+        "anat.anterior_upper_arm.right",
+        "anat.anterior_upper_arm.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-biceps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-biceps-01",
+        "bloom-front-biceps-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Brachioradialis",
+      "exercise_count": 22,
+      "mapped_anatomy_ids": [
+        "anat.anterior_forearm.right",
+        "anat.anterior_forearm.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-forearms",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-forearms-01",
+        "bloom-front-forearms-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Calf musculature",
+      "exercise_count": 98,
+      "mapped_anatomy_ids": [
+        "anat.posterior_calf_region.left",
+        "anat.posterior_calf_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lower-legs",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-legs-01",
+        "bloom-back-lower-legs-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Deltoid",
+      "exercise_count": 18,
+      "mapped_anatomy_ids": [
+        "anat.anterior_shoulder.right",
+        "anat.anterior_shoulder.left",
+        "anat.posterior_shoulder.left",
+        "anat.posterior_shoulder.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-shoulders; back-shoulders",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-shoulders-01",
+        "bloom-back-shoulders-02",
+        "bloom-front-shoulders-01",
+        "bloom-front-shoulders-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Erector spinae",
+      "exercise_count": 11,
+      "mapped_anatomy_ids": [
+        "anat.lumbar_erector_region.left",
+        "anat.lumbar_erector_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lower-back",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-back-01",
+        "bloom-back-lower-back-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "External oblique",
+      "exercise_count": 41,
+      "mapped_anatomy_ids": [
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "External obliques",
+      "exercise_count": 1,
+      "mapped_anatomy_ids": [
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Forearm flexors",
+      "exercise_count": 40,
+      "mapped_anatomy_ids": [
+        "anat.anterior_forearm.right",
+        "anat.anterior_forearm.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-forearms",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-forearms-01",
+        "bloom-front-forearms-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Forearm grip muscles",
+      "exercise_count": 3,
+      "mapped_anatomy_ids": [
+        "anat.anterior_forearm.right",
+        "anat.anterior_forearm.left",
+        "anat.posterior_forearm.left",
+        "anat.posterior_forearm.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-forearms; back-forearms",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-forearms-01",
+        "bloom-back-forearms-02",
+        "bloom-front-forearms-01",
+        "bloom-front-forearms-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Gastrocnemius",
+      "exercise_count": 13,
+      "mapped_anatomy_ids": [
+        "anat.posterior_calf_region.left",
+        "anat.posterior_calf_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lower-legs",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-legs-01",
+        "bloom-back-lower-legs-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Gluteus maximus",
+      "exercise_count": 262,
+      "mapped_anatomy_ids": [
+        "anat.posterior_gluteal_region.left",
+        "anat.posterior_gluteal_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-glutes",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-glutes-01",
+        "bloom-back-glutes-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Gluteus medius",
+      "exercise_count": 86,
+      "mapped_anatomy_ids": [
+        "anat.posterior_gluteal_region.left",
+        "anat.posterior_gluteal_region.right",
+        "anat.anterior_hip_region.right",
+        "anat.anterior_hip_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "back-glutes; front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-glutes-01",
+        "bloom-back-glutes-02",
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Gluteus minimus",
+      "exercise_count": 12,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.gluteus_minimus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "back-glutes; front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-glutes-01",
+        "bloom-back-glutes-02",
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Gracilis",
+      "exercise_count": 7,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.gracilis",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Hamstrings",
+      "exercise_count": 149,
+      "mapped_anatomy_ids": [
+        "anat.posterior_thigh_region.left",
+        "anat.posterior_thigh_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-hamstrings",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-hamstrings-01",
+        "bloom-back-hamstrings-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Hip adductors",
+      "exercise_count": 13,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.hip_adductors",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Hip external rotators",
+      "exercise_count": 12,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.hip_external_rotators",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "back-glutes; front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-glutes-01",
+        "bloom-back-glutes-02",
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Hip flexors",
+      "exercise_count": 80,
+      "mapped_anatomy_ids": [
+        "anat.anterior_hip_region.right",
+        "anat.anterior_hip_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Infraspinatus",
+      "exercise_count": 1,
+      "mapped_anatomy_ids": [
+        "anat.scapular_upper_back_region.left",
+        "anat.scapular_upper_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-shoulders",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-shoulders-01",
+        "bloom-back-shoulders-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Internal oblique",
+      "exercise_count": 41,
+      "mapped_anatomy_ids": [
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Internal obliques",
+      "exercise_count": 1,
+      "mapped_anatomy_ids": [
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Latissimus dorsi",
+      "exercise_count": 98,
+      "mapped_anatomy_ids": [
+        "anat.posterolateral_back_region.left",
+        "anat.posterolateral_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lats",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lats-01",
+        "bloom-back-lats-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Lower trapezius",
+      "exercise_count": 24,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.lower_trapezius",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Middle deltoid",
+      "exercise_count": 34,
+      "mapped_anatomy_ids": [
+        "anat.anterior_shoulder.right",
+        "anat.anterior_shoulder.left",
+        "anat.posterior_shoulder.left",
+        "anat.posterior_shoulder.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-shoulders; back-shoulders",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-shoulders-01",
+        "bloom-back-shoulders-02",
+        "bloom-front-shoulders-01",
+        "bloom-front-shoulders-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Middle trapezius",
+      "exercise_count": 38,
+      "mapped_anatomy_ids": [
+        "anat.scapular_upper_back_region.left",
+        "anat.scapular_upper_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-traps; back-upper-back",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-traps-01",
+        "bloom-back-traps-02",
+        "bloom-back-upper-back-01",
+        "bloom-back-upper-back-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Pectineus",
+      "exercise_count": 7,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.pectineus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Pectoralis major",
+      "exercise_count": 47,
+      "mapped_anatomy_ids": [
+        "anat.pectoral_region.right",
+        "anat.pectoral_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-chest",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-chest-01",
+        "bloom-front-chest-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Posterior deltoid",
+      "exercise_count": 39,
+      "mapped_anatomy_ids": [
+        "anat.posterior_shoulder.left",
+        "anat.posterior_shoulder.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-shoulders",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-shoulders-01",
+        "bloom-back-shoulders-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Quadriceps femoris",
+      "exercise_count": 184,
+      "mapped_anatomy_ids": [
+        "anat.anterior_thigh_region.right",
+        "anat.anterior_thigh_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-quads",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-quads-01",
+        "bloom-front-quads-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Rectus abdominis",
+      "exercise_count": 42,
+      "mapped_anatomy_ids": [
+        "anat.upper_abdominal_region.right",
+        "anat.upper_abdominal_region.left",
+        "anat.middle_abdominal_region.right",
+        "anat.middle_abdominal_region.left",
+        "anat.lower_abdominal_region.right",
+        "anat.lower_abdominal_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-core",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Rhomboids",
+      "exercise_count": 38,
+      "mapped_anatomy_ids": [
+        "anat.scapular_upper_back_region.left",
+        "anat.scapular_upper_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-upper-back",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-upper-back-01",
+        "bloom-back-upper-back-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Rotator cuff",
+      "exercise_count": 203,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.rotator_cuff",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Scapular stabilizers",
+      "exercise_count": 27,
+      "mapped_anatomy_ids": [
+        "anat.scapular_upper_back_region.left",
+        "anat.scapular_upper_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-upper-back; back-traps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-traps-01",
+        "bloom-back-traps-02",
+        "bloom-back-upper-back-01",
+        "bloom-back-upper-back-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Serratus anterior",
+      "exercise_count": 92,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.serratus_anterior",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "front-core; front-chest",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-chest-01",
+        "bloom-front-chest-02",
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Shoulder stabilizers",
+      "exercise_count": 21,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.shoulder_stabilizers",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Soleus",
+      "exercise_count": 38,
+      "mapped_anatomy_ids": [
+        "anat.posterior_calf_region.left",
+        "anat.posterior_calf_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lower-legs",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-legs-01",
+        "bloom-back-lower-legs-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Spinal erectors",
+      "exercise_count": 163,
+      "mapped_anatomy_ids": [
+        "anat.lumbar_erector_region.left",
+        "anat.lumbar_erector_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lower-back",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-back-01",
+        "bloom-back-lower-back-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Supraspinatus",
+      "exercise_count": 3,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.supraspinatus",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Tensor fasciae latae",
+      "exercise_count": 12,
+      "mapped_anatomy_ids": [
+        "anat.anterior_hip_region.right",
+        "anat.anterior_hip_region.left"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "front-hips",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-front-hips-01",
+        "bloom-front-hips-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Teres major",
+      "exercise_count": 25,
+      "mapped_anatomy_ids": [
+        "anat.posterolateral_back_region.left",
+        "anat.posterolateral_back_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-lats",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lats-01",
+        "bloom-back-lats-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Transversus abdominis",
+      "exercise_count": 61,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.transversus_abdominis",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Trapezius",
+      "exercise_count": 18,
+      "mapped_anatomy_ids": [
+        "anat.anterior_upper_trapezial_region.right",
+        "anat.anterior_upper_trapezial_region.left",
+        "anat.posterior_upper_trapezial_region.left",
+        "anat.posterior_upper_trapezial_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-traps; back-traps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-traps-01",
+        "bloom-back-traps-02",
+        "bloom-front-traps-01",
+        "bloom-front-traps-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Triceps brachii",
+      "exercise_count": 101,
+      "mapped_anatomy_ids": [
+        "anat.posterior_upper_arm.left",
+        "anat.posterior_upper_arm.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "coarse_surface_projection_not_individual_muscle_localization",
+      "muscle_group_label": "back-triceps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-triceps-01",
+        "bloom-back-triceps-02"
+      ]
+    },
+    {
+      "muscle_descriptor": "Trunk musculature",
+      "exercise_count": 171,
+      "mapped_anatomy_ids": [
+        "anat.upper_abdominal_region.right",
+        "anat.upper_abdominal_region.left",
+        "anat.middle_abdominal_region.right",
+        "anat.middle_abdominal_region.left",
+        "anat.lower_abdominal_region.right",
+        "anat.lower_abdominal_region.left",
+        "anat.lateral_abdominal_region.right",
+        "anat.lateral_abdominal_region.left",
+        "anat.lumbar_erector_region.left",
+        "anat.lumbar_erector_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-core; back-lower-back",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-lower-back-01",
+        "bloom-back-lower-back-02",
+        "bloom-front-core-01",
+        "bloom-front-core-02",
+        "bloom-front-core-03",
+        "bloom-front-core-04",
+        "bloom-front-core-05",
+        "bloom-front-core-06",
+        "bloom-front-core-07",
+        "bloom-front-core-08"
+      ]
+    },
+    {
+      "muscle_descriptor": "Trunk stabilizers",
+      "exercise_count": 3,
+      "mapped_anatomy_ids": [],
+      "deferred_anatomy_id": "anat.deferred.trunk_stabilizers",
+      "mapping_status": "deferred_unmapped",
+      "mapping_kind": "biomechanical_muscle_preserved_no_defensible_baseline_surface_path",
+      "muscle_group_label": "",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "No path forced. This is a recognized exercise-anatomy descriptor with no usable baseline target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": []
+    },
+    {
+      "muscle_descriptor": "Upper trapezius",
+      "exercise_count": 54,
+      "mapped_anatomy_ids": [
+        "anat.anterior_upper_trapezial_region.right",
+        "anat.anterior_upper_trapezial_region.left",
+        "anat.posterior_upper_trapezial_region.left",
+        "anat.posterior_upper_trapezial_region.right"
+      ],
+      "deferred_anatomy_id": null,
+      "mapping_status": "canonical_baseline",
+      "mapping_kind": "one_muscle_to_multiple_coarse_surface_regions_non_additive",
+      "muscle_group_label": "front-traps; back-traps",
+      "resolution_source": "owner-authorized anatomy surface policy and source SVG IDs; anatomical judgment for coarse surface map",
+      "notes": [
+        "Coarse mapped visible surface; not a whole-muscle representation, function estimate, or distinct muscle hit target."
+      ],
+      "requires_v433": false,
+      "original_20261126_suggested_svg_paths": [
+        "bloom-back-traps-01",
+        "bloom-back-traps-02",
+        "bloom-front-traps-01",
+        "bloom-front-traps-02"
+      ]
+    }
+  ],
+  "deferred_descriptor_count": 16,
+  "source_id_count": 44,
+  "method": "Evidence-based region/surface matching, nonadditive; no forced match for deep/small or nonlocalized muscles. Descriptors may map to broad composite regions but never imply isolated muscle selection."
+}

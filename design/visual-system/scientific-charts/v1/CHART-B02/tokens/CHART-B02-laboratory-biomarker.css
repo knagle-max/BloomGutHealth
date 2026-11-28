@@ -1,0 +1,24 @@
+/* CHART-B02: opt-in, additive, no global chart selectors. CHART-A01 remains the semantic palette authority. */
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart.bv-laboratory-biomarker {
+  --bvc-b02-band-opacity: .52;
+  --bvc-b02-band-stroke-width: 1.5px;
+  --bvc-b02-threshold-stroke-width: 2.5px;
+  --bvc-b02-selected-halo: 12px;
+  --bvc-b02-min-tap-target: 44px;
+  min-width: 0;
+}
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-source-band { fill: var(--bvc-reference-band); fill-opacity: var(--bvc-b02-band-opacity); }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-source-edge { stroke: var(--bvc-reference-line); stroke-width: var(--bvc-b02-band-stroke-width); fill: none; vector-effect: non-scaling-stroke; }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-alternate-edge { stroke: var(--bvc-uncertainty); stroke-width: 1.5px; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-decision-limit { stroke: var(--bvc-threshold); stroke-width: var(--bvc-b02-threshold-stroke-width); stroke-dasharray: 11 5; fill: none; vector-effect: non-scaling-stroke; }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-published-comparison { stroke: var(--bvc-uncertainty); stroke-dasharray: 2 5; vector-effect: non-scaling-stroke; }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-source-inspection { background: var(--bvc-surface-muted); color: var(--bvc-ink); border: 1px solid var(--bvc-border); }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker [data-chart-action] { min-width: var(--bvc-b02-min-tap-target); min-height: var(--bvc-b02-min-tap-target); }
+@media (forced-colors: active) {
+ .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-source-band { fill: Canvas; fill-opacity: 1; }
+ .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-source-edge { stroke: Highlight; }
+ .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-b02-decision-limit { stroke: CanvasText; stroke-dasharray: 11 5; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker *, .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker *::before, .app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker *::after { transition-duration: 0ms !important; animation: none !important; }
+}

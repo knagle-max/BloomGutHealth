@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-19",
+  "status": "FINAL_PROPOSAL_READY_FOR_REVIEW_NOT_APPLIED",
+  "inventoryEvidence": "OWNER_CONFIRMED",
+  "existingDevicesUserOwned": true,
+  "linuxUntagged": true,
+  "approvedSubnetRoutesListed": false,
+  "exitNodesListed": false,
+  "additionalLinuxOrRouteGrantsRequiredForReportedInventory": false,
+  "policyTemplate": "docs/scientific-models/tailscale-personal-access-policy.template.json",
+  "personalConnectivity": "Member-to-member all protocols and ports retained; existing own-device SSH check retained",
+  "callerConnectivity": "Dedicated tagged caller to exact user-owned Mac TCP443 only; no general member grant for tagged caller",
+  "privateCompletedCopy": "OUTSIDE_GIT_OWNER_ONLY_NOT_VERSIONED",
+  "structureChecks": "PASS_NOT_CONTROL_PLANE_VALIDATION",
+  "controlPlaneValidation": "NOT_RUN",
+  "liveIdentityAndConnectivityTests": "NOT_RUN",
+  "privacy": {
+    "realNamesAddressesIdentifiersCredentialsOrResultsIncluded": false
+  },
+  "changesApplied": {
+    "existingDeviceIdentity": false,
+    "policy": false,
+    "networkActivation": false,
+    "renderSettings": false,
+    "deployment": false
+  }
+}

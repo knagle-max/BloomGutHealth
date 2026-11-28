@@ -1,0 +1,54 @@
+{
+  "status": "ALREADY_VERIFIED",
+  "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
+  "sourceBaseline": {
+    "published": "89448061429634df7735a85e2d5c69fac505da76",
+    "localEquivalent": "9900a6d90b16cedfef83a6a1f2cc03fec17655c1",
+    "tree": "5eea895f90ebefef3bf17ed8c72db4da791a0c1a"
+  },
+  "scope": [
+    "Public login/signup entry receives existing Bloom serif/theme typography, bounded readable form width, consistent brand header/spacing and visible focus",
+    "No credential, state, handler, validation, session, route, error content or authentication API changes; normalized TSX comparison strips only class attributes",
+    "Existing original v1 wordmark bytes and theme role tokens preserved; no decorative image adds value to credential entry, so no new artwork or BVA production requirement introduced"
+  ],
+  "semanticProof": [
+    {
+      "file": "client/src/pages/Login.tsx",
+      "normalizedSemanticSha256": "82a547a90e697f0c65ad8244590b33cf0ca065e9240267d4f2d3eb3fe8cf8726",
+      "result": "Class attributes only; auth handlers/source values preserved"
+    },
+    {
+      "file": "client/src/pages/Signup.tsx",
+      "normalizedSemanticSha256": "9f14822719d452c3c5f6d2902e7326f90998e82c41d199e5bc884e64b05ed867",
+      "result": "Class attributes only; auth handlers/source values preserved"
+    }
+  ],
+  "sourceSha256": {
+    "client/src/pages/Login.tsx": "fef2cae02802817fd13d025380f89ff2d43cddad975d367410459dc1773f1dab",
+    "client/src/pages/Signup.tsx": "2944428d59646b1b973f708e1b1b1b61356957581eb06c13da85e1325e7e2401",
+    "client/src/styles/auth-shell.css": "3f287454998516061ded2e64510dc99167ff83f3c100cbb2d28d491dcee31b28",
+    "client/src/styles/app.css": "2ea32460d98525c38640a0629432d0c642dbb2b37b7f841b5bdce3b1ce0ccb45",
+    "scripts/qa/auth-form-ux-journey.mjs": "437a61d92c4d15285a1b7246cc0ff7d14e72969d75b37aa075b202d36dc1020a",
+    ".github/workflows/neon_workflow.yml": "9a691dcdcfbbc48a9ec0830927fcd34b9c3fd464a993689fd438145c9bdac8b7"
+  },
+  "validation": {
+    "types": "PASS",
+    "productionBuild": "PASS; original scientific/R4/M1 source/build media fingerprints retained",
+    "browser": "PASS actual App/auth/session handlers, in-memory synthetic users and canonical cookie sessions; login and signup20 theme/width states plus200% text, keyboard order,44px targets, username autocomplete and persistent focused errors; transport details withheld; pending credentials/navigation frozen; duplicate-submit guard; logout and authenticated public-route redirect; pagehide/pageshow withdraw and clear credential drafts",
+    "screenshots": "Matched source/stylesheet-controlled before/after at320/390/1280 light/dark in /tmp/bloom-auth-ui-before and /tmp/bloom-auth-ui-after. Explicit assertions prove baseline/current TSX AND stylesheet were selected. Representative390light and320dark manually inspected by implementer.",
+    "sourceAudits": "Capability crosswalk and biology inventory checks PASS without changing registry entries, identity content or approval status",
+    "exactCI": {
+      "sha": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+      "run": "43750257253",
+      "job": "132922420884",
+      "status": "SUCCESS",
+      "tests": "733/733",
+      "hosted": "Exact isolated binding, report lab/province/overlay exact retry and reauthentication, unchanged source observations, owned export/account erasure/other-account denial;72 deployed layout states,18 real-network media recovery placements and synthetic account cleanup"
+    }
+  },
+  "limitations": [
+    "Public account entry uses Everyday default and any existing saved theme; Coach access or new mode selector is not implemented",
+    "Physical VoiceOver, independent brand/User Testing approval, exact original Stitch archive parity and complete full-app theme adoption are not claimed",
+    "Full v0.6 RC remains open; no main merge or production records changed"
+  ]
+}

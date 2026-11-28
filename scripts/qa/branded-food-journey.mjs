@@ -14,7 +14,7 @@ if(p==='/api/auth/me')json={user:{id:owner,username:'Synthetic '+owner}};
 else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
 else if(p==='/api/products/search')json=await service.search(url.searchParams.get('q'),url.searchParams.get('kind')||'all',store,owner);
 else if(p==='/api/products/saved')json=await store.getNutritionProducts(owner);
-else if(p==='/api/products'&&req.method()==='POST')json=await store.insertNutritionProduct(owner,body);
+else if(p==='/api/products'&&req.method()==='POST')json=await store.insertNutritionProduct(owner,body.label??body,body.intentId);
 else if(p.startsWith('/api/products/')){const [, , ,source,id]=p.split('/');try{json={products:await service.resolve({source,id},store,owner)};}catch{return route.fulfill({status:404,json:{error:'Source unavailable'}});}}
 else if(p==='/api/meals/review'&&req.method()==='POST'){const analysis=await analyzeMeal(body.mealText,false,body.ingredients,{store,userId:owner,products:body.ingredients?[]:body.products,service});return route.fulfill({json:analysis,headers:{'x-bloom-meal-review':mealReviewRevision(owner,analysis)}});}
 else if(['/api/meals','/api/meals/confirm'].includes(p)&&req.method()==='POST'){

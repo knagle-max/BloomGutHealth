@@ -1,0 +1,21 @@
+{
+  "taxonomy_status": "provisional",
+  "visual_group_keys": [
+    "traps",
+    "shoulders",
+    "chest",
+    "biceps",
+    "triceps",
+    "forearms",
+    "core",
+    "hips",
+    "quads",
+    "lower-legs",
+    "upper-back",
+    "lats",
+    "lower-back",
+    "glutes",
+    "hamstrings"
+  ],
+  "note": "No live exercise classification or canonical IDs are included."
+}

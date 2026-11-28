@@ -57,3 +57,16 @@ test("actual Profile HTTP source capture requires canonical revision, rejects st
   assert.equal((await(await request("GET",undefined,undefined,"b")).json()).measurementSource.revision,"none");
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });
+
+test("birth year is owned encrypted Profile metadata, revision-bound, preserved by legacy saves and removable without changing lab records",async()=>{
+ const previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString("base64");const pg=new PGlite();
+ try{
+  await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY,username text,password text,sex text,age integer,height_cm real,weight_kg real,activity_level text,dietary_preferences jsonb);INSERT INTO users(id,age) VALUES('a',56),('b',30);");await pg.exec(readFileSync(new URL("../migrations/0016_profile_measurement_sources.sql",import.meta.url),"utf8"));const db=drizzle(pg),read=async()=> (await db.select().from(users).where(eq(users.id,"a")))[0];
+  const original=await read(),before=profileRevision(original);await updateProfileWithRevision(db,"a",{birthYear:1970},before);const saved=await read(),metadata=await readProfileMeasurementSource(db,"a",saved);assert.equal(metadata.available,true);if(!metadata.available)throw Error('Missing metadata');assert.equal(metadata.fields.birthYear,1970);assert.deepEqual(saved,original,'The year lives in existing encrypted Profile metadata, not a guessed lab age');
+  assert.notEqual(profileRevision(saved,1970),before);await assert.rejects(updateProfileWithRevision(db,"a",{birthYear:1980},before),ProfileRevisionConflict);
+  await updateProfileWithRevision(db,"a",{age:57},profileRevision(saved,1970));assert.equal((await readProfileMeasurementSource(db,"a",await read())as any).fields.birthYear,1970);
+  const other=await readProfileMeasurementSource(db,"b",{});assert.equal(other.available&&other.fields.birthYear,undefined);
+  const raw=(await pg.query("SELECT encrypted_payload FROM profile_measurement_sources WHERE user_id='a'")).rows[0].encrypted_payload;assert.doesNotMatch(JSON.stringify(raw),/1970|birthYear/);
+  await updateProfileWithRevision(db,"a",{birthYear:null},profileRevision(await read(),1970));assert.equal((await readProfileMeasurementSource(db,"a",await read())as any).fields.birthYear,undefined);
+ }finally{await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
+});

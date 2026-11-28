@@ -1,0 +1,67 @@
+{
+  "assetId": "CHART-B03",
+  "version": "1.0.0",
+  "status": "Designer candidate; not integrated",
+  "dependsOn": [
+    "CHART-A01",
+    "CHART-A02",
+    "CHART-A03",
+    "CHART-A04",
+    "CHART-A05",
+    "CHART-A06",
+    "CHART-A07",
+    "CHART-A08",
+    "CHART-B01",
+    "CHART-B02"
+  ],
+  "themes": [
+    "everyday-light",
+    "everyday-dark",
+    "athlete-light",
+    "athlete-dark"
+  ],
+  "scenarios": [
+    "comparable",
+    "non-comparable",
+    "zero-baseline",
+    "reference-unavailable",
+    "method-changed",
+    "source-withdrawn"
+  ],
+  "screenWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "dataRequirements": {
+    "measurements": [
+      "sourceRecordId",
+      "observedAt",
+      "originalValue",
+      "originalUnit",
+      "assay",
+      "method",
+      "lab",
+      "sourceInterval",
+      "accessState"
+    ],
+    "comparability": "Only valid pairs with canonical units/method and assay comparability",
+    "delta": "after-before when both numeric and comparable",
+    "percentage": "(after-before)/abs(before)*100 only when earlier value is nonzero and comparable; otherwise unavailable",
+    "source": "never render inaccessible/revoked data"
+  },
+  "semantics": {
+    "reference": "source-specific interval, not universal normal",
+    "difference": "descriptive, not causal",
+    "zero": "observed zero is allowed; unknown is never zero",
+    "nonComparable": "no change figure; show methods and explicit reason"
+  },
+  "runtimeOnly": [
+    "numerical values",
+    "date spacing",
+    "reference geometry",
+    "source record details",
+    "delta calculations"
+  ]
+}
