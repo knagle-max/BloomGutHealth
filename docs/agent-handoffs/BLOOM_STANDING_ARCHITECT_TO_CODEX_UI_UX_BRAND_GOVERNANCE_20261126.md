@@ -2,6 +2,10 @@
 
 **Owner instruction:** 2026-11-26. **Status: STANDING/BINDING for future eligible UI implementations and successor Chief Architect.** Applies across future architect handoffs, Codex sessions and UI refactors. It is a *how-to-implement contract*, not a parallel task queue, permission to reopen already completed slices or a deployment/release authorization.
 
+## November 28 — Owner-approved unreviewed-feature first-pass quality addendum
+
+Read [Brand Concurrence & Architect → Codex First-Pass UI Stewardship](BLOOM_BRAND_UNREVIEWED_FEATURE_FIRST_PASS_ARCHITECT_CODEX_HANDOFF_20261128.md) and owner-verbatim `UX-STEWARDSHIP-20261128-R2` in `/Bloom gut health/Agent Handoffs/`. This is the standing **provisional design-while-building contract** for selected consumer features without formal UX+Brand specs. Codex must write a compact 390×844 / 1440×900 provisional Page UX & Wireframe Specification before substantive UI coding; reuse existing tokens, components, and canonical BVA IDs; avoid unsafe overlay/card/title/action hierarchy and verbose missing-field telemetry; supply evidence-backed provisional notes and actual significant-screen renders. Independent Brand/UX acceptance remains separate. This is not another task selector or deployment authorization; no mandatory screenshot campaign for purely nonvisual changes.
+
 ## 1. Architect succession / precedence
 
 The successor Architect must read this document when taking over Bloom, retain it in any consolidated successor handoff and point Codex to it via root `AGENTS.md`. The active `NEXT_ACTIONS.md` remains the sole selector of **what** to work on. This handoff governs **how the selected UI work is performed and verified**, alongside the original domain-specific User (UX) Spec, Brand (UI / Design System) Spec, latest specific owner approvals, and security/scientific law and permissions. Do not use old handoff STOP language to relaunch completed work.
