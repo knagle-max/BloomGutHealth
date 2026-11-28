@@ -139,3 +139,7 @@
 /* Journal summaries share the grid with later source panels; keep them in flow
    so scrolling cannot paint the summary over supplement controls. */
 .bloom-food-history .journal-workspace > .bloom-food-summary {position:static;}
+
+/* Native date-picker affordances follow the existing selected app theme. */
+.saved-meals-page :is(input[type="date"],input[type="datetime-local"]) {color-scheme:light;}
+:root.dark .saved-meals-page :is(input[type="date"],input[type="datetime-local"]) {color-scheme:dark;}
