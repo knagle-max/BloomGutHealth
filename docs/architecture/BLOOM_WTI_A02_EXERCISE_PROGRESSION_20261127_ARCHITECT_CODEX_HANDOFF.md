@@ -110,3 +110,46 @@ Recommended deterministic decision order:
 **Preserve** separate accepted source IDs vs staged 553 exercise metadata, 53 muscle descriptors and 3,102 **unreviewed** stage relationships, original 44 art paths/Option B parent/child geometry and canonical source restrictions. Avoid using missing muscle relationships to block actual safe set logging.
 
 **Governance:** The original owner handoff is approved product direction but **this review did not run app code/test screenshots or implement UI**. Codex is sole engineering implementer on authorized nonshipping worktree; existing `AGENTS.md` and `NEXT_ACTIONS.md` control. No Render until December hold lifted, main merge, protected system changes, production migration, paid provider, external personal-data transfer or unsupported clinical action. A verified bounded vertical with actual tests beats a documentation-only loop. Persist this contract for future Architects.
+
+## 8. Owner addition — personal equipment access is a soft recommendation signal (2026-11-28)
+
+**Binding owner product requirement.** Users must be able to specify what exercise equipment they **ordinarily have access to**, from **no equipment** through exact fixed dumbbell weights, to adjustable dumbbells, free weights, machines, cables or gym facilities. Their equipment is an influential **recommendation/ranking preference and progression availability input**, **not an absolute catalogue exclusion**. The same person may regularly train at home with limited weights, sometimes attend a fully equipped gym, travel to a hotel with a different setup, or train without equipment. Preserve **full exercise discovery** and the user's ability to manually select/log any authorized exercise regardless of saved home inventory. Do not infer that a listed gym or machine is actually available today.
+
+### A. Account-owned access model (reuse existing settings/catalogue)
+
+Existing verified source at reconciliation HEAD: `shared/experience.ts` `exerciseCataloguePreferencesSchema` has favourites/custom exercises but **no ordinary equipment inventory**; `shared/exercise-catalogue.ts` has a manually selected `equipment` facet; `ExerciseCataloguePicker.tsx` defaults to any equipment and does not persist an equipment-access profile. The currently progressing WTI-A02/source fields may evolve; **reinspect exact HEAD before implementation** and extend these existing user preferences, exercise catalogue and canonical training context, not a separate gym/equipment store.
+
+A user-editable optional `Equipment I have access to` setting may contain:
+- **Named context/location** (`Home`, `Gym`, `Travel` or user-defined), default/most common context, and **current selected context for today's workout**. These contexts are convenience categories, not geolocation or location-tracking permissions.
+- **Equipment types**: none/bodyweight; fixed or adjustable dumbbells; bands/loops; bench; kettlebell; barbell+plates/microplates; pull-up/dip structures; cable/machine weights; bike/treadmill/rowing equipment; floor/mat and appropriately supported others. A configured **No equipment** context must remain valid.
+- **Actual available increments** where relevant: exact **individual dumbbell per-hand weights** (e.g. 10/20/30 lb), adjustable ranges/increments, plate combinations and barbell starting load, cable/machine stack markings, assistance settings, kg/lb and exact load convention, with units explicit. Missing/incomplete detail is **unknown**, not unlimited machine or a fabricated increment.
+- Optional **access level** `usually available`, `sometimes available`, `not in current context`, `unknown` or equivalent. Do not use time-of-day/geolocation inference to silently switch a context. Choice remains explicit and editable per workout.
+
+### B. Ranking, recommendations and manual freedom
+
+1. **Default exercise suggestions** favor workouts executable with the active context's **known available equipment**, user-selected time and needs, but **keep exercises using other equipment discoverable** and selectable with an informative “Requires equipment not in your current setup” or “Check availability” indicator. Equipment mismatch lowers practical fit; it is not a health/safety prohibition unless the user **explicitly chooses** a strict `Only my available equipment` filter or actual safety/access constraint is relevant.
+2. Show optional `Use my equipment` soft ranking and `Only available here` strict filter **as distinct controls**. “No equipment” returns bodyweight/no-equipment recommendations without stripping the complete exercise library or preventing later gym use.
+3. Workouts/programs may mix home and gym sessions. A temporary context change updates recommendations and candidate loads for **that session only** unless the user saves the default; preserve planned template, history and progression configuration. If user starts a workout originally designed for unavailable kit, offer **reviewable** substitutions from the existing catalogue, rather than rewrite it or imply all exercise variations are equivalent.
+4. Reuse canonical exercise identity and vetted movement associations. Home dumbbell shoulder press is **not** automatically the same comparable load baseline as barbell or machine press. Substitution keeps the original planned exercise separate from actual chosen exercise, and actual confirmed sets drive history.
+5. **Progression must use verified currently selected equipment and its exact load increments.** A 30→35 lb per-dumbbell jump is 16.7% and may warrant hold/reps/optional transition; a home profile with only 10/20/30 lb **cannot propose 35 lb**. If heavier weights become available at the gym, user can temporarily switch context and receive separate equipment-aware suggestions, but only if source/comparability is verified. Never invent that user owns microplates or can select smaller increments.
+6. No inferred access from previously logged workout, membership, current GPS or recorded device; suggestions use **user-confirmed** equipment, not a silent assumption. Users lacking a saved profile get a useful general library and optional equipment-selection prompt, not mandatory onboarding.
+
+### C. First-pass UI / Brand integration
+
+One compact **Equipment & access** preference within current activity settings/profile and one unobtrusive **Training here: Home / Gym / …** context switch in the exercise discovery/workout flow; exact placement uses the existing Brand & UX provisional governance. Everyday mode prioritizes simple equipment chips and sensible suggestions; Athlete may expose exact increment/profile controls progressively. Do not add form-card sprawl to active set entry, create new original visual art or hijack current primary **Complete set** action. Accessibility across four modes/themes, real 390×844 and 1440×900 key states, 320px, 200% zoom, keyboard, proper empty/no-equipment and source-loading/error states. User stays in control of suggestions, filter and workout selection.
+
+### D. Acceptance — EPG-EQUIP-01..09
+
+| ID | Acceptance |
+|---|---|
+| EPG-EQUIP-01 | A new user can choose `No equipment` and receive qualified bodyweight exercises while the rest of the canonical library remains findable. |
+| EPG-EQUIP-02 | User with only fixed 10/20/30 lb dumbbells receives feasible home suggestions; 35 lb is not offered as available home equipment. |
+| EPG-EQUIP-03 | Gym context can contain barbells, machines and distinct increments; switching context affects **future suggestions** without rewriting a saved history or global default silently. |
+| EPG-EQUIP-04 | Browse shows lower-equipment-fit canonical exercises instead of hiding them; explicit `Only available here` filters strictly, with clear way to reset. |
+| EPG-EQUIP-05 | Exercise substitutions are editable and never copy a mechanically incompatible load or muscle adaptation inference. |
+| EPG-EQUIP-06 | Load `lb` vs `kg`, per-dumbbell vs total barbell, adjustable vs fixed equipment, and unknown increments preserve compatible units; unavailable load cannot be promoted. |
+| EPG-EQUIP-07 | Missing, outdated or conflicting equipment profiles produce honest “unknown/check availability” states, not assumed unlimited gym access or forced profile completion. |
+| EPG-EQUIP-08 | Settings and temporary workout-context changes respect account isolation, permissions, corrections and stale cache invalidation. |
+| EPG-EQUIP-09 | Workout selection and one-tap complete-set remain usable on actual responsive Everyday/Athlete themes, no additional visual registry and no extra primary action. |
+
+**Execution scope:** This is a new **future eligible equipment-personalization slice**, **not an interruption to the currently selected WTI-A02 first history/progression code vertical**. That existing task may accept exact user-confirmed equipment increments already available in canonical source, but must not begin an unrelated settings/profile/calendar redesign now. At next selected workout-equipment task, implement smallest end-to-end settings→soft ranking→explicit current context→safe progression step with tests and in-pass Brand/UX, rather than another architecture audit. Preserve sole `NEXT_ACTIONS.md` selector, scientific/provenance/consent restrictions and current nonshipping policy.
