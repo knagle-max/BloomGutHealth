@@ -1,0 +1,114 @@
+{
+  "schema": "bloom.calculated_insights.ui.v1",
+  "authority": "Biology November 4 specification and UT-CALC-4101–4112",
+  "route": "My Biology/Bloodwork/Calculated Insights",
+  "components": [
+    {
+      "name": "CalculatedInsightSummary",
+      "inputs": [
+        "derivedObservationId",
+        "formulaVersion",
+        "value",
+        "unit",
+        "date",
+        "eligibility",
+        "interpretationType",
+        "parentObservationIds",
+        "sourceRevisionIds"
+      ],
+      "states": [
+        "available",
+        "calculation_pending",
+        "missing_inputs",
+        "invalid_denominator",
+        "ineligible",
+        "stale_revision",
+        "error"
+      ]
+    },
+    {
+      "name": "CalculationProvenance",
+      "inputs": [
+        "formula",
+        "formulaVariant",
+        "inputs[]",
+        "unitConversions[]",
+        "specimenAndDrawId",
+        "sourceLinks",
+        "calculatedAt",
+        "sourceRevisions[]"
+      ],
+      "states": [
+        "eligible",
+        "unknown_time",
+        "mixed_collection",
+        "corrected",
+        "source_unavailable"
+      ]
+    },
+    {
+      "name": "InterpretationBand",
+      "inputs": [
+        "type",
+        "validatedCohort",
+        "referenceSource",
+        "effectiveDate",
+        "thresholds[]",
+        "caveat"
+      ],
+      "states": [
+        "guideline",
+        "lab_reference",
+        "trend_only",
+        "research_only",
+        "specialist_only",
+        "ineligible"
+      ],
+      "rule": "No arbitrary colour scale for descriptive/research ratios"
+    },
+    {
+      "name": "DerivedTrend",
+      "inputs": [
+        "timepoints[]",
+        "comparableFormulaVersions",
+        "collectionMetadata",
+        "methodHistory",
+        "sourceRevisionHistory"
+      ],
+      "states": [
+        "sufficient_comparable",
+        "sparse",
+        "incompatible_method",
+        "revised",
+        "empty"
+      ]
+    },
+    {
+      "name": "DataRequirementState",
+      "inputs": [
+        "metric",
+        "requiredInputs",
+        "missingInputIds",
+        "ineligibleReasons"
+      ],
+      "states": [
+        "no_labs",
+        "missing",
+        "not_fasting",
+        "wrong_specimen",
+        "zero_denominator",
+        "age_context_unsupported"
+      ]
+    }
+  ],
+  "prohibitions": [
+    "derived not measured",
+    "no universal NLR or HOMA cutoffs",
+    "no unsupported diagnoses",
+    "no combining same-day repeated draws without occurrence",
+    "no second laboratory data store",
+    "no cross-version TyG trend",
+    "no clinical conclusions from one eGFR/uACR"
+  ],
+  "releaseStatus": "visual prototype only, not tested production implementation"
+}

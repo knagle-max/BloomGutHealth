@@ -1,0 +1,119 @@
+{
+  "schema": "bloom.science_explorer.ui/1",
+  "components": [
+    {
+      "name": "ScienceExplorerHeader",
+      "props": [
+        "entityId",
+        "canonicalName",
+        "entityRank",
+        "reportLabel",
+        "sourceDate",
+        "researchSummary"
+      ],
+      "states": [
+        "loading",
+        "ready",
+        "unresolved",
+        "error"
+      ]
+    },
+    {
+      "name": "MechanismChain",
+      "props": [
+        "nodes[]",
+        "edges[]",
+        "evidenceIds[]",
+        "reviewStatus",
+        "plainLanguageSummary"
+      ],
+      "states": [
+        "diagram",
+        "text-only",
+        "unknown-step",
+        "withdrawn"
+      ],
+      "rule": "The chain must express studied evidence, not measurements made in user."
+    },
+    {
+      "name": "FoodInfluenceCard",
+      "props": [
+        "foodId",
+        "studyDesign",
+        "population",
+        "reportedAmount",
+        "duration",
+        "comparator",
+        "measuredOutcome",
+        "targetLevel",
+        "directness",
+        "citation",
+        "allergyExcluded"
+      ],
+      "states": [
+        "eligible",
+        "indirect-only",
+        "excluded",
+        "unknown"
+      ],
+      "rule": "Never transform abundance effect into toxin suppression."
+    },
+    {
+      "name": "PersonalRelevance",
+      "props": [
+        "observations[]",
+        "detectedRank",
+        "testedGenes[]",
+        "testedToxins[]",
+        "assayLimitations",
+        "sourceId"
+      ],
+      "states": [
+        "no-data",
+        "species-only",
+        "strain-tested",
+        "gene-tested",
+        "toxin-tested",
+        "unresolved"
+      ]
+    },
+    {
+      "name": "EvidenceDrawer",
+      "props": [
+        "claims[]",
+        "studies[]",
+        "contradictions[]",
+        "provenance",
+        "reviewHistory"
+      ],
+      "states": [
+        "loading",
+        "published",
+        "conflicting",
+        "withdrawn",
+        "offline"
+      ]
+    },
+    {
+      "name": "ResearchStatusPill",
+      "props": [
+        "status",
+        "lastReviewed",
+        "allowedUse"
+      ],
+      "states": [
+        "candidate",
+        "reviewed-education",
+        "personal-advice-approved",
+        "withdrawn"
+      ]
+    }
+  ],
+  "tokens": {
+    "forest": "#173F32",
+    "evergreen": "#246B50",
+    "sage": "#84A990",
+    "ivory": "#FAF9F4"
+  },
+  "generalAvailability": "The designs require developer integration and product review; this is not a deployed screen."
+}

@@ -1,0 +1,14 @@
+{
+  "design": "bloom-science-changes-v1",
+  "branch": "design/biology-visuals-2026-10-30",
+  "files": [
+    "prototype.html",
+    "README.md",
+    "UI_CONTRACT.json",
+    "ACCEPTANCE.md",
+    "ASSET_MANIFEST.json"
+  ],
+  "asset_type": "editable standalone html/css/js and structured contracts",
+  "status": "prototype_not_deployed",
+  "notes": "No third-party image rights or remote assets. Mechanism claim requires scientific approval; all other scenario examples synthetic."
+}

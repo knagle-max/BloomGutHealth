@@ -1,0 +1,138 @@
+{
+  "schema": "bloom.discover.assets.v1",
+  "assets": [
+    {
+      "id": "garden-stage-1",
+      "path": "garden/stage-1.svg",
+      "kind": "decorative_garden_stage",
+      "rights": "pending",
+      "science": "visual_concept",
+      "distribution": "disabled"
+    },
+    {
+      "id": "garden-stage-2",
+      "path": "garden/stage-2.svg",
+      "kind": "decorative_garden_stage",
+      "rights": "pending",
+      "science": "visual_concept",
+      "distribution": "disabled"
+    },
+    {
+      "id": "garden-stage-3",
+      "path": "garden/stage-3.svg",
+      "kind": "decorative_garden_stage",
+      "rights": "pending",
+      "science": "visual_concept",
+      "distribution": "disabled"
+    },
+    {
+      "id": "garden-stage-4",
+      "path": "garden/stage-4.svg",
+      "kind": "decorative_garden_stage",
+      "rights": "pending",
+      "science": "visual_concept",
+      "distribution": "disabled"
+    },
+    {
+      "id": "oats",
+      "path": "food-icons/oats.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "apple",
+      "path": "food-icons/apple.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "lentils",
+      "path": "food-icons/lentils.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "broccoli",
+      "path": "food-icons/broccoli.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "chickpeas",
+      "path": "food-icons/chickpeas.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "blueberries",
+      "path": "food-icons/blueberries.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "garlic",
+      "path": "food-icons/garlic.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "brown-rice",
+      "path": "food-icons/brown-rice.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "cabbage",
+      "path": "food-icons/cabbage.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "leafy-greens",
+      "path": "food-icons/leafy-greens.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "seeds",
+      "path": "food-icons/seeds.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    },
+    {
+      "id": "legumes",
+      "path": "food-icons/legumes.svg",
+      "kind": "illustrative_food_icon",
+      "rights": "pending",
+      "science": "not_nutrient_identity_proof",
+      "distribution": "disabled"
+    }
+  ],
+  "component": "components/BloomDiscover.tsx",
+  "css": "components/discover.css",
+  "feature_preservation": "canonical food records and editable ingredients required",
+  "metric": "unique confirmed culinary plant-food identities only",
+  "status": "design_assets_ready_app_integration_pending"
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "bloom.genetics_relevance.presentation.v1",
+  "source_review": "BIO-GENREL-01–08; UT-GEN-4213–4220",
+  "existing_route": "My Biology/Genetics",
+  "components": [
+    {
+      "id": "RelevanceOverview",
+      "inputs": [
+        "eligibleClaimIds[]",
+        "policyVersion",
+        "sourceRevision",
+        "reviewedClaimVersion",
+        "consentState"
+      ],
+      "states": [
+        "zero-eligible",
+        "one-to-five",
+        "uncertain",
+        "loading",
+        "error",
+        "revoked"
+      ],
+      "rules": [
+        "0–5 testable default, never pad",
+        "not all genetic results"
+      ]
+    },
+    {
+      "id": "GeneticsCoverageCounts",
+      "inputs": [
+        "catalogueCount",
+        "measuredObservations",
+        "interpretableCalls",
+        "reviewedClaims",
+        "personalEligibleClaims"
+      ],
+      "states": [
+        "verified",
+        "partial",
+        "unavailable"
+      ],
+      "rules": [
+        "independent counts, no misleading pie/chart funnel"
+      ]
+    },
+    {
+      "id": "RelevanceExplanation",
+      "inputs": [
+        "claimId",
+        "claimReviewVersion",
+        "variantIds[]",
+        "whyShownFacts[]",
+        "applicablePopulation",
+        "contextMeasurements[]",
+        "sourceCitations[]"
+      ],
+      "states": [
+        "approved",
+        "unavailable",
+        "withdrawn"
+      ],
+      "rules": [
+        "explain exact known context, no inferred causality or score"
+      ]
+    },
+    {
+      "id": "FindingsBrowser",
+      "inputs": [
+        "canonicalVariants[]",
+        "claims[]",
+        "domains[]",
+        "sort",
+        "filter",
+        "search"
+      ],
+      "states": [
+        "catalogue-only",
+        "observed",
+        "research-only",
+        "sensitive-gated",
+        "empty"
+      ],
+      "rules": [
+        "preserve 17 domains, full source calls, measured versus research"
+      ]
+    },
+    {
+      "id": "CorrelatedVariantCluster",
+      "inputs": [
+        "leadingClaimId",
+        "sourceVariantIds[]",
+        "ldBasis",
+        "reviewedCluster"
+      ],
+      "states": [
+        "reviewed",
+        "unresolved"
+      ],
+      "rules": [
+        "presentation suppression only; source observations unchanged"
+      ]
+    }
+  ],
+  "gates": {
+    "eligibility": [
+      "valid_assay",
+      "variant_type",
+      "genome_build_and_orientation",
+      "verified_effect_allele",
+      "claim_level_biology_review",
+      "applicable_population",
+      "required_consent",
+      "allowed_scope"
+    ],
+    "ranking": [
+      "evidence_quality",
+      "credible_genotype_specific_effect",
+      "known_user_context",
+      "nonredundancy",
+      "usefulness",
+      "expressed_interest"
+    ],
+    "prohibited": [
+      "genetic_health_score",
+      "automatic_disease_prediction",
+      "unapproved_dosing",
+      "source-deleting_hide_control",
+      "raw_genotype_analytics"
+    ]
+  },
+  "status": "prototype_not_deployed"
+}

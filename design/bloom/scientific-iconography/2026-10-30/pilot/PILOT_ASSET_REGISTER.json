@@ -1,0 +1,63 @@
+{
+  "title": "Bloom scientific visual pilot",
+  "date": "2026-10-30",
+  "status": "design_pilot_not_production_approved",
+  "visuals": [
+    {
+      "file": "microbe-ecoli.svg",
+      "subject": "Escherichia coli",
+      "representation": "conceptual_illustration",
+      "specificity": "representative rod only",
+      "biology_review": "pending",
+      "micrograph": false
+    },
+    {
+      "file": "microbe-faecalibacterium.svg",
+      "subject": "Faecalibacterium genus",
+      "representation": "conceptual_illustration",
+      "specificity": "representative rods only",
+      "biology_review": "pending",
+      "micrograph": false
+    },
+    {
+      "file": "microbe-archaea.svg",
+      "subject": "Methanobrevibacter smithii",
+      "representation": "conceptual_illustration",
+      "specificity": "generic archaeal coccoid concept, taxonomy/morphology validation pending",
+      "biology_review": "pending",
+      "micrograph": false
+    },
+    {
+      "file": "molecule-butyrate.svg",
+      "subject": "butyrate anion",
+      "smiles": "CCCC(=O)[O-]",
+      "pubchem_cid": 104775,
+      "formula": "C4H7O2-",
+      "representation": "schematic_2d_atom_connectivity",
+      "chemistry_review": "pending",
+      "automated_chemistry_check": "pending"
+    },
+    {
+      "file": "molecule-acetate.svg",
+      "subject": "acetate anion",
+      "smiles": "CC(=O)[O-]",
+      "pubchem_cid": 175,
+      "formula": "C2H3O2-",
+      "representation": "schematic_2d_atom_connectivity",
+      "chemistry_review": "pending",
+      "automated_chemistry_check": "pending"
+    },
+    {
+      "file": "molecule-propionate.svg",
+      "subject": "propionate anion",
+      "smiles": "CCC(=O)[O-]",
+      "pubchem_cid": 104745,
+      "formula": "C3H5O2-",
+      "representation": "schematic_2d_atom_connectivity",
+      "chemistry_review": "pending",
+      "automated_chemistry_check": "pending"
+    }
+  ],
+  "licensing": "Original editable SVG compositions authored for Bloom; embedded third-party images: none. Publication and ownership/rights clearance still require project Legal review.",
+  "disclaimer": "No taxon illustration represents the user's own specimen. Molecular cards show simplified connectivity, not geometrically calibrated structures. Original art-direction raster references, if available outside GitHub, are mood boards only. No release or review signoff implied."
+}
