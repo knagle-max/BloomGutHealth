@@ -1,3 +1,4 @@
+import {exerciseCatalogueReferenceSchema} from './exercise-catalogue-reference';
 import {setLoadContextSchema} from './training-set-context';
 import {localizedSymptomSchema} from './localized-symptoms';
 import {athleteReferenceEntrySourceSchema,sessionEntrySourceSchema,hydrationEntrySourceSchema,athleteEntrySourceMatches} from "./athlete-entry-source";
@@ -68,7 +69,7 @@ export const displayUnitsSchema = z.object({
 export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
 
 export const exerciseCataloguePreferencesSchema=z.object({favourites:z.array(z.string().min(1).max(100)).max(1000).default([]),custom:z.array(z.object({id:z.string().uuid(),name:z.string().trim().min(1).max(120),aliases:z.array(z.string().trim().min(1).max(120)).max(20).default([]),category:z.string().trim().min(1).max(100),equipment:z.array(z.string().trim().min(1).max(100)).max(20).default([])}).strict()).max(500).default([])}).strict();
-export const exerciseCatalogueReferenceSchema=z.object({id:z.string().regex(/^(exercise\.[a-f0-9]{24}|custom\.[a-f0-9-]{36})$/),version:z.string().min(1).max(100),match:z.enum(['selected','description-suggestion']),confirmed:z.boolean()}).strict();
+export {exerciseCatalogueReferenceSchema} from './exercise-catalogue-reference';
 export const experienceSettingsSchema = z.object({
   exerciseCatalogue:exerciseCataloguePreferencesSchema.prefault({}),
   lifecycleId:z.string().uuid().optional(), // Server-owned generation; never an entitlement.

@@ -44,3 +44,7 @@ test('set-context reader version is explicit only on same-origin experience APIs
  const original=globalThis.fetch,calls:Headers[]=[];globalThis.fetch=(async(_url,init)=>{calls.push(new Headers(init?.headers));return new Response('{}');})as typeof fetch;
  try{bindRequestActor('synthetic-owner');for(const url of ['/api/experience/records','https://bloom.invalid/api/experience/records','https://foreign.invalid/api/experience/records','/api/precision','/api/auth/me']){await accountFetch(url,{headers:{'X-Bloom-Set-Fields':'forged'}});assert.equal(calls.at(-1)!.get('X-Bloom-Set-Fields'),url.startsWith('/api/experience/')||url.startsWith('https://bloom.invalid/api/experience/')?'load-context-v2':null);}}finally{globalThis.fetch=original;bindRequestActor(null);}
 });
+test('movement response compatibility header is confined to owned experience requests',async()=>{
+ const original=globalThis.fetch,calls:Headers[]=[];globalThis.fetch=(async(_url,init)=>{calls.push(new Headers(init?.headers));return new Response('{}');})as typeof fetch;
+ try{bindRequestActor('synthetic-movement-owner');for(const url of ['/api/experience/records','/api/precision','https://foreign.invalid/api/experience/records','/api/auth/me']){await accountFetch(url,{headers:{'X-Bloom-Symptom-Fields':'forged'}});assert.equal(calls.at(-1)!.get('X-Bloom-Symptom-Fields'),url==='/api/experience/records'?'movement-response-v1':null);}}finally{globalThis.fetch=original;bindRequestActor(null);}
+});

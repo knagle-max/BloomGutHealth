@@ -13,7 +13,7 @@ import {exerciseCatalogue,exerciseCatalogueVersion,customCatalogueChoices,search
 import {useExperience,useExperienceRecords} from '@/lib/experience';
 import type {ActivityComponent} from '@shared/experience';
 type Choice={id:string;name:string;category:string};
-export default function ExerciseCataloguePicker({onChoose,actionLabel='Log exercise'}:{actionLabel?:string;onChoose:(choice:Choice,ref:NonNullable<ActivityComponent['catalogueRef']>)=>void}){
+export default function ExerciseCataloguePicker({onChoose,actionLabel='Log exercise',selectionOnly=false}:{selectionOnly?:boolean;actionLabel?:string;onChoose:(choice:Choice,ref:NonNullable<ActivityComponent['catalogueRef']>)=>void}){
  const {settings,mode,patchAsync,ready,saving}=useExperience(),records=useExperienceRecords();
  const [limit,setLimit]=useState(10),[query,setQuery]=useState(''),[equipment,setEquipment]=useState(''),[muscle,setMuscle]=useState(''),[category,setCategory]=useState(''),[filter,setFilter]=useState('all'),[customName,setCustomName]=useState(''),[error,setError]=useState('');
  const [detail,setDetail]=useState<Choice|null>(null),[detailOpen,setDetailOpen]=useState(false);
@@ -37,6 +37,7 @@ export default function ExerciseCataloguePicker({onChoose,actionLabel='Log exerc
    <button type="button" className="exercise-result-add" aria-label={`Review ${e.name}`} onClick={()=>choose(e)}><Plus size={18} aria-hidden="true"/><span>Add</span></button>
    <button type="button" className="exercise-result-favourite" disabled={!ready||saving} aria-pressed={favourites.has(e.id)} aria-label={`${favourites.has(e.id)?'Remove':'Add'} favourite ${e.name}`} onClick={()=>void favourite(e.id)}><Star size={18} fill={favourites.has(e.id)?'currentColor':'none'} aria-hidden="true"/></button>
   </li>)}</ul>;
+ if(selectionOnly)return <section className="exercise-picker space-y-3" aria-label="Choose reported movement"><label>Search movements<input ref={searchInput} type="search" autoFocus aria-label="Search reported movements" onKeyDown={e=>{if(e.key==='Enter'&&!e.nativeEvent.isComposing)e.preventDefault();}} className="bloom-input w-full" value={query} onChange={event=>{setQuery(event.target.value);setLimit(10);}}/></label><ul className="space-y-2">{matches.slice(0,limit).map(choice=><li key={choice.id}><button type="button" className="text-link min-h-11 text-left break-words max-w-full" aria-label={`Choose ${choice.name}`} onClick={()=>choose(choice)}>{choice.name}</button></li>)}</ul>{!matches.length&&<p className="panel-note">No matching movement. You can save the observation without a link.</p>}{matches.length>limit&&<button type="button" className="text-link min-h-11" onClick={()=>setLimit(n=>n+10)}>Show more movements</button>}</section>;
  return <section className="exercise-picker space-y-3" aria-label="Shared exercise catalogue">
   <h3>Find an exercise</h3>
   <label className="exercise-search">Search exercises<input ref={searchInput} type="search" className="bloom-input w-full" placeholder="Name or alternative name" value={query} onChange={e=>{setQuery(e.target.value);setLimit(10);}}/></label>

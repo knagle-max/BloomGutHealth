@@ -1,3 +1,4 @@
+import {symptomMovementSchema} from './symptom-movement';
 import {z} from 'zod';
 import front from '../design/bloom/anatomy/unified-symptom/v1/assets/front-regions-provisional.json';
 import back from '../design/bloom/anatomy/unified-symptom/v1/assets/back-regions-provisional.json';
@@ -17,6 +18,7 @@ export const localizedSymptomSchema=z.object({
  observedAt:stamp,timeZone:zone.nullable(),onsetAt:stamp.nullable(),
  severity:z.number().int().min(0).max(10).nullable(),durationMinutes:z.number().finite().min(0).max(5256000).nullable(),ongoing:z.boolean().nullable(),
  notes:z.string().trim().max(2000).default(''),source:z.literal('user-reported'),
+ movement:symptomMovementSchema.nullable().optional(),
 }).strict().superRefine((record,ctx)=>{
  if(record.revision===record.previousRevision)ctx.addIssue({code:'custom',path:['revision'],message:'A changed observation needs a new revision'});
  if(record.onsetAt!==null&&Date.parse(record.onsetAt)>Date.parse(record.observedAt))ctx.addIssue({code:'custom',path:['onsetAt'],message:'Onset cannot follow the observation time'});

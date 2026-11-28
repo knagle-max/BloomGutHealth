@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {movementProgressionSafety} from '@shared/symptom-movement';
+import {useEffect,useRef,useState} from 'react';
 import {useAuth} from '@/lib/auth';
 import {useExperienceRecords} from '@/lib/experience';
 import {completedExerciseHistory} from '@shared/training-set-history';
@@ -10,19 +11,24 @@ import {Button} from './ui/button';
 const conventions:Record<SetLoadContext['convention'],string>={'barbell-total':'Barbell total','per-dumbbell':'Per dumbbell','combined-dumbbell':'Both dumbbells combined','single-limb':'Single limb','machine-stack':'Machine stack','assistance':'Assistance','bodyweight':'Bodyweight','external-total':'External load total'};
 export default function ExerciseSetGuidance({set,ordinal,before,excludeRecordId,onChange}:{set:ActualSets['sets'][number];ordinal:number;before?:string;excludeRecordId?:string;onChange:(patch:Partial<ActualSets['sets'][number]>)=>void}) {
  const{user}=useAuth(),records=useExperienceRecords();
+ const node=useRef<HTMLElement>(null);
+ useEffect(()=>{const refresh=()=>{if(node.current?.getClientRects().length)void records.refetch({cancelRefetch:false});};window.addEventListener('focus',refresh);return()=>window.removeEventListener('focus',refresh);},[records.refetch]);
  const [convention,setConvention]=useState<SetLoadContext['convention']|''>(set.loadContext?.convention??''),[equipment,setEquipment]=useState(set.loadContext?.equipmentKey??''),[ignored,setIgnored]=useState(''),[role,setRole]=useState<SetLoadContext['setRole']>(set.loadContext?.setRole??null),[rpe,setRpe]=useState<string>(set.loadContext?.effortRpe==null?'':String(set.loadContext.effortRpe)),[nextLoad,setNextLoad]=useState({value:'',unit:set.loadUnit??'kg'});
  const now=new Date().toISOString(),date=before?new Date(before):new Date(),cutoff=Number.isFinite(+date)?date.toISOString():null;
  const history=user&&cutoff?completedExerciseHistory({ownerId:user.id,available:records.isSuccess&&!records.isError&&records.fetchStatus==='idle'&&!records.isStale,records:records.data??[]},{actorId:user.id,before:cutoff,asOf:now,excludeRecordIds:excludeRecordId?[excludeRecordId]:[]}):null;
  const unit:WeightUnit=set.loadUnit??'kg',nextText=nextLoad.unit===unit?nextLoad.value:'',nextValue=nextText.trim()?Number(nextText):NaN;
  const nextKg=Number.isFinite(nextValue)&&nextValue>0?displayToKg(nextValue,unit):undefined;
- const proposal=history?exerciseProgression(set,history,ordinal,{nextAvailableLoadKg:nextKg}):null;
+ const safety=user?movementProgressionSafety(set.catalogueRef,{ownerId:user.id,available:records.isSuccess&&!records.isError&&records.fetchStatus==='idle'&&!records.isStale,records:records.data??[]},{actorId:user.id,asOf:now}):null;
+ const proposal=history?exerciseProgression(set,safety?.state==='SOURCE_UNAVAILABLE'?{...history,status:'SOURCE_UNAVAILABLE'}:history,ordinal,{nextAvailableLoadKg:nextKg,relevantNewOrWorseningPain:safety?.state==='SAFETY_HOLD'}):null;
  const target=proposal?.target,previous=proposal?.previous;
  const amount=(kg:number,u:WeightUnit)=>`${Number(kgToDisplay(kg,u).toFixed(3))} ${u}`;
  const signature=JSON.stringify([user?.id,set.id,proposal?.decision,previous?.key,previous?.sources,target,set.loadContext,set.side]);
  const focusReps=(button:HTMLButtonElement)=>{const input=button.closest('fieldset')?.querySelector<HTMLInputElement>('input[type="number"]');requestAnimationFrame(()=>input?.focus());};
  const context=setLoadContextSchema.safeParse({version:1,convention,equipmentKey:equipment,setRole:role,effortRpe:rpe.trim()?Number(rpe):null});
- return <section className="exercise-set-guidance space-y-2" aria-label="Previous and suggested set">
+ return <section ref={node} className="exercise-set-guidance space-y-2" aria-label="Previous and suggested set">
   <p className="panel-note"><strong>Previous:</strong> {records.isPending?'Loading…':!proposal||proposal.status==='SOURCE_UNAVAILABLE'?'Unavailable':previous?<>{previous.reps===null?'Reps unknown':`${previous.reps} reps`} · {previous.loadKg===null?'Load unknown':amount(previous.loadKg,previous.loadUnit??unit)} <span>· {new Date(previous.occurredAt).toLocaleDateString()}</span>{proposal.status!=='COMPARABLE_VERIFIED'?' · Reference only':''}</>:'No prior completed set'}</p>
+  {records.isError&&<button type="button" className="text-link min-h-11" onClick={()=>void records.refetch({cancelRefetch:false})}>Retry history</button>}
+  {safety?.state==='SAFETY_HOLD'&&<div role="status" className="space-y-1"><p>You reported worsening with this movement. Progression suggestions are paused; actual set logging remains available.</p><p className="panel-note">Reported {new Date(safety.matches[0].observedAt).toLocaleDateString()}</p><a className="text-link inline-flex min-h-11 items-center" href="/pain-preview#history" target="_blank" rel="noopener noreferrer">Review observation (new tab)</a></div>}
   {target&&ignored!==signature?<div className="space-y-2"><p><strong>Suggested:</strong> {target.reps} reps · {amount(target.loadKg,unit)}</p><div className="flex flex-wrap gap-2"><Button type="button" variant="outline" className="min-h-11 px-3" onClick={e=>{onChange({reps:target.reps,loadKg:target.loadKg,loadUnit:unit});setIgnored(signature);focusReps(e.currentTarget);}}>Use target</Button><Button type="button" variant="ghost" className="min-h-11 px-3" aria-label="Edit target" onClick={e=>focusReps(e.currentTarget)}>Edit</Button><Button type="button" variant="ghost" className="min-h-11 px-3" onClick={e=>{setIgnored(signature);focusReps(e.currentTarget);}}>Ignore</Button></div></div>:target?<p aria-live="polite" className="panel-note">Keep or edit your own draft target.</p>:null}
   <details><summary>Comparison & equipment</summary><div className="space-y-3 pt-2"><p className="panel-note">{proposal?.reason??'Choose a valid activity date to compare history.'}</p>{previous&&<p className="panel-note">{previous.sources[0].title} · Recorded set {previous.sources[0].position}. {proposal?.status==='COMPARABLE_VERIFIED'?'Same confirmed exercise, equipment, load basis and side.':'Historical reference, not a matched training baseline.'}</p>}
    <label className="block">Load basis<select aria-label="Set load basis" className="bloom-input w-full" value={convention} onChange={e=>setConvention(e.target.value as typeof convention)}><option value="">Not recorded</option>{Object.entries(conventions).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>

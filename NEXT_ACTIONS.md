@@ -10,11 +10,17 @@
 
 ## 1. CURRENT — Implement now, not another audit
 
+**WTI equipment preferences / exercise fit — first independently working account-owned picker slice.** Implement the next eligible item from Section2/order1 under [WTI-A02 §§8–9](docs/architecture/BLOOM_WTI_A02_EXERCISE_PROGRESSION_20261127_ARCHITECT_CODEX_HANDOFF.md): reuse existing preferences and ExerciseCataloguePicker for categorized/searchable multi-select equipment, Home/Gym/Travel contexts and explicit fixed/adjustable available loads. Cover all57 source-native labels exactly once in presentation groups. Deliver a working settings+consumer path, not just a taxonomy or audit. Keep full553 exercise discovery/logging possible; preferences are a soft fit signal, with strict filtering only when explicitly selected. Reuse First-Pass UX/Brand, preserve source-compatible readers/writers and actual progression constraints; no second equipment database. Follow the approved1–2bounded-commit split if necessary, with tests and actual rendering. Do not restart completed pain/history/ZIP/branch work.
+
+## 1A. Completed EPG-PAIN-01 engineering slice — retained acceptance scope, not a recurring task
+
+**IMPLEMENTED_AND_LOCAL_ENGINEERING_TESTED — 2026-11-28:** the optional canonical movement response, compatible old readers/writers, source-scoped hold and neutral pain editor are complete for this bounded task.33focused tests +1actual browser regression across12contexts (320/390/1440 ×4themes), types/build PASS;24synthetic captures, key states inspected. Save/correction/deletion/retry/account isolation and retained workout drafts verified through real owned HTTP routes and disposable encrypted storage. See DEVELOPMENT_LOG.md; exact source SHA is reported at delivery. No clinical/diagnostic/rehab authorization or native zoom/AT/independent Brand/hosted acceptance is implied. The original task below remains acceptance provenance; do not rerun it to reach the next source task.
+
 **EPG-PAIN-01: user-confirmed movement-related worsening → eligible progression SAFETY_HOLD.**
 
 **Verified previous work:** Cross-workout `Previous` and editable repetition/weight targets, equipment-step v2, optional working/warm-up and per-set RPE context, canonical writer compatibility and the actual-browser session edit/correction/delete/self-history fixes are recorded as locally implemented and tested in [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md). Do **not** reimplement them or repeat the branch consolidation, four design ZIP checks, 35 UI review, anatomy source integration or historical testing receipts. Independent Brand/UX/native/hosted acceptance remains separate.
 
-**One functional slice:**
+**Retained completed functional-slice acceptance:**
 1. Inspect only current `shared/localized-symptoms.ts`, `client/src/components/LocalizedSymptomEditor.tsx`, `shared/exercise-progression.ts`, affected actual Activity/TrainingSetsEditor consumers and focused tests; verify live HEAD and current actor-scoped source writer.
 2. Add **small optional user-confirmed exercise/movement identity and worsened-with-movement observation** to the **existing canonical symptom source and editor**, version-compatible with existing records and revisions. Neither location, pain intensity nor proximity in time proves causation or injury. Unknown stays unknown.
 3. Connect only **explicit, currently relevant, owned and unwithdrawn** worsening observations to the existing conservative `SAFETY_HOLD` recommendation state. Withhold affected automatic progression, **never** block true actual set logging or all unrelated exercise discovery; no speculative region→muscle/contraindication map.

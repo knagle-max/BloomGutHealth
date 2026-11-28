@@ -17,7 +17,7 @@ import '@/styles/body-map-preview.css';
 export default function BodyMapPreview({kind='muscles'}:{kind?:'muscles'|'pain'}){const {user}=useAuth();return user?<BodyMapWorkspace key={`${user.id}:${kind}`} actor={user.id} kind={kind}/>:null;}
 function BodyMapWorkspace({actor,kind}:{actor:string;kind:'muscles'|'pain'}){
  const {mode}=useExperience(),records=useExperienceRecords(kind==='pain'?'localized-symptom':'activity');
- const [tab,setTab]=useState('map'),[selection,setSelection]=useState<AnatomyVisualSelection|null>(null),[open,setOpen]=useState(false),[info,setInfo]=useState(false),[layer,setLayer]=useState<'muscles'|'locations'>(kind==='pain'?'locations':'muscles'),[generation,setGeneration]=useState(0);
+ const [tab,setTab]=useState(()=>kind==='pain'&&window.location.hash==='#history'?'activity':'map'),[selection,setSelection]=useState<AnatomyVisualSelection|null>(null),[open,setOpen]=useState(false),[info,setInfo]=useState(false),[layer,setLayer]=useState<'muscles'|'locations'>(kind==='pain'?'locations':'muscles'),[generation,setGeneration]=useState(0);
  const [editingRecord,setEditingRecord]=useState<Extract<ExperienceRecord,{kind:'localized-symptom'}>|undefined>();
  const [dirty,setDirty]=useState(false),[busy,setBusy]=useState(false);
  const trigger=useRef<HTMLElement|SVGElement|null>(null);

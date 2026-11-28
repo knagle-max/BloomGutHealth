@@ -1,3 +1,6 @@
+import {catalogueExercise,exerciseCatalogueVersion} from '../shared/exercise-catalogue';
+import {localizedSymptomSchema} from '../shared/localized-symptoms';
+import type {SymptomMovement} from '../shared/symptom-movement';
 import {mergeSetLoadContexts} from '../shared/training-set-context';
 import {routineSourceMatches,routineLocalDate,routineDue,addRoutineDays} from '../shared/activity-routines';
 import {ActivityRoutineConflict} from './activity-routine-errors';
@@ -19,6 +22,12 @@ import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHi
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
+function assertOwnedSymptomMovement(settings:ReturnType<typeof experienceSettingsSchema.parse>,movement:SymptomMovement|null|undefined){
+ if(!movement)return;const ref=movement.exercise;
+ const known=ref.id.startsWith('custom.')?ref.version==='account-custom-v1'&&settings.exerciseCatalogue.custom.some(row=>'custom.'+row.id===ref.id):ref.version===exerciseCatalogueVersion&&!!catalogueExercise(ref.id);
+ if(!known||!ref.confirmed||!movement.confirmedByUser)throw Error('LOCALIZED_SYMPTOM_MOVEMENT');
+}
+
 const decode = (r: typeof experienceRecords.$inferSelect, userId:string):ExperienceRecord => ({...experienceEntrySchema.parse({kind:r.kind,payload:decryptPrecision(r.encryptedPayload,userId)}),id:r.id,createdAt:r.createdAt.toISOString(),updatedAt:r.updatedAt.toISOString()});
 export class ExperienceStorage {
  constructor(private readonly db:Database) {}
@@ -204,6 +213,7 @@ export class ExperienceStorage {
 
     const existing=rows.find(r=>r.kind==='localized-symptom'&&(decryptPrecision(r.encryptedPayload,userId) as any).revision===entry.payload.revision);
     if(existing){const record=decode(existing,userId);if(record.kind!=='localized-symptom'||JSON.stringify(record.payload)!==JSON.stringify(entry.payload))throw Error('LOCALIZED_SYMPTOM_CONFLICT');return record;}
+    assertOwnedSymptomMovement(experienceSettingsSchema.parse(decryptPrecision(settings.encryptedPayload,userId)),entry.payload.movement);
    }
    // Exact-description memories are one record per key, scoped to the owner.
    if(entry.kind==="food-memory" || entry.kind==="checkin") {
@@ -243,6 +253,8 @@ export class ExperienceStorage {
     if(!settings||experienceSettingsSchema.parse(decryptPrecision(settings.encryptedPayload,userId)).lifecycleId!==entry.payload.lifecycleId)throw Error('LOCALIZED_SYMPTOM_SCOPE');
     const current=experienceEntrySchema.parse({kind:'localized-symptom',payload:previous});
     if(current.kind!=='localized-symptom')throw Error('LOCALIZED_SYMPTOM_CONFLICT');
+    if(entry.payload.movement===undefined&&current.payload.movement!==undefined)entry={kind:'localized-symptom',payload:localizedSymptomSchema.parse({...entry.payload,movement:current.payload.movement})};
+    if(JSON.stringify(entry.payload.movement?.exercise)!==JSON.stringify(current.payload.movement?.exercise))assertOwnedSymptomMovement(experienceSettingsSchema.parse(decryptPrecision(settings.encryptedPayload,userId)),entry.payload.movement);
     if(entry.payload.revision===current.payload.revision){if(JSON.stringify(entry.payload)!==JSON.stringify(current.payload))throw Error('LOCALIZED_SYMPTOM_CONFLICT');return decode(existing,userId);}
     if(entry.payload.previousRevision!==current.payload.revision)throw Error('LOCALIZED_SYMPTOM_CONFLICT');
    }
