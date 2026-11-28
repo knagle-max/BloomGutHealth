@@ -1,3 +1,4 @@
+import {mergeSetLoadContexts} from '../shared/training-set-context';
 import {routineSourceMatches,routineLocalDate,routineDue,addRoutineDays} from '../shared/activity-routines';
 import {ActivityRoutineConflict} from './activity-routine-errors';
 import {activityRoutineSchema,activityRoutinePlanSchema,type ActivityRoutinePlan,routineOccurrenceOverrideSchema,type RoutineOccurrenceOverride} from '../shared/experience';
@@ -14,7 +15,7 @@ import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, notInArray, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords,experimentVersions,users } from "../shared/schema";
-import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceLifecycleSchema,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,actualSetsSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceLifecycleSchema,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -249,23 +250,28 @@ export class ExperienceStorage {
    let payload=preserveFocusFeedback(entry,previous);
    if(entry.kind==="activity"){
     const current=activitySchema.parse(previous);
-    if(entry.payload.routineSource&&JSON.stringify(entry.payload.routineSource)!==JSON.stringify(current.routineSource))throw new ActivityRoutineConflict(409,'The original routine occurrence identity cannot be replaced.');
+    // An older reader omits additive set metadata from the immutable plan snapshot.
+    // Restore only omitted, same-identity context before comparing its source receipt.
+    const incomingSource=entry.payload.routineSource;
+    const comparedSource=incomingSource?{...incomingSource,planSnapshot:activityRoutinePlanSchema.parse({...incomingSource.planSnapshot,components:{version:1,items:incomingSource.planSnapshot.components.items.map(part=>{const prior=current.routineSource?.planSnapshot.components.items.find(old=>old.id===part.id),sets=mergeSetLoadContexts(prior?.actualSets,part.actualSets);return{...part,...(sets?{actualSets:sets}:{})};})}})}:undefined;
+    if(comparedSource&&JSON.stringify(comparedSource)!==JSON.stringify(current.routineSource))throw new ActivityRoutineConflict(409,'The original routine occurrence identity cannot be replaced.');
     if(current.routineSource&&routineLocalDate(current.routineSource.timeZone,new Date(entry.payload.startedAt))!==current.routineSource.localDate)throw new ActivityRoutineConflict(409,'This activity belongs to its original routine day. Review the occurrence before changing its day.');
-    if(current.components&&entry.payload.components===undefined&&(entry.payload.minutes!==current.minutes||entry.payload.title!==current.title||(entry.payload.distanceM!==undefined&&entry.payload.distanceM!==current.distanceM)||(entry.payload.actualSets!==undefined&&JSON.stringify(entry.payload.actualSets)!==JSON.stringify(current.actualSets))))throw Error("ACTIVITY_COMPONENT_REVIEW_REQUIRED");
+    if(current.components&&entry.payload.components===undefined&&(entry.payload.minutes!==current.minutes||entry.payload.title!==current.title||(entry.payload.distanceM!==undefined&&entry.payload.distanceM!==current.distanceM)||(entry.payload.actualSets!==undefined&&JSON.stringify(actualSetsSchema.parse(mergeSetLoadContexts(current.actualSets,entry.payload.actualSets)))!==JSON.stringify(current.actualSets))))throw Error("ACTIVITY_COMPONENT_REVIEW_REQUIRED");
+    const actualSets=mergeSetLoadContexts(current.actualSets,entry.payload.actualSets);
     payload={...entry.payload,
      ...(current.routineSource?{routineSource:current.routineSource}:{}),
      ...(entry.payload.components===undefined&&current.components?{components:current.components}:{}),
-     ...(entry.payload.components?{components:{version:1 as const,items:entry.payload.components.items.map(part=>{const prior=current.components?.items.find(old=>old.id===part.id);return {...part,...(part.steps===undefined&&prior?.steps!==undefined?{steps:prior.steps}:{}),...(part.stepScope===undefined&&prior?.stepScope!==undefined?{stepScope:prior.stepScope}:{})};})}}:{}),
+     ...(entry.payload.components?{components:{version:1 as const,items:entry.payload.components.items.map(part=>{const prior=current.components?.items.find(old=>old.id===part.id);const sets=mergeSetLoadContexts(prior?.actualSets,part.actualSets);return {...part,...(sets!==undefined?{actualSets:sets}:{}),...(part.steps===undefined&&prior?.steps!==undefined?{steps:prior.steps}:{}),...(part.stepScope===undefined&&prior?.stepScope!==undefined?{stepScope:prior.stepScope}:{})};})}}:{}),
      ...(entry.payload.steps===undefined&&current.steps!==undefined?{steps:current.steps}:{}),
      ...(entry.payload.stepScope===undefined&&current.stepScope!==undefined?{stepScope:current.stepScope}:{}),
      ...(entry.payload.distanceM===undefined&&current.distanceM!==undefined?{distanceM:current.distanceM}:{}),
-     ...(entry.payload.actualSets===undefined&&current.actualSets!==undefined?{actualSets:current.actualSets}:{}),
+     ...(actualSets!==undefined?{actualSets}:{}),
      ...(current.capture?{capture:{...(entry.payload.capture||current.capture),description:current.capture.description,method:current.capture.method,...(entry.payload.capture?.reviewedDescription===undefined&&current.capture.reviewedDescription!==undefined?{reviewedDescription:current.capture.reviewedDescription}:{})}}:{})};
    }
    if(entry.kind==="activity"&&(payload as Activity).components)payload=activitySchema.parse({...payload,...activityProjection((payload as Activity).components!.items)});
-   if(entry.kind==="session"&&entry.payload.actualSets===undefined){
-    const current=trainingSessionSchema.parse(previous);
-    if(current.actualSets!==undefined)payload={...entry.payload,actualSets:current.actualSets};
+   if(entry.kind==="session"){
+    const current=trainingSessionSchema.parse(previous),sets=mergeSetLoadContexts(current.actualSets,entry.payload.actualSets);
+    if(sets!==undefined)payload={...entry.payload,actualSets:sets};
    }
    if(entry.kind==="session"||entry.kind==="hydration"){
     const schema=entry.kind==="session"?trainingSessionSchema:hydrationSchema,current=schema.parse(previous),next=schema.parse(payload);

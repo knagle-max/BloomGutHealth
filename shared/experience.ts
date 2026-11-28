@@ -1,3 +1,4 @@
+import {setLoadContextSchema} from './training-set-context';
 import {localizedSymptomSchema} from './localized-symptoms';
 import {athleteReferenceEntrySourceSchema,sessionEntrySourceSchema,hydrationEntrySourceSchema,athleteEntrySourceMatches} from "./athlete-entry-source";
 import {restaurantRegions} from "./restaurant-entry";
@@ -89,6 +90,7 @@ export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
 export const actualSetsSchema = z.object({
   version: z.literal(1),
   sets: z.array(z.object({
+    loadContext:setLoadContextSchema.nullable().optional(),
     catalogueRef:exerciseCatalogueReferenceSchema.optional(),
     exercise: z.string().trim().min(1).max(120),
     reps: z.number().int().min(0).max(1000).nullable(),
@@ -96,7 +98,7 @@ export const actualSetsSchema = z.object({
     completed: z.boolean(),bodyweight:z.literal(true).optional(),reportedBout:z.literal(true).optional(),
     id:z.string().uuid().optional(),loadUnit:z.enum(['kg','lb']).optional(),
     state:z.enum(['described','planned','cancelled']).optional(),side:z.enum(['left','right','both']).nullable().optional(),
-  }).strict()).max(100),
+  }).strict().refine(set=>!set.loadContext||!!set.id,'Load context requires a stable set identity')).max(100),
 }).strict();
 export type ActualSets = z.infer<typeof actualSetsSchema>;
 const actualStepsFields={steps:z.number().int().nonnegative().safe().nullable().optional(),stepScope:z.enum(['session','whole-day']).nullable().optional()};

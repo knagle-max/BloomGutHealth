@@ -53,19 +53,19 @@ export type CompletedExerciseObservation = {
   loadUnit: HistorySet['loadUnit'] | null;
   side: HistorySet['side'];
   bodyweight: true | null;
-  // These facts do not exist in serialized v1 sets. Never infer them from names,
-  // catalogue muscle roles, session effort, or a preference on the current draft.
-  loadConvention: null;
-  equipmentInstance: null;
+  // Only explicit source context supplies convention/equipment. Never infer it
+  // from catalogue tags or a preference on the current draft.
+  loadConvention: NonNullable<HistorySet['loadContext']>['convention'] | null;
+  equipmentInstance: string | null;
   setRole: null;
   setEffort: null;
-  sources: {recordId: string; updatedAt: string; kind: 'activity' | 'session'; title: string; componentId: string | null; position: number; occurredAt: string; timeZone: string | null}[];
+  sources: {recordId: string; updatedAt: string; kind: 'activity' | 'session'; title: string; componentId: string | null; position: number; exercisePosition: number; occurredAt: string; timeZone: string | null}[];
 };
 
 /** Read-only performance facts over existing owned records, not another journal.
  * Ownership still belongs to the authenticated collector/API; this envelope check
  * prevents accidental cross-account reuse and discards unavailable cached facts.
- * No v1 observation is a progression baseline without explicit load conventions.
+ * This projection makes no comparison to a current draft or progression target.
  */
 export function completedExerciseHistory(
   source: OwnedExerciseHistorySource,
@@ -83,7 +83,7 @@ export function completedExerciseHistory(
   const response = (status: 'SOURCE_UNAVAILABLE' | 'NO_CONFIRMED_HISTORY' | 'HISTORY_AVAILABLE_NOT_COMPARABLE') => ({
     version: completedExerciseHistoryVersion, ownerId: source.ownerId, status,
     before: options.before, asOf: options.asOf, observations, excluded, conflictingSetKeys,
-    qualification: 'Recorded completed sets only. Times are parent record starts, not individual set timestamps. Load convention, equipment instance, set role and set effort are unknown; these are references, not progression targets.',
+    qualification: 'Recorded completed sets only. Times are parent record starts, not individual set timestamps. Load convention/equipment require explicit stored context; set role and set effort remain unknown. These are references, not progression targets.',
   });
   if (!source.available) return response('SOURCE_UNAVAILABLE');
   if (source.records.length > 5000) throw Error('EXERCISE_HISTORY_LIMIT');
@@ -108,7 +108,9 @@ export function completedExerciseHistory(
   const collect = (record: Extract<HistoryRecord, {kind:'activity'|'session'}>, sets: HistorySet[], occurredAt: string, componentId: string | null) => {
     const time = Date.parse(occurredAt);
     if (!instant.safeParse(occurredAt).success || !Number.isFinite(time) || time >= cutoff) { excluded.push({recordId: record.id, reason: 'not-before-cutoff'}); return; }
+    const positions=new Map<string,number>();
     for (const [index, set] of Array.from(sets.entries())) {
+      const identity=set.catalogueRef?.id??exerciseKey(set.exercise),exercisePosition=(positions.get(identity)??0)+1;positions.set(identity,exercisePosition);
       if (++inspectedSets > 20000) throw Error('EXERCISE_HISTORY_LIMIT');
       if (!set.completed || set.state === 'planned' || set.state === 'cancelled') { if (set.id) unconfirmed.add('set:' + set.id.toLowerCase()); continue; }
       if (candidates.length >= 20000) throw Error('EXERCISE_HISTORY_LIMIT');
@@ -118,9 +120,9 @@ export function completedExerciseHistory(
         catalogueRef: set.catalogueRef ? {...set.catalogueRef} : null,
         occurredAt, timeBasis: 'record-start', timeZone: record.kind === 'activity' ? record.payload.timeZone : null, reps: set.reps, loadKg: set.loadKg, loadUnit: set.loadUnit ?? null,
         side: set.side ?? null, bodyweight: set.bodyweight ?? null,
-        loadConvention: null, equipmentInstance: null, setRole: null, setEffort: null,
+        loadConvention: set.loadContext?.convention ?? null, equipmentInstance: set.loadContext?.equipmentKey ?? null, setRole: null, setEffort: null,
         sources: [{recordId: record.id, updatedAt: record.updatedAt, kind: record.kind as 'activity' | 'session', title: record.payload.title,
-          componentId, position: index + 1, occurredAt, timeZone: record.kind === 'activity' ? record.payload.timeZone : null}],
+          componentId, position: index + 1, exercisePosition, occurredAt, timeZone: record.kind === 'activity' ? record.payload.timeZone : null}],
       });
     }
   };
@@ -138,7 +140,7 @@ export function completedExerciseHistory(
     }
   }
   const unique = new Map<string, CompletedExerciseObservation>(), setConflicts = new Set<string>();
-  const basis = (row: CompletedExerciseObservation) => JSON.stringify([row.exercise, row.catalogueRef, Date.parse(row.occurredAt), row.reps, row.loadKg, row.loadUnit, row.side, row.bodyweight]);
+  const basis = (row: CompletedExerciseObservation) => JSON.stringify([row.exercise, row.catalogueRef, Date.parse(row.occurredAt), row.reps, row.loadKg, row.loadUnit, row.side, row.bodyweight, row.loadConvention, row.equipmentInstance]);
   for (const row of candidates.sort((a, b) => a.sources[0].recordId.localeCompare(b.sources[0].recordId))) {
     const old = unique.get(row.key);
     if (!old) unique.set(row.key, row);

@@ -1,3 +1,4 @@
+import ExerciseSetGuidance from './ExerciseSetGuidance';
 import {useLayoutEffect,useRef,useState} from 'react';
 import {Check,Minus,ChevronDown,ChevronUp} from 'lucide-react';
 import {Button} from './ui/button';
@@ -17,7 +18,7 @@ export function SetCompletionRow({set,number,unit,open,editorId,onToggle,onCompl
  );
 }
 
-export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd,plannedReferences=false}:{exercise:string;value:ActivityDraftSets;onChange:(value:ActivityDraftSets)=>void;unit:WeightUnit;canAdd:boolean;plannedReferences?:boolean}){
+export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd,plannedReferences=false,before,excludeRecordId}:{exercise:string;value:ActivityDraftSets;onChange:(value:ActivityDraftSets)=>void;unit:WeightUnit;canAdd:boolean;plannedReferences?:boolean;before?:string;excludeRecordId?:string}){
  const [editing,setEditing]=useState<Set<string>>(()=>{const next=value.sets.find(set=>!set.completed&&set.state!=='cancelled'&&(set.state!=='planned'||plannedReferences));return new Set(next?.id?[next.id]:[]);});
  const focusAfterRender=useRef<(()=>void)|null>(null),addControl=useRef<HTMLButtonElement>(null);
  useLayoutEffect(()=>{const focus=focusAfterRender.current;focusAfterRender.current=null;focus?.();},[editing,value]);
@@ -47,6 +48,7 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd,p
     <label className={unconfirmed?"col-span-2":undefined}>Unit<select aria-label={`Load unit for set ${index+1}`} className="bloom-input w-full" required={unconfirmed} value={unconfirmed?"":shownUnit} onChange={e=>{if(e.target.value)onChange({version:1,sets:value.sets.map(old=>old.id===set.id?confirmDraftLoadUnit(old,e.target.value as WeightUnit):old)});}}>{unconfirmed&&<option value="">Unit unknown — choose kg or lb</option>}<option value="kg">kg</option><option value="lb">lb</option></select></label>
    </div>
    <p className="panel-note">{set.reps===null?'Reps not recorded. ':''}{unconfirmed?'Reported load — unit needs confirmation. ':set.loadKg===null?'Load not recorded. ':''}{set.state==='cancelled'?'Cancelled':set.state==='planned'?'Planned':set.completed?'Completion confirmed':'Completion not confirmed'}</p>
+   <ExerciseSetGuidance key={set.id} set={set} ordinal={value.sets.slice(0,index).filter(row=>set.catalogueRef?row.catalogueRef?.id===set.catalogueRef.id:row.exercise===set.exercise).length} before={before} excludeRecordId={excludeRecordId} onChange={patch=>change(set.id!,patch)}/>
    <details><summary>Set status & side (optional)</summary><label className="flex min-h-11 items-center gap-2"><input type="checkbox" aria-label={`Bodyweight for set ${number}`} checked={!!set.bodyweight} onChange={e=>change(set.id!,{bodyweight:e.target.checked?true:undefined})}/>Bodyweight movement (external load recorded separately)</label>
     <label className="block">Set state<select aria-label={`State for set ${index+1}`} className="bloom-input w-full" value={set.state||'described'} onChange={e=>change(set.id!,{state:e.target.value as 'described'|'planned'|'cancelled',...(e.target.value!=='described'?{completed:false}:{})})}><option value="described">Described / reported</option><option value="planned">Planned</option><option value="cancelled">Cancelled</option></select></label>
     <label className="block">Side<select aria-label={`Side for set ${index+1}`} className="bloom-input w-full" value={set.side||''} onChange={e=>change(set.id!,{side:e.target.value?e.target.value as 'left'|'right'|'both':null})}><option value="">Not recorded</option><option value="left">Left</option><option value="right">Right</option><option value="both">Both</option></select></label>

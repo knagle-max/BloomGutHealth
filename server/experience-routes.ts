@@ -1,3 +1,4 @@
+import {legacySetContextView,setContextHeader,setContextVersion} from '../shared/training-set-context';
 import {createHash} from 'node:crypto';
 import {buildMuscleHistory} from '../shared/muscle-history';
 import {registerDietaryReferenceContextRoutes} from './dietary-reference-context';
@@ -34,7 +35,7 @@ const clockSchema=z.object({date:dateKey,timezoneOffset:z.number().int().min(-84
 const kindSchema=experienceEntrySchema.options.map(o=>o.shape.kind.value);
 export const scanResultSchema=z.object({description:z.string(),name:z.string(),brand:z.string(),servingDescription:z.string(),servingGrams:z.number().nullable(),nutrients:z.array(z.object({key:z.enum(nutrientDefinitions.map(n=>n[0]) as [string,...string[]]),amount:z.number().nonnegative(),unit:z.string()}))});
 export function registerExperienceRoutes(app:Express, auth:RequestHandler, store:IStorage, precision:ReturnType<typeof registerPrecisionRoutes>) {
- app.use("/api/experience",auth,(_req,res,next)=>{res.setHeader("Cache-Control","no-store");next();});
+ app.use("/api/experience",auth,(req,res,next)=>{res.setHeader("Cache-Control","no-store");res.vary(setContextHeader);if(req.get(setContextHeader)!==setContextVersion){const send=res.json.bind(res);res.json=body=>send(legacySetContextView(body));}next();});
  const counters=new Map<string,{at:number;count:number}>();
  const limit:RequestHandler=(req,res,next)=>{const t=Date.now();for(const [id,v] of Array.from(counters))if(t-v.at>60000)counters.delete(id);const id=req.session.userId!,v=counters.get(id)||{at:t,count:0};if(v.count>=30)return void res.status(429).json({error:"Please wait a minute before another update."});v.count++;counters.set(id,v);next();};
  registerRecordedIntakeSourceRoutes(app,store);

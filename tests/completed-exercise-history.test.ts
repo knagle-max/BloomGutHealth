@@ -68,3 +68,11 @@ test('day-only routine log times are not precise workout times and bounded input
  const result=project([row]);assert.deepEqual(result.observations,[]);assert.equal(result.status,'HISTORY_AVAILABLE_NOT_COMPARABLE');assert.equal(result.excluded[0].reason,'reported-day-not-exact-time');
  assert.throws(()=>project(Array(5001).fill(record('many','activity',[set(2)]))),/HISTORY_LIMIT/);
 });
+
+test('explicit equipment semantics are source facts; conflicting shared contexts are not silently comparable',()=>{
+ const loadContext={version:1 as const,convention:'per-dumbbell' as const,equipmentKey:'Synthetic pair A'};
+ const row=record('context','activity',[set(1,{loadContext})]);const facts=project([row]);
+ assert.equal(facts.observations[0].loadConvention,'per-dumbbell');assert.equal(facts.observations[0].equipmentInstance,'Synthetic pair A');
+ assert.equal(facts.status,'HISTORY_AVAILABLE_NOT_COMPARABLE');assert.equal(facts.observations[0].setEffort,null);
+ assert.deepEqual(project([row,record('disputed','session',[set(1,{loadContext:{...loadContext,convention:'combined-dumbbell'}})])]).observations,[]);
+});
