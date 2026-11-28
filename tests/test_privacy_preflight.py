@@ -81,6 +81,20 @@ class PatternTests(unittest.TestCase):
         self.assertEqual(preflight.scan_text(b"plain source documentation", []), set())
 
     @unittest.skipUnless(importlib.util.find_spec("detect_secrets"), "Isolated privacy tooling required")
+    def test_entropy_candidates_require_the_offline_entropy_threshold(self):
+        from detect_secrets.plugins.high_entropy_strings import Base64HighEntropyString
+        detector = Base64HighEntropyString(limit=4.5)
+        low = b'const label = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"'
+        high = b'const example = "aB3dE5gH7jK9mN2pQ4sT6vW8yZ0cF1iL"'
+        self.assertTrue(list(detector.analyze_string(low.decode())))
+        with patch("socket.create_connection", side_effect=AssertionError("No network")):
+            detector.verify = lambda *args, **kwargs: self.fail("Must not verify credentials")
+            self.assertEqual(preflight.scan_text(low, [detector]), set())
+            result = preflight.scan_text(high, [detector])
+        self.assertEqual(result, {"potential-secret:Base64 High Entropy String"})
+        self.assertNotIn("aB3dE5", repr(result))
+
+    @unittest.skipUnless(importlib.util.find_spec("detect_secrets"), "Isolated privacy tooling required")
     def test_real_secret_detectors_are_offline_and_do_not_return_matches(self):
         from detect_secrets.settings import default_settings, get_plugins
         with default_settings(), patch("socket.create_connection", side_effect=AssertionError("No network")):

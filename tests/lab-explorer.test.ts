@@ -1,5 +1,6 @@
+import {parseLabPaste} from '../shared/lab-paste';
 import test from 'node:test';import assert from 'node:assert/strict';
-import{buildPrecisionReport,contextSchema,labSchema,sourceOnlyLabSchema}from'../shared/precision-nutrition';import{defaultPreferences}from'../shared/meal-intelligence';import{labExplorerEntries,normalizeLabSearch,labCategories}from'../shared/lab-explorer';
+import{buildPrecisionReport,contextSchema,labSchema,sourceOnlyLabSchema}from'../shared/precision-nutrition';import{defaultPreferences}from'../shared/meal-intelligence';import{labExplorerEntries,labExplorerLatestText,normalizeLabSearch,labCategories}from'../shared/lab-explorer';
 const lab=labSchema.parse({marker:'alt',value:0,unit:'U/L',measuredAt:'2026-10-01T12:00:00Z',laboratory:'Synthetic lab',method:'unknown',fasting:'unknown',referenceLow:null,referenceHigh:null});
 const report=(rows:any[])=>buildPrecisionReport(rows,contextSchema.parse({}),defaultPreferences,null);
 test('grouped explorer shares canonical records and aliases, counts unknown labels separately and never supplies clinical content',()=>{
@@ -20,4 +21,16 @@ test('canonical history projects only explicit same-marker source revision ances
  const points=report(rows).trends.find(t=>t.marker==='alt')!.points;assert.equal(points.length,1);assert.deepEqual(points[0].supersededIds,['revision','original']);assert.equal(points[0].sourceValue,0);
  assert.deepEqual(report([{id:'foreign-marker',kind:'lab',payload:{...lab,marker:'ast'}},{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('foreign-marker')}}]).trends.find(t=>t.marker==='alt')!.points[0].supersededIds,[]);
  assert.deepEqual(report([{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('absent')}}]).trends[0].points[0].supersededIds,[]);
+});
+
+ test('compact marker display retains original zero and units; tied dates and source-only missing units stay explicit',()=>{
+ const r=report([{id:'zero',kind:'lab',payload:lab}]);const entry=labExplorerEntries(r)[0];assert.equal(labExplorerLatestText(entry),'0 U/L · 2026-10-01');
+ const tied=report([{id:'zero',kind:'lab',payload:lab},{id:'other',kind:'lab',payload:{...lab,value:10}}]);assert.equal(labExplorerLatestText(labExplorerEntries(tied)[0]),'Multiple results · open to inspect dates');
+ const unknown=sourceOnlyLabSchema.parse({sourceOnly:true,reportedAnalyte:'Synthetic label',reportedValue:'trace',reportedUnit:null,measuredAt:lab.measuredAt,laboratory:'Synthetic',method:'unknown',fasting:'unknown',sourceInput:{text:'Synthetic label trace',number:'trace',suppliedUnit:null,capture:'manual-report'}});assert.equal(labExplorerLatestText(labExplorerEntries(report([{id:'trace',kind:'lab',payload:unknown}]))[0]),'trace Unit not reported · 2026-10-01');
+ });
+
+test('newer unresolved units remain visible rather than replacing them with an older accepted value',()=>{
+ const pending=parseLabPaste('LDL,120','2026-10-02T12:00:00Z').pending[0].payload;
+ const entry=labExplorerEntries(report([{id:'older',kind:'lab',payload:{...lab,marker:'ldl',value:3,unit:'mmol/L'}},{id:'pending',kind:'lab',payload:pending}])).find(row=>row.id==='ldl')!;
+ assert.equal(entry.pending.length,1);assert.ok(labExplorerLatestText(entry).includes('120'));assert.ok(labExplorerLatestText(entry).includes('2026-10-02'));assert.ok(!labExplorerLatestText(entry).includes('3 mmol/L'));
 });

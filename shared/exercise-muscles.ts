@@ -10,11 +10,45 @@ const lower='https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-app
 const axial='https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back';
 const abdomen='https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax';
 export const descriptiveMuscles={
+ abdominal_wall:{label:"Abdominal wall",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ adductor_longus:{label:"Adductor longus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ anconeus:{label:"Anconeus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ ankle_stabilizers:{label:"Ankle stabilizers",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ brachialis:{label:"Brachialis",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ brachioradialis:{label:"Brachioradialis",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ calf_musculature:{label:"Calf musculature",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ deltoid:{label:"Deltoid",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ external_oblique:{label:"External oblique",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ forearm_grip_muscles:{label:"Forearm grip muscles",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ gluteus_minimus:{label:"Gluteus minimus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ gracilis:{label:"Gracilis",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ hip_adductors:{label:"Hip adductors",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ hip_external_rotators:{label:"Hip external rotators",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ hip_flexors:{label:"Hip flexors",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ infraspinatus:{label:"Infraspinatus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ internal_oblique:{label:"Internal oblique",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ internal_obliques:{label:"Internal obliques",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ lower_trapezius:{label:"Lower trapezius",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ middle_trapezius:{label:"Middle trapezius",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ pectineus:{label:"Pectineus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ rotator_cuff:{label:"Rotator cuff",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ scapular_stabilizers:{label:"Scapular stabilizers",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ shoulder_stabilizers:{label:"Shoulder stabilizers",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ spinal_erectors:{label:"Spinal erectors",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ supraspinatus:{label:"Supraspinatus",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ tensor_fasciae_latae:{label:"Tensor fasciae latae",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ teres_major:{label:"Teres major",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ transversus_abdominis:{label:"Transversus abdominis",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ trunk_musculature:{label:"Trunk musculature",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ trunk_stabilizers:{label:"Trunk stabilizers",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+ upper_trapezius:{label:"Upper trapezius",reference:'Bloom supplied 553-exercise catalogue; references retained per association'},
+
  pectoralis_major:{label:'Pectoralis major',reference:upper},anterior_deltoid:{label:'Anterior deltoid',reference:upper},lateral_deltoid:{label:'Lateral deltoid',reference:upper},posterior_deltoid:{label:'Posterior deltoid',reference:upper},
  biceps_brachii:{label:'Biceps brachii',reference:upper},triceps_brachii:{label:'Triceps brachii',reference:upper},latissimus_dorsi:{label:'Latissimus dorsi',reference:upper},trapezius:{label:'Trapezius',reference:upper},rhomboids:{label:'Rhomboids',reference:upper},serratus_anterior:{label:'Serratus anterior',reference:upper},forearm_flexors:{label:'Forearm flexor group',reference:upper},
  erector_spinae:{label:'Erector spinae',reference:axial},rectus_abdominis:{label:'Rectus abdominis',reference:abdomen},obliques:{label:'Abdominal oblique group',reference:abdomen},
  gluteus_maximus:{label:'Gluteus maximus',reference:lower},gluteus_medius:{label:'Gluteus medius',reference:lower},quadriceps:{label:'Quadriceps group',reference:lower},hamstrings:{label:'Hamstring group',reference:lower},adductor_magnus:{label:'Adductor magnus',reference:lower},gastrocnemius:{label:'Gastrocnemius',reference:lower},soleus:{label:'Soleus',reference:lower},
 } as const;
+export const muscleDescriptorNames={"pectoralis_major": "Pectoralis major", "anterior_deltoid": "Anterior deltoid", "lateral_deltoid": "Middle deltoid", "posterior_deltoid": "Posterior deltoid", "biceps_brachii": "Biceps brachii", "triceps_brachii": "Triceps brachii", "latissimus_dorsi": "Latissimus dorsi", "trapezius": "Trapezius", "rhomboids": "Rhomboids", "serratus_anterior": "Serratus anterior", "forearm_flexors": "Forearm flexors", "erector_spinae": "Erector spinae", "rectus_abdominis": "Rectus abdominis", "obliques": "External obliques", "gluteus_maximus": "Gluteus maximus", "gluteus_medius": "Gluteus medius", "quadriceps": "Quadriceps femoris", "hamstrings": "Hamstrings", "adductor_magnus": "Adductor magnus", "gastrocnemius": "Gastrocnemius", "soleus": "Soleus", "abdominal_wall": "Abdominal wall", "adductor_longus": "Adductor longus", "anconeus": "Anconeus", "ankle_stabilizers": "Ankle stabilizers", "brachialis": "Brachialis", "brachioradialis": "Brachioradialis", "calf_musculature": "Calf musculature", "deltoid": "Deltoid", "external_oblique": "External oblique", "forearm_grip_muscles": "Forearm grip muscles", "gluteus_minimus": "Gluteus minimus", "gracilis": "Gracilis", "hip_adductors": "Hip adductors", "hip_external_rotators": "Hip external rotators", "hip_flexors": "Hip flexors", "infraspinatus": "Infraspinatus", "internal_oblique": "Internal oblique", "internal_obliques": "Internal obliques", "lower_trapezius": "Lower trapezius", "middle_trapezius": "Middle trapezius", "pectineus": "Pectineus", "rotator_cuff": "Rotator cuff", "scapular_stabilizers": "Scapular stabilizers", "shoulder_stabilizers": "Shoulder stabilizers", "spinal_erectors": "Spinal erectors", "supraspinatus": "Supraspinatus", "tensor_fasciae_latae": "Tensor fasciae latae", "teres_major": "Teres major", "transversus_abdominis": "Transversus abdominis", "trunk_musculature": "Trunk musculature", "trunk_stabilizers": "Trunk stabilizers", "upper_trapezius": "Upper trapezius"} as const;
 export type DescriptiveMuscleId=keyof typeof descriptiveMuscles;
 export type MuscleRole='primary'|'secondary'|'stabilizers';
 export type AssociationReview={catalogueExerciseId?:string;role:MuscleRole;muscle:DescriptiveMuscleId;state:'reviewed'|'rejected';exerciseRevision:string;reviewId:string;sourceReferences:readonly string[]};

@@ -55,24 +55,34 @@ function HistoricalTrends({
 }) {
   const { settings } = useExperience();
   const energyUnit = settings.displayUnits.energy;
+  const historyHeading = useRef<HTMLHeadingElement>(null);
+  const [retryingHistory, setRetryingHistory] = useState(false);
   const currentTargets = targets || {};
   const currentDate = new Date();
   const currentMonth = currentDate.getUTCMonth();
   const currentYear = currentDate.getUTCFullYear();
 
-  const { data: monthlyData, isError: monthlyError } = useQuery<any>({
+  const { data: monthlyData, isError: monthlyError, refetch: retryMonth, isFetching: monthlyFetching } = useQuery<any>({
     queryKey: [
       `/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`,
     ],
     enabled: !!userId,
   });
 
-  const { data: yearlyData, isError: yearlyError } = useQuery<any>({
+  const { data: yearlyData, isError: yearlyError, refetch: retryYear, isFetching: yearlyFetching } = useQuery<any>({
     queryKey: [`/api/nutrition/yearly/${userId}?year=${currentYear}`],
     enabled: !!userId,
   });
 
-  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError) return null;
+  async function retryHistory() {
+    if (retryingHistory) return;
+    setRetryingHistory(true);
+    const results = await Promise.allSettled([monthlyError ? retryMonth() : null, yearlyError ? retryYear() : null]);
+    setRetryingHistory(false);
+    if (results.every(result => result.status === "fulfilled" && !result.value?.isError)) historyHeading.current?.focus();
+  }
+
+  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError && !retryingHistory) return null;
 
   // Recorded partial days are not an adequacy assessment against today's targets.
   const historyAmount = (period: any, key: string, unit: string) => {
@@ -84,12 +94,12 @@ function HistoricalTrends({
 
   return (
     <div className="mb-6 space-y-4">
-      <h2 className="text-lg font-semibold flex items-center gap-2">
+      <h2 ref={historyHeading} tabIndex={-1} className="text-lg font-semibold flex items-center gap-2">
         <Calendar className="h-5 w-5" />
         Historical Trends
       </h2>
       <p className="text-sm text-muted-foreground">Known recorded contributions per UTC day with a meal. Unlogged meals and missing nutrients are not measured zeros; these averages do not establish total intake or adequacy.</p>
-      {(monthlyError||yearlyError)&&<p role="alert">Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p>}
+      {(monthlyError||yearlyError||retryingHistory)&&<div role="alert" className="space-y-2"><p>Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p><Button type="button" variant="outline" className="min-h-11" disabled={retryingHistory||monthlyFetching||yearlyFetching} onClick={()=>void retryHistory()}>{retryingHistory||monthlyFetching||yearlyFetching?"Retrying history…":"Retry nutrition history"}</Button></div>}
 
       {monthlyData?.dailyAverages && (
         <Card className="bloom-food-history-panel" data-testid="card-monthly-averages">

@@ -33,15 +33,18 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
       <Dialog.Content className="microbial-profile-sheet" data-editorial-profile="true" onKeyDownCapture={e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();onClose();}}} onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
         <div className="microbial-profile-handle" aria-hidden="true" />
         <Dialog.Close className="microbial-profile-close" aria-label="Close organism profile"><X aria-hidden="true" size={22}/></Dialog.Close>
+        <div className="microbial-profile-identity-header">
         {taxon&&<OrganismPortrait size="portrait" captionPlacement="footer" sourceName={taxon.bacterialName} source={artworkSource}/>}
-        <Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
-        <Dialog.Description>The organism name comes from your report.</Dialog.Description>
+        <div><Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
+        <Dialog.Description>The organism name comes from your report.</Dialog.Description></div>
+        </div>
         {taxon && <>
           <p className="microbial-listed-badge inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
-          {reportedTaxonAmount(taxon)!=="Not reported"&&<p>Source-reported amount: {reportedTaxonAmount(taxon)}</p>}
-          <div className="microbial-identity-chips" aria-label="Reported identity context"><span><Layers size={16} aria-hidden="true"/>Resolution: {taxon.taxonomyLevel||"Not reported"}</span><span>Group: {sourceGroups.length?sourceGroups.join(" / "):"Not reported"}</span><span>Report-listed</span></div>
+          <section className="microbial-profile-source-summary" aria-label="Finding in selected report"><p>Source-reported amount: {reportedTaxonAmount(taxon)}</p><p>Source-reported status: {taxon.reportedStatus||"Not reported"}</p><p className="panel-note">{sample?.testingCompany||"Source not reported"} · {reportDateText(sample)}</p></section>
+
           <OrganismPrimer taxon={taxon}/>
           <details className="microbial-observation"><summary className="microbial-profile-action"><FileText aria-hidden="true"/><span><strong>Your report</strong><small>See this organism’s original source record.</small></span><ChevronRight aria-hidden="true"/></summary>
+          <div className="microbial-identity-chips" aria-label="Reported identity context"><span><Layers size={16} aria-hidden="true"/>Resolution: {taxon.taxonomyLevel||"Not reported"}</span><span>Group: {sourceGroups.length?sourceGroups.join(" / "):"Not reported"}</span><span>Report-listed</span></div>
           <section aria-label="Reported observation">
             <h3>Your reported observation</h3>
             <dl>
@@ -80,8 +83,10 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
 {title==="Sources & limitations"&&<>
               <p>Relative abundance does not measure gene expression, butyrate, methane, toxins, infection or disease risk. Missing percentages stay unknown. There is no personal optimal percentage or treatment recommendation from this record.</p>
               <p>Assay compatibility and strain resolution have not been established. Cross-report differences are not interpreted as health changes.</p>
-            </>}
+              <p className="panel-note mt-4">Representative illustration, not an image of your exact strain or sample.</p>
+        </>}
           </details>)}</div></details>
+          <p className="panel-note mt-4">Representative illustration, not an image of your exact strain or sample.</p>
         </>}
       </Dialog.Content>
     </Dialog.Portal>

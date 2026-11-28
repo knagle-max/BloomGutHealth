@@ -32,17 +32,15 @@ export default function TodayFocus({now,mealCount=0,missingNutritionCount=0,load
  const chosen=proposed?.choice&&proposed.choice.choice!=="clear";
  const title=paused?"Suggestion paused":proposed?proposed.action.title:loading?"Make space for today":journalError?"Keep a place for your day":!mealCount?"Start with a meal":missingNutritionCount?"A clearer food picture":sessionAction?"Fuel your planned session":"One good next step";
  const reason=paused?"Paused for this visit. Bring the suggestion back when you are ready.":proposed?proposed.action.description:action.reason;
- return <CompanionHero media={!loading&&!journalError?<EditorialMedia slot="today" sizes="(max-width:767px) 100vw, 800px" priority />:undefined} title={title} eyebrow={proposed?"WHAT YOU CAN TRY":"A LITTLE CARE, EVERY DAY"} reason={reason} actions={<>
-  {proposed?(chosen?<Link className="hero-button" href={proposed.action.href}>{proposed.action.linkLabel}</Link>:<button type="button" className="hero-button" disabled={choices.busy||choices.waiting||!choices.sourceReady} onClick={()=>choices.choose(proposed.action.id,"try",true)}>Try this</button>):<Link className="hero-button" href="/log-meal">Add food</Link>}
-  {proposed&&<Link className="text-link" href="/log-meal">Add food</Link>}
-  {paused?<button type="button" className="text-link" onClick={()=>{pendingFocus.current=true;setSkipped(null);}}>Show suggestion</button>:<>
-   {!proposed&&action.href!=="/log-meal"&&<Link className="text-link" href={action.href}>{action.label}</Link>}
-   {!choices.current&&!loading&&!journalError&&<button type="button" className="text-link" onClick={()=>{pendingFocus.current=true;setSkipped(actionKey);}}>Skip for now</button>}
-  </>}
+ return <CompanionHero className="today-next-step" reasonBeforeActions media={!loading&&!journalError?<EditorialMedia slot="today" sizes="(max-width:767px) 100vw, 800px" priority />:undefined} title={title} eyebrow={proposed?"WHAT YOU CAN TRY":"A LITTLE CARE, EVERY DAY"} reason={reason} actions={<>
+  {paused?<button type="button" className="hero-button" onClick={()=>{pendingFocus.current=true;setSkipped(null);}}>Show suggestion</button>:proposed?(chosen?<Link className="hero-button" href={proposed.action.href}>{proposed.action.linkLabel}</Link>:<button type="button" className="hero-button" disabled={choices.busy||choices.waiting||!choices.sourceReady} onClick={()=>choices.choose(proposed.action.id,"try",true)}>Try this</button>):<Link className="hero-button" href={action.href}>{action.label}</Link>}
+  {(paused||proposed||action.href!=="/log-meal")&&<Link className="text-link" href="/log-meal">Add food</Link>}
+  {!paused&&!choices.current&&!loading&&!journalError&&<button type="button" className="text-link" onClick={()=>{pendingFocus.current=true;setSkipped(actionKey);}}>Skip for now</button>}
   <Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link>
  </>}>
   <WellnessChoiceDetails controller={choices} selected={selected} showAlternatives={!paused&&!loading&&!journalError&&!missingNutritionCount&&!sessionAction}/>
-  {report.error&&<p role="alert" className="panel-note">Your saved focus could not load. This general routine suggestion remains available; retry My biology to review your saved goals.</p>}
+  {choices.source.isError&&<p role="alert" className="panel-note">Suggestions could not load. You can still log independently. <button type="button" className="text-link" disabled={choices.source.isFetching} onClick={()=>{void choices.source.refetch();document.getElementById("today-action-title")?.focus();}}>Retry suggestions</button></p>}
+  {report.error&&<p role="alert" className="panel-note">Your saved focus could not load. Manual logging remains available. <button type="button" className="text-link" disabled={report.isFetching} onClick={()=>{void report.refetch();document.getElementById("today-action-title")?.focus();}}>Retry saved focus</button></p>}
   {sessions.isError&&<p className="panel-note">Training schedule unavailable. This action uses your journal and saved focus only.</p>}
   <details className="today-focus-evidence"><summary>Why this?</summary>
    {proposed?<>

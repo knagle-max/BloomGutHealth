@@ -1,0 +1,72 @@
+{
+  "assetId": "BVA-0051",
+  "approvedCandidate": "candidate-3",
+  "ownerApprovalDate": "2026-11-21",
+  "status": "ARTWORK_APPROVED_NOT_INTEGRATED",
+  "sourceIntrinsicDimensions": {
+    "width": 1774,
+    "height": 887
+  },
+  "sourceGeneratedFileSha256": "3d901b3509c4629b6523ebb6a93b572cc2a9ae66ae171f82e03b1eff3f71c49d",
+  "files": [
+    {
+      "path": "BVA-0051_original.png",
+      "bytes": 1582195,
+      "sha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00",
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "path": "BVA-0051_desktop_1600x800.webp",
+      "bytes": 75078,
+      "sha256": "d06ad52b30dce819b11c492ff054dfed7601ed54a199413b54ab09bed7fd9d6f",
+      "dimensions": {
+        "width": 1600,
+        "height": 800
+      }
+    },
+    {
+      "path": "BVA-0051_desktop_1200x600.webp",
+      "bytes": 50112,
+      "sha256": "d2c185ff2e15ea2ce0bbf51a5ce9a084953179e713060828f086605a2cea78a5",
+      "dimensions": {
+        "width": 1200,
+        "height": 600
+      }
+    },
+    {
+      "path": "BVA-0051_desktop_800x400.webp",
+      "bytes": 27444,
+      "sha256": "a29c38e794796e8453c87f0f8a6e97f1a70b7692d434541f57a9e2f60676c884",
+      "dimensions": {
+        "width": 800,
+        "height": 400
+      }
+    },
+    {
+      "path": "BVA-0051_mobile_right_768x1024.webp",
+      "bytes": 66566,
+      "sha256": "00f8e2194e0f19cedb9bc8fa08e1b4accc05efaed9cf8838b3348bc8ec86ce44",
+      "dimensions": {
+        "width": 768,
+        "height": 1024
+      }
+    },
+    {
+      "path": "BVA-0051_mobile_right_576x1024.webp",
+      "bytes": 50356,
+      "sha256": "975e2f33932b90d7b1cf329d1e1fa452e34da4a22476f05c0cb245fa219b6b69",
+      "dimensions": {
+        "width": 576,
+        "height": 1024
+      }
+    },
+    {
+      "path": "README.md",
+      "bytes": 1024,
+      "sha256": "ac9bd02a3e4d596e2ba97953554ce7f1bcfdca49a27f8f930a2a274879fbe283"
+    }
+  ]
+}

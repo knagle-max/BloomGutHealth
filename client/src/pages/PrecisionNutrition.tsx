@@ -443,7 +443,7 @@ export default function PrecisionNutrition() {
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
-          <h1>{bloomCopy.biology.h1}</h1>
+          <h1>{tab==="overview"?"My Biology":bloomCopy.biology.h1}</h1>
           <p className="science-intro">
             {tab==="overview"?bloomCopy.biology.takeaway:"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
           </p>
@@ -452,7 +452,7 @@ export default function PrecisionNutrition() {
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
       )}
-      {tab==="overview"&&<EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />}
+      {tab==="overview"&&<div className="biology-overview-scene"><EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" showCaption={false}/></div>}
       {tab!=="overview"&&tabNavigation}
       <div aria-live="polite">
         {status && (
@@ -467,8 +467,6 @@ export default function PrecisionNutrition() {
         )}
       </div>
       {tab==="progress"&&requestedObservation&&currentResult&&r&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="status" className="panel-note">The requested dated observation is not available in your current records.</p>}
-      {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
-      {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
       {(result.isError||result.fetchStatus==="paused")&&(
         <section className="bloom-panel">
@@ -478,6 +476,8 @@ export default function PrecisionNutrition() {
           {sampleId&&<Button onClick={()=>setSampleId("")}>Use latest report</Button>}
         </section>
       )}
+      {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
+      {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {r&&(
         <div hidden={!currentResult}>
           <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">

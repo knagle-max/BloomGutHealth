@@ -26,14 +26,14 @@ export default function BloodworkAtlas({report}:{report?:PrecisionReport}){
  return <section className="bloodwork-atlas" aria-labelledby="bloodwork-atlas-title">
   <header className="bloodwork-atlas-hero">
    <EditorialMedia slot="bloodwork-hero" sizes="(max-width:767px) 100vw, 1000px" priority showCaption={false}/>
-   <div className="bloodwork-atlas-intro"><p className="eyebrow">YOUR BIOLOGY, WITH CONTEXT</p><h1 id="bloodwork-atlas-title" tabIndex={-1}>Bloodwork</h1><p>Explore your results, with dates, units and source details.</p>
+   <div className="bloodwork-atlas-intro"><h1 id="bloodwork-atlas-title" tabIndex={-1}>Bloodwork</h1>
     {records!==null&&<p className="bloodwork-atlas-count">{records} recorded {records===1?'result':'results'}</p>}
     <div className="bloodwork-atlas-actions">{report&&<a className="hero-button" href="#add-labs-title" onClick={()=>requestAnimationFrame(()=>{const target=document.getElementById('add-labs-title');target?.setAttribute('tabindex','-1');target?.focus();})}>Add lab results</a>}<Link className="text-link" href="/biology/reports">Manage reports</Link></div>
    </div>
   </header>
+  <LabExplorer key={`explorer:${user?.id||"signed-out"}`} owner={user?.id||''} report={report} marker={marker} group={group} selection={selection} onSelect={select} onSelectionChange={changeSelection} illustrated/>
   {report&&<LabPanelReview key={`panel:${user?.id||"signed-out"}`} report={report} onSelect={select}/>}
   {report&&<LabRememberedContextHistory sourceKey={JSON.stringify(report.labHistory)}/>}
-  <LabExplorer key={`explorer:${user?.id||"signed-out"}`} owner={user?.id||''} report={report} marker={marker} group={group} selection={selection} onSelect={select} onSelectionChange={changeSelection} illustrated/>
   {report&&!entries.length&&<p className="panel-note">Add laboratory results to browse your recorded markers. Missing measurements are not treated as zero.</p>}
   {report&&entries.length>0&&<p className="panel-note">Systems help you browse; they are not diagnoses. Some markers appear in more than one system. Original reports and every recorded result remain below.</p>}
   <Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>

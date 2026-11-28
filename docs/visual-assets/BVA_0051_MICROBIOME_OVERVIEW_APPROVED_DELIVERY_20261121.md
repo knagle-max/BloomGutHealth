@@ -13,3 +13,8 @@
 **Integration:** `NOT_INTEGRATED / NOT_VERIFIED`. Do not overwrite existing organism art or its IDs; integration through the reserved `microbiome-overview-hero` slot only when eligible under Codex's current queue. Review real app crops at 320/390/768/1024/1440, Everyday/Athlete light/dark theme contrast, image-off fallback, keyboard and screen-reader access. Mobile image must sit alongside a separate accessible text panel (not blind text overlay).
 
 **Owner approval scope:** The specific candidate 3 artwork is visually approved 2026-11-21; this is not scientific, rights, production integration or hosted-release approval. No runtime changes or public deployment performed.
+
+
+## Local preview source receipt — 2026-11-27
+
+The exact registered ZIP is now supplied and verified locally: CRC, all7manifest entries and6image dimensions PASS. Preserved source directory `design/bloom/microbiome/bva-0051-20261121/`; all5WebPs copied byte-identically under `client/public/images/editorial/microbiome/bva-0051/`. Existing slot now uses supplied desktop/mobile variants, mobile copy alongside art, retained image-off fallback.6asset tests/registry/types/build and40synthetic five-width/four-theme normal/image-off rendering cases PASS; see dated consolidated UI verification report. Prior NOT_INTEGRATED describes historical intake; current isolated preview is locally wired and engineering tested. No commit/push/deploy, independent Brand/scientific/rights/physicalAT/hosted acceptance or new artwork claim.

@@ -1,3 +1,4 @@
+import {catalogueMuscleAssociations,exactCatalogueIdentity,fullAssociationVersion} from './exercise-catalogue-associations';
 import {catalogueExercise} from './exercise-catalogue';
 import type {ExperienceRecord,ActualSets} from './experience';
 import {descriptiveMuscles,exerciseMuscleCatalogVersion,exerciseMuscleAcceptance,matchCuratedExercise,exerciseAssociations,type DescriptiveMuscleId} from './exercise-muscles';
@@ -18,12 +19,14 @@ export function buildMuscleHistory(records:readonly ExperienceRecord[],options:M
   const date=day??muscleCalendarDate(at,timeZone);if(Date.parse(at)>now||!eligibleDate(date)){excluded.push({recordId:record.id,reason:Date.parse(at)>now?'future':'outside-window',sets:items.length});return;}
   for(const[index,set]of Array.from(items.entries())){
    if(!set.completed||set.state==='planned'||set.state==='cancelled'){excluded.push({recordId:record.id,reason:'completion-not-confirmed',sets:1});continue;}
-   const canonical=set.catalogueRef?.confirmed?catalogueExercise(set.catalogueRef.id):null;
-   const match=matchCuratedExercise(canonical?.name??set.exercise);if(!match){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
+   const canonical=set.catalogueRef?.confirmed?catalogueExercise(set.catalogueRef.id):exactCatalogueIdentity(set.exercise);
+   if(set.catalogueRef?.confirmed&&!canonical){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
+   const full=canonical?catalogueMuscleAssociations(canonical.id):null;
+   const match=full?{id:full.identity.id}:matchCuratedExercise(set.exercise);if(!match){unmapped.push({recordId:record.id,setId:set.id??null,exercise:set.exercise});continue;}
    if(candidates.length>=20000)throw Error('MUSCLE_HISTORY_WINDOW_TOO_LARGE');
-   const resolved=exerciseAssociations(match,canonical?.id??null);
+   const resolved=full??exerciseAssociations(match as NonNullable<ReturnType<typeof matchCuratedExercise>>,canonical?.id??null);
    const volume=set.reps!==null&&set.loadKg!==null?set.reps*set.loadKg:null;
-   candidates.push({key:set.id?'set:'+set.id.toLowerCase():`legacy:${record.id}:${componentId??'parent'}:${index}`,sourceRecordId:record.id,sourceRecordKind:record.kind as 'activity'|'session',sourceUpdatedAt:record.updatedAt,linkedRecordIds:[record.id],setId:set.id??null,componentId,reportedExercise:set.exercise,catalogueExerciseId:set.catalogueRef?.id??null,catalogueReferenceVersion:set.catalogueRef?.version??null,exerciseId:match.id,catalogVersion:exerciseMuscleCatalogVersion,matchBasis:'exact-recorded-name',at,date,timestampBasis:day?'reported-day':'reported-start',side:set.side??'unspecified',reps:set.reps,loadKg:set.loadKg,externalVolumeKgReps:volume,associationStates:resolved.associations,primary:resolved.primary,secondary:resolved.secondary,stabilizers:resolved.stabilizers});
+   candidates.push({key:set.id?'set:'+set.id.toLowerCase():`legacy:${record.id}:${componentId??'parent'}:${index}`,sourceRecordId:record.id,sourceRecordKind:record.kind as 'activity'|'session',sourceUpdatedAt:record.updatedAt,linkedRecordIds:[record.id],setId:set.id??null,componentId,reportedExercise:set.exercise,catalogueExerciseId:set.catalogueRef?.id??null,catalogueReferenceVersion:set.catalogueRef?.version??null,exerciseId:match.id,catalogVersion:full?fullAssociationVersion:exerciseMuscleCatalogVersion,matchBasis:'exact-recorded-name',at,date,timestampBasis:day?'reported-day':'reported-start',side:set.side??'unspecified',reps:set.reps,loadKg:set.loadKg,externalVolumeKgReps:volume,associationStates:resolved.associations,primary:resolved.primary,secondary:resolved.secondary,stabilizers:resolved.stabilizers});
   }
  }
  for(const record of Array.from(byId.values())){
@@ -55,6 +58,6 @@ export function buildMuscleHistory(records:readonly ExperienceRecord[],options:M
  });
  const symptoms=Array.from(byId.values()).flatMap(row=>row.kind==='localized-symptom'&&Date.parse(row.payload.observedAt)<=now&&eligibleDate(muscleCalendarDate(row.payload.observedAt,timeZone))?[{id:row.id,updatedAt:row.updatedAt,payload:row.payload as LocalizedSymptom}]:[]).sort((a,b)=>a.payload.observedAt.localeCompare(b.payload.observedAt));
  const comparison=Array.from({length:days},(_,index)=>{const date=addDays(from,index);return{date,completedSetRecordKeys:contributions.filter(c=>c.date===date).map(c=>c.key),symptomRecordIds:symptoms.filter(s=>muscleCalendarDate(s.payload.observedAt,timeZone)===date).map(s=>s.id)};});
- return{version:1 as const,catalogVersion:exerciseMuscleCatalogVersion,acceptance:exerciseMuscleAcceptance,asOf,timeZone,from,to,days,muscles,contributions,symptoms,comparison,unmapped,excluded,conflictingSharedSetIds:Array.from(conflicts),potentialDuplication,coverageCaveat:'Recorded observations only. Missing logs are not no activity or no symptoms. Muscle associations are curated exercise roles, not measured activation. Do not sum muscle counts/volumes as unique whole-workout totals. Similar activity/session logs may be duplicates; no causal or recovery conclusion is made.'};
+ return{version:1 as const,catalogVersion:fullAssociationVersion,acceptance:exerciseMuscleAcceptance,asOf,timeZone,from,to,days,muscles,contributions,symptoms,comparison,unmapped,excluded,conflictingSharedSetIds:Array.from(conflicts),potentialDuplication,coverageCaveat:'Recorded observations only. Missing logs are not no activity or no symptoms. Muscle associations are curated exercise roles, not measured activation. Do not sum muscle counts/volumes as unique whole-workout totals. Similar activity/session logs may be duplicates; no causal or recovery conclusion is made.'};
 }
 export type MuscleHistory=ReturnType<typeof buildMuscleHistory>;

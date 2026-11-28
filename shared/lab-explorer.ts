@@ -1,3 +1,4 @@
+import {latestRecordedLabContext,labDateText,formatRecordedLabNumber} from './lab-history';
 import {labSourceAnalyteFamily,type PsaSourceFamilyIdentity} from './lab-source-identity';
 import {additionalLabMarkers,type AdditionalLabMarkerId} from './additional-lab-markers';
 import type {PrecisionReport,SourceOnlyLab,MarkerId} from './precision-nutrition';
@@ -32,4 +33,11 @@ export function labExplorerEntries(report:Pick<PrecisionReport,'trends'|'pending
  const labels=new Map<string,(SourceOnlyLab&{id:string})[]>();for(const row of report.sourceOnlyLabs||[]){const group=labels.get(row.reportedAnalyte)||[];group.push(row);labels.set(row.reportedAnalyte,group);}
  for(const [name,sourceOnly]of Array.from(labels.entries())){const id='source:'+sourceOnly.map(r=>r.id).sort()[0],familyIdentity=labSourceAnalyteFamily(name)||undefined;entries.push({id,name:familyIdentity?.name||name,categories:['other'],pending:[],sourceOnly,recordCount:new Set(sourceOnly.map(r=>r.id)).size,searchKey:normalizeLabSearch([name,familyIdentity?.name||'',...sourceOnly.map(r=>r.sourceInput.text)].join(' ')),...(familyIdentity?{familyIdentity}:{})});}
  return entries;
+}
+
+/** Compact source display only; unresolved units and tied dates never select an older numeric result. */
+export function labExplorerLatestText(entry:LabExplorerEntry){
+ const points=[...(entry.trend?.points.map(point=>({date:point.date,sourceReport:point.sourceReport,dateCorrection:point.dateCorrection,text:`${formatRecordedLabNumber(point.sourceValue)} ${point.sourceUnit}`}))||[]),...entry.pending.map(row=>({date:row.measuredAt,sourceReport:row.sourceReport,dateCorrection:row.dateCorrection,text:row.unitReview?.originalText||row.sourceInput?.text||'Unit review needed'})),...entry.sourceOnly.map(row=>({date:row.measuredAt,sourceReport:row.sourceReport,dateCorrection:row.dateCorrection,text:`${row.reportedValue} ${row.reportedUnit||'Unit not reported'}`}))];
+ const latest=latestRecordedLabContext(points);
+ return latest.point?`${latest.point.text} · ${labDateText(latest.point.date,latest.point.sourceReport,latest.point.dateCorrection)}`:latest.ambiguous?'Multiple results · open to inspect dates':'Recorded value unavailable';
 }

@@ -9,7 +9,7 @@ export interface EditorialMediaAsset {
   reserved?: { width: number; height: number; conceptual: boolean };
 }
 export const editorialMedia = {
-  "microbiome-overview-hero": {mode:"conceptual",placement:"microbiome-editorial-hero",reserved:{width:1600,height:800,conceptual:true}},
+  "microbiome-overview-hero": {mode:"conceptual",placement:"microbiome-editorial-hero",reserved:{width:1600,height:800,conceptual:true},raster:{src:"/images/editorial/microbiome/bva-0051/BVA-0051_desktop_800x400.webp",src2x:"/images/editorial/microbiome/bva-0051/BVA-0051_desktop_1600x800.webp",width:800,height:400,width2x:1600,height2x:800,conceptual:true,mobile:{src:"/images/editorial/microbiome/bva-0051/BVA-0051_mobile_right_576x1024.webp",width:576,height:1024}}},
   "lab-detail-ldl-hero": {mode:"conceptual",placement:"marker-editorial-hero",reserved:{width:1600,height:800,conceptual:true}},
   "lab-detail-ldl-particle": {mode:"conceptual",placement:"marker-education-what",reserved:{width:160,height:160,conceptual:true}},
   "lab-detail-ldl-artery": {mode:"conceptual",placement:"marker-education-why",reserved:{width:160,height:160,conceptual:true}},

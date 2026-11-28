@@ -135,3 +135,7 @@
 @media (prefers-reduced-motion: reduce) {
   .bloom-food-journal .bloom-food-meal-row { transition: none; }
 }
+
+/* Journal summaries share the grid with later source panels; keep them in flow
+   so scrolling cannot paint the summary over supplement controls. */
+.bloom-food-history .journal-workspace > .bloom-food-summary {position:static;}

@@ -1,3 +1,4 @@
+import {exerciseCatalogue,exerciseCatalogueVersion} from '../shared/exercise-catalogue';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID,randomBytes} from 'node:crypto';
@@ -53,6 +54,13 @@ test('localized HTTP records require sign-in, reject owner injection and stale e
   const foreign=await request('/muscle-history?days=7&timeZone=UTC','GET',undefined,'b',200);assert.equal(foreign.contributions.length,0);assert.notEqual(history.sourceRevision,foreign.sourceRevision);
   await request('/records/'+training.id,'DELETE',undefined,'a',204);
   const removed=await request('/muscle-history?days=7&timeZone=UTC','GET',undefined,'a',200);assert.equal(removed.contributions.length,0);assert.notEqual(history.sourceRevision,removed.sourceRevision);
+  const fullChoice=exerciseCatalogue.find(e=>e.name==='Alternating dumbbell bench press')!;
+  const fullPayload={...activity.payload,title:fullChoice.name,actualSets:{version:1 as const,sets:[{...activity.payload.actualSets!.sets[0],id:randomUUID(),exercise:fullChoice.name,side:'both' as const,catalogueRef:{id:fullChoice.id,version:exerciseCatalogueVersion,match:'selected' as const,confirmed:true}}]}};
+  const fullTraining=await store.createActivity('a',fullPayload,randomUUID());
+  const expanded=await request('/muscle-history?days=7&timeZone=UTC','GET',undefined,'a',200);
+  assert.equal(expanded.contributions.length,1);assert.equal(expanded.contributions[0].exerciseId,fullChoice.id);assert.equal(expanded.contributions[0].associationStates.length,5);assert.ok(expanded.contributions[0].associationStates.every((a:any)=>a.state==='preliminary'));assert.equal(expanded.muscles.find((m:any)=>m.id==='pectoralis_major').directSetRecords,1);
+  assert.equal((await request('/muscle-history?days=7&timeZone=UTC','GET',undefined,'b',200)).contributions.length,0);
+  await request('/records/'+fullTraining.id,'DELETE',undefined,'a',204);assert.equal((await request('/muscle-history?days=7&timeZone=UTC','GET',undefined,'a',200)).contributions.length,0);
   const context=await request('/localized-symptom-context','GET',undefined,'a',200);await request('/localized-symptom-context','GET',undefined,'b',200);const entry={kind:'localized-symptom',payload:{...observation(),lifecycleId:context.lifecycleId}};await request('/records','POST',entry,'b',409);await request('/records','POST',entry,'',401);await request('/records','POST',{...entry,userId:'b'},'a',400);const row=await request('/records','POST',entry,'a',201);assert.equal((await request('/records','POST',entry,'a',201)).id,row.id);assert.equal((await request('/records?kind=localized-symptom','GET',undefined,'a',200)).length,1);assert.deepEqual(await request('/records?kind=localized-symptom','GET',undefined,'b',200),[]);
   await request('/records/'+row.id,'PUT',entry,'b',404);await request('/records/'+row.id,'DELETE',undefined,'b',404);
   const corrected={kind:'localized-symptom',payload:{...entry.payload,revision:randomUUID(),previousRevision:entry.payload.revision,severity:0,durationMinutes:0}};await request('/records/'+row.id,'PUT',corrected,'a',200);await request('/records/'+row.id,'PUT',{kind:'localized-symptom',payload:{...entry.payload,revision:randomUUID(),previousRevision:entry.payload.revision,severity:7}},'a',409);const saved=await request('/records?kind=localized-symptom','GET',undefined,'a',200);assert.equal(saved[0].payload.severity,0);assert.equal(saved[0].payload.durationMinutes,0);await request('/records/'+row.id,'DELETE',undefined,'a',204);await request('/records','POST',entry,'a',409);assert.deepEqual(await request('/records?kind=localized-symptom','GET',undefined,'a',200),[]);
