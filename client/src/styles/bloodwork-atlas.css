@@ -59,3 +59,11 @@
 .lab-panel-review-observation {padding:.85rem 0;border-top:1px solid var(--bv-line,currentColor);}
 .lab-panel-review-observation p {margin:.35rem 0;}
 .lab-panel-review-tradeoff {padding:.75rem;border-inline-start:3px solid currentColor;}
+
+/* BIO-UI01: browsing leads; decorative header never displaces marker entry. */
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero {padding:1.25rem;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-intro h1 {font-size:clamp(2rem,4vw,3rem);margin:0 0 .5rem;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-actions {margin-top:.75rem;gap:.75rem;}
+
+.lab-explorer-marker-toggle > span:first-child {min-width:0;}
+.lab-explorer-latest {display:block;font-size:.9375rem;font-variant-numeric:tabular-nums;line-height:1.5;margin-top:.25rem;}

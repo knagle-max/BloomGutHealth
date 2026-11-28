@@ -42,3 +42,15 @@ test("three cited research families preserve exact-name resolution and family ve
  const bile=functionalResearchFor({bacterialName:"Odoribacteraceae"})!;assert.match(bile.introduction,/does not identify those isolates/);assert.match(bile.measurementLimit,/does not identify the studied isolates/);assert.match(bile.dietLimit,/More total secondary bile acids is not a goal/);
  for(const bacterialName of["Veillonella","V. atypica","Veillonella atypica strain X","Odoribacter","Odoribacteraceae bacterium","Odoribacteraceae-like"]){assert.equal(functionalResearchFor({bacterialName}),null);}
 });
+
+test("contradictory explicit source ranks abstain without removing source observations",()=>{
+ const taxa=[
+  {id:'rank-a',bacterialName:'Ruminococcus bromii',taxonomyLevel:'family',abundance:0},
+  {id:'rank-b',bacterialName:'Veillonella atypica',taxonomyLevel:'genus',reportedStatus:'Not detected'},
+  {id:'rank-c',bacterialName:'Odoribacteraceae',taxonomyLevel:'species',reportedAbundance:'Detected'},
+ ];
+ const before=JSON.stringify(taxa);
+ for(const taxon of taxa)assert.equal(functionalResearchFor(taxon),null);
+ assert.deepEqual(functionalResearchGroups(taxa),[]);
+ assert.equal(JSON.stringify(taxa),before);
+});

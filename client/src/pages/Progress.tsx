@@ -47,9 +47,8 @@ export default function Progress() {
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
-        <EditorialMedia slot="progress-scene" sizes="(max-width:767px) 100vw, 1000px" />
         <p className="eyebrow">{bloomCopy.progress.eyebrow}</p>
-        <h1>{bloomCopy.progress.h1}</h1>
+        <h1>Progress</h1>
         <p>
           {bloomCopy.progress.takeaway}
         </p>
@@ -61,8 +60,9 @@ export default function Progress() {
           <TabsTrigger value="biology">Biology</TabsTrigger>
         </TabsList>
         <TabsContent value="nutrition" forceMount className="space-y-5 data-[state=inactive]:hidden">
-          <RecordedIntakeSources key={JSON.stringify([params.get('nutrient'),params.get('sourceDate'),params.get('sourceZone')])} summaryLabel="Micronutrients" showCorrectionLinks active={activeView==='nutrition'} micronutrientsOnly defaultOpen={!!params.get('nutrient')} initialNutrientKey={params.get('nutrient')??undefined} initialDate={params.get('sourceDate')??undefined} initialTimeZone={params.get('sourceZone')??undefined}/>
+
           <FoodProgress />
+          <RecordedIntakeSources key={JSON.stringify([params.get('nutrient'),params.get('sourceDate'),params.get('sourceZone')])} summaryLabel="Micronutrients" showCorrectionLinks active={activeView==='nutrition'} micronutrientsOnly defaultOpen={!!params.get('nutrient')} initialNutrientKey={params.get('nutrient')??undefined} initialDate={params.get('sourceDate')??undefined} initialTimeZone={params.get('sourceZone')??undefined}/>
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
@@ -151,6 +151,7 @@ export default function Progress() {
       <DeviceObservations />
         </TabsContent>
       </Tabs>
+        <div className="progress-context-scene"><EditorialMedia slot="progress-scene" sizes="(max-width:767px) 100vw, 1000px" showCaption={false}/></div>
       <details className="bloom-panel workspace-disclosure">
         <summary>Weekly responses, goals & experiments</summary>
         <WeeklyReviewPanel mode={mode} />

@@ -41,7 +41,14 @@ def scan_text(data, plugins):
     # No verify/analyze_line calls: provider credential verification could network.
     for plugin in plugins:
         for line in lines:
-            if next(iter(plugin.analyze_string(line)), None) is not None:
+            # HighEntropyStringsPlugin.analyze_string yields raw regex candidates;
+            # its entropy filter normally runs in analyze_line (which we avoid).
+            entropy = getattr(plugin, "calculate_shannon_entropy", None)
+            candidates = plugin.analyze_string(line)
+            if entropy is not None:
+                candidates = (candidate for candidate in candidates
+                              if entropy(candidate) > plugin.entropy_limit)
+            if next(iter(candidates), None) is not None:
                 findings.add("potential-secret:" + plugin.secret_type)
                 break
     return findings
@@ -147,6 +154,7 @@ def preflight(root, plugins):
     return {"status": "INCOMPLETE" if incomplete else "REVIEW_REQUIRED" if findings else "NO_PATTERN_FINDINGS",
             "scanner": "detect-secrets local pattern detectors",
             "scannerVersion": importlib.metadata.version("detect-secrets"),
+            "scannerPolicyVersion": 2,
             "networkVerification": False, "objectsScanned": dict(counts),
             "categoryCounts": dict(categories), "findings": findings,
             "limitations": ["Pattern findings are candidates, not confirmed credential or PHI incidents.",

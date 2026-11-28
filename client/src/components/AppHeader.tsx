@@ -22,7 +22,7 @@ export default function AppHeader({
   const [location] = useLocation();
   const {mode}=useExperience();
   const [menuOpen, setMenuOpen] = useState(false);
-  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
+  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location === "/pain-preview" ? "Pain & discomfort" : location === "/body-map-preview" ? "Explore body regions" : location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
   return (
     <header className="bloom-header">
       <div className="bloom-header-inner">

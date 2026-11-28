@@ -447,3 +447,20 @@ html:not(.dark)[data-experience="athlete"] .app-shell[data-bloom-visual="premium
 @media(max-width:639px) {
  .app-shell[data-bloom-visual="premium"] .lab-explorer-category:not(.bloodwork-system-group) > summary { grid-template-columns:40px minmax(0,1fr) 18px; }
 }
+
+/* BP-UI08 / TODAY-UI06 / BIO-UI10: preserve the approved outline above utility-layer outline-none.
+   Keep the shared Button and all unrelated workspaces unchanged. */
+.app-shell[data-bloom-visual="premium"] :is(.progress-workspace, .biology-home, .athlete-workspace, .lab-explorer) :is(button, a, input, select, textarea, summary):focus-visible {
+  outline:3px solid var(--bv-focus) !important;
+  outline-offset:3px !important;
+}
+@media (forced-colors: active) {
+  .app-shell[data-bloom-visual="premium"] :is(.progress-workspace, .biology-home, .athlete-workspace, .lab-explorer) :is(button, a, input, select, textarea, summary):focus-visible {
+    outline-color:Highlight !important;
+  }
+  .app-shell[data-bloom-visual="premium"] .progress-workspace :is(button[aria-pressed="true"], [role="tab"][data-state="active"]) {
+    font-weight:700;
+    text-decoration:underline;
+    text-underline-offset:4px;
+  }
+}

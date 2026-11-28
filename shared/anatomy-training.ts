@@ -1,9 +1,9 @@
 import crosswalk from '../design/bloom/anatomy/canonical-baseline44-20261126/canonical_to_svg_crosswalk.json';
-import {type DescriptiveMuscleId} from './exercise-muscles';
+import {muscleDescriptorNames,type DescriptiveMuscleId} from './exercise-muscles';
 import type {MuscleHistory} from './muscle-history';
 /** Muscle identities remain distinct from coarse surface identities. Aliases
  * below are explicit anatomical terms, never guessed SVG-name matches. */
-const descriptors:Record<DescriptiveMuscleId,string>={pectoralis_major:'Pectoralis major',anterior_deltoid:'Anterior deltoid',lateral_deltoid:'Middle deltoid',posterior_deltoid:'Posterior deltoid',biceps_brachii:'Biceps brachii',triceps_brachii:'Triceps brachii',latissimus_dorsi:'Latissimus dorsi',trapezius:'Trapezius',rhomboids:'Rhomboids',serratus_anterior:'Serratus anterior',forearm_flexors:'Forearm flexors',erector_spinae:'Erector spinae',rectus_abdominis:'Rectus abdominis',obliques:'External obliques',gluteus_maximus:'Gluteus maximus',gluteus_medius:'Gluteus medius',quadriceps:'Quadriceps femoris',hamstrings:'Hamstrings',adductor_magnus:'Adductor magnus',gastrocnemius:'Gastrocnemius',soleus:'Soleus'};
+const descriptors=muscleDescriptorNames;
 export type SurfaceTraining={anatomyId:string;pathId:string;view:'front'|'back';side:string;primaryKeys:string[];secondaryKeys:string[]};
 export function projectTrainingSurfaces(contributions:MuscleHistory['contributions']){
  const surfaces=new Map<string,SurfaceTraining>(),unsidedSetKeys:string[]=[],unmappedMuscles=new Set<DescriptiveMuscleId>();

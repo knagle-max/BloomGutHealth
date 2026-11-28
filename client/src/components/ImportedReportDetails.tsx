@@ -50,6 +50,7 @@ export default function ImportedReportDetails({
       <div>
         <p className="eyebrow">UNDERSTAND YOUR REPORT</p>
         <h2>What your provider reported</h2>
+        <p className="panel-note">Source: {report.sourceLabel||"Provider not reported"}</p>
         <p>
           {report.dataOrigin ||
             "User-supplied report; not independently verified."}
@@ -90,8 +91,6 @@ export default function ImportedReportDetails({
           placeholder="For example: butyrate or Akkermansia"
         />
       </label>
-      {!!foodSource.foods.length&&<ProviderFoodSuggestions foods={foodSource.foods} query={query} provider={report.sourceLabel}/>}
-      {!!foodSource.foods.length&&<MicrobiomeFoodPreferences/>}
       {foodSource.status==="unreadable"&&<p className="panel-note">Provider food rows could not be read in this report format. Your original source data is retained.</p>}
       {report.scores.length > 0 && (
         <section>
@@ -109,9 +108,9 @@ export default function ImportedReportDetails({
                 const help = explainScore(score.name);
                 return (
                   <article className="report-card" key={i}>
-                    <div className="report-card-top">
+                    <div className={score.score===null?"report-card-top report-card-top--qualitative":"report-card-top"}>
                       <h4>{score.name}</h4>
-                      <span className="report-value">
+                      <span className={score.score===null?"report-value report-value--qualitative":"report-value"}>
                         {score.score ?? score.reportedValue ?? score.reportedCategory ?? "Unavailable"}
                         <small>{score.score===null&&score.reportedValue===null&&score.reportedCategory?"provider category":"reported value"}</small>
                       </span>
@@ -141,6 +140,8 @@ export default function ImportedReportDetails({
           </div>
         </section>
       )}
+      {!!foodSource.foods.length&&<ProviderFoodSuggestions foods={foodSource.foods} query={query} provider={report.sourceLabel}/>}
+      {!!foodSource.foods.length&&<details className="workspace-disclosure"><summary>Meal-planning preferences</summary><MicrobiomeFoodPreferences/></details>}
       {report.organisms.length > 0 && (
         <section>
           <div className="report-section-heading">

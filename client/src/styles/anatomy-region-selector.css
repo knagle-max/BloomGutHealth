@@ -35,3 +35,6 @@
 
 .anatomy-muscle-paint{pointer-events:none;vector-effect:non-scaling-stroke}
 .anatomy-muscle-hit{pointer-events:fill;cursor:pointer;touch-action:manipulation}
+
+/* Pain uses neutral geography with location circles, never filled muscle areas. */
+.anatomy-pain-locations .anatomy-selector-path[data-selected=true]{fill:transparent;stroke:none}

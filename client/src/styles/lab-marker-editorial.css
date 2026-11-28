@@ -43,11 +43,6 @@
  .lab-editorial-summary>h4 {grid-column:1/-1;}
  .lab-editorial-composition .lab-marker-primer {grid-template-columns:repeat(2,minmax(0,1fr));}
 }
-@container lab-editorial-card (min-width:52rem) {
- .lab-editorial-composition {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:2rem;align-items:start;}
- .lab-editorial-composition .lab-marker-education {margin-top:1.25rem;border-left:1px solid var(--lab-editorial-border);padding-left:1.5rem;}
- .lab-editorial-composition .lab-marker-primer {grid-template-columns:minmax(0,1fr);border-top:0;margin-top:0;padding-top:0;}
-}
 
 @media(forced-colors:active){.app-shell[data-bloom-visual="premium"] .lab-marker-editorial .lab-editorial-result {background:Canvas;color:CanvasText;border:1px solid CanvasText;box-shadow:none;}}
 @media(prefers-reduced-transparency:reduce){.app-shell[data-bloom-visual="premium"] .lab-marker-editorial .lab-editorial-result {background:hsl(var(--card));box-shadow:none;}}

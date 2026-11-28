@@ -7,7 +7,7 @@ import type {dailyMealSummary} from '@/lib/dashboard-data';
 export default function TodayFoodSummary({summary,loading,error,energyUnit}:{summary:ReturnType<typeof dailyMealSummary>;loading:boolean;error:boolean;energyUnit:'kcal'|'kJ'}){
   const available=!loading&&!error&&summary.meals.length>0;
   return <section className="flagship-nourishment" aria-labelledby="today-food-title">
-    <div className="flagship-section-heading"><h2 id="today-food-title">Today so far</h2><Link className="text-link" href="/nutrition">Food journal</Link></div>
+    <div className="flagship-section-heading"><h2 id="today-food-title">Recorded food</h2><Link className="text-link" href="/nutrition">Food journal</Link></div>
     {loading?<p role="status">Checking recorded food…</p>:error?<p role="status">Recorded totals are unavailable. You can still add food manually.</p>:!available?<><p>Your recent foods and recorded totals will appear after you log a meal.</p><EditorialMedia slot="journal-empty" sizes="120px" /></>:<>
       <p className="flagship-recorded-energy"><strong>{summary.calories===null?'—':energyAmount(summary.calories,energyUnit)}</strong> {energyUnit} <span>recorded{summary.coverage.calories.partial?' · Partial data':''}</span></p>
       <dl className="flagship-macros">{([['protein','Protein'],['carbs','Carbs'],['fat','Fat']] as const).map(([key,label])=><div key={key}><dt>{label}</dt><dd>{summary[key]===null?'—':`${formatNutrientAmount(summary[key])} g`}{summary.coverage[key].partial&&<small>Partial data</small>}</dd></div>)}</dl>

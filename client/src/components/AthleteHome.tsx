@@ -51,7 +51,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
         { title: 'Recorded training', detail: !day ? 'Current context not checked' : day.loadEntries ? `${day.loadEntries} completed session(s) with RPE` : 'No completed RPE entry', Icon: Activity, onClick: () => openSource('athlete-load-context', 'summary') },
     ];
     return <>
-  <CompanionHero media={!checking&&!unavailable&&!dayUnavailable?<EditorialMedia slot="athlete" sizes="(max-width:767px) 100vw, 800px" />:undefined} className="athlete-home-hero" headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
+  <CompanionHero media={!checking&&!unavailable&&!dayUnavailable?<EditorialMedia slot="athlete" sizes="(max-width:767px) 100vw, 800px" />:undefined} className="athlete-home-hero today-next-step" reasonBeforeActions headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
    {dayChecking&&<p role="status" className="panel-note">Checking your current athlete day…</p>}
    {dayUnavailable && <div role="alert" className="athlete-home-context-error" data-blocker-reason="source_unavailable"><p>Current fueling targets could not be checked. Numerical guidance is unavailable.</p><Button variant="outline" disabled={retrying} onClick={onRetryDay}>Retry athlete day</Button></div>}
    {day?.blocked && <div className="athlete-fueling-review" data-blocker-reasons={blockers.join(" ")}>
@@ -62,7 +62,12 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
    <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p>{calendar.validDate&&<><CheckinSourceDetails sources={sourceContext.current?.checkinSources} loading={sourceContext.source.fetchStatus!=="idle"}/><FoodSourceDetails sources={sourceContext.current?.foodSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/><MovementSourceDetails sources={sourceContext.current?.movementSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/></>}</details>
   </CompanionHero>
-  <p><Link className="text-link" href="/activity">Add activity · describe, select or repeat</Link></p>
+  <nav className="athlete-record-tools" aria-label="Exercise and muscle tools">
+    <Link className="text-link" href="/activity">Add activity</Link>
+    <Link className="text-link" href="/body-map-preview">Muscle map</Link>
+    <Link className="text-link" href="/pain-preview">Pain &amp; discomfort</Link>
+    <button type="button" className="text-link" onClick={()=>openSource('athlete-muscle-history','summary')}>Muscle history</button>
+  </nav>
   <nav className="athlete-home-links" aria-label="Your training sources">{cards.map(({ title, detail, Icon, href, onClick }) => {
             const content = <><Icon size={20} aria-hidden="true"/><span><strong>{title}</strong><small>{detail}</small></span><ChevronRight size={18} aria-hidden="true"/></>;
             return href ? <Link className="workspace-shortcut" key={title} href={href}>{content}</Link> : <button type="button" className="workspace-shortcut" key={title} onClick={onClick}>{content}</button>;

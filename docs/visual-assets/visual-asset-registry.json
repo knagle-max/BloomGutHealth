@@ -5272,14 +5272,14 @@
       ],
       "accessibility": "decorative; visible marker/category/count text supplies meaning",
       "lifecycle": "Approved",
-      "assetStatus": "Owner-approved candidate 3, delivered in Shared Library; NOT_INTEGRATED / NOT_VERIFIED",
+      "assetStatus": "Exact owner-approved source package transferred and wired in isolated local preview; NOT_HOSTED_OR_INDEPENDENTLY_ACCEPTED",
       "ownerApproval": {
         "approved": true,
         "date": "2026-11-21",
         "scope": "specific candidate 3 visual artwork only; not science, rights, integration or hosted verification"
       },
       "approvedArtworkDelivery": {
-        "state": "ARTWORK_APPROVED_NOT_INTEGRATED",
+        "state": "EXACT_BYTES_RECEIVED_LOCAL_PREVIEW",
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0051_Microbiome_Overview_Approved_2026-11-21.zip",
         "zipSha256": "df51cca56cdf8c1ba49dd0f15e6161086cb5b681a3599567282b3022b5ca6904",
         "originalSha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00",
@@ -5293,12 +5293,18 @@
           "png",
           "webp"
         ],
-        "responsiveVerification": "pending",
+        "responsiveVerification": "Local synthetic preview:320/390/768/1024/1440, four themes, image-on/off40cases PASS; not independent visual/AT acceptance",
         "scientificReview": "pending",
         "rightsReview": "pending"
       },
-      "filePaths": [],
-      "sha256": null,
+      "filePaths": [
+        "/images/editorial/microbiome/bva-0051/BVA-0051_desktop_1200x600.webp",
+        "/images/editorial/microbiome/bva-0051/BVA-0051_desktop_1600x800.webp",
+        "/images/editorial/microbiome/bva-0051/BVA-0051_desktop_800x400.webp",
+        "/images/editorial/microbiome/bva-0051/BVA-0051_mobile_right_576x1024.webp",
+        "/images/editorial/microbiome/bva-0051/BVA-0051_mobile_right_768x1024.webp"
+      ],
+      "sha256": "2d5f8873c3643abd43f5f43ae015213a1afab4641ddd2fd62fb910a5a0bddc00",
       "license": null,
       "sourceRelation": {
         "existingRegistry": "client/src/content/editorial-media.ts",
@@ -5307,13 +5313,15 @@
       },
       "integration": {
         "verified": false,
-        "state": "Approved artwork package delivered; reserved runtime placeholder remains, NOT_INTEGRATED"
+        "state": "LOCAL_PREVIEW_WIRED_ENGINEERING_RENDERED_NOT_HOSTED",
+        "sourceDirectory": "design/bloom/microbiome/bva-0051-20261121",
+        "sourceZipSha256": "df51cca56cdf8c1ba49dd0f15e6161086cb5b681a3599567282b3022b5ca6904"
       },
       "review": {
         "design": "owner explicitly approved candidate 3, 2026-11-21; two prior food scenes rejected",
         "scientific": "not reviewed",
         "rights": "original AI-generated artwork; commercial rights review pending",
-        "rendered": "reserved fallback engineering testing pending"
+        "rendered": "Local preview captures inspected; independent Brand/physical assistive technology and hosted review not claimed"
       },
       "authority": "Owner2026-11-17 microbiome overview and organism detail reference; docs/design-references/microbiome/",
       "fallback": "new reserved surface only; no existing hero or other image reuse",

@@ -18,3 +18,29 @@ test('account custom identities use the same natural-language matcher without gu
 test('performed recents exclude planned/cancelled work and unconfirmed identity',async()=>{
  const {recentlyPerformedCatalogueIds}=await import('../shared/exercise-catalogue');const {experienceEntrySchema}=await import('../shared/experience');const ref={id:exerciseCatalogue[0].id,version:'synthetic-index',match:'selected',confirmed:true};const entry=experienceEntrySchema.parse({kind:'activity',payload:{title:'Synthetic exercise',startedAt:'2026-11-26T10:00:00Z',minutes:null,notes:'',actualSets:{version:1,sets:[{exercise:'Synthetic exercise',reps:null,loadKg:null,completed:true,catalogueRef:ref}]}}});const row={...entry,id:'synthetic-record',createdAt:'2026-11-26T10:00:00Z',updatedAt:'2026-11-26T10:00:00Z'};assert.deepEqual(recentlyPerformedCatalogueIds([row]),[ref.id]);if(row.kind!=='activity')throw Error('fixture');for(const state of ['planned','cancelled']as const)assert.deepEqual(recentlyPerformedCatalogueIds([{...row,payload:{...row.payload,actualSets:{version:1,sets:[{...row.payload.actualSets!.sets[0],state}]}}}]),[]);
 });
+
+test('discovery ranks exact canonical names and aliases before prefixes and other text matches',async()=>{
+ const {customCatalogueChoices}=await import('../shared/exercise-catalogue');
+ const custom=customCatalogueChoices([
+  {id:'prefix',name:'Synthetic cable reach long',aliases:[],category:'Custom exercise',equipment:[]},
+  {id:'other',name:'A synthetic cable reach variation',aliases:[],category:'Custom exercise',equipment:[]},
+  {id:'exact',name:'Synthetic cable reach',aliases:[],category:'Custom exercise',equipment:[]},
+  {id:'alias',name:'A precise synthetic movement',aliases:['Synthetic cable reach'],category:'Custom exercise',equipment:[]},
+ ]);
+ const original=JSON.stringify(custom),canonical=JSON.stringify(exerciseCatalogue);
+ assert.deepEqual(searchExerciseCatalogue({query:'SYNTHETIC—cable reach'},custom).map(e=>e.id),['custom.alias','custom.exact','custom.prefix','custom.other']);
+ assert.deepEqual(searchExerciseCatalogue({query:'synthetic cable reach'},[...custom].reverse()).map(e=>e.id),['custom.alias','custom.exact','custom.prefix','custom.other']);
+ assert.equal(JSON.stringify(custom),original);assert.equal(JSON.stringify(exerciseCatalogue),canonical);
+ assert.equal(searchExerciseCatalogue({query:'synthetic cable reach'}).length,0);
+ assert.equal(searchExerciseCatalogue({query:'synthetic cable reach',category:'Resistance training'},custom).length,0);
+ assert.equal(searchExerciseCatalogue({query:'synthetic cable reach',equipment:'Dumbbell'},custom).length,0);
+ assert.equal(searchExerciseCatalogue({query:'synthetic cable reach',muscle:'Pectoralis major'},custom).length,0);
+});
+
+test('recents use reported activity timing, exclude future/planned/unconfirmed records and do not reorder input',async()=>{
+ const {recentlyPerformedCatalogueIds}=await import('../shared/exercise-catalogue');const {experienceEntrySchema}=await import('../shared/experience');
+ const refs:Record<string,string>={old:exerciseCatalogue[0].id,recent:exerciseCatalogue[1].id,future:exerciseCatalogue[2].id,unconfirmed:exerciseCatalogue[3].id};
+ const row=(id:string,startedAt:string,createdAt:string,confirmed=true)=>({...experienceEntrySchema.parse({kind:'activity',payload:{title:'Synthetic timing fixture',startedAt,minutes:null,notes:'',actualSets:{version:1,sets:[{exercise:'Synthetic exercise',reps:null,loadKg:null,completed:true,catalogueRef:{id:refs[id],version:'synthetic',match:'selected',confirmed}}]}}}),id:'row-'+id,createdAt,updatedAt:createdAt});
+ const rows=[row('old','2026-11-20T10:00:00Z','2026-11-27T10:00:00Z'),row('recent','2026-11-26T10:00:00Z','2026-11-26T10:00:00Z'),row('future','2026-11-28T10:00:00Z','2026-11-27T10:00:00Z'),row('unconfirmed','2026-11-27T10:00:00Z','2026-11-27T10:00:00Z',false)];
+ const before=JSON.stringify(rows);assert.deepEqual(recentlyPerformedCatalogueIds(rows,'2026-11-27T12:00:00Z'),[refs.recent,refs.old]);assert.equal(JSON.stringify(rows),before);
+});
